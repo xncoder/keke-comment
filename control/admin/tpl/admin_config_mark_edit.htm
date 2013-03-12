@@ -1,0 +1,138 @@
+<!--{template control/admin/tpl/admin_header}-->  
+
+	<div class="page_title">
+    	<h1>{$_lang['rule_manage']}</h1>
+     	<div class="tool"> 
+        <a href="index.php?do=$do&view=$view"        {if $op!='edit'}class="here"{/if}>{$_lang['credit_rules_manage']}</a>
+        <a href="index.php?do=$do&view=$view&op=edit" {if $op=='edit'}class="here"{/if}>{$_lang['add_credit_rules']}</a>
+		</div>
+    </div>
+		<div class="box post">
+        <div class="tabcon">
+        	<div class="title"><h2>{if $mark_rule_id}{$_lang['edit_rules']}{else}{$_lang['add_rules']}{/if}</h2></div>
+            <div class="detail">
+               <form action="{$url}" method="post" name="frm1" id="frm1" enctype="multipart/form-data">
+               	   <input type="hidden" name="hdn_mark_rule_id" value="$mark_rule_id">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <th scope="row" width="200">{$_lang['credit_value']}{$_lang['zh_mh']}</th>
+                        <td><input name="txt_g_value" type="text" value="{$mark_info['g_value']}" class="txt" style=" width:260px;" />
+					  </td>
+                      </tr>
+					  <tr>
+                        <th scope="row" width="200">{$_lang['ability_value']}{$_lang['zh_mh']}</th>
+                        <td><input name="txt_m_value" type="text" value="{$mark_info['m_value']}" class="txt" style=" width:260px;" />
+					  </td>
+                      </tr>
+                     <tr>
+                        <th scope="row">{$_lang['employer_name']}{$_lang['zh_mh']}</th>
+                        <td> <input name="txt_g_title" type="text" value="{$mark_info['g_title']}" class="txt" style=" width:260px;" /></td>
+                      </tr>
+					  
+					  <tr>
+                        <th scope="row">{$_lang['witkey_name']}{$_lang['zh_mh']}</th>
+                        <td> <input name="txt_m_title" type="text" value="{$mark_info['m_title']}" class="txt" style=" width:260px;" /></td>
+                      </tr>
+					  <tr>
+                       <th scope="row">{$_lang['employer_icon']}{$_lang['zh_mh']}</th>
+                        <td> 
+						<input type="hidden" name="hdn_g_ico" id="hdn_g_ico" value="$mark_info['g_ico']">
+						<input type="hidden" name="hdn_g_ico_fid" id="hdn_g_ico_fid" value="" />
+						<input type="file" name="g_ico" id="g_ico" ext=".png,.jpg,.jpeg,.gif" class="file">
+						<button type="button"  onclick="upload('g_ico');" class="pill">{$_lang['upload']}</button>
+						<span id="span_g_ico">
+							{if $mark_info['g_ico']}
+							<img src="../../{$mark_info['g_ico']}" onload="resize(this)" />
+							{/if}
+						</span>
+						</td>
+                      </tr>
+					  <tr>
+                        <th scope="row">{$_lang['witkey_icon']}{$_lang['zh_mh']}</th>
+                        <td> 
+						<input type="hidden" name="hdn_m_ico" id="hdn_m_ico" value="$mark_info['m_ico']">
+						<input type="hidden" name="hdn_m_ico_fid" id="hdn_m_ico_fid" value="" />
+						<input type="file" name="m_ico" id="m_ico" ext=".png,.jpg,.jpeg,.gif" class="file">
+						<button type="button"  onclick="upload('m_ico');" class="pill">{$_lang['upload']}</button>
+						<span id="span_m_ico">
+							{if $mark_info['m_ico']}
+							<img src="../../{$mark_info['m_ico']}" onload="resize(this)" />
+							{/if}
+						</span>
+						</td>
+                      </tr>
+					   
+                      <tr>
+                        <th scope="row">&nbsp;</th>
+                        <td>
+	                    	<div class="clearfix padt10">
+	                    	<input type="hidden" name="is_submit" value="1">
+	                        <button class="positive pill primary button" type="submit" 
+							onclick="return checkForm(document.getElementById('frm1'),false);"
+							 value={$_lang['submit']}>
+	                        	<span class="check icon"></span>{$_lang['submit']}</button>
+	                        
+	                    	</div>
+                        </td>
+                      </tr>
+                    </table>
+               </form>
+        	</div>
+   		</div>
+    </div>
+<script type="text/javascript"  src="../../resource/js/system/ajaxfileupload.js"></script>	
+<script type="text/javascript">
+    function upload(id){
+		var o  = document.getElementById(id);
+		if(!isExtName(o)){
+			art.dialog.alert("{$_lang['file_format_error']}");
+			return false;
+		}else{
+        $.ajaxFileUpload({
+            url: '../../index.php?do=ajax&view=upload&file_name='+id+'&file_type=sys&task_id=mark',
+            fileElementId: id,
+            dataType: 'json',
+            success: function(json){ 
+                if (json.err) {
+                    art.dialog.alert("{$_lang['upload_fail_file_too_large']}"+ json.err);
+                }else {
+                    var hf = $("#hdn_"+id);
+                    var hf_fid = $("#hdn_"+id+"_fid");
+                    $(hf).val(json.msg.up_file+"?fid="+json.fid);
+                    $(hf_fid).val(json.fid);
+					$("#span_"+id).html("<img src='../../"+json.msg.up_file+"' onload='resize(this)' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"span_"+id+"\")'>{$_lang['delete']}</a>");
+					
+                }
+            },
+            error: function(json, status, e){
+                if(e){
+					art.dialog.alert(e);	
+				}
+            }
+        });
+		}
+    }
+    function resize(img){
+    	var h=img.height, w=img.width;
+    	if(h>20){
+    		img.height=80;
+    	}
+    	if(w>70){
+    		img.width=80;
+    	}
+    }
+    function del(str,span){
+		var value = $("#"+str).val().split("?")['0'];
+		var fid=$("#"+str+"_fid").val();
+		var url  = '../../index.php?do=ajax&view=file&ajax=del&filepath='+value+"&fid="+fid;
+				$.post(url,function(json){
+					if(json.status==1){ 
+						 $("#"+str).val("");
+						 $("#"+span).children().remove();
+					}
+					
+				},'json');
+		return false;
+	}
+</script>
+<!--{template control/admin/tpl/admin_footer}-->

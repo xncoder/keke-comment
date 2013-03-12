@@ -1,0 +1,11 @@
+<?php
+  $pay_basic=array("pay_name"=>"±´±¦",
+  					"type"=>"online",
+                     "pay_dir"=>"paypal",
+                     "pay_dev"=>"kekezu",
+                     "pay_desc"=>"¼´Ê±µ½ÕË½Ó¿Ú",
+                     "img"=>"paypal.gif",
+                     "initparam"=>"account:±´±¦ÕÊºÅ"
+               );
+               
+?>

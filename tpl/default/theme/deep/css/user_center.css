@@ -1,0 +1,31 @@
+/* 1.0 管理面板
+ -----------------------------------------------------*/
+.deep_style ul.trading li{background:#2e2e2e;}
+.deep_style .box.complete{background:#2E2E2E; border:1px solid #38383b;}
+	.deep_style .step_progress{color:#898484;}
+	.deep_style .step_progress .step.selected strong{color:#53B4D0;}
+	/* 1.1 个人设置
+ -----------------------------------------------------*/
+	/* 1.1.1 基本资料
+	------------------------------------------------------*/
+		/* 个人经历*/
+		.deep_style .form_button{border-top:1px solid #4e4f52;}
+/* 1.3完成步骤页面
+ -------------------------------------------------------*/
+	/* 1.3.1 个人设置--银行账户--新增账户成功（第四步）;
+		 	  财务管理--账号充值--等待后台审核;
+		 	  财务管理--账号提现--完成提现  ; 
+	--------------------------------------------------------*/
+	.deep_style .box.complete .completedata{background:#505156; border:1px solid #252529;}
+		.deep_style .box.complete .completedata li{border-bottom:1px solid #46464c;}
+		.deep_style .box.waring{background-color:#2e2e2e; border:1px solid #4e4f52;}
+			.deep_style .box.waring:hover{box-shadow:0 0 5px #94BB3F;}
+		.deep_style .form_box{background:#2e2e2e !important; border:1px solid #212124; color:#9DA0AB;}
+		.deep_style .box.waring .inner{background:#2e2e2e;}
+
+		
+/*公用*/
+.deep_style .page_nav{height:30px; overflow:hidden;}
+.deep_style{color:#999;}
+.deep_style .box.default.model_bord .box_detail{ background:#4E4F54;}
+.deep_style .data_list .data_table tbody td a.button{border-left:1px solid #525459; border-right:1px solid #525459; border-bottom:1px solid #525459; color:#fff;}	

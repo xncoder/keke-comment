@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+.iphone,.android_box{ width:390px; height:626px; background:url(../img/mobile/iphone.jpg) no-repeat; padding-top:134px; padding-left:70px;}
+.android_box{background:url(../img/mobile/android_bg.jpg) no-repeat; padding-top:119px; padding-left:67px;}
+.secode_box{background:#fff; position:absolute; right:5px; height:25px; line-height:25px;}
+.secode_box img{width:90px; height:25px; }
+
+/* 手机客户端 */
+/***3.banner切换广告***/			
+	.android_box .banner{z-index:1;}
+	.android_box .banner #slides {position:absolute;top:0;left:0;z-index:1;width:324px;}
+	.android_box .banner #slides .slides_control  img{ display:block; float:left;}
+	.android_box .banner .slides_container{width:324px;height:479px;overflow:hidden;position:relative; background:#eee;}
+	.android_box .banner #slides .next, .banner #slides .prev{top:50%;left:0; width:25px; height:30px; margin-top:-20px; z-index:5; background:#f4f4f4; background:rgba(255,255,255,.6); filter:alpha(opacity=60); border-radius:0 30px 30px 0;  padding:15px 5px 0 0; box-shadow:3px 0 5px rgba(0,0,0,.5); width:16px;}
+	.android_box .banner #slides .next {left:auto;right:0;border-radius:30px 0 0 30px;padding:15px 0 0 5px;box-shadow:-3px 0 5px rgba(0,0,0,.5);}
+	.android_box .banner #slides a.next:hover, .banner #slides a.prev:hover{ background:#2F549F; background:rgba(47, 84, 159,.9);}
+	.android_box .banner .pagination {position:absolute; z-index:10; right:10px; bottom:30px;}
+	.android_box .banner .pagination li {float:left; margin:0 1px;}
+	.android_box .banner .pagination li a {	display:block;width:12px;	height:0;padding-top:12px;background-image:url(../img/mobile/pagination.png);background-position:0 0;	float:left;	overflow:hidden;}
+	.android_box .banner .pagination li.current a {background-position:0 -12px;}
+	#ie6 .android_box .banner .next .icon16,
+	#ie6 .android_box .banner .prev .icon16{ font:bolder 20px/20px "宋体"; color:#000; text-align:center;}
+	#ie6 .android_box .banner .next:hover .icon16,
+	#ie6 .android_box .banner .prev:hover .icon16{ color:#fff;}
+	
+.mobile_nav ul{border:1px solid #ccc; border-bottom:none; float:left;}
+.mobile_nav li{ float:left; }
+.mobile_nav li.backLava{ z-index:1; }
+.mobile_nav li.selectedLava a{background:#fff; border-bottom-color:#fff;}
+.mobile_nav li.selectedLava a:hover{color:#666;}
+.mobile_nav li a{color:#666; display:block;  padding:8px 15px 5px; border-left:1px solid #ccc; border-bottom:1px solid #ccc; position:relative; z-index:2;   background-color:#FAFAFA;
+background-image: -webkit-gradient(linear, left top, left bottom, from(#F2F2F2), to(#FFFFFF)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient(top, #F2F2F2, #FFFFFF); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient(top, #F2F2F2, #FFFFFF); /* Firefox 3.6-15 */
+  background-image:      -o-linear-gradient(top, #F2F2F2, #FFFFFF); /* Opera 11.10+ */
+  background-image:         linear-gradient(to bottom, #F2F2F2, #FFFFFF);
+  progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#F2F2F2,endColorStr=#FFFFFF);
+}
+.mobile_nav li a:hover{color:#000;}
+.mobile_nav li a.frist_links{border-left:none}
+.mobile_nav li a em {background: url("../img/mobile/mobile_icon.png") no-repeat scroll 0 0 transparent; display: inline-block;height: 30px;vertical-align: middle;width: 30px;}							
+	.mobile_nav li a em.web {background-position: 0 -80px;}
+.mobile_nav_box{ background:#fff; border:1px solid #ccc; margin-top:-1px;}	

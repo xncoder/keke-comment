@@ -1,0 +1,112 @@
+ <!--左边部分-->
+<div class="grid_17 omega alpha">
+ <div class="pad10 border_r_c">
+  <!--提示信息-->
+   <div class="messages m_infor">
+     <span class="icon16">info</span>{$model_info['model_intro']}
+       <a href="javascript:;" class="close">&times;</a>
+   </div>
+   
+  <!--end 提示信息-->
+  <!--from表单 start-->
+   <div class="form_box clearfix box border_n">
+      <div class="form_tip">
+        <h5 class="font14b t_c" style="color:#7caf22">{$model_info['model_name']}{$_lang['task_process']}</h5>
+        <!--单人悬赏-single-->
+		<div class="min_step all_8 step_orange mb_10 ml_30">
+					<ul class="clearfix">
+						<li class>
+							<div class="icon"></div>
+							<span>{$_lang['release']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['audit']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['submit_work']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['choos_work']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['publicing']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['delivering']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['user_mark']}</span>
+						</li>
+						
+						<li class="last">
+							<div class="icon"></div>
+							<span>{$_lang['task_over']}</span>
+						</li>
+						
+					</ul>
+				</div>
+      </div>
+	  <form action="{$basic_url}" method="post" name="frm_step1" id="frm_step1">
+	  	<input type="hidden" name="step1" value="step1">
+		<input type="hidden" name="min" value="$min" id="min">
+		<input type="hidden" name="max" value="{if $release_info['max']}{$release_info['max']}{else}{$default_max_day}{/if}" id="max">
+	  	<input type="hidden" name="formhash" value="{FORMHASH}">
+		
+       <div class="rowElem clearfix">
+          <label class="grid_4"><strong>{$_lang['budget']}{$_lang['zh_mh']}</strong></label>
+           <div class="grid_12">
+              <input name="txt_task_cash" size="30" value="{if $release_info['txt_task_cash']}$release_info['txt_task_cash']{else}$task_config['min_cash']{/if}" type="text" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config['min_cash']}{$_lang['yuan']}" onkeyup="clearstr(this)"
+		    limit="required:true;type:float;between:{$task_config['min_cash']}-" msg="{$_lang['mtask_cash_msg']}{$task_config['min_cash']}{$_lang['yuan']}" onblur="getMaxDday(this.value)" />
+			<span class="ml_5">{$_lang['yuan']}</span>
+			<span id="span_task_cash" class="ml_5"></span>
+           </div>
+        </div>
+		
+        <div class="rowElem clearfix">
+          <label class="grid_4"><strong>{$_lang['task_round']}{$_lang['zh_mh']}</strong></label>
+            <div class="grid_12">
+       
+               <input name="txt_task_day"   onclick="showcalendar(event, this, 0)" size="30" value="{if $release_info['txt_task_day']}$release_info['txt_task_day']{else}$default_max_day{/if}" type="text" id="txt_task_day"    min_day="$task_config['min_day']"    title="{$_lang['task_round_title']}:{$task_config['min_day']}{$_lang['day']},{$_lang['max_day']}{if $release_info['max']}{$release_info['max']}{else}$max_day{/if}" msgArea="span_task_day" onkeyup="clearstr(this)"
+			   	limit="required:true;type:date;than:min;less:max" msg="{$_lang['task_round_msg']}" max=""/> 
+            	
+				 <span id="span_task_day" class="ml_5"></span>
+				
+			</div>
+        </div>
+		
+		
+		
+        <div class="rowElem clearfix po_re">
+           <label class="grid_4"><strong>{$_lang['cash_assign']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_6"><strong>{$_lang['single_reward']}</strong></div>
+        </div>
+     </form>
+    </div>
+    <!--from表单 end-->
+    <div class="step_button"> <button type="submit" name="is_submit" onclick="stepCheck();" class="big button">{$_lang['next_step']}</button></div>
+   </div>
+ </div>
+<!--end 左边部分-->
+<!--右边部分-->
+   <div class="grid_7 omega alpha">
+     <div class=" prefix_1 suffix_1 pt_20">
+       <h3 class="font14b">{$_lang['what']}{$model_info['model_name']}？ </h3>
+        <p><!--{eval echo kekezu::filter_input($model_info['model_desc'])}--></p>
+     </div>
+    </div>
+		<script type="text/javascript">
+			In('calendar');
+		</script>
+<!--end 右边部分-->

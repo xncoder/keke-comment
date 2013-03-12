@@ -1,0 +1,169 @@
+<!--{eval $page_title=$service_info['title'].'--'.$_K['html_title'];}--><!--{template header}--><!--页面内容区-->
+<!--页面样式-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/css/shop.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css" rel="stylesheet" type="text/css">
+<div class="wrapper">
+<!--页面头部-->
+ <header class="clearfix page_header">
+   <div class="container_24 clearfix">
+	   	<!--面包屑-->
+	    <div class="breadcrumbs clearfix">
+	          <a href="index.php">{$_lang['home']}</a> &gt;
+			  <a href="index.php?do=shop_list&model_id={$model_id}">{$_lang['witkey_shop']}</a> &gt;
+			  <a href="index.php?do=shop_list&model_id={$model_id}&indus_pid={$service_info['indus_pid']}">{$indus_p_arr[$service_info['indus_pid']]['indus_name']}</a> &gt;
+	          <a href="index.php?do=shop_list&model_id={$model_id}&indus_id={$service_info['indus_id']}">{$indus_arr[$service_info['indus_id']]['indus_name']}</a>
+	    </div>
+		<!--end 面包屑-->
+		<!--页面标题布局-->
+		<div class="grid_24 po_re">
+			<!--页面标题-->
+	    	<div class="page_title clearfix">
+			
+	            <div class="grid_22 page_title">
+	                <h2 class="title"><a href="javascript:void(0);">{$service_info['title']}</a></h2>
+					
+	                <div class="clearfix page_sub_title c666">
+                    <span>{$_lang['pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$service_info[on_time])}--></span>
+                    <span class="border_l_c mar10"></span>
+					<span>{$_lang['type']}{$_lang['zh_mh']}{$model_info[model_name]} </span>
+                    <span class="border_l_c mar10"></span>
+                    <span>{$_lang['id']}{$_lang['zh_mh']}#{$sid} </span>
+                    <span class="border_l_c mar10"></span>
+                    
+                  
+					<!--{eval $time = time();}-->
+					{if $payitem_arr[top]>$time&&$item_config[2]['small_pic']}<img src="{$_K[siteurl]}/$item_config[2]['small_pic']" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}
+					<!--{eval $is_map =  stristr($service_info[pay_item], '4');}-->
+				 	{if $is_map&&$item_config[4]['small_pic']}<img src="{$_K[siteurl]}/$item_config[4]['small_pic']" alt="{$_lang['map']}" title="{$_lang['map']}">{/if}
+				</div>
+	            </div>
+			</div>
+			<!--页面标题 end-->
+			
+		</div>
+		<!--页面标题布局 end-->
+		
+   		
+   			
+   	
+   </div>
+ </header>
+
+<!--end 页面头部-->
+<!--详细内容区-->
+ <section class="content clearfix">
+ <!--布局框-->  
+  <div class="container_24">
+
+                    
+   <!--步骤下部所有内容-->
+
+
+		
+     <!--左边部分-->
+       <div class="grid_19">
+         <div class="box normal clearfix">
+           <!--服务详细内容-->
+             <div class="inner clearfix" id="agreement">
+                 <div class="clearfix pad20 font14">
+                  <!--from表单 start-->
+
+                   <div class="rowElem clearfix">
+                    <label class="grid_2 t_r">{$_lang['goods_sell_price']}</label>
+                      <div class="grid_8"><strong class="font16 cc00">{$service_info['price']}{$_lang['yuan']} / {$service_info['unite_price']}</strong></div>
+                   </div>
+                   <div class="rowElem clearfix">
+                     <label class="grid_2 t_r">{$_lang['goods_recommend']}{$_lang['zh_mh']}</label>
+                     <div class="grid_13 ws_prewrap ws_break"><!--{eval echo kekezu::filter_input($service_info['content'])}--></div>
+                   </div>
+                   <div class="rowElem clearfix form_button">
+                     <button type="submit" class="button" value="{$_lang['confirm_buy']}" onclick="sub_order('{$_lang['goods']}','{$sid}','{$owner_info['uid']}')">
+                        <span class="check icon"></span>{$_lang['confirm_buy']}
+                     </button>
+                   </div>
+                 </div>
+              </div>
+           <!--end 服务详细内容-->
+    	   </div>
+       </div>
+	   
+    <!--end 左边部分-->
+     <!--右边部分-->
+       
+	   <div class="grid_5 alpha">
+	   	<div class="shop_author box default clearfix">
+                    	<div class="inner">
+                        	<h2 class="pl_10">店主信息</h2>
+							<div class="pad5 clearfix border_b_c">
+							<div class="clearfix">
+                                <div class="t_c fl_l mr_10">
+                                        <!--{userpic($owner_info['uid'],'small')}-->
+                                    <!--<a href="index.php?do=space&member_id={$owner_info['uid']}" target="_blank" class="button mt_10"><b class="fl_l">{$_lang['into_space']}</b><span class="icon16 top-right-expand fl_r"></span></a>-->
+                                </div>
+								<p class="shop_sign fl_l">
+                                    <a href="index.php?do=space&member_id={$owner_info['uid']}" class="font14b block" target="_blank">{$owner_info['username']}</a>
+									$user_level['pic']
+                                </p>
+							</div>
+                            <p>
+                            	<!--卖家的认证信息-->
+                                {loop $auth_info $k $v}
+									<a href="javascript:void(0)" title="{$v['auth_title']}" class="mr_5">
+										<img src="{$_K['siteurl']}/{$v['auth_small_ico']}" alt=''>
+									</a>
+								{/loop}
+                            </p>
+							<p>{$_lang['good_evaluation_rate']}{if $owner_info['seller_total_num']}<span class="cc00 ml_10 pl_5"><!--{eval echo number_format($owner_info['seller_good_num']/$owner_info['seller_total_num'],4)*100}-->{else}0{/if}%</span>
+							</p>
+							<p>出售商品<span class="c333 ml_5">{$seller_goods_num}</span></p>
+							
+							{loop $shop_aid $k $v}
+							<p><span>{$v['aid_name']}<em class="cc00 ml_5">{$v['avg']}{$_lang['fen']}</em></span><span class="stars a5"><!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}--></span></p>							
+							{/loop}							
+                            <div class="shop_sum1 clearfix hidden">
+                                <ul>
+                                    <li class="border_r_c fl_l">
+                                        <a href="javascript:void(0);" class="font14b block">{if $owner_info['seller_total_num']}<!--{eval echo number_format($owner_info['seller_good_num']/$owner_info['seller_total_num'],4)*100}-->{else}0{/if}%</a>
+                                        <span>{$_lang['good_evaluation_rate']}</span>
+                                    </li>
+                                    <li class="border_r_c fl_l">
+                                        <a href="javascript:void(0);" class="font14b block"><!--{eval echo intval($owner_info['accepted_num'])}--></a>
+                                        <span>{$_lang['win_bid']}</span>
+                                    </li>
+                                    <li class="fl_l">
+                                        <a href="javascript:void(0);" class="font14b block"><!--{eval echo intval($service_info['sale_num'])}--></a>
+                                        <span>{$_lang['sell']}</span>
+                                    </li>
+                                </ul>
+                            </div>          
+                    	</div>
+							<div class="shop_author_link clearfix">
+								<a href="index.php?do=space&member_id={$owner_info['uid']}" target="_blank" class="fl_l">查看店铺空间</a>
+								<a href="javascript:void(0)" onclick="sendMessage($owner_info['uid'],'$owner_info[username]')" class="fl_r">{$_lang['send_web_msg']}</a>
+							</div>
+						</div>
+					</div>
+
+         </div>
+
+     <!--end 右边部分-->
+
+
+   <!--end 步骤下部所有内容--> 
+  </div>
+
+  <!--end 布局框-->     	
+ </section>
+<!--end 详细内容区-->
+</div>
+<!--end 页面内容区-->
+ 
+<script type="text/javascript">
+	In.add('service',{path:"resource/js/system/service.js",type:'js'});
+	In('service','custom');
+	var sid = "{$sid}";
+    var basic_url = "index.php?do=service&sid=" + sid;
+	var uid = parseInt('{$uid}')+0;
+</script>
+<!--{template footer}-->

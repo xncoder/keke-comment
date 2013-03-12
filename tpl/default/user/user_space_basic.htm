@@ -1,0 +1,126 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+ <div class="container_24">
+   <!--{template user/user_nav}--><!--main start-->
+
+   <section class="clearfix section">
+  <!--{template user/user_side}-->
+  <div class="show_panel container_24 po_re">
+   <div class="prefix_3 grid_21">
+     <div class="panel clearfix box">
+       <!--main content-->
+         <div class="">
+           <!--header内容头部 start-->
+            <header class="clearfix box_header">
+            <h2 class="grid_4 alpha omega box_title t_c">{$_lang['space_set']}</h2>
+             <div class="grid_17 alpha omega">
+                <nav class="box_nav">
+                   <ul>
+                      {loop $third_nav $k $v}
+						{if $k!='view'}
+                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                <a href="index.php?do=user&view=setting&op=space&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+                            </li>  
+						{else} 
+							<li>
+								 <a href="index.php?do=space&member_id={$uid}" title="{$v['1']}" target="_blank">{$v['0']}</a>
+                            </li>
+						{/if}
+                       {/loop}
+                     </ul>
+                    
+                  </nav>
+              </div>
+            <div class="clear"></div>
+         </header>
+       <!--header内容头部 end-->
+		
+		
+         <div class="prefix_1 suffix_1">
+         	<div id="tips"></div>
+            <div class="clearfix form_box border_n" id="content_tip">
+                <!--from表单 start-->
+                  <form action="{$ac_url}" method="post" id="frm" name="frm">
+                  	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                  	<input type="hidden" value="{if $user_info['user_type']==2}2{else}1{/if}" name="shop_type"/>
+					  <input type="hidden" name="pk[shop_id]" id="shop_id" value="{$shop_info['shop_id']}"><!--基本资料start-->
+					  <input type="hidden" name="ac" value="open"/>
+					     <div class="rowElem clearfix">
+                           <label class="grid_3 t_r">{$_lang['shop_name']}{$_lang['zh_mh']}</label>
+                            <div class="grid_15">
+                                <input class="txt_input" name="shop_name" size="45" type="text" value="{$shop_info['shop_name']}" title="{$_lang['tips_about_shop_name']}" id="shop_name" limit="required:true;len:2-30" msg="{$_lang['input_shop_name_correct_format']}" msgArea="span_shop_name"/><span id="span_shop_name"></span>
+                            </div>
+                        </div>
+
+						 {if $user_info['user_type']==1}<!-- 个人空间 -->
+						 <div class="rowElem clearfix" id="slogans">
+                            <label class="grid_3 t_r">{$_lang['shop_sign']}{$_lang['zh_mh']}</label>
+							<div class="grid_13">
+	                           <textarea cols="71" rows="10" name="shop_slogans" id="tar_content" class="xheditor {tools:'Bold,Fontface,FontColor,Italic,Underline,Strikethrough,Align,List,Outdent,Indent,Link,Unlink',skin:'nostyle'}">{$shop_info['shop_slogans']}</textarea>
+                                <div class="c999 grid_6" id="length_show"></div>
+								<div class="clear"></div>
+	                            <div class="ui_note">{$_lang['tips_about_shop_sign']}</div>
+								<script type="text/javascript">
+							       $(function(){
+											editor = $("#shop_slogans").xheditor({'innerCheck':true});
+											editor.checkInner();
+									})
+							  </script>
+								</div>
+                        </div>						
+						{/if}
+                        {if $user_info['user_type']==2}<!-- 企业空间 -->
+						 	<div class="rowElem clearfix" id="desc">
+                               <label class="grid_3 t_r">
+                                   {$_lang['shop_description']}{$_lang['zh_mh']}
+                               </label>
+							   <div class="grid_13 omega">
+	                               <textarea style="width:500px" rows="12" name="conf[shop_desc]" id="tar_content"
+									   class="xheditor {urlBase:'$_K['siteurl']/',tools:'simple',html5Upload:false,emotMark:false,upImgUrl:'index.php?do=ajax&view=upload&file_type=att'}">{$shop_info['shop_desc']}</textarea>
+								<div class="c999 grid_6" id="length_show"></div>
+								<div class="clear"></div>
+									<div class="ui_note">{$_lang['enterprise_space_desc']}</div>
+								</div>
+							</div>
+					   {/if}						
+                            <div class="rowElem clearfix form_button">
+                              <input type="hidden" name="sbt_edit" value="1">
+                                 <button type="button" class="button" value="{$_lang['save']}" onclick="check123('frm');">
+                                    <span class="check icon"></span>{$_lang['save']}
+                                 </button>
+                            </div>
+							</form>
+                         <!--from表单 end-->
+                      </div>
+                   </div>
+                  <!--detail内容 end-->
+               </div>
+              <!--main content end -->
+           <div class="clear"></div>
+         </div>
+        </div>
+      </section>
+     <!--main end-->
+     </div>
+    </div>
+    <!--contain end-->
+<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+<script type="text/javascript">
+    In.add('jscolor',{path:"resource/js/others/jscolor.js",type:'js'});
+    In('jscolor','form');                    
+   /**
+    * 表单提交 编辑空间
+    * @param  obj
+  */
+              function check123(obj){
+						if(contentCheck('tar_content',"{$_lang['shop_sign']}",20,1000,1,'slogans','editor')){						
+							formSub('frm','form',true);
+                               // return true;
+                        }else {
+	                     	return false;
+	                	}
+            }
+        
+  </script>
+  <!--{template user/user_footer}-->
+<!--{template footer}-->

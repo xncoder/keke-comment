@@ -1,0 +1,226 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}--><!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['space_set']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            {if $k!='view'}
+                                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                                <a href="index.php?do=user&view=setting&op=space&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+                                            </li>
+                                            {else} 
+                                            <li>
+                                                <a href="index.php?do=space&member_id={$uid}" title="{$v['1']}" target="_blank">{$v['0']}</a>
+                                            </li>
+                                            {/if}
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                           
+                            <div class="prefix_1 suffix_1">
+                            	<div id="messages">
+                                        <!--messages消息 start-->
+                                 </div>
+                                <div class="clearfix form_box border_n">
+                                    <!--from表单 start--><!--date_table数据表格 start-->
+                                    
+									
+									<div>
+										<form action="post" name="frm" id="frm">
+                                            <div class="rowElem clearfix">
+                                                <div id="link">
+                                                    <label class="grid_2 t_r">
+                                                        {$_lang['link_name']}{$_lang['zh_mh']}
+                                                    </label>
+                                                    <div class="grid_6">
+                                                        <input type="hidden" name="ac" value="add"><input type="hidden" name="link_id" value=""><input name="link[link_name]" size="20" type="text" title="{$_lang['tips_about_link_name']}" id="link_name" limit="required:true;len:2-20" msg="{$_lang['please_input_correct_link_name']}" msgArea="span_link_url"/>
+                                                    </div>
+                                                    <label class="grid_2 t_r">
+                                                        {$_lang['link_url']}{$_lang['zh_mh']}
+                                                    </label>
+                                                    <div class="grid_6">
+                                                        <input name="link[link_url]" size="20" type="text" title="{$_lang['tips_about_link_url']}" id="link_url" limit="required:true;type:url" msg="{$_lang['please_input_correct_link_url']}" msgArea="span_link_url"/>
+                                                    </div>
+                                                    <div class="grid_2 t_c">
+                                                        <button type="button" id="edit" class="button" value="{$_lang['add']}" onclick="add()">
+                                                            <span class="check icon"></span>{$_lang['add']}
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <div class="grid_7">
+                                                        <span id="span_link_url"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+									</div>
+									
+                                    <div class="data_list mt_10">
+                                        <table cellpadding="0" cellspacing="0" class="data_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">
+                                                        {$_lang['link_name']}
+                                                    </th>
+                                                    <th scope="col">
+                                                        {$_lang['link_url']}
+                                                    </th>
+                                                    <th scope="col">
+                                                        {$_lang['edit']}
+                                                    </th>
+                                                    <th scope="col">
+                                                        {$_lang['delete']}
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {loop $shop_link $v}
+                                                <tr id="{$v['link_id']}">
+                                                    <td>
+                                                        {$v['link_name']}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{$v['link_url']}" target="_blank">{$v['link_url']}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" onclick="edit('$v['link_id']')">{$_lang['edit']}</a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" onclick="del('$v['link_id']')">{$_lang['delete']}</a>
+                                                    </td>
+                                                </tr>
+                                                {/loop}
+                                            </tbody>
+                                        </table>
+                                        
+                                        
+                                    </div>
+                                    <!--data_table数据表格 end-->
+									
+									<div class="page">
+                                            <p>
+                                                {$pages['page']}
+                                            </p>
+                                        </div>
+                                </div>
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end -->
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <!--main end-->
+            </div>
+            </div>
+            <!--contain end-->
+<script type="text/javascript" >
+        	 In('jscolor'); 
+
+                
+                /**
+                 * 编辑链接
+                 * @param {Object} link_id 链接编号
+                 */
+                function edit(link_id){
+                    $("#link input[name='ac']").val('edit');
+                    $("#link input[name='link_id']").val(link_id);
+                    $("#link #link_name").val($("#" + link_id + " td:eq(0)").html());
+                    $("#link #link_url").val($("#" + link_id + " a:eq(0)").attr("href"));
+                    $("#link #edit").val("{$_lang['edit']}").html("<span class='edit icon'></span>{$_lang['edit']}");
+                }
+                
+                /**
+                 * 链接添加
+                 */
+                function add(){
+                    var i = checkForm(document.getElementById('frm'));
+                    if (i) {
+                        var link_name = $("#link_name").val();
+                        var link_url = $("#link_url").val();
+                        var ac = $("input[name='ac']").val();
+                        if (ac == 'add') {
+                            var url = "index.php?do=user&view=setting&op=space&opp=link&ac=" + ac;
+                        }
+                        else {
+                            var link_id = $("input[name='link_id']").val();
+                            var url = "index.php?do=user&view=setting&op=space&opp=link&ac=" + ac + "&link_id=" + link_id;
+                        }
+                        $.getJSON(url, {
+                            link_name: link_name,
+                            link_url: link_url
+                        }, function(json){
+                            if (json.status > '0') {
+                                if (ac == 'add') {
+                                    var str = "<tr id='" + json.status + "'><td>" + link_name + "</td>" +
+                                    "<td><a href='" +
+                                    link_url +
+                                    "' target='_blank'>" +
+                                    link_url +
+                                    "</a></td>" +
+                                    "<td><a href='javascript:void(0);' onclick='edit(\"" +
+                                    json.status +
+                                    "\")'>{$_lang['edit']}</a></td>" +
+                                    "<td><a href='javascript:void(0);' onclick='del(\"" +
+                                    json.status +
+                                    "\")'>{$_lang['delete']}</a></td></tr>";
+                                    $(str).appendTo("table tbody");
+                                }
+                                else {
+                                    $("#" + link_id + " td:eq(0)").html(link_name);
+                                    $("#" + link_id + " a:eq(0)").attr("href", link_url).html(link_url);
+                                }
+                                tipsAppend("messages", json.msg, 'successful', 'm_correct');
+                                $("#link_name").val('');
+                                $("#link_url").val('');
+                            }
+                            else {
+                                tipsAppend("messages", json.msg, 'error', 'm_error');
+                            }
+                        })
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                
+                /**
+                 * 链接删除
+                 * @param {Object} link_id 链接编号
+                 */
+                function del(link_id){
+                    var i = confirm("{$_lang['confirm_delete']}");
+                    if (i) {
+                        $.getJSON("index.php?do=user&view=setting&op=space&opp=link&ac=del&link_id=" + link_id, function(json){
+                            if (json.status == '1') {
+                                $("tbody").find("#" + link_id).remove();
+                                tipsAppend("messages", json.msg, 'successful', 'm_correct');
+                            }
+                            else {
+                                tipsAppend("messages", json.msg, 'error', 'm_error');
+                            }
+                        })
+                    }
+                }
+            </script>
+            <!--{template user/user_footer}-->
+<!--{template footer}-->

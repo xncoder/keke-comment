@@ -1,0 +1,186 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}--><!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav ">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
+                                            </li>
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                            <div class="prefix_1 suffix_1 mt_10">
+                                <div class="clearfix box font14">
+                                    <!--from表单 start-->
+                                    <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
+                                        <!--messages消息 start-->
+                                        <div class="messages m_infor clearfix">
+                                            <div class="icon16">info</div>
+                                            {$_lang['skill_pic_msg']},{$_lang['skill_mark_at_most_five_item']}{$_lang['zh_th']}<a href="###" class="close">&times;</a>
+                                        </div>
+                                        <!--messages消息 end-->
+                                        <div class="clearfix pb_20 pt_10">
+                                            <div class="grid_9 suffix_1">
+                                                <h4 class="mb_10 messages m_warn">{$_lang['tips_about_skill_mark']}</h4>
+                                                <!--tags_box 标签 start-->
+                                                <div class="tags_box">
+                                                <span id="tags" type="text" class="tags" /></span>
+                                            	</div><!--tags_box 标签 end-->
+                                        	</div>
+                                        <div class="grid_7">
+                                            <h4 class="mb_10 border_b_c messages m_warn">{$_lang['add_skill_mark']}</h4>
+                                            <div class="">
+                                                <div class="grid_2">
+                                                    <label>
+                                                        {$_lang['select_industry']}
+                                                    </label>
+                                                </div>
+                                                <div class="grid_3">
+                                                    <select name="indus_pid" id="indus_pid" style="width:140px;" onchange="InsertIndus($('#indus_pid option:selected').val(),'skill_tags');">
+                                                        {loop $indus_p_arr $v}<option {if $user_indus['indus_pid']==$v['indus_id']}  selected="selected"{/if}  value="{$v['indus_id']}">{$v['indus_name']}  </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                            <div class="form_box">
+                                                <div class="tags_add pad5 clearfix" id="skill_tags"></div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="clear"></div>
+                                        <!--技能经历end-->
+                                        <div class="rowElem clearfix form_button">
+                                        	<a class="button" type="button" name="sbt_edit" onclick="save_skill();" value="{$_lang['save']}">
+                                        	<span class="check icon"></span>{$_lang['save']}
+											</a>
+                                        </div>
+                                    </form>
+                                    <!--from表单 end-->
+                                </div>
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+    function InsertIndus(pIndus, insertDiv){
+        $.getJSON("$ac_url&opp=$opp&ac=get_skill&indus_id=" + pIndus, function(json){
+            if (json.status == '1') {
+                var tagStr = '';
+                $.each(json.data, function(i, n){
+                    tagStr += '<a  href="javascript:add_tag(\'' + n.skill_name + '\');\">' + n.skill_name + '</a>';
+                })
+                $("#" + insertDiv).html(tagStr);
+            }
+            else {
+                $("#" + insertDiv).html("{$_lang['no_tag']}");
+            }
+        })
+    }
+    
+    $(function(){
+        var SelectedP = $("#indus_pid option:selected").val();
+        InsertIndus(SelectedP, "skill_tags");
+        
+    })
+    var add_tag = function(name){
+        os = $("#tags_tagsinput .tag");
+        s = os.length;
+        var tags = new Array();
+        os.each(function(i, n){
+            tags.push(jQuery.trim($(n).find('span').text()));
+        })
+        if (in_array(name, tags)) {
+            showDialog("{$_lang['this_skill_already_exists']}", 'alert', "{$_lang['operate_notice']}");
+        }
+        else {
+            if (s < 5) {
+                $("#tags").addTag(name);
+            }
+            else {
+                showDialog("{$_lang['selfselect_skill_at_most_five_item']}", 'notice', "{$_lang['operate_notice']}");
+            }
+        }
+    }
+    function save_skill(){
+        os = $("#tags_tagsinput .tag");
+        s = os.length;
+        var tags = new Array();
+        os.each(function(i, n){
+            tags.push(jQuery.trim($(n).find('span').text()));
+        })
+        if (!s) {
+            showDialog("{$_lang['skill_list_is_null']}!", 'alert', "{$_lang['operate_notice']}");
+        }
+        else {
+            tag_str = tags.join(',');
+            tag_str = escape(tag_str);
+        }
+        $.post("$ac_url&opp=$opp&ac=save_skill",{'skill':tag_str}, function(json){
+            if (json.msg) {
+                showDialog("{$_lang['skill_mark_has_been_saved']}!", 'right', "{$_lang['operate_notice']}");
+            }
+            else {
+                showDialog("{$_lang['skill_mark_save_fail']}!", 'alert', "{$_lang['operate_notice']}");
+            }
+        }, 'json');
+        
+    }
+    
+    //标签
+    function set_tags(){
+        $('#tags').tagsInput({
+            'unique': 1,
+            'defaultText': ''
+        });
+        skills = "$user_skill";
+		
+        s = skills.split(',');
+        for (i = 0; i < s.length; i++) {
+            $("#tags").addTag(s[i]);
+        }
+        
+    }
+ 
+    In.add('css_tagsinput', {
+        path: "resource/js/jqplugins/tagsinput/jquery.tagsinput.css",
+        type: 'css'
+    });
+    In.add('tagsinput', {
+        path: "resource/js/jqplugins/tagsinput/jquery.tagsinput.js",
+        type: 'js'
+    });
+    In('css_tagsinput', 'tagsinput', function(){
+        set_tags();
+    });
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

@@ -1,0 +1,32 @@
+<!--{if $_K['inajax']}-->
+     <!--{if !isset($ajaxmenu)}-->
+		<h3 class="flb"><em>{$title}</em><span><a href="javascript:;" class="flbc" onClick="hideWindow('$handlekey');" title="close">{$_lang['close']}</a></span></h3>
+	<!--{/if}-->
+<!--{else}-->
+<!--{template header_top}-->
+        <!--tool_E-->
+	 <nav class="nav">
+        <div class="container_24" id="pageTop">
+        	<div class="menu grid_24 clearfix">
+                <ul class="clearfix">
+                	{loop $nav_arr $k $v}
+                   		<li>
+                   			<a href="{$v['nav_url']}" {if isset($nav_active_index) && $v['nav_style']==$nav_active_index}class="selected"{/if} {if $v['newwindow']}target="_blank"{/if}>
+                   			<span>{$v['nav_title']}</span></a>
+						</li>
+						<li class="line"></li>
+					{/loop}
+                </ul>
+                <!---->
+                  <div class="operate po_ab">
+                    	<a href="index.php?do=help" target="_blank" title="{$_lang['help_center']}">
+                        	<div class="icon16 help reverse">{$_lang['help_center']}</div>
+                        </a>
+                   </div>
+                <!---->
+			</div>
+                <div class="clear"></div>
+        </div>
+    </nav>
+    <div class="clear"></div>
+<!--{/if}-->

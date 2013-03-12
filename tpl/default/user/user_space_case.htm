@@ -1,0 +1,380 @@
+<!--{template header}--><!--contain start-->
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['space_set']}</h2>
+                                <div class="grid_14 omega">
+                                    <nav class="box_nav">
+                                        <ul>
+				                      {loop $third_nav $k $v}
+										{if $k!='view'}
+				                            <li {if $k==$opp}class="selectedLava"{/if}>
+				                                <a href="index.php?do=user&view=setting&op=space&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+				                            </li>  
+										{else} 
+											<li>
+												 <a href="index.php?do=space&member_id={$uid}" title="{$v['1']}" target="_blank">{$v['0']}</a>
+				                            </li>
+										{/if}
+				                       {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+								{if $show=='list'}
+								<div class="rowElem clearfix t_r">
+					             <button type="button" value="{$_lang['add_case']}" onclick="location.href='{$ac_url}&show=add#userCenter'" style="width:100px"> {$_lang['add_case']}
+					             </button>
+					           </div>
+							   {else}
+								<div class="rowElem clearfix t_r">
+					             <button type="button" value="{$_lang['view_case']}" onclick="location.href='{$ac_url}&show=list#userCenter'" style="width:100px">{$_lang['view_case']}
+					             </button>
+					           </div>
+							   {/if}
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <div class="prefix_1 suffix_1">
+                                <!--案例列表start-->
+                                 {if $show=='list'}
+								 {if $case_list}
+                                 {loop $case_list $v}
+										<div class="clearfix box mt_10" id="{$v['case_id']}">
+                                            <div class="case_title po_re clearfix ">
+                                            	<strong class="po_ab gj_bg">NO.{$v['case_id']}</strong>
+												<div class="case_word_title">
+													<span class="ml_5">$_lang['case_description']</span>
+												</div>
+											</div>
+											<div class="clearfix box case_box po_re" id="{$v['member_id']}">
+												<div class="clearfix case_info po_ab" >
+													<div class="po_re pad10">
+														<a href="#">
+															<img class="block mar_auto pic_img" width="132" height="139" src="{$v['case_pic']}">
+														</a>
+														<ul>
+	                                                        <li class="t_c"><a href="{if $v['case_url']}$v['case_url']{else}index.php?do=service&sid=$v['service_id']{/if}" title="{$v['case_name']}"><span>{$v['case_name']}</span></a></li>
+	                                                        <li class="ml_20">{$_lang['type']}{$_lang['zh_mh']}{if $v['case_type']=='1'}{$_lang['inside']}{else}{$_lang['outside']}{/if}</li>
+	                                                        <li class="ml_20">{$_lang['industry']}{$_lang['zh_mh']}{$indus_c_arr[$v['indus_id']]['indus_name']}</li>
+	                                                        <li class="ml_20">{$_lang['start_time']}{$_lang['zh_mh']}<!--{date('Y-m-d',$v['start_time'])}--></li>
+	                                                        <li class="ml_20">{$_lang['end_time']}{$_lang['zh_mh']}{if $v['end_time']}<!--{date('Y-m-d',$v['end_time'])}-->{else}{$_lang['up_to_now']}{/if}</li>
+	                                                    </ul>
+													</div>
+												</div>	
+                                        		<div class="case_word border_l_c po_re">     
+		                                                    <div class="pad20">
+			                                                    <div class="t_i">
+			                                                        {if $v['case_desc']}{$v['case_desc']}{else}{$_lang['no_description']}{/if}
+			                                                    </div>
+															</div>
+															<div class="operate po_ab">
+																<a href="{$ac_url}&show=add&case_id={$v['case_id']}#userCenter" title="{$_lang['edit']}" class="mr_10"><div class="icon16 pencil mr_5">edit</div>{$_lang['edit']}</a>
+																|
+																<a href="javascript:void(0)" title="{$_lang['delete']}"class="mr_10" onclick="del($v['case_id'])"><div class="icon16 trash mr_5">delete</div>{$_lang['delete']}</a>
+															</div>
+		                                                </div>
+											</div>	
+	                                    </div>
+                                 {/loop}
+	                                 {else}
+		                                 <div class="bf7 mt_10 clearfix t_c font14b">
+		                                    {$_lang['no_case']}
+		                                 </div>
+	                                 {/if} 
+	                                  <div class="page">
+	                                        <p>
+	                                            {$pages['page']}
+	                                        </p>
+	                                    </div>  
+						    </div>	
+                                    {else}<!--from表单 start--><h3 class="mt_10 mb_10">
+                                    	{if $case_id}{$_lang['edit_spase_case']}{else}{$_lang['add_spase_case']}{/if}</h3>
+                                    <form action="{$ac_url}&show=add&case_id={$case_id}" method="post" id="frm" name="frm" enctype="multipart/form-data">
+                                        <input type="hidden" name="pk[case_id]" value="{$case_id}">
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                            {$_lang['the_industry']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class=" fl_l mr_10" id="industry">
+                                                <select id="indus_pid" style="width:100px" limit="required:true" onchange="change_indus(this.value)" msgArea="span_indus" msg="{$_lang['choose_fu_indus']}">
+                                                    <option value="">{$_lang['please_choose']}</option>
+                                                    {loop $indus_p_arr $k $v}<option value="{$v['indus_id']}" {if $indus_c_arr[$case_info['indus_id']]['indus_pid']==$v['indus_id']}  selected="selected"{/if}>{$v['indus_name']} </option>
+                                                    {/loop}
+                                                </select>
+                                                <select name="conf[indus_id]" id="indus_id" style="width:100px" limit="required:true" msg="{$_lang['choose_zi_indus']}" msgArea="span_indus">
+                                              		<option value="">{$_lang['please_choose']}</option>
+											    </select>
+                                                <span id="span_indus" class="c999">({$_lang['add_what_industry_case']})</span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['case_type']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_3">
+                                                <input type="radio" name="conf[case_type]" value="1" id="case_type_1" {if $case_info['case_type']==1||!$case_info['case_type']}checked{/if}{if $case_info['case_type']==2}disabled{/if}>
+												<label>{$_lang['inside_case']}</label>
+                                            </div>
+                                            <div class="grid_3">
+                                                <input type="radio" name="conf[case_type]" value="2" id="case_type_2" {if $case_info['case_type']==2}checked{/if}{if $case_info['case_type']==1}disabled{/if}>
+												<label>{$_lang['outside_case']}</label>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix" id="show_service" style="display:none;">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['service_list']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class=" fl_l mr_10">
+                                                <select name="conf[service_id]" id="shop_service" style="width:260px" onchange="selectCase();" limit='required:true' msg="请选择服务" msgArea="span_service">
+                                                </select>
+												<span id="span_service"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['case_name']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <input name="conf[case_name]" size="28" type="text" title={$_lang['case_name_as']} id="case_name" value="{$case_info['case_name']}" limit="required:true;len:2-40" msg={$_lang['entet_corrent_case_name']} msgArea="span_case_name"/><span id="span_case_name"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix" id="show_url" style="display:none;">
+                                            <label class="grid_2 t_r">
+                                               {$_lang['outside_link']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <input name="conf[case_url]" size="39" type="text" title={$_lang['outside_case_link']} id="case_url" value="{$case_info['case_url']}" limit="required:false;type:url" msg={$_lang['enter_corrent_outside_case_link']} msgArea="span_case_url"/><span id="span_case_url"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['case_img']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_16">
+                                                <div class="grid_13">
+                                                    <input type="file" name="case_pic" id="case_pic" ext=".jpg,.gif,.png,.jpeg" class="button t_c" onchange="isExtName(this,1);">
+													{if $case_info['case_pic']}
+														<a href="{$_K['siteurl']}/$case_info['case_pic']" target="_blank"><!--{eval echo ltrim(strrchr($case_info['case_pic'],'/'),'/')}--></a>
+													{/if}
+                                                    <input type="hidden" name="hdn_case_pic" id="hdn_case_pic" value="{$case_info['case_pic']}" />
+                                                </div>
+                                                <div class="grid_9 alpha ui_note">
+                                                    {$_lang['display_case_img']}
+                                                </div>
+                                             </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['start_time']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <!--{eval if($case_info['start_time'])$date=$case_info['start_time'];else $date=time();}--><input size="23" type="text" name="conf[start_time]" onclick="showcalendar(event, this,0)" id="start_time" limit="required:true;type:date" value="<!--{date('Y-m-d',$date)}-->"/>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['end_time']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <!--{eval if($case_info['end_time'])$date=$case_info['end_time'];else $date='';}-->
+												<input size="23" type="text" name="conf[end_time]" onclick="showcalendar(event, this,0)"
+												 id="end_time" limit="required:false;type:date;than:start_time" value="<!--{date('Y-m-d',$date)}-->"
+												  class="fl_l" msgArea="span_end_time" msg="{$_lang['end_time_error']}"/>
+												  <span id="span_end_time"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <div class="grid_12 omega" id="desc">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['case_description']}{$_lang['zh_mh']}
+                                                </label>
+                                                <textarea name="conf[case_desc]" id="case_desc" cols="70" rows="8" class="grid_9 xheditor-simple {skin:'nostyle'}">
+                                                    {$case_info['case_desc']}
+                                                </textarea>
+                                            </div>
+											<div class="clear"></div>
+											<div class="grid_2">&nbsp;</div>
+                                            <div class="grid_6 alpha ui_note">
+                                              {$_lang['case_description_carefully_enter']}
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix form_button t_c">
+                                            <button type="submit" name="sbt_action" id="sbt_action" value={if !$case_info}{$_lang['add']}{else}{$_lang['edit']}{/if}{$_lang['case']} onclick="return check_form('frm')">
+                                                <span class="check icon"></span>{if !$case_info}{$_lang['add']}{else}{$_lang['edit']}{/if}{$_lang['case']}
+                                            </button>
+                                        </div>
+                                    </form>
+                                    {/if}<!--from表单 end-->
+                                </div>
+                                <!--个人经历end-->
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+
+<!--contain end-->
+<script type="text/javascript">
+In('form','xheditor'); 
+    $(function(){
+        var indus_pid = parseInt($("#indus_pid option:selected").val()) + 0;
+        change_indus(indus_pid);
+        if ($("#case_type_2").is(":checked")) {
+            $("#show_url").show();
+            $("#show_service").hide();
+        }
+        if ($("#case_type_1").is(":checked")) {
+            show_service();
+        }
+        $("#case_type_2").click(function(){
+            $("#show_url").show();
+            $("#show_service").hide();
+        })
+        $("#case_type_1").click(function(){
+            $("#show_url").hide();
+            show_service();
+        })
+    })
+    /**
+     * 查找用户商品
+     */
+    function show_service(){
+        $("#show_service").show();
+        $.post("{$ac_url}&show=add&ac=show_service&case_id={$case_id}", function(data){
+            $("#shop_service").empty().append(data);
+         }, 'text')
+    }
+    
+    /**
+     * 选取案例名称
+     * @param {Object} value
+     */
+    function selectCase(){
+        var case_name = $.trim($("#shop_service option:selected").text());
+        if (case_name && case_name != "{$_lang['please_choose']}") {
+            $("#case_name").val(case_name);
+        }
+    }
+    
+    /**
+     * 获取行业信息
+     * @param {Object} indus_pid 父级行业id
+     */
+    function change_indus(indus_pid){
+	
+        var indus_id = parseInt($case_info['indus_id']) + 0;
+	
+        $.post("{$ac_url}&show=add&ac=show_indus", {
+            indus_pid: indus_pid,
+            indus_id: indus_id
+        }, function(data){
+            $("#indus_id").empty().append(data);
+          }, 'text')
+    }
+    
+    /**
+     * 删除案例
+     * @param {Object} case_id 案例id
+     */
+    function del(case_id){
+		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}",function(){
+			var url = '{$ac_url}&show=list&ac=del&case_id=' + case_id;
+            $.getJSON(url, function(json){
+                if (json.status == '1') {
+                    tipsAppend(case_id, json.msg, 'successful', 'green');
+                    $("#" + case_id).slideUp(2000).remove();
+                    if ($("dl dt").length == 0) {
+                        $("dl").append("<dt class='bf7 mt_10 clearfix t_c font14b'>{$_lang['this_page_has_case']}</dt>");
+                    }
+                }
+                else {
+                    tipsAppend(case_id, json.msg, 'error', 'red');
+                }
+            })
+		});
+    }
+    
+    /**
+     *
+     * @param {Object} cate_id 自定义分类id
+     */
+    function define(cate_id){
+        if (cate_id == 'define') {
+            showWindow('shop_cate', 'index.php?do=ajax&view=ajax&ac=cate_add');
+            return false;
+        }
+    }
+    
+    /**
+     * 添加自定义分类
+     */
+    function ajax_cate(){
+        v = $("input[name='cate_name']").val();
+        v = escape(v);//编码转换
+        if (v) {
+            $.post("index.php?do=user&view=setting&op=space&opp=cate&ajax=cus_cate&cate_name=" + v, function(data){
+                $("#cate_id").empty().append(data);
+             })
+            hideWindow('shop_cate');
+        }
+        else {
+            showDialog("{$_lang['class_name_cannot_empty']}", 'alert',"{$_lang['proven_tips']}" , '', 1);
+            return false;
+        }
+    }
+    /**
+     * 表单提交
+     * @param {Object} obj 表单id
+     */
+    function check_form(obj){
+        var i = checkForm(document.getElementById(obj));
+        if (i) {
+            /**行业选择判断**/
+            var indus_pid = parseInt($("#indus_pid option:selected").val()) + 0;
+            var indus_id = parseInt($("#indus_id option:selected").val()) + 0;
+            if ((!indus_pid || isNaN(indus_pid) || (!indus_id || isNaN(indus_id)))) {
+                tipsAppend("industry", "{$_lang['industry_cannot_empty']}", 'warning', 'm_warn',1);
+                return false;
+            }
+            
+            /**时间判定**/
+            var st = $("#start_time").val();
+            var end = $("#end_time").val();
+            if (st >= end && end) {
+                tipsAppend("end_time","{$_lang['start_time_cannot_less_end_time']}", 'warning', 'm_warn',1);
+                var end = $("#end_time");
+                end.attr(end['0'].title ? 'title' : 'original-title',"{$_lang['start_time_cannot_less_end_time']}");
+                return false;
+            }
+            /**文本域选择判断**/
+            var shtml = $("#case_desc").val();
+            if (shtml.length < 2) {
+                tipsAppend("desc", "{$_lang['description_not_less_2']}", 'warning', 'm_warn',1);
+                $("#case_desc").focus();
+                return false;
+            }
+        }
+        else 
+            return false;
+    }
+</script>
+<!--main end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

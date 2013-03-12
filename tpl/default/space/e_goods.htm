@@ -1,0 +1,124 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+<div class="prefix_1 suffix_1 clearfix mt_10 mb_20 " id="taskScroll">
+				
+    <h1 class="fl_l">
+    	{if $indus_parr[$indus_id]}
+			{$indus_parr[$indus_id]['indus_name']}
+		{else}
+    		{$_lang['goods_display']} 
+		{/if}
+		
+	</h1>
+	<span  class="fl_l mt_5 ml_10">{$_lang['total_find']}<span class="cc00"> $count </span>{$_lang['tiao_result']}</span>
+	
+	<div class="clear"></div>
+            <!--¶¥²¿ÄÚÈÝ-->
+            <div class=" pb_10 border_t_ef clearfix">
+            	
+				<ul class="cag_list cag_col4 clearfix">
+							<li {if !$indus_id} class=" selected" {/if}>
+								<h4>
+								<a href="index.php?do=space&member_id={$member_id}&view=goods#taskScroll">
+									{$_lang['all_goods']}
+								</a>
+								</h4>
+							</li>
+							{loop $searh_arr $v}
+								<li {if $v['indus_id']==$indus_id} class=" selected" {/if}>
+										<h4>
+										<a href="index.php?do=space&member_id={$member_id}&view=goods&page={$page}&indus_id={$v['indus_id']}#taskScroll">{$indus_arr[$v['indus_id']]['indus_name']}({$v['c']})</a>
+										</h4>
+								</li>
+							{/loop}
+							
+				</ul>
+				
+				
+				
+    
+                <div class=" pt_10 clearfix">
+                    
+                        <form name="frm_s" id="frm_s" action="index.php?do=space&member_id={$member_id}&view={$view}&indus_id={$indus_id}#taskScroll" method="post">
+                            
+                                <input type="text" name="title" class="txt_input togg" value="{if $title}{$title}{else}{$_lang['to_search_product_name']}{/if}" id="title_search" style="color:#999; ">
+                                
+                                <button name="a" type="button" class="button" value="{$_lang['search']}" onclick="search();">
+                                    <span class="magnifier icon"></span>{$_lang['search']}
+                                </button>
+                            	
+                        </form>
+                    
+						
+					
+                   
+                </div>
+				<script type="text/javascript">
+					$(function(){
+						$('.indus_list').hover(function(){
+							$('.indus_list li').removeClass('selected');
+						},function(){
+							$('.indus_list li.now').addClass('selected').siblings().removeClass('selected');
+						})
+					})
+				</script>
+                <!--end ¶¥²¿ÈÝÍ·-->
+            </div>
+
+    
+        	
+			
+						
+			
+			<div class="goods_list pt_10">
+	            <div id="goods">
+	            	
+					
+					
+	                
+	                <div class="clear"></div>
+	                <ul class="pro_list">
+	                    {loop $shop_arr $k $v}<!--{eval $n = $k+1;}-->
+	                    <li>
+	                        <a href="index.php?do=service&sid=$v['service_id']" title="$v['title']" target="_blank">
+	                        	<img alt="" src="<!--{eval echo keke_shop_class::output_pics($v[pic],'',1)}-->"/>
+							<span class="pro_title">
+							<h2>
+								<span class="pro_name">
+									<span class="cc00">
+										[<!--{eval echo mb_strcut($model_list[$v['model_id']]['model_name'],4,4,$_K['charset'])}-->]
+									</span>
+									<!--{eval echo kekezu::cutstr($v['title'], 22);}-->
+								</span>
+								
+								<span class="pro_price">
+								{c:$v['price']}/{$v['unite_price']}
+								</span>
+								<span class=" ">{$_lang['for_sale']}:{$v['sale_num']} {$v['unite_price']} </span>
+								</h2>
+								</span>
+								
+	                        
+							</a>
+	                    </li>
+	                    {/loop}
+						
+						{if !$count}
+							<li class="t_c c999 font14" style="width:auto; float:none; margin:0;">
+								<p >{$_lang['no_product_research']}<a href="index.php?do=space&member_id={$member_id}&view=goods#taskScroll" style="display:inline;">{$_lang['look_all_goods']}</a>¡£</p>
+							</li>
+						{/if}
+						
+	                </ul>
+					 <div class="clear"></div>
+					<!--page ·­Ò³ start-->
+		                <div class="pages">
+		                    {$pages['page']}
+		                </div>
+		                <!--page ·­Ò³ end-->
+	            </div>
+        </div>
+
+    
+</div>
+</div>
+<!--{template footer}-->

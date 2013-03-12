@@ -1,0 +1,181 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start--> 
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
+                                            </li>
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                            <div class="prefix_1 suffix_1 mt_10">
+                                <div class="clearfix box font14">
+                                    <!--from表单 start-->
+                                    <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
+                                    	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                                        <input type="hidden" name="pk[uid]" value="{$uid}"><!--联系方式start-->
+                                        <div class="rowElem clearfix">
+                                                <label class="grid_2 t_r">
+                                                   E-mail{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_6">
+                                                    <input class="txt_input" name="conf[email]" id="email" type="text" value="{$user_info['email']}" title="{$_lang['fill_in_your_own_email']}" limit="required:false;type:email"
+													 msg="{$_lang['wrong_format_about_mailaddress']}" msgArea="span_email" size="37" {if $auth['email']}readonly style="color:#999"{/if}/>
+												</div>
+                                            <div class="grid_2 fl_l">
+                                                <select name="sect[email]" style="width:75px">
+                                                    <option value="1" {if $sect_info['email']['v1']==1}selected="selected"{/if}>{$_lang['user_private']}&nbsp;</option>
+                                                    <option value="2" {if $sect_info['email']['v1']==2||!$sect_info['email']['v1']}selected="selected"{/if}>{$_lang['user_public']}&nbsp;</option>
+                                                </select>
+                                            </div>
+											<button onclick="location.href='index.php?do=user&view=payitem&op=auth&auth_code=email'" value="{$_lang['email_auth']}" type="button">
+												<span class="icon plus">&nbsp;</span>
+												{$_lang['email_auth']}
+											</button>
+											<span id="span_email"></span>
+                                                
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['mobile']}{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_6">
+                                                    <input class="txt_input" name="conf[mobile]" id="mobile" type="text" value="{$user_info['mobile']}" title="{$_lang['fill_in_your_own_phonenum']}"
+													 limit="required:false;type:mobileCn" msg="{$_lang['wrong_format_about_phonenum']}" msgArea="span_mobile"
+													  size="37"  {if $auth['mobile']}readonly style="color:#999"{/if}/>
+                                                   
+                                                </div>
+                                            <div class="grid_2 fl_l">
+                                                <select name="sect[mobile]" style="width:75px">
+                                                    <option value="1" {if $sect_info['mobile']['v1']==1}selected="selected"{/if}>{$_lang['user_private']}&nbsp;</option>
+                                                    <option value="2" {if $sect_info['mobile']['v1']==2||!$sect_info['mobile']['v1']}selected="selected"{/if}>{$_lang['user_public']}&nbsp;</option>
+                                                </select>
+                                            </div>
+											<button onclick="location.href='index.php?do=user&view=payitem&op=auth&auth_code=mobile'" value="{$_lang['mobile_auth']}" type="button">
+												<span class="icon plus">&nbsp;</span>
+												{$_lang['mobile_auth']}
+											</button>
+											 <span class="t_r" id="span_mobile"></span>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                                <label class="grid_2 t_r">
+                                                   QQ{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_6">
+                                                    <input class="txt_input" name="conf[qq]" id="qq" type="text" value="{$user_info['qq']}" title="{$_lang['fill_in_your_own_qqnum']}" limit="required:false;type:int;len:5-13" msg="{$_lang['wrong_format_about_qqnum']}" msgArea="span_qq" size="37" />
+                                                 </div>
+                                            <div class="grid_2 fl_l">
+                                                <select name="sect[qq]" style="width:75px">
+                                                    <option value="1" {if $sect_info['qq']['v1']==1}selected="selected"{/if}>{$_lang['user_private']}&nbsp;</option>
+                                                    <option value="2" {if $sect_info['qq']['v1']==2||!$sect_info['qq']['v1']}selected="selected"{/if}>{$_lang['user_public']}&nbsp;</option>
+                                                </select>
+                                            </div>
+											 <span class="t_r" id="span_qq"></span>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                                <label class="grid_2 t_r">
+                                                    MSN{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_6">
+                                                    <input class="txt_input" name="conf[msn]" id="msn" type="text" value="{$user_info['msn']}" title="{$_lang['fill_in_your_own_msnnum']}" limit="required:false;type:email" msg="{$_lang['wrong_format_about_msnnum']}" msgArea="span_msn" size="37" />
+                                                   
+                                                </div>
+                                            <div class="grid_2 fl_l">
+                                                <select name="sect[msn]" style="width:75px">
+                                                    <option value="1" {if $sect_info['msn']['v1']==1}selected="selected"{/if}>{$_lang['user_private']}&nbsp;</option>
+                                                    <option value="2" {if $sect_info['msn']['v1']==2||!$sect_info['msn']['v1']}selected="selected"{/if}>{$_lang['user_public']}&nbsp;</option>
+                                                </select>
+                                            </div>
+											 <span class="t_r" id="span_msn"></span>
+                                        </div>
+										<!--
+                                        <div class="rowElem clearfix">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['fax_num']}{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_6">
+                                                    <input class="txt_input" name="conf[fax]" id="fax" type="text" value="{$user_info['fax']}" title="{$_lang['fill_in_your_own_faxnum']}" limit="required:false;type:fax" tips="" msg="{$_lang['wrong_format_about_faxnum']}" msgArea="span_fax" size="37" />
+                                                   
+                                                </div>
+                                            <div class="grid_2 fl_l">
+                                                <select name="sect[fax]" style="width:75px">
+                                                    <option value="1" {if $sect_info['fax']['v1']==1}selected="selected"{/if}>{$_lang['user_private']}&nbsp;</option>
+                                                    <option value="2" {if $sect_info['fax']['v1']==2||!$sect_info['fax']['v1']}selected="selected"{/if}>{$_lang['user_public']}&nbsp;</option>
+                                                </select>
+                                            </div> <span class="t_r" id="span_fax"></span>
+                                        </div>
+										-->
+                                        <div class="rowElem clearfix">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['hand_free_telephone']}{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_6">
+                                                    <input class="txt_input" name="conf[phone]" id="phone" type="text" value="{$user_info['phone']}" title="{$_lang['fill_in_your_own_telnum']}" limit="required:false;type:tel" tips="" msg="{$_lang['wrong_format_about_telnum']}" msgArea="span_phone" size="37" />
+                                                   
+                                                </div>
+                                            <div class="grid_2 fl_l">
+                                                <select name="sect[phone]" style="width:75px">
+                                                    <option value="1" {if $sect_info['phone']['v1']==1}selected="selected"{/if}>{$_lang['user_private']}&nbsp;</option>
+                                                    <option value="2" {if $sect_info['phone']['v1']==2||!$sect_info['phone']['v1']}selected="selected"{/if}>{$_lang['user_public']}&nbsp;</option>
+                                                </select>
+                                            </div>
+											 <span class="t_r" id="span_phone"></span>	
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['location']}{$_lang['zh_mh']}
+                                            </label>
+											<div class="grid_15">
+											<select name="province"></select><select name="city"></select><select name="area"></select>
+											</div>
+						                </div>
+                                        <!--联系方式end-->
+                                        <div class="rowElem clearfix form_button">
+                                            <button class="button" type="button" name="sbt_edit" value="{$_lang['save']}" onclick="formSub('frm','form',true);">
+                                                <span class="check icon"></span>{$_lang['save']}
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <!--from表单 end-->
+                                </div>
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+   <script type="text/javascript"  >
+        	In('form','pcas',function(){
+	  			  new PCAS("province","city","area","{$loca['0']}","{$loca['1']}","{$loca['2']}");
+			});  
+        </script>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

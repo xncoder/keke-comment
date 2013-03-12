@@ -1,0 +1,57 @@
+<!--{template header}-->
+<style type="text/css"> 
+	ul.pics,ul.words{ margin:10px 0 20px;}
+	ul.pics li,ul.words li{ float:left; display:inline; width:12%; text-align:center;}
+	ul.pics li a{ display:inline-block; margin:5px 0; border:1px solid #ccc;}
+	ul.pics li a:hover{ border-color:#2F549F;}
+	ul.words li a{display:inline-block; margin:5px 0; white-space:nowrap;}
+</style>
+<div class="wrapper">
+	<header class="clearfix page_header">
+    	<div class="container_24">
+    	
+        <!--页面导航-->
+        	<div class="breadcrumbs clearfix">
+            	<a href="#">$_lang['home']</a> &gt;
+        	</div>
+        <!--end 页面导航-->
+
+		<!--页面标题-->
+        	<div class="page_title clearfix">
+            	<div class="grid_20">
+                	<h2 class="title">$_lang['firend_link']</h2>
+            	</div>
+            	<div class="clear"></div>
+             
+        	</div>
+        <!--end 页面标题-->
+		
+    	</div>
+	</header>
+	
+	<section class="clearfix content">
+		<div class="container_24">
+			
+			<ul class="pics clearfix">
+					{loop $pic_link_arr $k $v}
+					<li><a title="{$v['link_name']}" href="javascript:window.open('$v['link_url']','_self');" 
+					target="_blank"><img width="84" height="29" alt="{$v['link_name']}" src="{$v['link_pic']}"></a></li>
+					{/loop}
+			</ul>
+			
+			
+			<ul class="words clearfix">
+					{loop $word_link_arr $k $v}
+					<li><a  title="{$v['link_name']}" href="javascript:window.open('$v['link_url']','_self');"  target="_blank">{$v['link_name']}</a></li>
+					{/loop} 
+			</ul>
+			
+		</div>
+	</section>
+	
+</div>
+
+<!--{template footer}-->
+
+
+

@@ -1,0 +1,73 @@
+<!--{if isset($r['inajax'])}-->
+<script src="resource/js/jquery.js"></script>
+<script src="resource/js/system/keke.js"></script>
+		<h3 class="flb"><em>{$title}</em><span><a href="javascript:;" class="flbc" onClick="hideWindow('$r['handlekey']');" title="close">{$_lang['close']}</a></span></h3>
+     	<div class="c altw"><div {if $msgtype=='info'} class="alert_info" {else} class="{$msgtype}"{/if}><p>$content</p></div></div>
+		<p class="o pns">
+			{if $time<1}
+			<button class="pn pnc" value="true" onclick="{if $url}window.location.href ='$url';return false;{else}hideWindow('$r['handlekey']');{/if}" id="fwin_dialog_submit"><strong>{$_lang['confirm']}</strong></button>
+			{else}
+			<button class="pn" onclick="hideWindow('$r['handlekey']');" id="fwin_dialog_submit"><strong>{$_lang['jumping']}</strong></button>
+			{/if}
+		</p>
+<script type="text/javascript">
+	//clearTimeout();
+	var t = parseInt("$time")*1000;
+	var u =encodeURI("$url");
+	if(t>0&&u){
+	    setTimeout(function(){
+			window.location.href=u;
+			},t);		 
+	}
+</script>
+<!--{else}-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset={$_K['charset']}">
+<!--<meta http-equiv="refresh" content="$time;url=$url">-->
+<title>{$_lang['jump_notice']}</title>
+<link href="resource/css/animate.css" rel="stylesheet" type="text/css">
+<link href="{$_K['siteurl']}/resource/css/base.css" rel="stylesheet" type="text/css" />
+<link href="{$_K['siteurl']}/resource/css/buttons.css" rel="stylesheet" type="text/css" />
+<script src="resource/js/jquery.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div class="systips animated">
+        <div class="systips_detail {$type}">
+            	<div class="tip_icon">&nbsp;</div>
+                <div class="tip_title">{$title} {$_lang['page_jumping']}</div>
+                <div class="tip_messages">{$content}<span id="time">$time</span> {$_lang['seconds_auto_jump']}</div>
+                <div class="tip_help">{$_lang['no_jump_please_click']}<a href="{$url}" class="button"><span class="icon rightarrow">&nbsp;</span>{$_lang['here']}</a></div>
+            
+        </div>
+    </div>
+
+	<script type='text/javascript'>
+		window.onload=function(){
+			setInterval(show_time, 1000);
+		}
+		function show_time(){
+			var u =encodeURI("$url");
+			var time = document.getElementById("time").innerHTML;
+			time = parseInt(time);
+			if (time > 0)
+			{
+				time -= 1; 
+			}
+			document.getElementById("time").innerHTML = time;
+			if(time==0&&u){
+				document.location.href = u;
+			}
+		}
+	$(function(){
+		$('.systips').addClass('bounceIn');
+	})
+	
+	
+	</script>
+</body>
+</html>
+<!--{/if}-->

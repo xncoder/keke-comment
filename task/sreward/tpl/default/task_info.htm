@@ -1,0 +1,603 @@
+<!--{eval $page_title=$task_info['task_title'].'--'.$_K['html_title'];}-->
+<!--{template header}-->
+<link href="{SKIN_PATH}/css/task.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/task.css" rel="stylesheet" type="text/css">
+<!--公用样式-->
+ <script type="text/javascript"> 
+	In.add('reward_task',{path:"task/{$model_code}/{SKIN_PATH}/{$model_code}_task.js",type:'js'});
+	In('task','reward_task','print');
+</script>
+ <!--页面内容区-->
+ <div class="wrapper">
+  <!--页面头部-->
+  <header class="clearfix page_header">
+  <div class="container_24 clearfix">
+
+    <div class="clearfix po_re" >
+    		<!--面包屑-->
+					     <div class="breadcrumbs clearfix">
+						      <a href="index.php">{$_lang['home']}</a> &gt;
+							  <a href="index.php?do=task_list&path=B{$model_id}">{$_lang['task_hall']}</a> &gt;
+							  <a href="index.php?do=task_list&path=A{$task_info['indus_pid']}B{$model_id}">{$indus_p_arr[$task_info['indus_pid']]['indus_name']}</a> &gt;
+								<a href="index.php?do=task_list&path=A{$task_info['indus_pid']}B{$model_id}">{$indus_arr[$task_info['indus_id']]['indus_name']}</a>
+						   </div>
+					  <!--end 面包屑-->
+ 			<div class="grid_19 ">
+ 				<div class="mre_l_con clearfix">
+ 					
+					  <div  id="taskScroll">
+						   <div class="page_title ws_break clearfix">
+							    <h2 class="title">
+							    	{if $task_info['is_trust']&&$task_info['trust_type']=='alipay_trust'}
+							    		<img src="{$_K['siteurl']}/tpl/{$_K['template']}/img/ico/ico_32_alipay.gif" title="{$_lang['alipay_trust']}">
+									{/if}
+							       <strong class="red mr_10">{c:$task_info['task_cash']}</strong>
+							                <a href="index.php?do=task&task_id={$task_id}">{$task_info['task_title']}</a>
+							    </h2>
+							    <div class="page_sub_title c666 mb_10">
+							       <span>{$_lang['task_pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i',$task_info[start_time])}--></span>
+								   <span class="border_l_c mar10">&nbsp;</span>
+							       <a class="mre_task_kind c333" href="javascript:void(0);" title="{$_lang['only_one_can_bid']},威客中标后将得到：{c:$cash};">{$model_list[$task_info['model_id']]['model_name']}{$_lang['model']}<span>&nbsp;</span></a>
+							       <span class="border_l_c mar10">&nbsp;</span>
+							       <span>{$_lang['id']}{$_lang['zh_mh']}#{$task_id}</span>
+								   <span class="border_l_c mar10">&nbsp;</span>
+							       <span>{$show_payitem}</span>
+								</div>
+						    </div>
+					</div>
+ 				</div>
+ 			</div>
+			<div class="grid_5">
+				<div class="mre_r_con clearfix">
+					<div class="control clearfix">
+				      <!--start提交稿件-->
+				     	{if $process_can['work_hand']}
+							{if $union_hand}
+								<a href="{$union_hand}" class="submit block">{$process_desc['work_hand']}</a>
+							{else}
+								<a href="javascript:void(0)" onclick="workHand();" class="submit block">{$process_desc['work_hand']}</a>
+							{/if}
+						{/if}
+					  <!--end 提交稿件-->
+					  <!--start延期加价-->
+				     	{if $process_can['delay']}
+							<a href="javascript:void(0)" onclick="taskDelay();" class="submit block ">{$process_desc['delay']}</a>
+						{/if}
+					  <!--end 延期加价-->
+				      <!--start发起投票-->
+				     	{if $process_can['task_vote']}
+							<a href="javascript:void(0)" onclick="taskVote();" class="submit block">{$process_desc['task_vote']}</a>
+						{/if}
+					  <!--end 发起投票-->
+					  <div class="clearfix mt_5">
+					      <!-- <div class="msg msg_ok block ">
+						  	{$_lang['status']}{$_lang['zh_mh']}{$status_arr[$task_status]}							
+						  </div>-->
+						  <div class="msg msg_ok block ">
+						  {$time_desc['ext_desc']}
+						  </div>
+						  <div>
+							  	<span class="c333">{$time_desc[time_desc]}</span>
+							    <span class="red d_time" ed="{$time_desc['time']}" title="{$time_desc[desc]}"></span>
+						  </div>
+		                 
+					  </div>
+				     </div>
+				</div>
+			</div>
+ 		</div>
+		
+		
+		
+    <!--操作区-->
+   <div class="grid_6 hidden" id="taskScroll">
+     <div class="control clearfix">
+     <!--start提交稿件-->
+     	{if $process_can['work_hand']}
+			{if $union_hand}
+				<a href="{$union_hand}" class="submit block">{$process_desc['work_hand']}</a>
+			{else}
+				<a href="javascript:void(0)" onclick="workHand();" class="submit block">{$process_desc['work_hand']}</a>
+			{/if}
+		{/if}
+	  <!--end 提交稿件-->
+      <!--start补充需求-->
+     	{if $process_can['reqedit']}
+			<a href="javascript:void(0)" onclick="taskReqedit();" class="big button pill t_c fl_l">{$process_desc['reqedit']}</a>
+		{/if}
+	  <!--end 补充需求-->
+      <!--start延期加价-->
+     	{if $process_can['delay']}
+			<a href="javascript:void(0)" onclick="taskDelay();" class="big button pill t_c fl_l ml_5 ">{$process_desc['delay']}</a>
+		{/if}
+	  <!--end 延期加价-->
+      
+    
+    
+     </div>
+   </div>
+   <!--end 操作区-->
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   <div class="clear"></div>
+    <!--页面子导航-->
+	<div id="header_nav" class="po_re grid_19">
+     <nav class="clearfix page_nav po_re" id="top_nav">
+       <ul>
+         <li {if !$view||$view=='base'}class="selected"{/if}>
+         	<a href="{$basic_url}" title="{$_lang['description']}">
+            	<div class="icon16 notepad-2 mr_5">{$_lang['description']}</div> {$_lang['description']}
+            </a>
+         </li>
+         <li {if $view=='work'}class="selected"{/if}>
+         	<a href="{$basic_url}&view=work" title="{$_lang['work']}[{$task_info['work_num']}]">
+            	<div class="icon16 spechbubble-sq-line mr_5">{$_lang['work']}</div>{$_lang['work']} <span class="c999">[{$task_info['work_num']}]</span>
+            </a>
+         </li>
+         <li {if $view=='comment'}class="selected"{/if}>
+         	<a href="{$basic_url}&view=comment" title="{$_lang['leave_word']}[{$task_info['leave_num']}]">
+            	<div class="icon16 spechbubble-2 mr_5">icon</div>{$_lang['leave_word']} <span class="c999">[{$task_info['leave_num']}]</span>
+            </a>
+         </li>
+        <li {if $view=='mark'}class="selected"{/if}>
+        	<a href="{$basic_url}&view=mark" title="{$_lang['evaluate']}[{$task_info['mark']['all']}]">
+            <div class="icon16 cert mr_5">{$_lang['evaluate']}</div>{$_lang['evaluate']}<span class="c999">[{$task_info['mark']['all']}]</span>
+            </a>
+         </li>
+		 	 {if $uid==$task_info['uid']}<li {if $view=='tools'} class="selected" {/if}><a href="{$basic_url}&view=tools" ><span class="icon16 box mr_5">icon</span> 工具<span class="c999"></span></a></li>{/if}
+        
+         <li class="border_n">
+         	<a href="javascript:void(0);" title="{$_lang['stay_left']}">
+            	<div class="icon16 arrow-bottom-left block"  id="arrow-bottom-left">{$_lang['stay_left']}</div>
+            </a>
+         </li>
+       </ul>
+	 </nav>
+	 <!--工具栏-->
+	    <div class="operate po_ab hidden">
+	    {if $task_info['task_file']}
+	      <a href="#file" class="" title="{$_lang['have_attachment']}"><span class="icon16 clip">{$_lang['have_attachment']}</span></a>
+		{/if}
+	      <a href="javascript:setfontsize();" class="" title="{$_lang['text_size']}"><div class="icon16 text-letter-t">{$_lang['text_size']}</div></a>
+	      <a href="javascript:setprint('details');" class="" title="{$_lang['print']}"><div class="icon16 print">{$_lang['print']}</div></a>
+	   </div>
+	  <!--end 工具栏-->
+     <div class="clear"></div>
+	</div>
+    
+   <div class="clear"></div>
+  </div> 
+ </header>
+ <!--end 页面头部-->
+ <!--详细内容区-->
+  <section class="content">
+  <!--布局框-->  
+  <div class="container_24">
+  	<!--章节1-->
+   <section class="clearfix section">
+  	<!--左边导航 start-->
+	<div class="second_menu container_24 po_ab hidden" id="left_nav">
+        <div class="suffix_23 pull_1">
+            <nav class="minor_nav box">
+                <ul class="nav_group">
+                   <li >
+			         	<a href="{$basic_url}" title="{$_lang['description']}" {if !$view||$view=='base'}class="selected"{/if}>
+			            	<div class="icon16 notepad-2 mr_5 block">{$_lang['_miao_']}</div>
+			            </a>
+			         </li>
+			         <li>
+			         	<a href="{$basic_url}&view=work" title="{$_lang['work']}[{$task_info['work_num']}]" {if $view=='work'}class="selected"{/if}>
+			            	<div class="icon16 spechbubble-sq-line mr_5 block">{$_lang['_gao_']}</div>
+			            </a>
+			         </li>
+			         <li >
+			         	<a href="{$basic_url}&view=comment" title="{$_lang['leave_word']}[{$task_info['leave_num']}]" {if $view=='comment'}class="selected"{/if}>
+			            	<div class="icon16 spechbubble-2 mr_5 block">{$_lang['_liu_']}</div>
+			            </a>
+			         </li>
+			        <li>
+			        	<a href="{$basic_url}&view=mark" title="{$_lang['evaluate']}[{$task_info['mark']['all']}]" {if $view=='mark'}class="selected"{/if}>
+			            <div class="icon16 cert mr_5 block">{$_lang['_ping_']}</div>
+			            </a>
+			         </li>
+			       
+			        {if $uid==$task_info[uid]}
+					 <li>
+					 	<a href="{$basic_url}&view=tools" {if $view=='tools'} class="selected" {/if} title="{$_lang['tool']}">
+					 		<div class="icon16 box mr_5 block">{$_lang['_gong_']}</div>
+						</a>
+						</li>
+					{/if}
+                </ul>
+                <ul class="nav_group">
+					<li>
+			         	<a href="javascript:void(0);" class="" title="{$_lang['stay_top']}">
+			            	<div class="icon16 arrow-top-right block" id="arrow-top-right">{$_lang['stop']}</div>
+			            </a>
+			         </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+  	<!--左边导航 end-->
+
+   
+    <!---->
+    <div class="show_panel container_24 po_re">
+      {if !$view||$view=='base'}
+	  <div class="grid_19  clearfix">
+		  <div class="panel clearfix box">
+	      <!--布局 左-->
+	       <div class="clearfix">
+	        <!--布局 内边距-->
+	         <div class="pad20">
+	          <!--标题头部-->
+	         <header class="hidden">
+	          <div class="pad5 border_b_c po_re clearfix">
+	            <h2>{$_lang['info']}</h2>
+	            <!--工具栏-->
+	            <div class="operate po_ab hidden">
+	            {if $task_info['task_file']}
+	              <a href="#file" class="" title="{$_lang['have_attachment']}"><span class="icon16 clip">{$_lang['have_attachment']}</span></a>
+				{/if}
+	              <a href="javascript:setfontsize();" class="" title="{$_lang['text_size']}"><div class="icon16 text-letter-t">{$_lang['text_size']}</div></a>
+	              <a href="javascript:setprint('details');" class="" title="{$_lang['print']}"><div class="icon16 print">{$_lang['print']}</div></a>
+	           </div>
+	          <!--end 工具栏-->
+	          </div>  
+	        </header>
+	       <!--end 标题头部-->
+	       <!--内容1-->
+	       <details open class="mb_20 " id="details">
+	       <!--标题-->
+	        <summary  class="fontb">{$_lang['requirement']}</summary>
+	         <!--内容-->
+				<pre class="ws_prewrap ws_break" >
+				<!--{eval echo htmlspecialchars_decode($task_info[task_desc])}--></pre> 
+	      </details>
+	      <!--end 内容1-->
+	      <!--start补充需求-->
+	     	{if $process_can['reqedit']}
+				<a href="javascript:void(0)" onclick="taskReqedit();" class=" button">{if $task_info['ext_desc']}$_lang['edit_add_need']{else}{$process_desc['reqedit']}{/if}</a>
+			{/if}
+		  <!--end 补充需求-->
+		  <!--任务补充需求-->
+		  {if $task_info['ext_desc']}
+	      <details open  class="mb_20">
+	       <!--标题-->
+	         <summary class="fontb">{$_lang['supply_description']}<em class="c999 font_normal">{$_lang['des_zc']}</em></summary>
+	            <pre class="ws_prewrap ws_break"  id="reqedit"><!--{eval echo kekezu::escape($task_info['ext_desc'])}--></pre>
+	      </details>
+		  {/if}
+	     <!--end 任务补充需求-->
+	     <!--任务地图-->
+		{if $task_info['point']}
+		<details open  class="mb_20">       
+	        <summary class="fontb">{$_lang['task_map']}<em class="c999 font_normal"></em></summary> 
+			{if $_K['map_api']=='baidu'}
+			<!--{template tpl/default/task/task_info_map_baidu}-->
+			{else}
+			<!--{template tpl/default/task/task_info_map_google}-->
+			{/if}     
+	    </details>	
+		{/if}
+		<!--end任务地图-->
+
+		 <!--任务附件-->
+		 {if $task_info['task_file']}
+	     <details open  class="mb_20" id="file">
+	     <!--标题-->
+	     <summary class=" fontb">{$_lang['attachment']}</summary>
+	      <div class="affix pl_10">
+	       <ul>
+	       	{loop $task_file $v}
+			<!--{eval $v['file_name_ext']=urlencode($v['file_name']);}-->
+	          <li>
+	             <a id="ddd" target="_blank" href="index.php?do=ajax&view=file&ajax=download&file_name={$v['file_name_ext']}&file_path={$v['save_name']}#file" >
+	             	{$v['file_name']}<span class="c999">（<!--{eval echo is_file($v['save_name'])?kekezu::get_format_size(filesize($v[save_name])):''}-->）</span><span class="icon16 download"></span></a>
+	          </li>
+			{/loop}
+			
+			
+	      </ul>
+	     </div>
+	   </details>
+	   {/if}
+	    <!--end 任务附件-->
+		
+	   </div>
+	   <!--end 布局 内边距-->
+	  </div>
+	  <!--end 布局 左-->
+	   
+	   <!--工具栏-->
+	      <div class="operate fl_r mt_10 hidden">
+	
+	        <a href="index.php" class="" title="{$_lang['return_home']}"><div class="icon16 home">{$_lang['return_home']}</div></a>
+	
+	        <a href="javascript:void(0)" class="scrollTop" title="{$_lang['return_top']}"><div class="icon16 arrow-top">{$_lang['return_top']}</div></a>
+	      </div>
+	    <!--end 工具栏-->  
+	</div>
+	</div>
+		  <div class="grid_5  clearfix mre_btns">
+		 	<!--作者信息-->
+            	<div class="shop_author bord_c clearfix mb_10">
+            	<div class="inner">
+                	<h2 class="pl_10">{$_lang['employer_info']}</h2>
+					<div class="pad5 clearfix border_b_c">
+					<div class="clearfix">
+                        <div class="t_c fl_l mr_10">
+                                <!--{userpic($task_info['uid'],'small')}-->
+                        </div>
+						<p class="shop_sign fl_l">
+                            <a href="index.php?do=space&member_id={$task_info['uid']}" class="font14b block" target="_blank">{$task_info[username]}</a>
+							<!--{eval $user_leve=unserialize($sub_task_user_level['buyer_level'])}-->{$user_leve['pic']}
+                        </p>
+					</div>
+                    <p>
+                    	<!--卖家的认证信息-->
+                        {loop $auth_info $k $v}
+							<a href="javascript:void(0)" title="{$v['auth_title']}" class="mr_5">
+								<img src="{$_K['siteurl']}/{$v['auth_small_ico']}" alt=''>
+							</a>
+						{/loop}
+                    </p>
+					<p>{$_lang['good_rate']}{if $g_info['seller_total_num']}<span class="cc00 ml_10 pl_5"><!--{eval echo number_format($g_info['seller_good_num']/$g_info['seller_total_num'],4)*100}-->{else}0{/if}%</span>
+					</p>
+					<!--{eval echo $task_obj->em_mark()}-->        
+            	</div>
+					<div class="shop_author_link clearfix">
+						<a href="index.php?do=space&member_id={$g_info['uid']}" target="_blank" class="fl_l">{$_lang['view_shop_space']}</a>
+						<a href="javascript:void(0)" onclick="sendMessage($task_info['uid'],'$task_info[username]')" class="fl_r">{$_lang['send_web_msg']}</a>
+					</div>
+				</div>
+			</div>	
+            <!--end 作者信息-->
+			<div class="">
+				{if $process_can['task_audit']}
+				<a class="button block" href="javascript:misc(1);">
+					<span class="round-checkmark  icon16"></span>
+					 {$_lang['pass']}
+				</a>
+				<a class="button block" href="javascript:misc(2);">
+					<span class="round-delete  icon16"></span>
+					{$_lang['nopass']}
+				</a>
+				{/if}
+				{if $process_can['task_recommend']}
+				<a class="button block" href="javascript:misc(3);">
+					<span class="hand-pro  icon16"></span>
+					 {$_lang['recommend_top']}
+				</a>
+				{/if}
+				{if $process_can['task_freeze']}
+				<a class="button block" href="javascript:misc(4);">
+					<span class="padlock-closed  icon16"></span>
+					 {$_lang['freeze']}{$_lang['task']}
+				</a>
+				{/if}
+			</div>
+			{if $process_can['tools']}
+			<div class="">	
+			  {loop $item_list $v}
+				<a class="button block" href="index.php?do=task&task_id=$task_id&view=tools">
+					<span style=" vertical-align:middle; display:inline-block;"><img src="{$v['small_pic']}" alt="{$v['item_name']}"></span>
+					 {$v['item_name']}
+				</a>
+			{/loop}
+			</div>
+			{/if}
+			{if $task_status==8}
+			<div class="award clearfix">
+				<div class="">
+					<div class="award_top mt_10 clearfix">
+						<div class="clearfix">
+							<h2 class=" a_des">
+								{$_lang['task_bider']}
+							</h2>
+						</div>
+						<div class="srewar_user  clearfix">
+							<ul class="clearfix">
+								{loop $list_work $v}
+									<li>
+										<a href="index.php?do=space&member_id={$v['uid']}" title="{$v['username']}" target="_blank"><!--{userpic($v['uid'],'small')}--></a>
+										 
+									</li>
+									<li>
+										<p class="shop_sign fl_l">
+				                            <a href="index.php?do=space&member_id={$v['uid']}" class="font14b block" target="_blank">{$v[username]}</a>
+											<!--{eval $list_work_leve=unserialize($v['seller_level'])}-->{$list_work_leve['pic']}
+				                        </p>
+									</li>
+								{/loop}
+							</ul>
+						</div>
+						
+					</div>
+				</div>
+				
+			 </div>	
+			{/if}
+			{if $process_can['task_report']}
+			<a class="button block mt_10" href="javascript:void(0)"  onclick="report('task','2','{$task_id}','{$task_info['uid']}','{$task_info['username']}');" title="{$_lang['report']}">
+	         	<span class="icon16 hand-1"></span>
+				{$_lang['report']}
+	         </a>
+			 {/if}
+			 {if $uid!=$task_info['uid']}
+			<a class="button block" href="javascript:void(0);" onclick="favor('task_id','task','{$model_code}','{$task_info['uid']}','{$task_id}','{$task_info['task_title']}','{$task_id}')">
+				<span class="star-fav-empty  icon16"></span>
+				 {$task_info[focus_num]} {$_lang['times']}{$_lang['favorit']}
+			</a>
+			{/if}
+			<a class="button block" href="index.php?do=ajax&view=share&oid=1&title={$task_info['task_title']}" id="share1" onclick="return false;"   onmouseover="share(this)" title="{$_lang['share']}">
+         	<span class="icon16 share"  id="test_aaa"></span>
+			{$_lang['share']}
+		 </a>
+			<div class="c333 mt_10 ml_5">
+				<span class="eye  icon16 mt_5"></span>
+				{$task_info['view_num']} {$_lang['people']}{$_lang['view']}
+			</div>
+		 
+		 </div>
+		  
+		  <!--end 布局 右-->
+	   {elseif $view=='work'}
+	   <!--{template task/sreward/tpl/default/task_work}-->
+	   {elseif $view=='comment'}
+	   <!--{template task/sreward/tpl/default/task_comment}-->
+	   {elseif $view=='mark'}
+	   <!--{template task/sreward/tpl/default/task_mark}-->
+	    {elseif $view=='tools'&&$uid==$task_info['uid']}
+	   <!--{eval require S_ROOT.'/control/payitem_tools.php'}-->
+	   {/if}
+	       <div class="clear"></div>
+	   
+   </div>
+   <!---->
+   </section>
+   <!--end 章节1-->
+  
+
+   <!--任务详情_底部广告-->
+   <!--{ad_show(TASKINFO_BOTTOM)}-->
+
+  
+  
+  
+  
+  
+  
+  
+  <!--其他推荐-->
+    <aside class="clearfix mb_10">
+     <div class="grid_8">
+      <div class="box  normal2">
+        <div class="inner">
+          <h3 class="title">{$_lang['view']}<span class="c369"><a href="index.php?do=task_list&path=B{$model_id}A{$task_info['indus_pid']}" target="_blank">{$indus_p_arr[$task_info['indus_pid']]['indus_name']}</a></span>{$_lang['other_view']}</h3>
+           <div class="clearfix mt_10">             
+
+               <ul>
+               	{if $related_task['same']}
+					{loop $related_task['same'] $v}
+                  		<li>
+                        <div class="item clearfix">
+                        <a href="index.php?do=task&task_id={$v['task_id']}" target="_blank">
+                        	<span class="c900">
+                        	{if $v['model_id']==4||$v['model_id']==5||$v['model_id']==12}
+                        		{c:$cover_cash[$v['task_cash_coverage']]['start_cove']}-{c:$cover_cash[$v['task_cash_coverage']]['end_cove']}
+                        	{else}
+                        		{c:$v['task_cash']}
+                        	{/if}
+                        	</span>{$v['task_title']}
+                        	
+                        </a>
+                        </div>
+                        </li>	
+					{/loop}
+				{else}
+                   <li class="t_c"><span class="c999">{$_lang['now_no_record']}</span></li>
+				{/if}
+               </ul>
+
+           </div>
+        </div>
+      </div>
+     </div>
+     <div class="grid_8">
+      <div class="box  normal2">
+       <div class="inner">
+         <h3 class="title">{$_lang['you_may_insterest']}</h3>
+         <div class="clearfix mt_10">
+        <ul>
+        	
+               	{if $related_task['favor']}
+					{loop $related_task['favor'] $v}
+                  		<li>
+                        <div class="item clearfix">
+                        <a href="index.php?do=task&task_id={$v['task_id']}" target="_blank"><span class="c900">
+                         
+                         
+                        	{if $v['model_id']==4||$v['model_id']==5||$v['model_id']==12}
+                        		{c:$cover_cash[$v['task_cash_coverage']]['start_cove']}-{c:$cover_cash[$v['task_cash_coverage']]['end_cove']}
+                        	{else}
+                        		{c:$v['task_cash']}
+                        	{/if}
+                        
+                        </span> {$v['task_title']}</a>
+                        </div>
+                        </li>	
+					{/loop}
+				{else}
+                   <li class="t_c"><span class="c999">{$_lang['now_no_record']}</span></li>
+				{/if}
+          </ul>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="grid_8">
+       <div class="box  normal2">
+         <div class="inner">
+            <h3 class="title">{$_lang['view_history_record']}</h3>
+              <div class="clearfix mt_10">
+                <ul class="small_list">
+               	{if $browing_history}
+					{loop $browing_history $v}
+						<li>
+							<div class="item clearfix">
+								<!--{eval list($a,$b) = explode('-',$v[1]);}-->
+								<a href="index.php?do=task&task_id={$v[0]}" target="_blank" title="{$v[2]}"><span class="c900">
+									{if $a and $b}
+										{c:$a}-{c:$b}
+									{else}
+										{c:$a}
+									{/if}
+									</span> {$v[2]}
+									</a>
+							</div>
+						</li>	
+					{/loop}
+				{else}
+                   <li class="t_c"><span class="c999">{$_lang['now_no_record']}</span></li>
+				{/if}
+				</ul>
+               </div>          
+         </div>
+        </div>
+     </div>
+    </aside>
+    <!--end 其他推荐-->
+    </div>
+    <!--end 布局框-->     	
+   </section>
+   <!--end 详细内容区-->
+  </div>
+<!--end 页面内容区-->
+<script type="text/javascript" src="resource/js/jqplugins/jQuery.mouseDelay.js"></script>
+<script type="text/javascript">
+	var guid  	 	= parseInt($task_info['uid'])+0;
+	var task_id		= parseInt($task_id)+0;
+	var uid 		= parseInt('{$uid}')+0;
+	var task_status = parseInt($task_status)+0;
+	var basic_url	= "{$basic_url}";
+	var datePrv     = "{$date_prv}";
+	var username    = "{$username}";
+	var delay_count = parseInt('{$delay_count}')+0;
+	var delay_total = parseInt('{$delay_total}')+0;
+	var trust_mode  = "{$trust_mode}";
+</script>
+
+ 
+ 
+<!--{template footer}-->	

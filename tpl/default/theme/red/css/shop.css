@@ -1,0 +1,60 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+	
+	内容 CONTENTS:
+	1. 商城首页
+		1.0 banner部分
+		1.1  热门分类区
+		1.2  热门推荐区
+		
+	2. 商城列表
+	3. 商城地图（地图搜索下拉按钮）
+	4. 商城详细
+		4.0  商品描述
+		4.1  购买记录
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1.商城首页
+ --------------------------------------*/
+
+/* 1.0 banner部分 */
+.container{background:#DED8D8; }
+.shoptab{display:block; background:#D2CACA}
+.banner_info{bottom:-1px; right:10px;}
+/* 1.1 热门分类区 */
+.box_detail ul.category_list li.category_width{ text-overflow:ellipsis;  padding-top:0;}
+		.category_list .item{  _height:expression(this.scrollHeight < 100 ? "100px" : "auto");}
+			.item h2{color:#000; font-size:14px; font-weight:bold;}
+			.box_detail ul.category_list li .item a:hover{  color:#e77f1e;}
+		
+
+/* 1.2 热门推荐 区*/
+			.title h5{color:#000;}
+			.pic_top .one p{position:relative;}
+					.pic_top .one:hover a.shop_word,.pic_top .one.hover a.shop_word{color:#e40d29;}
+				.jy p{color:#000;}
+
+
+/* 3.商城地图-----地图搜索下拉按钮------
+ --------------------------------------*/
+.operate{bottom:0; right:0; z-index:2; height:26px; line-height:16px;}
+ .condition dd .jqTransformSelectWrapper a.selected, .basic_style .condition dd .jqTransformSelectWrapper a.selected:hover{ border-radius:0px;}
+ .jqTransformSelectWrapper ul a:hover{ background:#ED8888;}	
+ .footer .jqTransformSelectWrapper ul a:hover.selected{background:#951a1a;}	
+
+
+/* 4.0商品描述 */
+.example{ _overflow:hidden;}
+.box .box_header{padding:10px 0; border-bottom:1px solid #ccc;}
+.show_panel .box_nav a{padding:5px 6px;}
+
+@media only screen and (min-width: 1280px) and (max-width: 1600px){
+	.banner_bg img{ width:100%}
+
+}

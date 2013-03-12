@@ -1,0 +1,241 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$payitem_config['item_name']}{$_lang['edit']}</h1>
+    <div class="tool">
+        <a href="index.php?do=payitem">{$_lang['service_manage']} </a>
+        <a href="javascript:void(0)" class="here">{$_lang['edit']}</a>
+    </div>
+</div>
+<div class="box post">
+    <div class="tabcon">
+        <div class="title">
+            <h2>{$_lang['edit_service']}</h2>
+        </div>
+        <div class="detail">
+            <form method="post" action="index.php?do={$do}&view={$view}&item_code={$item_code}"  enctype="multipart/form-data" name="frm" id="frm">
+                <input type="hidden" name="pk[item_id]" value="{$payitem['item_id']}">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th scope="row" width="130">
+                            {$_lang['payitem_name']}
+                        </th>
+                        <td>
+                            <input type="text" value="{$payitem['item_name']}" name="fds[item_name]" id="title" class="txt" style=" width:260px;" limit="required:true;len:1-50" title="{$_lang['input_item_name']}" msg="{$_lang['itme_name_msg']}" msgArea="item_title_msg"/><b style="color:red">*</b>
+                            <span id="item_title_msg"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="130">
+                           {$_lang['belong_type']}
+                        </th>
+                        <td>
+                        	<p>
+                                <label for="rdo_user_type_1">
+                                    <input type="radio" name="fds[user_type]" value="employer" id="rdo_user_type_1" {if !$payitem['user_type']||$payitem['user_type']=='employer'}checked="checked"{/if}/>{$_lang['employer']}
+                                </label>
+                                <label for="rdo_user_type_2">
+                                    <input name="fds[user_type]" type="radio" id="rdo_user_type_2" value="witkey" {if $payitem['user_type']=='witkey'}checked="checked"{/if} />{$_lang['witkey']}
+                                </label>
+                            </p>
+                            <div class="padt10 direct">
+                                <p>
+                                    {$_lang['payitem_config']}{$payitem['item_name']}{$_lang['belong_user_type']}
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+					<tr>
+                        <th scope="row" width="130">
+                           {$_lang['belong_model']}
+                        </th>
+                        <td>
+                        	{loop $model_list $v}
+								{if $v['model_status']=='1'}
+                        			<label for="model_{$v['model_id']}"><input type="checkbox" id="model_{$v['model_id']}" value="{$v['model_code']}" name="model_code[]" class="checkbox" {if in_array($v['model_code'],$code_arr)} checked {/if} />{$v['model_name']}</label>
+								{/if}
+							{/loop}
+                            <div class="padt10 direct">
+                                <p>
+                                    {$_lang['payitem_config']}{$payitem['item_name']}{$_lang['_belong_model']}
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="130">
+                            {$_lang['service_cash']}
+                        </th>
+                        <td>
+                            <input type="text" value="{$payitem['item_cash']}" name="fds[item_cash]" id="item_cash" class="txt" style=" width:260px;" limit="required:true;type:float" title="{$_lang['input_item_cash_title']}" msg="{$_lang['input_item_cash_msg']}" msgArea="item_cash_msg"/><b style="color:red">*</b>
+                        	<span id="item_cash_msg"  style=" width:260px;"></span>  
+							<div class="padt10 direct">
+                                <p>
+                                   {$_lang['item_notice']}
+                                </p>
+                            </div>
+						</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="130">
+                        {$_lang['cash_idea']}
+                        </th>
+                        <td>
+                           <p>
+                                <label for="rdo_standard_1">
+                                    <input name="fds[item_standard]" type="radio" id="rdo_standard_1" value="times"  checked="checked"/>{$_lang['by_times']}
+                                </label>
+                            </p>
+                        </td>
+                    </tr>
+					<tr id="limit">
+                        <th scope="row" width="130">
+                            {$_lang['buy_limit']}
+                        </th>
+                        <td>
+                            <input type="text" value="{$payitem['item_limit']}" name="fds[item_limit]" id="item_limit" class="txt" style=" width:260px;" limit="required:true;type:int;between:1-100" title="{$_lang['input_single_num_title']}" msg="{$_lang['input_single_num_msg']}" msgArea="item_limit_msg"/><b style="color:red">*</b>
+                        	 <span id="item_limit_msg"></span>
+							 <div class="padt10 direct">
+                                <p>
+                                   {$_lang['sing_buy_most']}
+                                </p>
+                            </div>
+						</td>
+                    </tr>
+					<tr>
+                        <th scope="row" width="130">
+                            {$_lang['use_limit']}
+                        </th>
+                        <td>
+                            {$payitem_type[$payitem['item_type']]}
+							 <div class="padt10 direct">
+                                <p>
+                                   {$_lang['service_limit']}
+                                </p>
+                            </div>
+						</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="130">
+                            {$_lang['itme_s_pic']}
+                        </th>
+                        <td> 
+                        	<input type="hidden" name="hdn_small_pic" id="hdn_small_pic" value="{$payitem['small_pic']}" />
+                        	<input type="hidden" name="hdn_small_pic_fid" id="hdn_small_pic_fid" value="<!--{eval echo get_fid($payitem['small_pic'])}-->" />
+			             	<input type="file" name="small_pic" id="small_pic" ext=".png,.jpg,.jpeg,.gif" class="file"/>
+			             	<button type="button"  onclick="upload('small_pic','sys','back','tools');">{$_lang['upload']}</button>
+			             	<span id="span_small_pic">
+								{if $payitem['small_pic']}
+									<img src="../../$payitem['small_pic']" height="60px" width="60px" />
+									<a href=";" onclick="return del('hdn_small_pic','span_small_pic')">{$_lang['delete']}</a>
+								{/if}
+							</span>
+							<div class="padt10 direct">
+                                <p>
+                                    {$_lang['s_pic_size']}
+                                </p>
+                            </div>
+							
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="130">
+                            {$_lang['itme_b_pic']}
+                        </th>
+                        <td>
+							<input type="hidden" name="hdn_big_pic" id="hdn_big_pic" value="{$payitem['big_pic']}" />
+                        	<input type="hidden" name="hdn_big_pic_fid" id="hdn_big_pic_fid" value="<!--{eval echo get_fid($payitem['big_pic'])}-->" />
+							<input type="file" name="big_pic" id="big_pic" ext=".png,.jpg,.jpeg,.gif" class="file"/>
+							<button type="button"  onclick="upload('big_pic','sys','back','tools');">{$_lang['upload']}</button>
+			             	<span id="span_big_pic">
+								{if $payitem['big_pic']}
+									<img src="../../$payitem['big_pic']" height="60px" width="60px" />
+									<a href=";" onclick="return del('hdn_big_pic','span_big_pic')">{$_lang['delete']}</a>
+								{/if}
+							</span>
+							<div class="padt10 direct">
+                                <p>
+                                    {$_lang['b_pic_size']}
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['service_desc']}
+                        </th>
+                        <td>
+                            <textarea id="system-create-location_1" class="xheditor {urlBase:'{$_K['site_url']}',html5Upload:false,upImgUrl:'../../index.php?do=ajax_upload'}" rows="15" style="width:65%; display: none;" name="fds[item_desc]">{$payitem['item_desc']}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" width="130">
+                            {$_lang['is_open']}
+                        </th>
+                        <td>
+                            <p>
+                                <label for="rdo_is_open_1">
+                                    <input type="radio" name="fds[is_open]" value="1" id="rdo_is_open_1" {if !$payitem['is_open']||$payitem['is_open']=='1'}checked="checked"{/if}/> {$_lang['yes']}
+                                </label>
+                                <label for="rdo_is_open_2">
+                                    <input name="fds[is_open]" type="radio" id="rdo_is_open_2" value="2" {if $payitem['is_open']=='2'}checked="checked"{/if} /> {$_lang['no']}
+                                </label>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            &nbsp;
+                        </th>
+                        <td>
+                            <div class="clearfix padt10">
+                                <button class="positive primary pill button" type="submit" name="sbt_edit" value="{$_lang['submit']}" onclick="return checkForm(document.getElementById('frm'))">
+                                    <span class="check icon"></span>{$_lang['submit']}
+                                </button>
+								<button class="pill button" onclick="history.go(-1);" value="{$_lang['return']}" type="button"><span class="icon uparrow"></span>{$_lang['return']}</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"  src="../../resource/js/system/ajaxfileupload.js"></script>
+<script type="text/javascript">
+	if($("#rdo_standard_1").is(":checked")){
+		$("#limit").show();
+	}
+	$("#rdo_standard_1").click(function(){
+		$("#limit").show();
+	})
+	$("#rdo_standard_2").click(function(){
+		$("#limit").hide();
+	})
+	/**
+ * 上传完成后的页面响应
+ * @param json json数据
+ */
+function uploadResponse(json){
+	var id = json.filename;
+	 var hf = $("#hdn_"+id);
+	 var hf_fid = $("#hdn_"+id+"_fid");
+          $(hf).val(json.msg.up_file+"?fid="+json.fid);
+          $(hf_fid).val(json.fid);
+		$("#span_"+id).html("<img src='../../"+json.msg.up_file+"'width='80px' height='80px' />").append("<a href=';' onclick='return del(\"hdn_"+id+"\",\"span_"+id+"\")'>删除</a>");
+}
+    function del(str,span){
+		var value = $("#"+str).val().split("?")['0'];
+		var fid=$("#"+str+"_fid").val();
+    	var url  = '../../index.php?do=ajax&view=file&ajax=del&filepath='+value+"&fid="+fid;
+				$.post(url,function(json){
+					if(json.status==1){ 
+						 $("#"+str).val("");
+						 $("#"+span).children().remove();
+					}
+					
+				},'json');
+		return false;
+	}
+</script>
+</script>
+<!--{template control/admin/tpl/admin_footer}-->

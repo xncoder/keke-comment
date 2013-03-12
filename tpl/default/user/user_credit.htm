@@ -1,0 +1,403 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+    <!--星级评定样式-->
+        <section class="clearfix section">
+        <!--{template user/user_side}-->
+        <div class="show_panel container_24 po_re">
+        <div class="prefix_3 grid_21">
+            <div class="panel clearfix box">
+                <!--main content-->
+                <div class="">
+                    <!--header内容头部 start-->
+                    <header class="clearfix box_header">
+                        <h2 class="grid_4 alpha box_title t_c">{$_lang['credit_grade']}</h2>
+                    </header>
+                    <!--header内容头部 end--><!--detail内容 start-->
+                    <article class="box_detail">
+
+                    	{if $user_type==2}
+                        <div class="prefix_1 suffix_1">
+                            <div class=" groupinfo clearfix">
+                                <div class="clearfix pt_20  pb_10">
+                                      
+									
+	                                    <h2 class="fl_l">{$_lang['credit_grade']}</h2>
+										<div class="fl_r">{$credit_level['pic']}</div>
+										
+										<div class="clear"></div>
+									
+	                                    <div class="loading_bar load_green" style="z-index:10">
+	                                        <div class="progress_bar shine" title="{$credit_level['title']} " grade="{$credit_level['grade_rate']}">
+	                                            {$credit_level['title']} 
+												
+	                                        </div>
+											<div class="tipsy tipsy-s"  style="left:{$credit_level['grade_rate']}%; margin-left:-83px; bottom:15px; line-height:15px; display:none;">
+													<div class="tipsy-arrow tipsy-arrow-s"></div>
+													<div class="tipsy-inner">
+														{$_lang['next_level_need']}
+														{$credit_level['level_up']}
+														{$_lang['reputation_value']}
+														
+													</div>
+											</div>
+	                                    </div>
+									
+                                </div>
+                                <div class=" clearfix grid_9">
+                                    <p>
+                                        <strong>{$_lang['reputation_value']}</strong>
+                                        <a href="javascript:void(0);">{$user_info['buyer_credit']}</a>
+                                    </p>
+									{if $task_open}
+                                    <p>
+                                        <strong>{$_lang['release_tasks_num']}</strong>
+                                        <a href="javascript:void(0);"><!--{eval echo intval($found_count['pub_task']['count'])}--></a>
+                                    </p>
+                                    
+									{/if}
+                                    {if $shop_open}
+	                                    <p>
+	                                        <strong>{$_lang['goods_num']}</strong>
+	                                        <a href="javascript:void(0);"><!--{eval echo intval($found_count['buy_service']['count'])}--></a>
+	                                    </p>
+									{/if}
+                                </div>
+								<div class="fl_l pl_20">
+									<div class=" clearfix grid_9">
+									<p>
+                                        <strong>{$_lang['favorable_rate']}</strong>
+                                        <a href="javascript:void(0);">{if $user_info['buyer_total_num']}<!--{eval echo number_format($user_info['buyer_good_num']/$user_info['buyer_total_num'],2)*100}-->{else}0{/if}%</a>
+                                    </p>
+									{if $task_open}
+                                    <p>
+                                        <strong>{$_lang['task_payment']}</strong>
+                                        <a href="javascript:void(0);" class="pay">
+                                            {c: $found_count['pub_task']['cash']}
+                                        </a>
+                                    </p>
+									{/if}
+									{if $shop_open}
+	                                
+	                                    <p>
+	                                        <strong>{$_lang['payment_services_section']}</strong>
+	                                        <a href="javascript:void(0);" class="pay">
+	                                            {c: $found_count['buy_service']['cash']}
+	                                        </a>
+	                                    </p>
+									{/if}
+	                                    
+	                                </div>
+								</div>
+								
+								<div class=" clearfix grid_9">
+								<!--辅助评价start-->
+								{loop $saler_aid $k $v}
+                                
+                                    <p>
+                                        	<span class="fl_l">
+	                                            <strong class="mr_5">{$v['aid_name']}</strong>
+	                                            <em class="cc00 mr_5">
+	                                                {$v['avg']}
+	                                            	{$_lang['fen']}
+	                                        	</em>
+                                        	</span>
+                                        
+                                            <!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
+                                        
+                                        	<span class="fl_r">
+                                            {$_lang['total']}{$v['count']}{$_lang['people']}
+                                        	</span>
+                                    </p>
+                                
+
+                                {/loop}<!--辅助评价end-->
+								</div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+						{elseif $user_type==1}
+                        <div class="prefix_1 suffix_1">
+                            <div class="groupinfo alpha omega clearfix">
+                            	
+								<div class=" clearfix pt_20  pb_10">
+	                                    <h2 class="fl_l title">{$_lang['ability_grade']}</h2>
+										<div class="fl_r">{$able_level['pic']}</div>
+								
+                                	<div class="clear"></div>
+								
+                                    <!--loading 加载 start-->
+									
+									
+                                    <div class="loading_bar " style="z-index:10">
+                                        <div class="progress_bar shine" grade="{$able_level['grade_rate']}">
+                                             
+                                        </div>
+										<div class="tipsy tipsy-s"  style="left:{$able_level['grade_rate']}%; margin-left:-83px; bottom:15px; display:none; line-height:15px;">
+												<div class="tipsy-arrow tipsy-arrow-s"></div>
+												<div class="tipsy-inner">
+													{$_lang['next_level_need']}
+													{$able_level['level_up']}
+													{$_lang['ability']}
+													
+												</div>
+											</div>
+                                    </div>
+									
+                                    <!--loading 加载 end-->
+
+                                </div>
+								
+								<div class="grid_9">
+                                    <p>
+                                       <strong>{$_lang['ability']}</strong>
+                                        <a href="javascript:void(0);">{$able_level['value']}</a>
+                                    </p>
+                                   
+                                    
+									{if $task_open}
+									<p>
+                                        <strong>{$_lang['number_of_successful_releases']}</strong>
+                                        <a href="javascript:void(0);"><!--{eval echo intval($found_count['task_bid']['count'])}--></a>
+                                    </p>
+									{/if}
+									{if $shop_open}
+                                    <p>
+                                        <strong>{$_lang['goods_sold_num']}</strong>
+                                        <a href="javascript:void(0);"><!--{eval echo intval($found_count['sale_service']['count'])}--></a>
+                                    </p>
+									{/if}
+                                </div>
+								
+								<div class="fl_l pl_20">
+									<div class="  grid_9">
+									<p>
+                                        <strong>{$_lang['favorable_rate']}</strong>
+                                        <a href="javascript:void(0);">{if $user_info['seller_total_num']}<!--{eval echo number_format($user_info['seller_good_num']/$user_info['seller_total_num'],2)*100}-->{else}0{/if}%</a>
+                                    </p>
+									{if $task_open}
+                                    <p>
+                                        <strong>{$_lang['get_task_models']}</strong>
+                                        <a href="javascript:void(0);" class="pay">
+                                             {c: $found_count['task_bid']['cash']}
+                                        </a>
+                                    </p>
+									{/if}
+									{if $shop_open}
+         
+                                    <p>
+                                        <strong>{$_lang['access_to_services_section']}</strong>
+                                        <a href="javascript:void(0);" class="pay">
+                                            {c: $found_count['sale_service']['cash']}
+                                        </a>
+                                    </p>
+									{/if}
+									</div>
+								</div>
+								
+								
+                                <div class="  grid_9 ">
+									{loop $buyer_aid $k $v}
+	                                    <p>
+	                                        <span class="fl_l">
+		                                        <strong class="mr_10">{$v['aid_name']}</strong>
+												
+												<span class="mr_10">
+		                                            <em class="cc00">
+		                                                {$v['avg']}
+														{$_lang['fen']}
+		                                            </em>
+												</span>	
+												<!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
+	                                        </span>
+	                                        
+	                                        <span class="fl_r">
+	                                            {$_lang['total']}{$v['count']}{$_lang['people']}
+	                                        </span>
+	                                    </p>
+	                                {/loop}<!--辅助评价end-->
+                                </div>
+
+								
+                                
+                            </div>
+                        </div>
+						{/if}
+                    
+					
+                    <div class="prefix_1 suffix_1">
+                    	
+						<div class=" clearfix ">
+	                         <h2 class="title">{$_lang['all_evaluation']}</h2>
+						</div>
+						<div class="data_list">
+						<table class="data_table">
+							{if $witkey_result}
+							<!--{eval $i=1;}-->
+							<thead>
+								<tr>
+									<th width="260">{$_lang['project_name']}{$_lang['task_goods']}</th>
+									<th>{$_lang['evaluate']}</th>
+									<th width="80">{$_lang['come_from']}</th>
+									<th class="t_c" width="200">{$_lang['assisted_evaluation']}</th>
+									
+								</tr>
+							</thead>
+							<tbody>
+								{loop $witkey_result $k $v}
+								<!--{eval $i++;}-->
+							
+								<tr>
+									<td>
+										{if in_array($v['model_code'],array('goods','service'))}
+												<a href="index.php?do=service&sid={$v['obj_id']}" class="font14b" target="_blank">{$v['title']}</a>
+												<span class="block">[{$_lang['shop']}]</span>
+                                       {else}
+											<a href="index.php?do=task&task_id={$v['origin_id']}" class="font14b" target="_blank">{$v['task_title']}</a>
+											<span class="block">[{$_lang['task']}]</span>
+                                        {/if}
+									</td>
+									<td>
+										<!--好中差-->
+                                            {if $v['mark_status']=='1'}
+												<!--好中差图片-->
+	                                            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+												{$_lang['praise']}
+                                            {elseif $v['mark_status']=='2'}
+	                                            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+												{$_lang['the_assessment']}
+                                            {elseif $v['mark_status']=='3'}
+	                                            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+												{$_lang['negative_feedback']}
+                                            {else}
+												{$_lang['didnot_respond_to_evaluation']}
+											{/if}
+											<!--好中差 end -->
+											
+											<div><!-- 评价内容  -->
+												
+                                             	{$v['mark_content']} 
+											</div>
+									</td>
+									<td>{$v['by_username']}</td>
+									<td>
+										{if $user_type==1}
+											<!-- 来自威客对雇主的扩展评介  -->
+                                            	{loop $v['pj'] $kk $vv}
+											    	<div class="clearfix">
+			                                        	<!--扩展评价名称-->
+			                                            <span class="mr_10">{$vv['aid_name']}</span>
+			                                            <em class="cc00 mr_10">
+			                                            	<!--扩展评价分值-->
+			                                                {$vv['score']}
+			                                            {$_lang['fen']}
+														</em>
+			                                     		
+			                                        	<!--扩展评价星星-->
+														
+			                                                <!--{eval echo keke_user_mark_class::gen_star2($vv['score']);}-->
+													</div>	
+			                                      
+			                                       {/loop}
+												<!-- 来自威客对雇主的扩展评介  end  -->	   
+                                            {elseif $user_type==2}
+											
+												<!-- 来自雇主对威客的扩展评介  -->
+                                            	{loop $v['pj'] $kk $vv}
+					                                <div class=" clearfix ">
+					                                        	<!--扩展评价名称-->
+					                                            <span class="mr_10">{$vv['aid_name']}</span>
+					                                            <em class="cc00 mr_10">
+					                                            	<!--扩展评价分值-->
+					                                                {$vv['score']}
+					                                            {$_lang['fen']}
+																</em>
+					                                        	<!--扩展评价星星-->
+					                                            <!--{eval echo keke_user_mark_class::gen_star2($vv['score']);}-->
+					                                        
+					                                 </div>
+                                        		{/loop}
+												<!-- 来自雇主对威客的扩展评介 end -->
+                                            {/if}	
+									</td>
+								</tr>
+							{/loop}
+							
+                                {else}
+								
+	                                <tr>
+	                                	<td colspan="4" class="bf7 clearfix t_c">{$_lang['no_comments']}</td>
+	                                </tr>
+								
+                                {/if}
+							</tbody>
+						</table>
+						</div>
+						
+                       
+                           
+                            
+             
+                        <div class="page clearfix">
+                            <p>
+                                {$pages['page']} 
+                            </p>
+                        </div>
+                    </div>
+                    
+                    
+              
+                </article>
+                <!--detail内容 end-->
+                </div>
+                <!--main content end -->
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<!--contain end-->
+
+<script type="text/javascript">
+    $(function(){
+        /**进度条加载**/
+        $('.progress_bar').each(function(){
+            $(this).animate({
+                width: $(this).attr("grade") + "%"
+            }, 3000)
+        })
+		
+		var tip = $('.loading_bar .tipsy');
+		
+		var show1 = setInterval(function(){
+			tip.fadeTo("", 0.8);
+			clearInterval(show1);
+			var hidden1 = setInterval(function(){
+				tip.fadeOut();
+				clearInterval(hidden1);
+			},3000)
+		},3000)
+		
+		
+		
+		
+		$('.loading_bar').hover(function(){
+			
+				tip.fadeTo("", 0.8);
+			
+		},function(){
+			if(tip.is(':visible')){
+			tip.fadeOut();
+			}
+		});
+    })
+</script>
+
+ <!--{template user/user_footer}-->
+<!--{template footer}-->

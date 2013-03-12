@@ -1,0 +1,292 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$_lang['prom_config_manage']}</h1>
+    <div class="tool">
+        <a {if $op=="config"||!$op}class="here"{/if} href="index.php?do=$do&view=$view&op=config">{$_lang['register_prom']}</a>
+        <a {if $op=="pub_task"}class="here"{/if} href="index.php?do=$do&view=$view&op=pub_task">{$_lang['task_prom']}</a>
+        <a {if $op=="bid_task"}class="here"{/if} href="index.php?do=$do&view=$view&op=bid_task">{$_lang['bid_prom']}</a>
+        <a {if $op=="service"}class="here"{/if} href="index.php?do=$do&view=$view&op=service">{$_lang['goods_prom']}</a>
+    </div>
+</div> 
+{if $op=='config'||!$op}
+<div>
+    <div class="box tip clearfix p_relative">
+        <div class="control">
+            <a href="javascript:void(0);" title="{$_lang['close']}"><b>&times;</b></a>
+        </div>
+        <div class="title">
+            <h2>{$_lang['tips']}</h2>
+        </div>
+        <div class="detail pad10">
+            <ul>
+            	<li>{$_lang['prom_config_notice']}{$_lang['zh_jh']}</li>
+				<li>{$_lang['register_prom_must_one_auth']}{$_lang['zh_jh']}</li>
+			</ul>
+        </div>
+    </div>
+    <div class="box post">
+        <div class="tabcon">
+            <div class="title">
+                <h2>{$_lang['register_prom']}</h2>
+            </div>
+            <div class="detail">
+                <form name="frm_config_basic" id="frm_config_basic" action="{$url}" method="post">
+                    <input type="hidden" name="op" value="{$op}">
+                    <input type="hidden" name="prom_id" value="{$reg_config['prom_id']}">
+					<input type="hidden" name="open_status" value="{$reg_config['is_open']}"><!-- 开启状态 -->
+					<div class="gut">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr><th scope="row">
+                                    {$_lang['is_open_global_prom']}{$_lang['zh_mh']}
+                                </th><td>
+                                 
+                        	       <label for="prom_open"><input type="radio" id="prom_open"  name="prom_reg_is_open" value='1' {if $global_config['prom_open']['v']==1}checked="checked"{/if}>{$_lang['open_prom']}</label>
+                                   <label for="prom_close"><input type="radio" id="prom_close" name="prom_reg_is_open" value='0' {if $global_config['prom_open']['v']==0}checked="checked"{/if}>{$_lang['closed_prom']}</label>
+                                   ({$_lang['this_set_global_effective']})
+                                </td></tr>
+                            <tr>
+                            	<th scope="row">{$_lang['prom_period']}{$_lang['zh_mh']}</th>
+                            		<td><input type="text" name="prom_period" class="txt" size="5" value="{$global_config['prom_period']['v']}" />{$_lang['day']}  ({$_lang['prom_upline_proift_notice']})</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                  {$_lang['prom_reward']}{$_lang['zh_mh']}
+                                </th>
+                                <td>
+                                	<p id="effect_mode"><!-- 生效模式 -->
+                                    <label>
+                                    	{$_lang['register_and_pass']}
+										<select name="allow_prom_reg" id="allow_prom_reg">
+											{loop $auth_info $k $v}
+												<option value='{$k}' {if $auth_step==$k}selected{/if} cash="{$v['cash']}" credit="{$v['credit']}">{$v['prom_item']}</option>
+											{/loop}
+										</select>
+										{$_lang['after_auth_promoter_will_get']}
+                                    	<input type="text" size=5 name="prom_cash" class="txt" id="prom_cash">{$_lang['yuan_cash']}，
+										<input type="text" size=5 name="prom_credit" class="txt" id="prom_credit">{$_lang['yuan_cash_coupon']}{$_lang['zh_jh']}
+									</label>
+									</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    &nbsp;
+                                </th>
+                                <td>
+                                    <button type="submit" name="sbt_edit" class="positive pill primary  button" value="{$_lang['submit']}"><span class="icon check"></span>
+                                        {$_lang['submit']}
+                                    </button>
+                                  
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+{else}
+    <div>
+        <div class="box tip clearfix p_relative">
+            <div class="control">
+                <a href="javascript:void(0);" title="{$_lang['close']}"><b>&times;</b></a>
+            </div>
+            <div class="title">
+                <h2>{$_lang['tips']}</h2>
+            </div>
+            <div class="detail pad10">
+                <ul>
+                    <li>
+                    	{if $op=='pub_task'}
+                     	   {$_lang['task_prom_notice']}{$_lang['zh_jh']}
+						{elseif $op=='bid_task'}
+							{$_lang['bid_prom_notice']}
+						{elseif $op=='service'}
+							{$_lang['goods_prom_notice']}
+						{/if}
+                    </li>
+                </ul>
+            </div>
+        </div>
+  <div class="box post">
+    <div class="tabcon">
+      <div class="title">
+        <h2>
+           {if $op=='pub_task'}
+				{$_lang['task_prom']}
+		   {elseif $op=='bid_task'}
+				{$_lang['bid_prom']}
+		  {elseif $op=='service'}
+				{$_lang['goods_prom']}
+		  {/if}
+		</h2>
+      </div>
+      <div class="detail">
+       <form name="frm_config_basic" id="frm_config_basic" action="{$url}" method="post">
+         <input type="hidden" name="op" value="{$op}">
+            <div class="gut">
+               <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                 <tr>
+                    <th scope="row"><input type="hidden" name="pub_task" value="1"><font style="text-align:right">{$_lang['binding_specified_industry']}{$_lang['zh_mh']}</font></th>
+                      <td>
+                         	{$_lang['default_for_all_industry']}<br/><!-- 
+                               <input type="checkbox" name="ckb_indus" value="1"{if $prom_config['indus']==1}checked="checked"{/if}>绑定行业 -->
+                           		<!--{eval $milist=explode(",",$prom_config['indus_string']);}-->
+						   		<input type="hidden" name="hdn_indus_id" id="hdn_indus_id" value="{$milist['0']}">
+						    	<select onchange="p_indus_add(this.value)" name="indus_p_id" style="margin-bottom:5px;">
+                        			<option value="">{$_lang['choose_industry']}</option>
+										{loop $indus_index['0'] $indus}
+									<option value="$indus['indus_id']" {if $milist['0']==$indus['indus_id']}selected="selected"{/if}>$indus['indus_name']</option>
+										{/loop}
+								</select>
+                        	    <br class="clear">
+								<select name="p_indus_select" id="p_indus_select" multiple="multiple" style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px" >
+								</select>
+							
+							    <div style="width:80px;float:left;height:160px;overflow:hidden;margin-left:20px; text-align:center;padding-top:40px;">
+									<button onclick = "moveitems()" type="button" class="input_but"><<</button><br><br>
+									<button onclick = "additems()" type="button" class="input_but">>></button><br>
+								</div>
+								<select name="s_indus_select[]" id="s_indus_select" multiple="multiple" style="width:160px;float:left;height:200px;overflow-y:scroll;background:white;border:#ccc solid 1px;margin-left:20px;">
+							          {loop $milist $k $m}
+											{if $m&&$k>0}<option id="s_indus_select_op_{$m}" value="$m" selected="selected">$indus_arr[$m]['indus_name']</option>{/if}
+									  {/loop}
+								</select>
+								<br class="clear">
+					<script type="text/javascript">
+						function p_indus_add(id){
+							mod = "";
+							{loop $indus_index $k $si}
+							if(id=='$k'){
+								{loop $si $i}
+								if(!$('#s_indus_select_op_{$i[indus_id]}').val()){
+								mod +="<option id=\"p_indus_select_op_{$i['indus_id']}\" value=\"{$i['indus_id']}\">{$i['indus_name']}</option>";
+								}
+								{/loop}
+							}
+							{/loop}
+							$('#p_indus_select').html(mod);
+						}
+						$(function(){
+							if($("#hdn_indus_id").val()!=''){
+							p_indus_add($("#hdn_indus_id").val());
+							}
+							$("#effect_mode label :radio").bind("click",function(){
+								//$(this).parent().css("border","1px solid red").siblings("label").css("border","1px solid white");
+								$(this).siblings().removeAttr("disabled");
+								$("#effect_mode label").not($($(this).parent())).children(":text").attr("disabled","disabled");//添加disabled属性
+							})
+							
+						})
+						function moveitems(){
+							vs = $('#s_indus_select').val()+'';
+							vs = vs.split(",");
+							var mod = '';
+							for(i=0;i<vs.length;i++){
+								if(String(vs[i]) == "null"){
+									continue;
+								}
+								mod+="<option value="+vs[i]+" id=\"p_indus_select_op_"+vs[i]+"\">"+$('#s_indus_select_op_'+vs[i]).html()+"</option>";
+								$('#s_indus_select_op_'+vs[i]).remove();
+							}
+							if(mod!='')
+							$('#p_indus_select').append(mod);
+						}
+						
+						function additems(){
+							vs = $('#p_indus_select').val()+'';
+						    vs = vs.split(",");
+							var mod = '';
+						    for(i=0;i<vs.length;i++){
+								if(String(vs[i]) == "null"){
+									continue;
+								}
+								mod+="<option value="+vs[i]+" id=\"s_indus_select_op_"+vs[i]+"\" selected=\"selected\">"+$('#p_indus_select_op_'+vs[i]).html()+"</option>";
+								
+								$('#p_indus_select_op_'+vs[i]).remove();
+							}
+							if(mod!='')
+							$('#s_indus_select').append(mod);
+						}
+			
+					</script>
+                   </td>
+                </tr>                           
+                 <tr>
+                    <th><font style="text-align:right">{$_lang['specified_task_model']}</font></th>
+                       <td>{$_lang['only_specified_will_be_prom']}<br/>
+                         {loop $model_info $k $v}
+							{if $v['model_type']==$model_type}
+								<label for="model_{$k}"><input type="checkbox" id="model_{$k}" name="ckb_model[]" value="$v['model_id']" {if FALSE!==strpos($prom_config['model'],$v['model_id'])}checked="checked"{/if}>
+                            		{$_lang['limit']}{$v['model_name']}</label><br>
+							{/if}
+                         {/loop}
+                       </td>
+				</tr>
+           {if $op=='pub_task'}
+				<tr>
+					<th><font>{$_lang['task_release_prommoter_proift']}</font></th>
+						<td>
+							{$_lang['task_release_prom_profit_model']}<br/>
+							<label id="pub_task_rake_type"><input type="radio" id="pub_task_rake_type"  name="pub_task_rake_type" value="1" {if $prom_config['pub_task_rake_type']==1}checked="checked"{/if}>{$_lang['according_to_fixed_money']}</label><font color="red">{$_lang['according_to_task_reward_rate_tip']}</font>
+								<div id="pub_task_rake_type_child">
+									<input type="text" size="5" class="txt" name="pub_task_cash" id="pub_task_cash" value="{$prom_config['cash']}" />{$_lang['cash']}
+									<input type="text" size="5" class="txt" name="pub_task_credit" id="pub_task_credit" value="{$prom_config['credit']}" />{$_lang['cash_coupon']}</div>
+										
+									<label id="rake_type2"><input type="radio" id="rake_type2" name="pub_task_rake_type" value="2" {if $prom_config['pub_task_rake_type']==2}checked="checked"{/if}>{$_lang['according_to_task_reward_rate']}</label><br/>
+									<input type="text" size="5" class="txt" name="pub_task_rate" id="pub_task_rate" value="{$prom_config['rate']}">%
+					   </td>
+				</tr>
+		   {elseif $op=='bid_task'}
+				<tr><th><font>{$_lang['undertake_task_prom_proift']}</font></th>
+						<td>
+							<input type="text" size="5" class="txt" name="bid_task_rake" id="bid_task_rake" value="{$prom_config['rate']}" />%
+								({$_lang['from_withdraw_to_promoter_rate']})
+						</td>
+				</tr>
+		  {elseif $op=='service'}
+				 <tr>
+                    <th scope="row">
+                       {$_lang['goods_prom_proift']}
+                    </th>
+                    <td>
+                        <input type="text" size="15" class="txt" name="service_rate" value="{$prom_config['rate']}" maxlength="5" />%
+                          ({$_lang['website_withdraw_to_promoter_notice']})
+                    </td>
+               </tr>
+		  {/if}
+                <tr>
+                   <th scope="row"> &nbsp;</th>
+                  <td>
+                     <button type="submit" name="sbt_edit" class="positive primary pill button"><span class="icon check"></span>
+                        {$_lang['submit']}
+                    </button>
+                  </td>
+                </tr>
+             </table>
+           </div>
+        </form>
+      </div>
+   </div>
+  </div>
+ </div>
+{/if}	 
+ <script type="text/javascript">
+<!--
+$(function(){
+	$(".control").add(".title").click(function(){
+		$(".tip").children().not($(".control,.title")).slideToggle('200');
+	});
+ 	var optif = $("#allow_prom_reg option:selected");
+	$("#prom_cash").val(optif.attr("cash"));
+	$("#prom_credit").val(optif.attr("credit"));
+})
+ $("#allow_prom_reg").change(function(){
+ 	var opti = $("#allow_prom_reg option:selected");
+	$("#prom_cash").val(opti.attr("cash"));
+	$("#prom_credit").val(opti.attr("credit"));
+ })
+//-->
+</script> 
+<!--{template control/admin/tpl/admin_footer}-->

@@ -1,0 +1,165 @@
+<!--左边部分-->
+ <div class="grid_17 ">
+   <div class="pad10 border_r_c"> 
+    <!--from表单 start-->
+     <div class="form_box clearfix box border_n">
+         <form action="{$basic_url}" method="post" name="frm_step2" id="frm_step2" enctype="multipart/form-data">
+	  	<input type="hidden" name="step2" value="step2">
+	  	<input type="hidden" name="p_step" value="step2">
+	  	<input type="hidden" name="formhash" value="{FORMHASH}">
+         <div class="rowElem clearfix">
+           <label class="grid_3">
+              <strong>{$_lang['industry_class']}</strong>
+           </label>
+           
+             <select name="indus_pid" id="indus_pid" onchange="showIndus(this.value)" limit = "required:true;between:5-10" msg = '{$_lang['industry_class_has_not_choose']}' msgArea="span_indus">
+                <option value="">{$_lang['please_choose_class']}</option>
+                  {loop $indus_p_arr $v}
+					<option value="{$v[indus_id]}" {if $release_info[indus_pid]==$v[indus_id]}selected{/if}>{$v[indus_name]}</option>
+				  {/loop}
+			 </select>
+            <select name="indus_id" id="indus_id"  limit = "required:true;between:5-10" msg='{$_lang['industry_son_class_not_choose']}' title='{$_lang['your_service_is_what_industry']}' msgArea="span_indus">
+               <option value="">{$_lang['please_choose_son_class']}</option>
+				{if $release_info['indus_id']}
+					{loop $indus_arr $k $v}
+	                    <option value="{$v[indus_id]}" {if $release_info[indus_id]==$v[indus_id]}selected{/if}>{$v[indus_name]}</option>
+					{/loop}
+				{/if}
+            </select><span id="span_indus" class="ml_5"></span>
+        </div>
+                                                
+         <div class="rowElem clearfix po_re">
+             <label class="grid_3"><strong>{$_lang['service_name']}</strong></label>
+                <div class="grid_13 alpha">
+                  <input name="txt_title" type="text" value="{$release_info['txt_title']}"  title="{$_lang['you_submit_service_notice']}" size="34" maxlength=50
+				   msgArea="span_title" msg="{$_lang['please_input_service_name']}" limit="required:true;len:5-50" id="txt_title" style="width:255px" class="mr_5"/>
+                  <div class="c999" id="span_title">{$_lang['service_name_max_word']}</div><span class="grid_4 omega"></span> 
+                </div>
+                 
+         </div>
+                                               
+         <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['service_description']}</strong></label>
+             <div class="grid_9 alpha">
+                <textarea cols="65" rows="12" name="tar_content" title="{$_lang['service_detail_description']}" id="tar_content" msgArea="msg_content" class="xheditor-simple {urlBase:'$_K['siteurl']/',html5Upload:false,upImgUrl:'index.php?do=ajax&view=upload&file_type=att',skin:'nostyle'}"><!--{eval echo kekezu::escape($release_info['tar_content'])}--></textarea>
+                <div class="clear"></div>
+                
+				<div id="msg_content"></div>
+				<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+				<script type="text/javascript">
+					$(function(){
+						editor = $("#tar_content").xheditor();
+					 	 
+					})
+					 
+				</script>
+             </div>
+             <span class="grid_4 omega"></span>
+         </div>
+                             <!--上传内容-->
+                    <div class="rowElem clearfix lit_form border_n">
+                        <label class="grid_3">
+							<strong>{$_lang['upload_pic']}：</strong>
+						</label>
+						 <div class="grid_9 alpha">
+                        <div class="bord_c">
+                        	<div class="upfile ws_break">
+                                    <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$_lang['upload_max']}{$basic_config['max_size']}M.{$_lang['upload_style']}{$ext}{$_lang['can_upload_five']}</span>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="upfile ws_break">
+                                <div class="grid_8">
+			 						<input type="hidden" name="file_ids" id="file_ids">
+                                	<input type="file" class="file" name="upload" id="upload">
+                                </div>
+								 <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<script type="text/javascript">
+							$(function(){
+								uploadify({
+										auto:true,
+										size:"{$basic_config['max_size']}MB",
+										exts:'{$ext}',
+										limit:5}
+									,{
+										fileType:'service',
+										objType:'service'
+									});
+							})
+					</script>
+					</div>
+                    <!--end 上传内容-->                                    
+         <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['sell_price']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_12 alpha font14">
+                <div class="fl_l">
+                	<input class="fl_l" name="txt_price" type="text" id="txt_price" value="{$release_info[txt_price]}" msgArea="span_price" size="13px"
+					 limit="required:true;type:int;between:{$service_config[min_cash]}-" msg="{$_lang['sell_min_money']}{$service_config[min_cash]}{$_lang['yuan']}"
+					 title="{$_lang['input_service_sell_price']}{$service_config[min_cash]}{$_lang['yuan']}"/><span class="fl_l ml_5">{$_lang['yuan']}/</span>
+				</div>
+                <div class="fl_l ml_10 mr_5">
+                	<select name="unite_price" id="unite_price" style="width:70px;">
+						{loop $price_unit $v}
+							<option value="{$v}" {if $release_info[unite_price]==$v}selected{/if}>{$v}</option>	
+						{/loop}
+           			</select>
+				</div>
+				<span id="span_price"></span>
+             </div>
+         </div>                                   
+         <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['work_time']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_12 alpha font14">
+                <div class="fl_l">
+                	<input name="service_time" id="service_time" type="text"  size="13px" value="{$release_info[service_time]}" msgArea="span_time"
+					 limit="required:true;type:int;between:1-" msg="{$_lang['service_work_time_notice']}"
+					 title="{$_lang['service_work_time_notice']}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+                <div class="fl_l ml_10 mr_5">
+                	<select name="unit_time" id="unit_time" style="width:70px;">
+						{loop $service_unit $v}
+							<option value="{$v}" {if $release_info[unite_price]==$v}selected{/if}>{$v}</option>	
+						{/loop}
+           			</select>
+				</div>
+				<span id="span_time"></span>
+             </div>
+             <span class="grid_4 omega"></span>
+         </div>
+			</form>  
+         </div>
+        <!--from表单 end-->
+		<div class="pt_15">
+     	<div class="step_button"> 
+       			 <button type="submit" name="is_submit" onclick="stepCheck();" class="button"><span class="check icon"></span>{$_lang['next']}</button>
+				 <span class="block"><input type="checkbox" name="agreement" id="agreement" checked>
+		            <label>
+		               	 {$_lang['agree']}《<a href="index.php?do=protocol&pro_id=221" class="agreement_link">{$_lang['service_sell_agreement']}</a>》
+		            </label>
+		        </span>
+		</div>
+		</div>
+		<div class="agreement_part clearfix" style="display:none;">
+		<p><!--{tag 服务出售协议}--></p>
+        </div>
+        </div>
+      </div>
+     <!--end 左边部分-->
+                                
+     <!--右边部分-->
+       <div class="grid_7 alpha">
+         <div class=" prefix_1 suffix_1 pt_20">
+            <h3 class="font14b">{$_lang['has_service_problem_contact']}{$_lang['zh_mh']}</h3>
+       		<div class="online_service clearfix border_b_c mb_10 pb_10">
+            <div class="clearfix mt_10 t_c">
+					<p class="font14b">{$_lang['kf_phone']}{$_lang['zh_mh']}$kf_phone</p>
+            </div>
+        	</div>
+       
+	      <!--{eval echo kekezu::filter_input($model_info[model_desc]);}-->
+     </div>
+     </div>
+  <!--end 右边部分-->

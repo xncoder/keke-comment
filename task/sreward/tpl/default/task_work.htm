@@ -1,0 +1,225 @@
+
+     <div class="grid_24 po_re">
+     	<div class="panel clearfix box">
+       <header class="clearfix box_header">
+       	  <div class="fl_l pl_10 pr_20">	
+          <h3 class="font16b lineh_32">{$_lang['work']}[{$task_info['work_num']}]</h3>
+          </div>
+		  <div class="grid_18 alpha">
+          	<nav class="box_nav">
+            	<ul class="clearfix">
+                    <li><a href="{$basic_url}&view=work">{$_lang['all_works']}[{$task_info['work_num']}]</a></li>
+                    <li><a href="{$basic_url}&view=work&st=4">{$_lang['bided_work']}[<!--{eval echo intval($search_condit['4']['count'])}-->]</a> </li>
+                    <li><a href="{$basic_url}&view=work&st=7">{$_lang['out_work']}[<!--{eval echo intval($search_condit['7']['count'])}-->]</a> </li>
+                    <li><a href="{$basic_url}&view=work&st=5">{$_lang['in_work']}[<!--{eval echo intval($search_condit['5']['count'])}-->]</a></li>
+                	{if $uid==$task_info[uid]}
+		            <li><a href="{$basic_url}&view=work&st=0">{$_lang['no_auth_work']}({if $search_condit[0][count]}$search_condit[0][count]{else}0{/if})</a></li>
+                    {/if}	
+                    {if $task_obj->_guid != $uid}
+					<li><a href="{$basic_url}&view=work&ut=my">{$_lang['my_works']}</a></li>
+					{/if}
+					
+            	</ul>
+            </nav>
+		</div>
+       </header>
+	   
+     	
+	   <!--摘要-->
+       <div class="gj_summery clearfix">
+       	<div  id="gj_summery">
+       {if $work_info}
+      {loop $work_info $v}
+      	<div class="items mt_5 clearfix box">
+      	<!--稿件标题栏 start-->
+         <div id="work_{$v['work_id']}" class="sum_title po_re clearfix ">
+           	 <strong class="po_ab gj_bg">NO.{$v['work_id']}</strong>
+             
+             <div class="sum_left">
+             	<span>{$_lang['contribute_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['work_time'])}--></span> 
+            {if $process_can['work_choose']}
+              {if !in_array($v['work_status'],array('4','7','8'))}
+              <span id="work_4_{$v['work_id']}">
+              	<a href="javascript:void(0);" class="button" onclick="workBid('{$v[work_id]}','4',this)">{$_lang['bid']}</a>
+              </span>
+              {/if}
+			  {if !in_array($v['work_status'],array('4','5','7','8'))}
+              <span id="work_5_{$v['work_id']}">
+              	<a href="javascript:void(0);" class="button"  onclick="workBid('{$v[work_id]}','5',this)">{$_lang['in']}</a>
+              </span>
+              {/if}
+			  {if !in_array($v['work_status'],array('4','7','8'))}
+              	<span id="work_7_{$v['work_id']}">
+                	<a href="javascript:void(0);" class="button"  onclick="workBid('{$v[work_id]}','7',this)">{$_lang['no_qualified']}</a>
+                </span>
+                {/if}
+			{/if} 
+			{if $process_can['task_agree']&&$v['work_status']=='4'&&($uid==$task_info['uid']||$v['uid']==$uid)}
+            <span id="task_agree">|
+            	<a href="javascript:taskAgree({$agree_id});">{$_lang['deliver_agreement']}</a>
+            </span>
+            {/if}
+			{if $process_can['work_vote']&&$v['work_status']=='5'&&$uid!=$v['uid']}
+            	<span>|
+                	<a href="javascript:void(0);" id="work_vote_{$v['work_id']}" onclick="workVote('{$v[work_id]}','{$v[uid]}',this)">{$_lang['vote']}</a>　
+                    <span class="red" id="vote_num_{$v['work_id']}">{$v['vote_num']}</span> {$_lang['vote_num']}
+                 </span>
+            {/if}
+			{if !$mark[$v['work_id']]||($mark[$v[work_id]][mark_status]!=1&&$mark[$v[work_id]][mark_count]<2)}
+				{if $process_can['work_mark']&&$v['work_status']=='4'&&$uid==$task_info['uid']}
+	            	<span>|
+	                	<a href="javascript:void(0);" onclick="mark('{$basic_url}&op=mark&role_type=2&obj_id={$v[work_id]}&task_id={$task_id}');">{if $mark[$v[work_id]][mark_status]}{$_lang['modify_mark_info']}{else}{$_lang['mark_to_work']}{/if}</a>
+	                </span>
+	            {/if}
+				{if $process_can['task_mark']&&$v['work_status']=='4'&&$uid==$v['uid']}
+	            	<span>|
+	                	<a href="javascript:void(0);" onclick="mark('{$basic_url}&op=mark&role_type=1&obj_id={$v[work_id]}&task_id={$task_id}');">{if $mark[$v[work_id]][mark_status]}{$_lang['modify_mark_info']}{else}{$_lang['mark_to_g']}{/if}</a>
+	               </span>
+	            {/if}
+            {/if}
+			 {if $v['uid']==$uid||$uid==$task_info['uid']||$user_info['group']}
+				<span class='fl_r pr_10 c396 fontb'>
+					{if $v['is_view']||$uid==$task_info['uid']}
+						{$_lang['has_viewed']}
+					{else}
+						{$_lang['not_vies']}
+					{/if}
+				</span> 
+			{/if}
+             </div>
+             
+          </div>
+          <!--稿件标题栏 end-->
+          <!--稿件内容栏 start-->
+          <div class="sum_content clearfix work_{$v['work_id']}">
+          <!--用户信息栏 start-->
+           <div class="sc_left t_c">
+             <div class="user_info po_re pt_10" uid="{$v['uid']}" wid="{$v['work_id']}">
+              
+				<!--浮出层-->
+                 <div class="po_ab user_detail hidden"></div>
+                <!--end 浮出层-->
+				
+				<!--用户信息-->
+				<div class="pl_20 t_l clearfix">
+					<div class="fl_l mr_10">
+						<a href="index.php?do=space&member_id={$v['uid']}" target="_blank"> <!--{userpic($v['uid'],'small')}--></a>
+					</div>
+					<!--{eval $user_leve=unserialize($v['seller_level'])}-->
+					<div>
+             			<p><a href="index.php?do=space&member_id={$v['uid']}" target="_blank"><strong>{$v['username']}</strong></a></p>
+						<p class="ml_10">{$user_leve['pic']} </p>
+					</div>
+              		<div class="clear"></div>
+               	 	<p>$v['residency']</p>
+              
+             	</div>
+				<!--end 用户信息-->
+             </div>
+             
+			
+           </div>
+             <!--用户信息栏 end-->
+             
+             <div class="sc_right pad20 po_re clearfix" id="{$v['work_id']}">
+             <!--稿件详细 start-->
+             <div class="work_status_big work_{$v['work_status']}_big qualified_big1 po_ab" alt="{$work_status[$v['work_status']]}" title="{$work_status[$v['work_status']]}"></div>
+       		 <div class="pl_20">
+			{if $v['hide_work']==1&&$uid!=$task_info['uid']&&$uid!=$v['uid']&&$v['work_status']!=4&&$user_info['group_id']<1}<!--隐藏，非雇主-->
+					<div><img src="{$style_path}/img/task/workhide.jpg" alt=''></div>
+			   {else}
+               
+			 	 <div class="ws_prewrap ws_break"><!--{eval echo kekezu::escape($v['work_desc'])}--></div>
+                 	{if $v['work_pic']}
+						<!--{eval $pic = explode(',',$v['work_pic']);}-->
+						{loop $pic $vc}
+							<img src="{$vc}" alt=''>
+						{/loop}
+					{/if}
+               		 <!--稿件附件-->
+				 	{if $v['work_file']}
+			   		  <details open  class="mb_20" id="file">
+			    		 <!--标题-->
+						 <!--{eval $file_count = sizeof(explode(",",$v['work_file']))}-->
+			     		<summary class="pad5 fontb"><a href="javascript:void(0);" onclick="loadFile('{$v[work_id]}')">{$_lang['see_attachment']}($file_count)</a></summary>
+			      		<div class="affix pl_10" id="work_{$v['work_id']}_file"></div>
+			  		 </details>
+			  	   {/if}
+			       <!--end 稿件附件-->
+				{/if}
+				{if $v['comment_num']}
+					<summary class="pad5 fontb">
+					<a href="javascript:void(0);" onclick="loadComment(this,'{$v[work_id]}','{$v[uid]}')">
+						{if $has_new[$v['work_id']]&&$uid==$v['uid']}
+							(<!--{eval echo intval($has_new[$v['work_id']]['count'])}-->){$_lang['tiao_new_words']}
+						{else}
+							({$v['comment_num']}){$_lang['tiao_words']}
+						{/if}
+					</a>
+					</summary>
+				 {/if}
+				 <!---->
+				 <div id="work_{$v['work_id']}_comment" class="pb_10">
+				 	
+				 </div>
+                    
+			{if $uid==$task_info['uid']}
+				 <div class="work_answer pt_10 pb_10 clearfix">
+					<div class="answer-form ">
+                    	<div class="grid_10">
+						<textarea class="tar_comment txt_input" onkeydown="checkCommentInner(this,event)" cols="70">{$_lang['i_say_little']}</textarea>
+                       
+                            <div class="answer-textarea  answer-zone pt_10" style="display:none;">
+                                <button type="button" class="button answer-zone" value="{$_lang['confirm']}" onclick="work_comment(this,'{$v[work_id]}')"><span class="check icon"></span>{$_lang['public']}</button>
+                                <span class="answer_word">{$_lang['you_can_input']}</span>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			{/if}
+                </div>
+				
+              </div>
+			  
+			  <div class="operate fl_r">
+			  	
+            	{if $user_info['group_id']=='7'}
+                	<a href="javascript:void(0);" title="{$_lang['del_work']}" onclick="workDel('{$v[work_id]}')"><div class=" icon16 trash mr_5"></div>{$_lang['del_work']}</a>|
+                {/if}
+				
+				{if $uid!=$v['uid']}
+				
+                	<a href="javascript:void(0);" title="{$_lang['favorit']}" onclick="favor('work_id','work','{$model_code}','{$v[uid]}','{$v[work_id]}','{$task_info[task_title]}{$_lang[ones_work]}','{$task_id}')"><div class="icon16 star-fav-empty mr_5"></div>{$_lang['favorit']}</a>|
+                {/if}
+				
+				{if $process_can['work_report']&&$uid!=$v['uid']}
+                	<a href="javascript:void(0);" title="{$_lang['complaint']}{$_lang['report']}" onclick="report('work','2','{$v[work_id]}','{$v[uid]}','{$v[username]}')"><div class=" icon16 hand-1 mr_5"></div>{$_lang['complaint']}{$_lang['report']}</a>
+                {/if}
+				<!--
+				{if $process_can['work_complaint']&&$uid!=$v['uid']}
+                	<a href="javascript:void(0);" title="{$_lang['complaint']}" onclick="report('work','3','{$v[work_id]}','{$v[uid]}','{$v[username]}')"><div class=" icon16 cog mr_5"></div>{$_lang['complaint']}</a>
+                {/if}
+				-->
+				</div>
+            </div>
+			
+            <!--稿件标题栏 end-->
+            </div>
+		 {/loop}
+		 {else}
+		 	<div class="t_c"><span class="c999">{$_lang['now_no_record']}</span></div>
+		 {/if}
+         <!--page 翻页 start-->
+         <div class="page">
+             <p class="clearfix"><span class="stats">{$_lang['total']}{$task_info['work_num']}{$_lang['tiao']} </span>{$pages['page']} </p>
+             <div class="clear">
+           </div>
+         </div>
+         <!--page 翻页 end-->
+       </div>
+	   </div><!--end 摘要-->
+     </div>
+	 </div>
+	 <script type="text/javascript" >
+	 	///In('xheditor');
+	 </script>

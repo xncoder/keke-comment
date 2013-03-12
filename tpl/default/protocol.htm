@@ -1,0 +1,35 @@
+<!--{template header}-->
+<style>
+.agreement{border:1px solid #ccc; background:#f9f9f9; margin-top:10px;}
+.agtop{height:50px;}
+.agreetop{font-size:25px; font-family:"Î¢ÈíÑÅºÚ"; color:#2f549f; font-weight:normal;}
+.cont{border-top:1px solid #ccc;}
+.contents{width:820px; margin:auto; margin-top:15px;}	
+</style>
+<div class="container_24">
+ <div class="clearfix agreement {$_K['theme']}_style pad20">
+ 	<div class="agtop t_c">
+ 	<h1 class="agreetop">{$pro_info['art_title']}</h1>
+	</div>
+   <div class="clearfix box" id="upload_tip">
+       <div class="rowElem cont clearfix" id="desc">
+			 <div class="contents">
+				<!--{eval echo kekezu::filter_input($pro_info['content'])}-->
+				<div class="operate t_r">
+			 		<a target="_blank" href="#" title="{$_lang['print']}">
+			 			<div class="icon16 print"></div>
+					</a>
+					<a target="_blank" href="#" title="{$_lang['return_top']}">
+			 			<div class="icon16 arrow-top"></div>
+					</a>
+					<a target="_blank" href="#" title="{$_lang['return_home']}">
+			 			<div class="icon16 home"></div>
+					</a>
+				 </div>
+			 </div>
+			 
+      </div>
+	</div>
+ </div>
+</div>
+<!--{template footer}-->

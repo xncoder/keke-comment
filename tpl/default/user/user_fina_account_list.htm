@@ -1,0 +1,101 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+        <!--{template user/user_side}-->
+        <div class="show_panel container_24 po_re">
+        <div class="prefix_3 grid_21">
+            <div class="panel clearfix box">
+                <!--main content-->
+                <div class="">
+                    <!--header内容头部 start-->
+                    <header class="clearfix box_header">
+                        <h2 class="grid_4 alpha box_title t_c">{$_lang['bank_account']}</h2>
+                        <nav class="box_nav">
+                            <ul>
+                                <li>
+                                    <a href="{$origin_url}&op={$op}&opp=add&step=step1#userCenter">{$_lang['add_account']}</a>
+                                </li>
+                                <li class="selectedLava">
+                                    <a href="{$origin_url}&op={$op}&opp=list#userCenter">{$_lang['account_list']}</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="clear">
+                        </div>
+                    </header>
+                    <!--detail内容 start-->
+                    <article class="box_detail">
+                        <div class="messages m_warn">
+                            <div class="icon16"></div>
+                            {$_lang['warn_about_account']} <a href="###" class="close">&times;</a>
+                        </div>
+                        <div class=" prefix_1 suffix_1 ">
+                            <div class="form_box pad10">
+                                <ul>
+                                   {if $account_list}
+                                    {loop $account_list $v}
+                                    <li class="border_b_c clearfix pad20">
+                                        <div class="grid_2">
+                                            {if $v['bank_type']=='1'}{$_lang['personal']}{else}{$_lang['enterprise']}{/if}
+                                        </div>
+                                        <div class="grid_7">
+                                            <img src="resource/img/system/kppw_2.0_{$v['bank_name']}.png" alt="{$bank_arr[$v['bank_name']]}" title="{$bank_arr[$v['bank_name']]}"/>
+                                        	{if $auth_list[$v['bank_id']]}
+											<span class="c690 fontb">{$_lang['have_auth']}</span>
+											{/if}
+										</div>
+                                        <div class="grid_8 t_r">
+                                        <div class="fl_r">	
+                                            <button type="button" class="button fl_l block mr_5" onclick="location.href='{$origin_url}&op={$op}&opp=add&step=step2&bank_type=$v['bank_type']&bank_id=$v['bank_id']'" value="{$_lang['view']}" name="{$_lang['view']}">
+                                                <span class="icon book ">&nbsp;</span>{$_lang['view']}
+                                            </button>
+                                            <button type="button" class="button fl_l block" onclick="rebind('{$v['bank_id']}','{$auth_list[$v['bank_id']]['bank_a_id']}');" value="{$_lang['unbind']}" name="{$_lang['unbind']}">
+                                                <span class="icon cross">&nbsp;</span>{$_lang['unbind']}
+                                            </button>
+											</div>
+                                        </div>
+                                    </li>
+                                    {/loop}
+                                    {else}
+                                      <li class="t_c w0"> 	{$_lang['norecord']}</li>
+                                     {/if}
+                                </ul>
+                                <div class="rowElem clearfix  pt_10 t_r">
+                                    <button type="button" value="{$_lang['register_account']}" name="{$_lang['register_account']}" onclick="location.href='index.php?do=user&view=setting&op=fina_account&opp=add'">
+                                        <span class="icon plus">&nbsp;</span>{$_lang['register_account']}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!--detail内容 end-->
+                </div>
+                <!--main content end -->
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+    function rebind(bank_id,bank_a_id){
+		var title = "{$_lang['confirm_about_unbind']}";
+		if(bank_a_id){
+			title = "{$_lang['confirm_about_unbind_bank_auth']}";
+		}else{
+			bank_a_id = 0;
+		}
+		showDialog(title,"confirm","{$_lang['friendly_notice']}","subConf("+bank_id+","+bank_a_id+")"); 
+    }
+	function subConf(bank_id,bank_a_id){
+		location.href="$ac_url&rebind=1&bank_id=" + bank_id+'&bank_a_id='+bank_a_id;
+  	}
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

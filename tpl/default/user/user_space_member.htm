@@ -1,0 +1,255 @@
+<!--{template header}-->
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['space_set']}</h2>
+                                <div class="grid_14 omega">
+                                    <nav class="box_nav">
+                                        <ul>
+				                      {loop $third_nav $k $v}
+										{if $k!='view'}
+				                            <li {if $k==$opp}class="selectedLava"{/if}>
+				                                <a href="index.php?do=user&view=setting&op=space&opp={$k}#userCenter" title="{$v['1']}">{$v['0']}</a>
+				                            </li>  
+										{else} 
+											<li>
+												 <a href="index.php?do=space&member_id={$uid}" title="{$v['1']}" target="_blank">{$v['0']}</a>
+				                            </li>
+										{/if}
+				                       {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+								{if $show=='list'}
+								<div class="rowElem clearfix t_r">
+					             <button type="button" value="{$_lang['add_member']}" onclick="location.href='{$ac_url}&show=add#userCenter'" style="width:100px"> {$_lang['add_member']}
+					             </button>
+					           </div>
+							   {else}
+								<div class="rowElem clearfix t_r">
+					             <button type="button" value="{$_lang['view_member']}" onclick="location.href='{$ac_url}&show=list#userCenter'" style="width:100px">{$_lang['view_member']}
+					             </button>
+					            </div>
+							   {/if}
+                                <div class="clear"></div>
+                            </header>
+                            <!--header内容头部 end-->
+                            <!--<div class="step_progress clearfix">
+                            </div>-->
+                            <!--messages消息 start-->
+                            <!--<article class="box_detail" id="messages">
+                            </article>-->
+                            <!--messages消息 end-->
+                           
+						    <div class="prefix_1 suffix_1">
+                                <!--成员列表start-->
+                                    {if $show=='list'}
+                                            {if $member_list}
+                                            {loop $member_list $v}
+												<div class="clearfix box mb_10 member{$v['member_id']}" id="{$v['member_id']}">
+													<div class="case_title po_re clearfix ">
+														<strong class="po_ab gj_bg">NO.{$v['member_id']}</strong>
+														<div class="case_word_title">
+															<span class="ml_5">$_lang['member_intro']</span>
+														</div>
+													</div>
+		                                         	<div class="clearfix box case_box po_re">
+														<div class="clearfix case_info po_ab" >
+															<div class="po_re pad10">
+																<a href="#">
+																	<!--{if $v['member_pic']}<img src="{$_K['siteurl']}/{$v['member_pic']}" class="block mar_auto pic_img" alt="{$_lang['display_picture']}" title="{$_lang['display_picture']}" width="132" height="139">{else}<img src="data/avatar/default/man_big.jpg" class="block mar_auto pic_img" alt="{$_lang['default_picture']}" title="{$_lang['default_picture']}" width="132" height="139">{/if}-->
+																</a>
+			                                                    <ul>
+			                                                        <li class="t_c"><a href="javascript:void(0)" title="{$v['truename']}"><span>{$v['truename']}</span></a></li>
+			                                                        <li class="ml_20">{$_lang['job_position']}{$_lang['zh_mh']}{$v['member_job']}</li>
+			                                                        <li class="ml_20">{$_lang['edu_background']}{$_lang['zh_mh']}{$v['top_eduction']}</li>
+			                                                        <li class="ml_20">{$_lang['graduated']}{$_lang['zh_mh']}{$v['school']}</li>
+			                                                        <li class="ml_20">{$_lang['entry_age']}{$_lang['zh_mh']}<!--{date('Y-m-d',$v['entry_age'])}--></li>
+			                                                    </ul>
+															</div>
+														</div>	
+		                                               
+													    <div class="case_word border_l_c po_re">     
+		                                                    <div class="pad20">
+			                                                    <div class="t_i">
+			                                                        {if $v['member_desc']}{$v['member_desc']}{else}{$_lang['no_description']}{/if}
+			                                                    </div>
+															</div>
+															<div class="operate po_ab">
+																<a href="{$ac_url}&show=add&member_id={$v['member_id']}#userCenter" title="{$_lang['edit']}" class="mr_10"><div class="icon16 pencil mr_5">{$_lang['edit']}</div>{$_lang['edit']}</a>
+																|
+																<a href="javascript:void(0)" title="{$_lang['delete']}"class="mr_10" onclick="del($v['member_id'])"><div class="icon16 trash mr_5">{$_lang['delete']}</div>{$_lang['delete']}</a>
+															</div>
+		                                                </div>
+													</div>	
+	                                            </div>
+											{/loop}
+                                            {else}
+	                                            <div class="mt_10 clearfix t_c w0">
+	                                                {$_lang['no_member']}
+	                                            </div>
+                                            {/if} 
+
+                                    <div class="page">
+                                        <p>
+                                            {$pages['page']}
+                                        </p>
+                                    </div>
+                                    {else}<!--from表单 start-->
+                                    <div id="add_tips">
+                                    <h3 class="mt_10 mb_10">{$_lang['add_space_member']}</h3>
+                                    <form action="{$ac_url}&show=add&member_id={$member_id}" method="post" id="frm" name="frm" enctype="multipart/form-data">
+                                        <input type="hidden" name="pk[member_id]" value="$member_id">
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['member_names']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <input name="conf[truename]" size="39" type="text" title="{$_lang['member_names_length']}" id="truename" value="{$member_info['truename']}" limit="required:true;len:2-10" msg="{$_lang['tips_about_member_names']}" msgArea="span_truename"/><span id="span_truename"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['entry_time']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <!--{eval if($member_info['entry_age'])$date=$member_info['entry_age'];else $date=time();}--><input size="23" type="text" name="conf[entry_age]" onclick="showcalendar(event, this,0)" title="{$_lang['entry_time']}" id="entry_age" limit="required:true;type:date" value="<!--{date('Y-m-d',$date)}-->"/>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['display_picture']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <div class="grid_10">
+                                                    <input type="file" name="member_pic" id="member_pic" ext=".jpg,.gif,.png,.jpeg" class="button t_c" onchange="isExtName(this,1)">
+                                                	{if $member_info['member_pic']}
+													<a href="{$_K['siteurl']}/{$member_info['member_pic']}" target="_blank"><!--{eval echo ltrim(strrchr($member_info['member_pic'],'/'),'/')}--></a>
+													{/if}
+												</div>
+                                                <div class="grid_12 alpha ui_note">
+                                                    {$_lang['best_results_about_display_picture']}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['member_position']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <input name="conf[member_job]" size="39" type="text" title="{$_lang['member_position_length']}" value="{$member_info['member_job']}" id="member_job" limit="required:true;len:2-30" msg="{$_lang['error_format_about_member_position']}" msgArea="span_member_job"/><span id="span_member_job"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['highest_level_of_edu']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class=" fl_l mr_10">
+                                                <select name="conf[top_eduction]" style="width:100px">
+                                                    {loop $entry_age $v}<option value={$v} {if $v==$member_info['top_eduction']}selected="selected"{/if}>$v&nbsp; </option>
+                                                    {/loop}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['graduated']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_15">
+                                                <input name="conf[school]" size="39" type="text" title="{$_lang['graduated_length']}" id="school" value="{$member_info['school']}" limit="required:true;len:2-50" msg="{$_lang['tips_about_graduated']}" msgArea="span_school"/><span id="span_school"></span>
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <div class="grid_12 omega">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['member_intro']}{$_lang['zh_mh']}
+                                                </label>
+                                                <textarea name="conf[member_desc]" id="member_desc" cols="80" rows="8" class="grid_9 xheditor-simple {skin:'nostyle'}">{$member_info['member_desc']}</textarea>
+                                            </div>
+											<span id="desc"></span>
+											
+											<div class="clear"></div>
+											<div class="grid_2">&nbsp;</div>
+                                            <div class="grid_6 alpha ui_note">
+                                               {$_lang['member_intro']}{$_lang['zh_jh']}
+                                            </div>
+                                        </div>
+                                        <div class="rowElem clearfix form_button t_c">
+                                            <button type="submit" name="sbt_action" id="sbt_action" value="{if !$member_info}{$_lang['add']}{else}{$_lang['edit']}{/if}{$_lang['member']}" onclick="return check_form('frm')">
+                                                <span class="check icon"></span>{if !$member_info}{$_lang['add']}{else}{$_lang['edit']}{/if}{$_lang['member']}
+                                            </button>
+                                        </div>
+                                    </form>
+                                    {/if}<!--from表单 end-->
+                                </div>
+                                <!--个人经历end-->
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+	</div>	
+
+<!--contain end-->
+<script type="text/javascript">
+	In('form','xheditor');
+    /**
+     * 删除成员
+     * @param {Object} member_id 成员编号
+     */
+    function del(member_id){
+		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}",function(){
+			var url = '$ac_url&show=list&ac=del&member_id=' + member_id;
+            $.getJSON(url, function(json){
+                if (json.status == '1') {
+                    tipsAppend(member_id, json.msg, 'successful', 'green');
+                    $(".member" + member_id).slideUp(2000).remove();
+                    if ($("dl dt").length == 0) {
+                        $("dl").append("<dt class='bf7 mt_10 clearfix t_c font14b'>{$_lang['no_member']}</dt>");
+                    }
+                }
+                else {
+                    tipsAppend(member_id, json.msg, 'error', 'red');
+                }
+            })
+		});
+    }
+    
+    /**
+     * 表单提交
+     * @param {Object} obj 表单id
+     */
+    function check_form(obj){
+        var shtml = $("#member_desc").val();
+        if (shtml.length < 2) {
+            tipsAppend("desc", "{$_lang['description_at_least_two_words']}", 'warning', 'm_warn',1);
+            $("#member_desc").focus();
+            return false;
+        }
+        var i = checkForm(document.getElementById(obj));
+        if (i) 
+            return true;
+        else 
+            return false;
+    }
+</script>
+<!--main end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

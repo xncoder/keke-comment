@@ -1,0 +1,69 @@
+<!--{template header}--> 
+<div class="wrapper">
+<link href="{SKIN_PATH}/css/guide.css" rel="stylesheet" type="text/css" charset="{CHARSET}">
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<!--页面头部-->
+<header class="clearfix page_header">
+    <div class="container_24 page_title">
+  		<h2 class="mt_10 mb_10 title"><b>{$_lang['perfect_data']}</b></h2>
+    </div>
+</header>
+<!--end 页面标题--><!--主内容-->
+<section class="clearfix content">
+	
+    <div class="container_24">
+        <div class="box mt_10  clearfix">
+            <div class="grid_24">
+            	<div class="filter box normal po_re">
+            		<div class="inner">
+            			<!--star 进度选项-->
+						<div class="step_progress clearfix">
+							<div class="step step1 ">
+							<span class="icon32 pub">1</span>
+							<strong>{$_lang['one_step']}</strong>
+							{$_lang['choose_identity']}
+							</div>
+							<div class="step step2">
+							<span class="icon32 pub">2</span>
+							<strong>{$_lang['two_step']}</strong>
+							{$_lang['fill_data']}
+							</div>
+							<div class="step step3 selected">
+							<span class="icon32 pub">3</span>
+							<strong>{$_lang['three_step']}</strong>
+							{$_lang['data_success']}
+							</div>
+						</div>
+						<!--end 进度选项-->
+						
+						<div class="step1_detail pl_5 pr_5 clearfix">
+							<div class="box complete form_box ml_40 mr_40 ">
+					            <div class="form_tip border_n">
+					            	
+									{if $type=='e'}
+									{$_lang['data_e_saved']}
+									<a href="index.php?do=user&view=payitem&op=auth&auth_code=enterprise#userCenter">{$_lang['e_auth']}</a>
+									
+									{elseif $type=='p'}
+									{$_lang['data_p_saved']}
+									<a href="index.php?do=user&view=payitem&op=auth&auth_code=realname#userCenter">{$_lang['p_auth']}</a>
+									
+									{/if}
+					            </div>
+					        </div>
+					        <div class="t_c mb_30">
+					            <a href="index.php?do=user&view=setting&op=basic" class="button">{$_lang['look_data']}</a>
+					            <a href="index.php?do=index" class="button  ml_10">{$_lang['go_index']}</a>
+					        </div>
+            			</div>
+                	</div>
+            	</div>
+			</div>
+		</div>
+	</div>	
+</section>	
+</div>
+<script type="text/javascript" src="resource/js/others/ui.core.js"></script>
+<script type="text/javascript" src="resource/js/others/ui.slider.js"></script>  
+
+ <!--{template footer}-->

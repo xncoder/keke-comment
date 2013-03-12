@@ -1,0 +1,53 @@
+ <table class="data_table " cellpadding="0" cellspacing="0">
+<thead>
+    <tr>
+        <th width="30%">
+            $_lang['pj_name']
+        </th>
+        <th width="">
+            $_lang['pj']
+        </th>
+        <th width="15%">
+            {if $come=='gz'||empty($come)}
+            $_lang['gz']
+            {else}
+            $_lang['witkey']
+            {/if}
+        </th>
+    </tr>
+</thead>
+<tbody>
+{if !empty($result)}
+{loop $result $k $v}
+<tr>
+	<td>{if $v['task_title']}{$v['task_title']}{else}{$v['title']}{/if}</td>
+	<td>{if $v['mark_status']=='1'}{$_lang['praise']}
+            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+            {elseif $v['mark_status']=='2'}{$_lang['the_assessment']}
+            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+            {elseif $v['mark_status']=='3'}{$_lang['negative_feedback']}
+            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+            {/if}
+             {if !empty($v['mark_content'])}
+	                                             {$v['mark_content']}<p><!--{eval echo date('Y-m-d H:i:s',$v['mark_time'])}--></p> 
+	                                    		{/if}
+    </td>
+	<td>
+	<div>{$v['by_username']}</div>
+	<!--{eval $credit=unserialize($v['seller_level']);}-->{$credit['pic']}
+	</td>
+</tr>
+{/loop}
+{else}
+ 	<tr><td colspan="3" class="t_c">$_lang['no_data']</td></tr>
+ {/if}
+ <tr>
+</tbody>
+</table>
+  	<div class="page ml_30  fl_r">
+        		<p class="clearfix">
+            		{$pages['page']}
+        		</p>
+	 </div>
+
+ 

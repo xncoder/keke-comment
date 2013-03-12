@@ -1,0 +1,98 @@
+<!--{template header}-->
+<link href="{SKIN_PATH}/css/mobile.css" rel="stylesheet"/>
+<script type="text/javascript" src="resource/js/jqplugins/slides.min.jquery.js"></script>
+<div class="wrapper">
+	<div class="container_24 clearfix">
+		
+		<div class="grid_11">
+			<div class="iphone hidden">
+				<div style="width:320px; overflow:hidden;">
+				<iframe src="{$_K['siteurl']}" scrolling="auto" frameborder="0" width="340" height="479"></iframe>
+				</div>
+			</div>
+			<div class="android_box clearfix">
+				<div class="banner clearfix po_re">
+					<div id="slides" class="clearfix">
+						<div  class="clearfix slides_container">						
+								
+								<div><img src="{SKIN_PATH}/img/mobile/android_index.jpg" alt="" /></div>						
+								<div><img src="{SKIN_PATH}/img/mobile/android_list.jpg" alt="" /></div>						
+								<div><img src="{SKIN_PATH}/img/mobile/android_task_list.jpg" alt="" /></div>	
+								<div><img src="{SKIN_PATH}/img/mobile/android_info.jpg" alt="" /></div>					
+								<div><img src="{SKIN_PATH}/img/mobile/android_user.jpg" alt="" /></div>						
+						</div>
+						<a class="prev cfff po_ab t_c block" href="#">
+							<span class="icon16 br-prev"><</span>
+						</a>
+						<a class="next cfff po_ab t_c block" href="#">
+							<span class="icon16 br-next">></span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="grid_13">
+			<div class="m_h" style="height:100px;"></div>
+			<div class="messages m_infor clearfix">
+				<span class="icon16 fl_l"></span>
+				<div class="grid_10">
+				{$_lang['using_mouse_wheel']}
+				</div>
+			</div>
+			
+			<nav class="mobile_nav box_nav clearfix ">
+				<ul class="clearfix">
+					<li id="tab_plac_1"  onclick="swaptab('plac','selectedLava','',2,1); $('.iphone').addClass('hidden'); $('.android_box').removeClass('hidden');">
+						<a href="{$apk_url}" class="frist_links">
+							<em class="android"></em>
+							Android版
+						</a>
+					</li>
+					<li id="tab_plac_2"  onclick="swaptab('plac','selectedLava','',2,2);$('.iphone').removeClass('hidden'); $('.android_box').addClass('hidden')">
+						<a href="javascript:void(0)">
+							<em class="web"></em>
+							手机网页版
+						</a>
+					</li>
+				</ul>
+			</nav>	
+			
+			<div class="pad20 mb_20 mobile_nav_box"> 
+				<div id="div_plac_1" class="clearfix t_c">
+					<a href="{$apk_url}" class="big button" >免费下载</a>
+				</div>
+				<div id="div_plac_2" class="clearfix hidden">
+					<h2 class="title">{$_lang['login_now']}  {$_K['sitename']} {$_lang['mobi_version']}</h2>
+					<p>{$_lang['immediate_phone_access']}</p>
+					<div class="t_c font18 cc00">
+						<p>{$_K['siteurl']}</p>
+					</div>	
+				</div>						
+			</div>
+			<div class="font14">
+					<strong class="title">[{$_lang['quickly_visit']}]</strong>
+					<p>{$_lang['quickly_access_via']}</p>
+					<strong class="title">[{$_lang['more_efficient']}]</strong>
+					<p>{$_lang['more_convenient']}</p>
+					<strong class="title">[{$_lang['mobile_browse']}]</strong>
+					<p>{$_lang['tips_about_mobile_version']}</p>
+				</div>
+		</div>
+	</div>
+</div>
+<script>
+		$(function(){
+			$('#slides').slides({
+				preload: true,
+				preloadImage: 'img/loading.gif',
+				play: 5000,
+				pause: 2500,
+				hoverPause: true,
+			});
+		});
+	</script>
+<!--{template footer}-->
+
+
+
+

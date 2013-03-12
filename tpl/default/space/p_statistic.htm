@@ -1,0 +1,166 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+  <!--页面内容-->
+<div class="container_24">
+   	<div class=" clearfix">
+      <!--左边用户详情-->
+        <div class="grid_5 alpha omega " >
+         <div class=" m_bk clearfix"><!--换肤-->
+           <!--sta_num-->
+             <div class=" clearfix">
+               	<div class="sta_num_list ">
+               		<p>{$_lang['nickname']} <span >$member_info['username']</span></p>
+                  	<p>{$_lang['grade']} <span >$credit_level['pic']</span></p>
+                  	<p>{$_lang['credit_value']} <span>({$_lang['purchase_commodity_number']} $buy_num) $member_info['seller_credit']</span></p>
+                  	<p>{$_lang['ability_value']} <span >({$_lang['Sale_goods_number']} $sale_num) $member_info['buyer_credit']</span></p>
+                  	<p>$_lang['rz'] 
+					<span >
+										{loop $auth_arr['item'] $k $v}
+											{if $k!=$auth_arr['code']}
+												{if $auth_arr['info'][$k]['auth_status']==1}
+												<img src="{$v['auth_small_ico']}" title="{$v['auth_title']}">
+												{else}
+												<img src="{$v['auth_small_n_ico']}" title="{$v['auth_title']}">
+												{/if}	
+											{/if}								
+											{/loop}
+										</span>
+					</p>
+					<p>$_lang['good_rate'] <span ><!--{eval echo $good_rate;}--></span></p>
+                  	 
+                      	{loop $seller_aid $k $v}
+                         	<div class="border_b_c clearfix">
+                            	
+                                	<p>{$v['aid_name']} <em class="cc00 ml_5">{$v['avg']}{$_lang['fen']}</em></p>
+                              	 		<div class="clear"></div>
+                                   			<div class="star">
+                                   				<div class="fl_l">
+                                        		<!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
+												</div>
+                                   				<span class="fl_r">{$_lang['total']}{$v['count']}{$_lang['people']}</span>
+                                   			</div>
+                            	
+                          	</div>
+                       	{/loop}
+					<!--辅助评价end-->
+                   
+                </div>
+             </div>
+            <!--end sta_num-->
+          </div>  
+         </div>
+                <!--end 左边用户详情-->
+                <!--右边主体内容-->
+                <div class="po_re prefix_5 clearfix " style="*padding-left:5px; *width:757px;">
+                
+                    <!--内容模块一-->
+                    <div class="m_bk clearfix pad20">
+                    	<!-- 筛选条件区域 -->
+                    	<form action="" method="post" name='space_sx' style="height:74px;">
+                    	
+                    		<div class="tab clearfix">
+                    			<a {if $come=='gz'||empty($come)} class='selected'{/if} href="$url&come=gz"><span>$_lang['come_form_gz']</span><b class="arrow arrow_b"></b></a>
+	                    		<a {if $come=='witkey'} class='selected'{/if} href="$url&come=witkey">
+	                    			<span> {if $uid == $member_id} $_lang['come_form_yourself'] {else} $_lang['come_form_witkey'] {/if}</span><b class="arrow arrow_b"></b></a>
+	                    	
+							</div>
+							<div class=" border_t_c bar mar0">
+		                    	<ul class="sort ">
+		                    		<li><label><input type="radio" value="all" name="type" checked>$_lang['all']</label></li>
+		                    		<li><label><input type="radio" value="good" name="type">$_lang['good']</label></li>
+		                    		<li><label><input type="radio" value="middle" name="type">$_lang['middle']</label></li>
+		                    		<li><label><input type="radio" value="bad" name="type">$_lang['bad']</label></li>
+		                    	</ul>
+	                    	</div>
+                    	
+                    	</form>
+                    	
+                    	<!-- 筛选条件区域 -->
+                        <!--comment_box-->
+                        <div id='space_sx_list'>
+			               <div id="ajax_dom" class="data_list">
+			               	<div class="content">
+			               <table class="data_table " cellpadding="0" cellspacing="0">
+                           <thead>
+                               <tr>
+                                   <th width="30%">
+                                       $_lang['pj_name']
+                                   </th>
+                                   <th>
+                                       $_lang['pj']
+                                   </th>
+                                   <th width="15%">
+                                       {if $come=='gz'||empty($come)}
+                                       $_lang['gz']
+                                       {else}
+                                       $_lang['witkey']
+                                       {/if}
+                                   </th>
+                               </tr>
+                           </thead>
+								<tbody >
+	                        	{if !empty($result)}
+	                        	{loop $result $k $v}
+			                        <tr>
+			                        	<td>{if $v['task_title']}{$v['task_title']}{else}{$v['title']}{/if}</td>
+			                        	<td>{if $v['mark_status']=='1'}{$_lang['praise']}
+	                                            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+	                                            {elseif $v['mark_status']=='2'}{$_lang['the_assessment']}
+	                                            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+	                                            {elseif $v['mark_status']=='3'}{$_lang['negative_feedback']}
+	                                            <img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" >
+	                                            {/if}
+	                                             {if !empty($v['mark_content'])}
+	                                             {$v['mark_content']}<p><!--{eval echo date('Y-m-d H:i:s',$v['mark_time'])}--></p> 
+	                                    		{/if}
+	                                    </td>
+			                        	<td>
+			                        		<div>{$v['by_username']}</div>
+										<!--{eval $credit=unserialize($v['seller_level']);}-->{$credit['pic']}
+										</td>
+			                        </tr>
+			                        {/loop}
+			                        {else}
+			                        	<tr><td colspan="3" class="t_c">$_lang['no_data']</td></tr>
+			                        {/if}		
+	                          </tbody>
+                        </table>
+						<!-- 分页 -->
+	                        
+	                            <div class="page ml_30  fl_r">
+	                                <p class="clearfix">
+	                                    {$pages['page']}
+	                                </p>
+	                            </div>
+	                        
+                        </div>
+                      		</div>
+                        
+						</div>
+                        <!--end comment_box-->
+
+                    <!--end 内容模块一--> 
+                    <div class="clear"></div>                   
+                </div> 
+                <!--end 右边主体内容-->
+                
+            </div>	
+   </div>
+   </div>
+        <!--end 页面内容-->
+<script type="text/javascript">
+	$(function(){
+		$(':input[type="radio"]').click(function(){
+			var sx = $(this).attr('value');
+			var url =$('.come_type').attr('href');
+			$.post(url,{sx:sx,isajax:true},function(data){
+				if(data){
+					$('#space_sx_list').find('#ajax_dom:visible .content').html(data);
+				}else{
+					$('#space_sx_list').find('#ajax_dom:visible .content').html("<tr><td colspan=\"3\"  class=\"t_c\">$_lang['no_data']</td></tr>");
+				}
+			},'html')
+		})
+	})
+</script>
+
+<!--{template footer}-->

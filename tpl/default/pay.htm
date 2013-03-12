@@ -1,0 +1,170 @@
+<!--{template header}-->
+ 
+<div class="wrapper">
+    <!--页面头部-->
+    <header class="clearfix page_header">
+        <div class="container_24 clearfix">
+            <!--面包屑-->
+            <div class="breadcrumbs clearfix">
+                <a href="index.php">{$_lang['home']}</a> &gt;
+            </div>
+            <!--end 面包屑-->
+             <div class="page_title">
+                <h2 class="title">{$_lang['pay']}</h2>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </header>
+    <!--end 页面头部--><!--详细内容区-->
+    <section class="content box clearfix">
+        <div class="container_24">
+            
+            <div class="grid_24 panel border_n">
+            <div class="prefix_1 suffix_1 mt_20">	
+				<!--date_table数据表格 start-->
+	            <div class="data_list">
+	                <table class="data_table">
+	                    <thead>
+	                        <tr>
+	                            <th scope="col">
+	                               {$_lang['order_name']} ({$_lang['order_id']}{$order_id})
+	                            </th>
+	                            <th scope="col">
+	                              	{$_lang['order_cash']}
+	                            </th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                    	
+	                        <tr>
+	                            <td>
+	                                <a href="{$href}">{$order_info['order_name']}</a>
+	                               
+	                            </td>
+	                            <td class="red font14b">
+	                                {c:$order_amount}
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <td class="flt">
+	                                <a href="#">{$_lang['user_remain_cach']}</a>
+	                                ({c:$user_balance})
+	                            </td>
+	                            <td class="red font14b">
+	                              	 {$_lang['you_should_pay_cach']}{c:$pay_amount}
+	                            </td>
+	                        </tr>
+	                         
+	                    </tbody>
+	                </table>
+	            </div>
+	            <!--data_table数据表格 end-->
+				
+				
+                <div class="">
+                    
+					
+					<form action="" name="pay" id="pay" method="post">
+		          
+		            <input type="hidden" name="hdn_recharge" id="hdn_recharge" value="$pay_amount">
+		         
+				
+				<!--start 线上支付方式-->
+		           <div class="online">
+		              <div class=" account1 mt_20 clearfix">
+		                    <!--{eval $k=0;}-->
+							{loop $payment_list $pay}
+		                       {if $pay['pay_status']}<!--{eval $k++;}-->
+		                          
+		                              <label class="mr_20"> 
+									  <input class=" mt_10" type="radio" name="online" value="{$pay['payment']}" {if $k=='1'}checked="checked"{/if}/>
+									  <img class="ov_hide" style="width:110px; vertical-align:middle;"  src="payment/{$pay['payment']}/{$pay['payment']}.gif" align="absmiddle" >
+									  </label>
+		                          
+							   {/if} 
+		                    {/loop}
+							{if $k==0}
+							   <div>{$_lang['online_pay']}{$_lang['account_close']}{$_lang['contact_admin']}</div>
+							 {/if} 
+		               
+		               </div>
+					   {if $payment_list['tenpay']['pay_status']}
+					<div class="clearfix form_box">
+						<table id="tbl_ten" cellspacing="0" border="0" cellpadding="0" width="100%" height="120" >
+							<caption class="bf7 pad5"><img src="resource/img/bank/logo.gif"/>{$_lang['provide_payment_service']}</caption>
+							<!--{eval $i=0;}-->
+							<tr>
+							{loop $ten_bank_type_arr $k $v}
+							<!--{eval $i++;}-->
+								<td class="pl_20 pt_10 pb_10"><input type="radio" name="bank_type" {if $i==1} checked="checked" {/if} value="{$k}" id="{$k}"><label for="{$k}" style="cursor:pointer;"><img src="resource/img/bank/{$v}.gif"/></label></td>
+								{if $i%5==0}
+								</tr>
+								<tr>
+								<!--{eval continue;}-->
+								{/if}
+							{/loop}
+							
+								<tr>
+						</table>
+					</div>
+					{/if}
+		            <div class="rowElem clearfix t_c">
+		            	{if $k>0}
+		               		<input type="hidden" name="sbt_pay" value="1">
+		               		<button type="submit" name="sbt_button" value={$_lang['pay']} style="width:100px" onclick=" return user_pay();">{$_lang['pay']}</button>
+					   {else}
+					     <div>在线支付方式未开启，请联系网站管理员开启后方可使用！</div>
+					   {/if}
+		            </div>
+					
+		            </div>
+					</form>
+                </div>
+				
+				</div>
+				
+            </div>
+        </div>
+    </section>
+    <!--end 详细内容区-->
+</div>
+
+<script type="text/javascript">
+	
+	$(function(){
+		//如果是财富通，就隐藏网银列表	
+		$(":radio[name='online']").click(function(){
+			if($(this).val()=='tenpay'){
+				$("#tbl_ten").parent().show();
+			}else{
+				$("#tbl_ten").parent().hide();
+			}
+			
+		})	
+	})
+	function user_pay(){
+		 //支付金额
+	      var cash = parseFloat($("#hdn_recharge").val()) + 0;
+		  //支付方式--财富通，支付宝
+		  var pay_mode = $(":radio[name='online']:checked").val();
+		  //财富通就要添加银行类型
+		  var bank_type = $(":radio[name='bank_type']:checked").val(); 
+		  //弹出付款窗口
+		  pay(pay_mode,cash,bank_type);
+		  return false;
+		 
+	}
+	function pay(pay_mode,cash,bank_type){
+
+		var url = "index.php?do=$do&pay_mode="+pay_mode+"&order_id=$order_id&model_id=$order_info['model_id']";
+		if(bank_type){
+			url += "&bank_type="+bank_type;	
+		}
+		
+	    showWindow("pay",url,'get',0,{cover:1});return false;
+	} 
+ 
+	
+</script>
+<!--{template footer}-->

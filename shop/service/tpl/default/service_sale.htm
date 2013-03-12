@@ -1,0 +1,79 @@
+
+            <div class="panel clearfix box grid_24">
+            	<header class="clearfix box_header">
+            		<div class="fl_l pl_10 pr_20">
+                	<h3 class="font16b lineh_32">{$_lang['buy_record']}[ {$service_info[sale_num]} ]</h3>
+					</div>
+					<div class="grid_18 alpha">
+				      <nav class="box_nav">
+				        <ul class="clearfix">
+				          <li {if !$w} class="selectedLava" {/if}>
+				          	<a href="{$basic_url}&view={$view}#pageTop">{$_lang['all']}[ {$service_info[sale_num]} ]</a>
+				          </li>
+				          <li {if $t=='today'} class="selectedLava" {/if}>
+				          	<a href="{$basic_url}&view={$view}&t=today#pageTop" >{$_lang['newest']}[ {$today_sale} ]</a>
+				          </li>
+				        </ul>
+				      </nav>
+				    </div>
+				</header>
+                <div class="prefix_1 suffix_1 clearfix">
+                
+                <div class="list mt_10">
+                    <dl>
+                        <dd class="tags">
+                            <ul>
+                                <li class="w2">
+                                    {$_lang['buyer']}{if !$uid}{$_lang['after_login_view']}{/if}
+                                </li>
+                                <li class="w2">
+                                    {$_lang['give_price']}
+                                </li>
+                                <li class="w4">
+                                    {$_lang['success_deal_time']}
+                                </li>
+                                <li class="w2">
+                                    {$_lang['status']}
+                                </li>
+                            </ul>
+                        </dd>
+		{if $sale_list}
+			{loop $sale_list $v}
+               <dd>
+        <ul style="height:25px;">
+                     <li class="w2">
+                     	{if $uid}
+                         <a href="index.php?do=space&member_id={$v[order_uid]}" target="_blank">{$v[order_username]}</a>
+						{else}
+							{$_lang['not_can_view']}
+						{/if}
+                     </li>
+                     <li class="w2 red">
+                       {c:$v[order_amount]}
+                      </li>
+                     <li class="w4">
+                         <!--{date('Y-m-d H:i:s',$v[order_time])}-->
+                     </li>
+                     <li class="w2">
+                                   {$status_arr[$v[order_status]]}
+                     </li>
+                   </ul>
+               </dd>
+		   {/loop}
+		{else}
+		   <dd class="bf7 clearfix t_c font14b">
+                                    {$_lang['now_no_deal_record']}
+            </dd>
+		{/if}
+         </dl>
+         </div>
+		 
+         <!--page ·­Ò³ start-->
+         <div class="page fl_r">
+            <p class="clearfix">{$pages[page]}</p>
+            <div class="clear"></div>
+         </div>
+        <!--page ·­Ò³ end-->
+		</div>
+     </div>
+	 

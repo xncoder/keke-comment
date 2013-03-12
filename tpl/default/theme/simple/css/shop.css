@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+	
+	内容 CONTENTS:
+	1. 商城首页
+		1.0 banner部分
+		1.1  热门分类区
+		1.2  热门推荐区
+		
+	2. 商城列表
+	3. 商城地图（地图搜索下拉按钮）
+	4. 商城详细
+		4.0  商品描述
+		4.1  购买记录
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1.商城首页
+ --------------------------------------*/
+
+.shop_otherInfo, .shop_author, .example{ background:#fff;}
+.page_title{ margin-top:10px;}
+/* 1.1 热门分类区 */
+.box.model.purple .box_detail{ background:url(../img/style/box_detai_bk.png) repeat-y right;}
+.box_detail ul.category_list li.category_width{width:316px; float:left; height:130px; overflow:hidden; position:relative; z-index:1; padding-bottom:10px;}
+.box_detail ul.category_list li.category_width:hover,
+.box_detail ul.category_list li.hover{z-index:3; overflow:visible;}
+.box_detail ul.category_list li.hover .item{position:absolute; z-index:2;}
+
+/* 1.2 热门推荐 区*/ 
+.pic_top .one p a.shop_word:hover{ overflow:visible; width:auto; background:#fffeb5; z-index:2;}
+
+.product_desc_rcon p.pro_price b,.product_desc_rcon p.pro_price i,.product_desc_rcon p em{color:#ff6800;}
+
+
+
+/* 4.0商品描述 */
+#ie6 .example{ height:260px;}
+
+
+
+

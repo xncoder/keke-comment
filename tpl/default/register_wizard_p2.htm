@@ -1,0 +1,324 @@
+<!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
+<link href="resource/js/jqplugins/tagsinput/jquery.tagsinput.css" rel="stylesheet" type="text/css">
+<div class="wrapper">
+
+<!--页面头部-->
+	<header class="clearfix page_header">
+    	<div class="container_24 page_title pt_15 pb_5">
+  			<h2 class="title"><b>{$_lang['perfect_data']}</b></h2>
+    	</div>
+	</header>
+<!--end 页面标题--><!--主内容-->
+
+	<section class="clearfix content">	
+    	<div class="container_24">
+        	<div class="box  clearfix">
+            	<div class="grid_24">
+            		<div class="filter box normal po_re">
+            			<div class="inner">
+            				<!--star 进度选项-->
+							<div class="step_progress clearfix">
+								<div class="step step1 ">
+									<span class="icon32 pub">1</span>
+									<strong>{$_lang['one_step']}</strong>
+									{$_lang['choose_identity']}
+								</div>
+								<div class="step step2 selected">
+									<span class="icon32 pub">2</span>
+									<strong>{$_lang['two_step']}</strong>
+									{$_lang['fill_data']}
+								</div>
+								<div class="step step3 ">
+									<span class="icon32 pub">3</span>
+									<strong>{$_lang['three_step']}</strong>
+									{$_lang['data_success']}
+								</div>
+							</div>
+							<!--end 进度选项-->
+						
+						<div class="step1_detail pl_5 pr_5 clearfix">
+							
+							<div class="prefix_1 suffix_1 clearfix">
+								<form action="index.php?do=register_wizard" name="frm" id="frm" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="formhash" value="{FORMHASH}">
+									<input type="hidden" name="refer"  value="$refer">
+									<input type="hidden" name="pk[uid]" value="{$uid}">
+									<input type="hidden" name="conf[user_type]" value="1"/>
+									<input type="hidden" value="{$step}" name="step">							
+									<input type="hidden" name="skills" id="skill_ids"/>
+									<div class="form_box pt_20">									
+										<div class="rowElem clearfix">											
+											<label class="grid_5 t_r">
+                                                 	{$_lang['skill_mark']}{$_lang['zh_mh']}
+                                            </label>
+											{$_lang['add_skill']}
+											<div class="clearfix prefix_5" id="skill_container11" >
+																							
+	                                            <div class="grid_8 alpha">
+	                                                <h4 class="mb_10">{$_lang['skill_tips']}</h4>
+	                                                   <!--tags_box 标签 start-->
+	                                                <div class="tags_box">
+	                                                <span id="tags" type="text" class="tags" /></span>
+	                                            	</div><!--tags_box 标签 end-->
+                                            	
+	                                        	</div>
+	                                        	<div class="grid_7">
+	                                            	<h4 class="mb_10 border_b_c">{$_lang['choose_indus_skill']}</h4>
+		                                            <div class="">
+		                                                <div class="grid_2">
+		                                                    <label>{$_lang['choose_indus']}</label>
+		                                                </div>
+		                                                <div class="grid_3">
+		                                                    <select name="skill_pid" id="skill_pid" style="width:140px;" onchange="InsertIndus($('#skill_pid option:selected').val(),'skill_tags');">
+		                                                        {loop $indus_p_arr $v}
+																	<option {if isset($user_indus['indus_pid']) &&  $user_indus['indus_pid']==$v['indus_id']}  selected="selected"{/if}  value="{$v['indus_id']}">{$v['indus_name']}</option>
+		                                                        {/loop}
+		                                                    </select>
+		                                                </div>
+		                                                <div class="clear"></div>
+		                                            </div>
+		                                            <div class="form_box clearfix">
+		                                                <div class="tags_add pad5 clearfix" id="skill_tags"></div>
+		                                            </div>
+	                                        	</div>
+												 <div class="clear"></div>  
+	                                        </div>
+                                        </div>	
+										<div class="rowElem clearfix">
+											<label class="grid_5 t_r">{$_lang['truename']}{$_lang['zh_mh']}</label>											
+												<input id="realname" name="conf[truename]"
+												 type="text" msgarea="span_realname" msg="{$_lang['truename_error']}" 
+												 limit="required:true;len:2-10" value="{$user_info['truename']}" size="35"  
+												  original-title="{$_lang['truename_title']}" {if $real_pass}disabled="disabled"  style="color:#999"{/if}>
+												<span id="span_realname"></span>
+											<div class="clear"></div>						
+										</div>										
+										<div class="rowElem clearfix">
+			                              <label class="grid_5 t_r">{$_lang['birthday']}{$_lang['zh_mh']}</label>				                          
+                                            <input name="conf[birthday]" class="birthday" type="text" size="35" value="{if $user_info['birthday']}{$user_info['birthday']}"
+											 onclick="showcalendar(event, this, 0)" title="" msgArea="span_birthday" 
+												 limit="required:true;type:date;less:1997-02-08" msg="{$_lang['birth_error']}" id="birthday" original-title="{$_lang['birth_title']}" />
+											 <span id="span_birthday"></span>
+                                          <div class="clear"></div>	
+									   </div>
+									    <div class="rowElem clearfix">						                    
+											<label class="grid_5 t_r">
+						                     	{$_lang['belong_indus']}{$_lang['zh_mh']}
+						                    </label>
+							              	<div class="fl_l">
+						                        <select name="conf[indus_pid]" id="indus_pid" title="{$_lang['choose_indus']}" style="width:135px;" onchange="showIndus(this.value)" limit = "required:true;between:5-10" msg = '{$_lang['indus_not_choose']}' msgArea="span_indus">
+						                            <option value="">{$_lang['choose_indus']}</option>
+						                      		{loop $indus_p_arr $v}
+														 <option value="{$v['indus_id']}" {if $user_info['indus_pid']==$v['indus_id']}selected{/if}>{$v['indus_name']}</option>
+													{/loop} 
+												 </select>
+												 
+												 
+						                    
+						                   
+						                        <select name="conf[indus_id]" id="indus_id" style="width:140px;" limit = "required:true;between:5-10" msg='{$_lang['sub_not_choose']}' title='{$_lang['choose_sub']}' msgArea="span_indus"><span id="span_indus"></span>
+						                            <option value="">{$_lang['choose_sub']}</option>
+													{if $user_info['indus_id']}}
+													{loop $indus_arr $k $v}
+						                           		 <option value="{$v['indus_id']}" {if $user_info['indus_id']==$v['indus_id']}selected{/if}>{$v['indus_name']}</option>
+													{/loop}
+													{/if}
+						                        </select>
+						                    
+											<div id="span_indus"></div>
+											</div>										
+						                </div>	
+									    <div class="rowElem clearfix">
+                                            <label class="grid_5 t_r">
+                                                {$_lang['mobile']}{$_lang['zh_mh']}
+                                            </label>
+                                            <input name="conf[mobile]" id="mobile" type="text" value="{$user_info['mobile']}" title="{$_lang['fill_in_your_own_phonenum']}" limit="required:true;type:mobileCn" msg="{$_lang['wrong_format_about_phonenum']}" msgArea="span_mobile" size="35" />
+											<span id="span_mobile"></span>
+                                            <div class="clear"></div>                          
+                                        </div>
+										<div class="rowElem clearfix">
+											<label class="grid_5 t_r">
+						                     	{$_lang['location']}{$_lang['zh_mh']}
+						                    </label>
+						                   		<select name="province" id="province"></select><select name="city" id="city"></select><select name="area"></select>
+			 							</div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_5 t_r">
+                                                {$_lang['sex']}{$_lang['zh_mh']}
+                                            </label>
+                                            <input class="border_n"  type="radio" name="conf[sex]" value="{$_lang['secret']}" {if !$user_info['sex']||$user_info['sex']==kekezu::lang('secret')}checked{/if} />
+                                            <label>
+                                                {$_lang['secret']}
+                                            </label>
+                                            <input class="border_n" type="radio" name="conf[sex]" value="{$_lang['man']}" {if $user_info['sex']==kekezu::lang('man')}checked{/if} />
+                                            <label>
+                                                {$_lang['man']}
+                                            </label>
+                                            <input class="border_n" type="radio" name="conf[sex]" value="{$_lang['woman']}" {if $user_info['sex']==kekezu::lang('woman')}checked{/if} />
+                                            <label>
+                                                {$_lang['woman']}
+                                            </label>
+                                        </div>
+										<div class="rowElem clearfix">                                            
+                                                <label class="grid_5 t_r">
+                                                 	{$_lang['profile']}{$_lang['zh_mh']}
+                                                </label>
+												<div class="fl_l">
+                                                <textarea cols="80" rows="8" id="tar_content" msgArea="content_msg" name="conf[summary]" class="xheditor-simple {skin:'nostyle'}" style="width:400px;">{$user_info['summary']}</textarea>
+												<div style="display:none;"><span id="content_msg"></span></div>
+												</div>                                            
+                                            <div class="grid_6 ui_note">{$_lang['profile_tips']} </div>
+                                        </div>
+										<div class="rowElem clearfix form_button" >
+											<input type="hidden" value="1" name="sbt_add" original-title="">
+											<button class="button" onclick="save();" value="{$_lang['save']}" name="sbt_add" type="button"><span class="check icon"></span>{$_lang['save']}</button>
+										</div>
+									</div>
+								</form>
+							</div> 
+							
+						</div> 
+            		</div>
+                </div>
+            </div>
+		</div>
+	</div>
+	</section>
+</div>
+ <script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+<script type="text/javascript">
+	 $(function(){
+	 	editor = $("#tar_content").xheditor();
+	 })
+</script>
+<script type="text/javascript">
+
+ 
+In.add('tagsinput', {path: "resource/js/jqplugins/tagsinput/jquery.tagsinput.js",type: 'js'});
+In('tagsinput',  function (){
+ 
+	set_tags(); 	
+});
+In('form','calendar','xheditor','pcas',function(){
+	    new PCAS("province","city","area");
+	}); 
+  
+  
+//标签
+function set_tags(){
+
+    $('#tags').tagsInput({
+        'unique': 1,
+        'defaultText': ''
+    });
+	 
+    skills = "{$user_skill}";
+	 
+    s = skills.split(',');
+    for (i = 0; i < s.length; i++) {
+        $("#tags").addTag(s['i']);
+    }
+
+	
+    
+}
+$(function(){
+
+$("#tar_content").blur(function(){		
+		contentCheck('tar_content',"{$_lang['profile']}",10,1000);
+	});
+	
+	var SelectedP = $("#skill_pid option:selected").val();
+    InsertIndus(SelectedP, "skill_tags");
+	
+})
+function InsertIndus(pIndus, insertDiv){
+    $.getJSON("index.php?do=user&view=setting&op=basic&opp=skill&ac=get_skill&indus_id=" + pIndus, function(json){
+        if (json.status == '1') {
+            var tagStr = '';
+            $.each(json.data, function(i, n){
+                tagStr += '<a  href="javascript:add_tag(\'' + n.skill_name + '\');\">' + n.skill_name + '</a>';
+            })
+            $("#" + insertDiv).html(tagStr);
+        }
+        else {
+            $("#" + insertDiv).html("{$_lang['no_tag']}");
+        }
+    })
+}
+
+var add_tag = function(name){
+    os = $("#tags_tagsinput .tag");
+    s = os.length;
+    var tags = new Array();
+	os.each(function(i, n){
+        tags.push(jQuery.trim($(n).find('span').text()));
+    })
+    if (in_array(name, tags)) {
+        showDialog("{$_lang['skill_had_add']}", 'alert', "{$_lang['operate_notice']}");
+    }
+    else {
+        if (s < 5) {
+            $("#tags").addTag(name);
+        }
+        else {
+            showDialog("{$_lang['skill_at_most_five']}", 'alert', "{$_lang['operate_notice']}");
+        }
+    }
+}
+function showIndus(indus_pid){
+	if(indus_pid){
+		$.post("index.php?do=ajax&view=indus",{indus_pid: indus_pid}, function(html){
+			var str_data = html;
+			if (trim(str_data) == '') {
+				$("#indus_id").html('<option value="-1">{$_lang['choose_sub']}</option>');
+			}
+			else {
+				$("#indus_id").html(str_data);
+			}
+		},'text');
+	}
+}
+
+
+function save(){	
+	var i = checkForm(document.getElementById('frm'));
+	
+	if(i){
+		os = $("#tags_tagsinput .tag");
+	    s = os.length;		
+		if(s){
+		    var tags = new Array();
+		    os.each(function(i, n){
+		        tags.push(jQuery.trim($(n).find('span').text()));
+		    })			
+		    if (s) {
+		        tag_str = tags.join(',');
+		        tag_str = escape(tag_str);
+				$("#skill_ids").val(tag_str);
+		    }
+		}		
+		var content = editor.getSource(); //contentCheck('tar_content',"{$_lang['profile']}",2,1000);
+		
+		if(content){
+			$("#frm").submit();
+		}else{	
+			showDialog("{$_lang['profile']}{$_lang['cannot_null']}",'alert',"{$_lang['operate_notice']}");		
+			return false;
+		}
+	}else{
+		return false;
+	}
+}
+
+	$('#ie6 .birthday').click(function(){
+		$('#ie6 select').addClass('hidden');
+	}).blur(function(){
+		$('#ie6 select').removeClass('hidden');
+	});
+	
+
+</script>
+<!--{template footer}-->

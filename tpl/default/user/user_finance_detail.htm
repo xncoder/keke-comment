@@ -1,0 +1,401 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['accounts_detail']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            <li {if $k==$action}class="selectedLava"{/if}>
+                                                <a href="{$origin_url}&op=$op&action={$k}#userCenter" title="$v['1']">$v['0']</a>
+                                            </li>
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end--><!--detail内容 start-->
+                            <article class="box_detail">
+                                <!--messages消息 start-->
+                                <div class="messages m_infor clearfix">
+                                    <div class="icon16 fl_l">info</div>
+                                    <div class="grid_18">
+									{if $action=='basic'}
+                                    {$_lang['money_balance']}:
+                                    <span class="cc00">
+                                      {c:$user_info['balance']}
+                                    </span>&nbsp;{CREDIT_NAME}{$_lang['residue']}
+                                    <span class="cc00">
+                                        $user_info['credit']
+                                    </span>
+                                    {elseif $action=='charge'}
+  {$_lang['recharge_success_total']}:
+                                    <span class="cc00">
+                                      {if $fina_count['ok']['cash']}
+									   {c:$fina_count['ok']['cash']}
+									  {else}0{/if}
+                                    </span>
+                                   {$_lang['to_confirm_money']}{$_lang['zh_mh']}
+                                    <span class="c690"> 
+                                       {if $fina_count['wait']['cash']}
+									  {c:$fina_count['wait']['cash']}
+									   {else}0{/if}
+                                    </span>{$_lang['zh_jh']}
+                                    {elseif $action=='withdraw'}
+                                 {$_lang['withdraw_success_money']}:
+                                    <span class="cc00">
+                                    {if $fina_count['2']['cash']}
+									  {c:$fina_count['2']['cash']}
+									   {else} 0 {/if}
+                                    </span>{$_lang['zh_jh']}{$_lang['to_audit_money']}{$_lang['zh_mh']}
+                                    <span class="c690">
+                                       {if $fina_count['1']['cash']}
+									   {c: $fina_count['1']['cash']} {else} 0 {/if}
+                                    </span>
+                                    {/if}
+									</div>
+                                </div>
+                                <!--messages消息 end-->
+                                <div class="">
+                                    <div class="clearfix box pad10">
+                                        {if $action=='basic'}<!--from表单 start-->
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                            	<div class="mr_10 fl_l">
+                                            	   <input type="text" name="fina_id" class="togg_u txt_input" value={$_lang['please_input_finance_id']} title={$_lang['please_input_finance_id']} size="13"/>
+                                                </div>
+                                                <div class=" fl_l">
+                                                    <select class=" fl_l" name="fina_type">
+                                                    	<option value="" {if !$fina_type}selected="selected"{/if}>{$_lang['all']}</option>
+                                                        <option value="in" {if $fina_type=='in'}selected="selected"{/if}>{$_lang['income']}</option>
+                                                        <option value="out" {if $fina_type=='out'}selected="selected"{/if}>{$_lang['out']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class=" fl_l">
+                                                    <select class=" fl_l" name="ord">
+                                                        {loop $ord_arr $k $v}
+															<option value="$k" {if $k==$ord}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class=" fl_l" name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']}><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form><!--from表单 end--><!--date_table数据表格 start-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            {$_lang['finance_id']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['type']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['use']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['amount']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {CREDIT_NAME}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['time']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                	{if $fina_arr}
+                                                    {loop $fina_arr $v}
+                                                    <tr>
+                                                        <td>
+                                                            $v['fina_id']
+                                                        </td>
+                                                        <td>
+                                                            {if $v['fina_type']=='in'}{$_lang['income']}{else}{$_lang['out']}{/if}
+                                                        </td>
+                                                        <td>
+														   {$action_arr[$v['fina_action']]}
+														   {if $v['task_title']&&$v['obj_type']=='task'}
+														   		<a href="{$_K['siteurl']}/index.php?do=task&task_id={$v['obj_id']}" target="_blank">{$v['task_title']}</a>
+															{elseif $v['title']&&$v['obj_type']=='service'}
+																<a href="{$_K['siteurl']}/index.php?do=service&sid={$v['obj_id']}" target="_blank">{$v['title']}</a>
+															{/if}
+                                                        </td>
+                                                        <td>
+                                                            {c:$v['fina_cash']}
+                                                        </td>
+                                                        <td>
+                                                            $v['fina_credit']
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i:s',$v['fina_time'])}-->
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+													{else}
+													<tr>	
+														<td colspan="8" class="t_c">
+																	{$_lang['norecord']}
+                                                        </td> 
+													</tr>
+													{/if} 
+													
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                        </td>
+                                                        <td>
+                                                            {$_lang['total']}:{$count}{$_lang['tiao']}
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->{elseif $action=='charge'}<!--from表单 start-->
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_5 fl_l">
+                                                    <input type="text" name="order_id" class="togg txt_input" value={$_lang['please_input_recharge_id']} title={$_lang['please_input_recharge_id']} size="13"/>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class=" fl_l" name="order_type">
+                                                    	<option value="" {if !$order_type}selected="selected"{/if}>{$_lang['all']}</option>
+                                                        {loop $order_type_arr $k $v}<option value="{$k}" {if $order_type==$k}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class=" fl_l" name="ord">
+                                                        {loop $ord_arr $k $v}<option value="$k" {if $k==$ord}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class=" fl_l" name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']} onclick="check('frm');"><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--from表单 end--><!--date_table数据表格 start-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            {$_lang['recharge_id']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['order_type']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['collection_type']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['recharge_money']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['recharge_status']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['recharge_time']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {if $charge_arr}
+												    {loop $charge_arr $v}
+                                                    <tr>
+                                                    	<td>
+                                                            $v['order_id']
+                                                        </td>
+                                                        <td>
+                                                            $order_type_arr[$v['order_type']]
+                                                        </td>
+                                                        <td>
+                                                        	{if $v['order_type']=='online_charge'}
+                                                           		$v['pay_type']
+															{else}
+																$bank_arr[$v['pay_type']]
+															{/if}
+                                                        </td>
+                                                        <td>
+                                                            {c:$v['pay_money']}
+                                                        </td>
+                                                        <td>
+                                                        	$status_arr[$v['order_status']]
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i:s',$v['pay_time'])}-->
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+													{else}
+														<tr>	
+														<td colspan="8" class="t_c">
+																	{$_lang['norecord']}
+                                                        </td> 
+													</tr>
+													{/if}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5">
+                                                        </td>
+                                                        <td>
+                                                            {$_lang['total']}:{$count}{$_lang['tiao']}
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->{elseif $action=='withdraw'}<!--from表单 start-->
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_5 fl_l">
+                                                    <input type="text" name="withdraw_id" class="togg txt_input" value={$_lang['please_input_withdraw_id']} title={$_lang['please_input_withdraw_id']} size="13"/>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class=" fl_l" name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']} onclick="check('frm');"><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--from表单 end-->
+                                        <!--date_table数据表格 start-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                           {$_lang['withdraw_id']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['withdraw_way']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['withdraw_account']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['withdraw_money']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['withdraw_status']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['withdraw_time']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['process_time']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                	{if $withdraw_arr}
+                                                    {loop $withdraw_arr $v}
+                                                    <tr>
+                                                        <td>
+                                                            $v['withdraw_id']
+                                                        </td>
+                                                        <td>
+                                                            {$bank_arr[$v['pay_type']]}
+                                                        </td>
+                                                        <td>
+                                                            $v['pay_account']
+                                                        </td>
+                                                        <td>
+                                                            {c:$v['withdraw_cash']}
+                                                        </td>
+                                                        <td>
+                                                        	{$status_arr[$v['withdraw_status']]}
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i:s',$v['applic_time'])}-->
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i:s',$v['process_time'])}-->
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+													{else}
+														<tr>	
+															<td colspan="8" class="t_c">
+																		{$_lang['norecord']}
+		                                                    </td> 
+														</tr>
+													{/if}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="6">
+                                                        </td>
+                                                        <td>
+                                                            {$_lang['total']}:{$count}{$_lang['tiao']}
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->
+                                        {/if}
+                                        <div class="page clearfix">
+                                            <p>
+                                                {$pages['page']}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end -->
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <!--main end-->
+            </div>
+            </div>
+            <!--contain end-->
+<!--{template user/user_footer}-->            
+<!--{template footer}-->

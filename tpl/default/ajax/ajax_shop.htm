@@ -1,0 +1,13 @@
+{if $action=='load_sale'}
+  {if $list}
+	{loop $list $v}
+		<li class="w2d5">
+   	 		<a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title=" {c:$v['price']}{$v['title']}" class="block">
+   	 			<img src="{if $v['pic']&&file_exists(S_ROOT.'/'.$v['pic'])}{$_K['siteurl']}/{$v['pic']}{else}{$style_path}/img/shop/shop_default.gif{/if}" alt="{$v['title']} " class="pic_small" />
+			</a>
+		</li>
+	{/loop}
+  {else}
+  	<li class="w9d5">‘›Œﬁ…Ã∆∑</li>
+  {/if}
+{/if}

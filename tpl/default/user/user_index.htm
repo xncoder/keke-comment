@@ -1,0 +1,746 @@
+<!--{template header}--> 
+<!--contain start-->
+<div class="wrapper">
+  <div class="container_24">
+    <!--{template user/user_nav}-->
+     <!--main start-->
+     <section class="clearfix section">		   
+		<div class="grid_6 mb_10">
+			<div class="box default">
+				<div class="inner">
+					<div class="user_info_con clearfix pt_10 pb_5 pl_10">
+						<a href="index.php?do=space&member_id={$uid}" class="fl_l mt_5" title="{$user_info['username']}" ><!--{userpic($uid,big)}--></a>	
+					<div class="grid_4 clearfix pl_5 omega">
+						<ul class="font14">
+							<li><a href="index.php?do=space&member_id={$uid}" class="font14b">{$username}</a></li>
+							<!--{eval $user_leve=unserialize($user_info['seller_level'])}-->
+							<li>{$_lang['user_level']}{$_lang['zh_mh']}{$user_leve['pic']}</li>
+							<li>{$_lang['ability_value']}{$_lang['zh_mh']}{$user_info['seller_credit']}</li>
+							<li>{$_lang['credit_value']}{$_lang['zh_mh']}{$user_info['buyer_credit']}</li>
+							<li>
+								<div class="font14 auth">
+									{$_lang['auth_info']}{$_lang['zh_mh']}
+									{loop $auth_item $k $v}
+									{if $v['auth_open']==1}
+									{if $k!=$un_code}
+										{if $auth_info[$k]['auth_status']==1}
+										
+										<img class="mar0" src="{$v['auth_small_ico']}" width="16px" height="16px" alt="" title="{$v['auth_title']}">
+										{else}
+										<a href="index.php?do=user&view=payitem&op=auth&auth_code={$v['auth_code']}#userCenter"><img class="mar0" src="{$v['auth_small_n_ico']}" width="16px" height="16px" alt="" title="{$v['auth_title']}"></a>
+										{/if}	
+									{/if}					
+									{/if}			
+									{/loop}
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<div class="c333">{$_lang['last_login_time']}{$_lang['zh_mh']}<!--{eval echo date('Y-m-d H:i:s',$user_info['last_login_time'])}--></div>
+					</div>
+				</div>
+			</div>		
+			
+			
+							
+		  <!--账户余额-->
+			<div class="box default mt_10">
+				<div class="inner">
+					<header class="box_header clearfix">
+						<h2 class="title">{$_lang['account_balance']}</h2>
+					</header>
+					<div class="box_detail">
+						<div class="font14">
+							{$_lang['cash']}{$_lang['zh_mh']}
+							<a class="font12">{c:$user_info['balance']}</a>
+						</div>
+						<div class="font14">
+							{CREDIT_NAME}{$_lang['zh_mh']}
+							<a class="font12">{$user_info['credit']}</a>
+						</div>
+						<div class=" mt_10 mb_20 t_c">
+							<a href="index.php?do=user&view=finance&op=recharge" class="button btn_width mr_5" title="{$_lang['recharge']}">{$_lang['recharge']}</a>
+							<a href="index.php?do=user&view=finance&op=withdraw" class="button btn_width" title="{$_lang['withdraw']}">{$_lang['withdraw']}</a>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<!--end 账户余额-->
+				
+		<!--账户安全信息-->
+		<div class="box default mt_10">
+			<div class="inner">
+				<header class="box_header clearfix">
+					<h2 class="title">{$_lang['account_safe_info']}</h2>
+				</header>
+				<div class="box_detail clearfix">
+				
+						<!--安全设置-->
+						
+							<div class="t_c pb_20">
+								<a class="button btn_width mr_5 mt_5" href="index.php?do=user&view=setting&op=safe" class="mr_10">{$_lang['update_password']}</a>
+								<a class="button btn_width mt_5" href="index.php?do=user&view=setting&op=safe&opp=sec_code" class="mr_10">{$_lang['update_safe_code']}</a>	
+									
+								<div class="mt_5">											
+									<a class="button btn_width mr_5 mt_5" href="index.php?do=user&view=setting&op=basic">{$_lang['improving_the_personal_data']}</a>										
+									<a class="button btn_width mt_5" href="index.php?do=user&view=payitem&op=auth">{$_lang['auth_center']}</a>
+								</div>
+							</div>
+						
+					
+				</div>	
+			</div>
+		</div>
+		<!--end 账户安全信息-->
+				
+		<!--快捷导航-->
+		<div class="box default mt_10 hidden">
+			<div class="inner">
+				<header class="box_header clearfix">
+					<h2 class="title">{$_lang['quick_nav']}</h2>
+				</header>
+				<div class="mb_20 t_c">
+					{if $task_open}
+						<a href="index.php?do=release" class="button btn_width mr_5" title="{$_lang['pub_task']}">{$_lang['pub_task']}</a>
+						<a href="index.php?do=task_list" class="button btn_width" title="{$_lang['join_task']}">{$_lang['join_task']}</a>
+					{/if}
+					{if $shop_open}
+						<a href="index.php?do=shop_release" class="button btn_width mr_5 mt_10" title="{$_lang['sell_goods']}">{$_lang['sell_goods']}</a>
+						<a href="index.php?do=shop_list" class="button btn_width mt_10" title="{$_lang['buy_goods']}">{$_lang['buy_goods']}</a>
+					{/if}
+					<a href="index.php?do=user&view=setting&op=space" class="button btn_width mr_5 mt_10" title="{$_lang['shop_set']}">{$_lang['shop_set']}</a>
+					<a href="index.php?do=space&member_id={$user_info['uid']}" class="button btn_width mt_10" title="{$_lang['enter_space']}">{$_lang['enter_space']}</a>
+				</div>
+			</div>	
+		</div>
+		<!--end 快捷导航-->
+				
+		<!--公告栏 -->
+		<div class="box default mt_10 hidden">
+			<div class="inner">
+	        	<div class="pb_20">
+			         <!--公告头部-->
+			         <header class="box_header clearfix">
+			          	<nav class="box_nav clearfix">
+			               <ul>
+			                  <li id="ul_plac_1" onclick="swaptab('plac','backLava','',3,1)"><a href="javascript:void(0);" title="{$_lang['announcement']}">网站资讯</a></li>
+			                  <li id="ul_plac_2" onclick="swaptab('plac','backLava','',3,2,{ajax:1,url:'index.php?do=user&view=index&ajax=bid_notice'})"><a href="javascript:void(0);" title="中标通知">中标通知</a></li>
+			                  <li id="ul_plac_3" onclick="swaptab('plac','backLava','',3,3,{ajax:1,url:'index.php?do=user&view=index&ajax=withdraw'})"><a href="javascript:void(0);" title="提现公告">提现公告</a></li>
+			                 <!-- <li id="ul_plac_4" onclick="swaptab('plac','backLava','',4,4,{ajax:1,url:'index.php?do=user&view=index&ajax=safe'})"><a href="javascript:void(0);" title="{$_lang['safe']}">{$_lang['safe']}</a></li>-->
+			               </ul>
+			            </nav>
+			            <div class="clear"></div>
+			         </header>
+			        <!--end 公告头部 -->
+			                            
+			        <!--公告detail内容-->
+			         <article class="box_detail" id="div_plac_1">
+			           <ul class="smaller_list">
+			              {loop $art_notice_arr $v}
+							<li><a href="index.php?do=article&view=article_info&art_id={$v['art_id']}">{$v['art_title']}</a></li>
+						 {/loop}
+			           </ul>
+			         </article>
+			        <article class="box_detail" id="div_plac_2" style="display:none;">
+			        </article>
+			        <article class="box_detail" id="div_plac_3" style="display:none;">
+			        </article>
+			       
+			        <!--end 公告detail内容-->
+			</div>
+			</div>
+		</div>
+		<!--end 公告栏 -->
+				
+		<!--新手指南-->
+		<div class="box default mt_10 hidden">
+			<div class="inner">
+				<header class="box_header clearfix">
+					<h2 class="title">{$_lang['novice_guide']}</h2>
+				</header>
+				<div class="box_detail clearfix">
+					<ul class="smaller_list pb_10">
+						{loop $new_help $value}
+						<li><a href="index.php?do=help&fpid=294&spid={$value['art_cat_id']}#pageTop"><span>{$value['art_title']}</span></a></li>
+						{/loop}
+					</ul>
+					<a href="index.php?do=help" class="button mb_10 block t_c" title="{$_lang['enter_help_center']}">{$_lang['enter_help_center']}</a>
+				</div>	
+			</div>
+		</div>
+		<!--end 新手指南-->
+				
+	</div>
+	
+	<div class="grid_18 mb_10 omega">
+		<!--用户信息-->
+		<div class="box default hidden">
+			<div class="inner">
+				<div class="user_info_con clearfix pt_10 pb_5 pl_10 pr_10">
+    				<a href="index.php?do=space&member_id={$uid}" class="fl_l" title="{$user_info['username']}" ><!--{userpic($uid,big)}--></a>							
+					<div class="grid_7 pl_10">
+						<ul class="font14">
+							<li><a href="index.php?do=space&member_id={$uid}" class="font14b">{$username}</a></li>
+							<!--{eval $user_leve=unserialize($user_info['seller_level'])}-->
+							<li>{$_lang['user_level']}{$_lang['zh_mh']}{$user_leve['pic']}</li>
+							<li>{$_lang['ability_value']}{$_lang['zh_mh']}{$user_info['seller_credit']}</li>
+							<li>{$_lang['credit_value']}{$_lang['zh_mh']}{$user_info['buyer_credit']}</li>
+							<li>{$_lang['last_login_time']}{$_lang['zh_mh']}<!--{eval echo date('Y-m-d H:i:s',$user_info['last_login_time'])}--></li>
+						</ul>
+					</div>
+					<div class="fl_l mt_10">
+						<div class="font14 auth">
+							{$_lang['auth_info']}{$_lang['zh_mh']}
+							{loop $auth_item $k $v}
+							{if $k!=$un_code}
+								{if $auth_info[$k]['auth_status']==1}
+								<img src="{$v['auth_small_ico']}" alt="" title="{$v['auth_title']}">
+								{else}
+								<a href="index.php?do=user&view=payitem&op=auth&auth_code={$v['auth_code']}#userCenter"><img src="{$v['auth_small_n_ico']}" alt="" title="{$v['auth_title']}"></a>
+								{/if}	
+							{/if}								
+							{/loop}
+							
+						</div>
+						<ul class="trading mt_20">
+							{if $task_open}
+							 <li>
+								{$_lang['task_trans_remind']}{$_lang['zh_mh']}
+								<span><a href="index.php?do=user&view=employer&op=task">{$_lang['wait_pay']}({$wait_task})</a></span>|
+								<span><a href="index.php?do=user&view=employer&op=task">{$_lang['wait_choose']}({$xg_task})</a></span>
+							 </li>
+							{/if}
+							{if $shop_open}
+							<li>
+								{$_lang['goods_trans_remind']}{$_lang['zh_mh']}
+								<span><a href="index.php?do=user&view=finance&op=order&obj_type=service">{$_lang['wait_pay']}({$wait_shop})</a></span>|
+								<span><a href="index.php?do=user&view=finance&op=order&obj_type=service">{$_lang['wait_confirm_pay']}({$confirm_service})</a></span>
+							</li>
+							{/if}
+						</ul>
+					</div>
+				</div>
+			</div>
+	    </div>
+		<!--end 用户信息-->
+				
+		<!--工具箱-->
+		{if $task_open||$shop_open}
+		<div class="box default model_bord mt_10 hidden">
+			<div class="inner">
+				<header class="box_header clearfix">
+					<h2 class="title">{$_lang['toolbox']}</h2>
+				</header>
+				<div class="box_detail po_re">
+				<div class="pt_10 pb_5">
+					<div class="toolbox clearfix">
+						<ul>
+							{loop $payitem_list $v}
+								{if item_show($v['item_type'])}
+							<li>
+								<a href="index.php?do=user&view=payitem&op=toolbox&show=buy&item_code={$v['item_code']}#userCenter">
+									<img src="{$v['big_pic']}" alt="{$v['item_name']}" title="{$v['item_name']}" width="48" height="48">
+									<div>{$v['item_name']}</div>
+								</a>	
+							</li>		
+							{/if}							
+							{/loop}	
+						</ul>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		{/if}
+   		<!--end 工具箱 -->
+				
+		<!--雇主交易面板-->
+		{if $task_open||$shop_open}
+		<div class="box default model_bord ">
+			<div class="inner">
+				<header class="box_header clearfix">
+					<h2 class="title grid_3">{$_lang['employer_trans_panel']}</h2>
+					<nav class="box_nav clearfix grid_7">
+						<ul>
+							{if $task_open}
+								<li><a href="javascript:void(0);" onclick="swaptab('pub','backLava','',2,1);show_none('more1','more2');">{$_lang['task_manage']}[<!--{eval echo intval(sizeof($pub_task));}-->]</a></li>
+							{/if}
+							{if $shop_open}
+								<!--{eval $s_count = intval(sizeof($pub_service))}-->
+								<li><a href="javascript:void(0);" onclick="swaptab('pub','backLava','',2,2);show_none('more2','more1');">{$_lang['goods_trans']}[<!--{eval echo intval(sizeof($buy_service));}-->]</a></li>
+							{/if}
+						</ul>
+					</nav>	
+    					<a id='more1'  class="pt_5 fl_r" href="{$_K['siteurl']}/index.php?do=user&view=employer">{$_lang['more_employer_trans']}<span class="font_simsun">>></span></a>
+					
+						
+    					<a id='more2' style="display:none;" class="pt_5 fl_r" href="{$_K['siteurl']}/index.php?do=user&view=employer&op=shop">{$_lang['more_employer_trans']}<span class="font_simsun">>></span></a>
+											
+				</header>
+				{if $task_open}
+				<div class="box_detail pad0" id="div_pub_1">
+					<div class="list">
+		                <dl>
+		                  <dt>{$_lang['employer_trans']}</dt>
+		                  <dd class="tags">
+		                    <ul>
+		                        <li>{$_lang['task_id']}</li>
+								<li>{$_lang['task_type']}</li>
+		                        <li class="w2 t_l">{$_lang['task_title']}</li>
+		                        <li class="w2">{$_lang['task_money']}</li>
+		                        <li>{$_lang['pub_time']}</li>
+		                        <li class="w2">交易{$_lang['status']}</li>
+								<li>{$_lang['operate']}</li>
+		                    </ul>
+		                  </dd>
+						  {if $pub_task}
+						  {loop $pub_task $v} 
+		                  <dd class="clearfix">
+		                    <ul>
+		                        <li>{$v['task_id']}</li>
+								<li>{$model_list[$v[model_id]][model_name]}</li>	
+		                        <li class="w2  t_l">
+		                        	<a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}" class="fl_l">
+		                        		<!--{eval $time = time();}-->
+		                        		{if $v['top']>$time} <img src="{$_K['siteurl']}/{$payitem_list['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}  
+                                        {if $v['urgent']>$time}<img src="{$_K['siteurl']}/{$payitem_list['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}				                        		
+										{$v['task_title']}
+									</a>
+								</li>
+		                        <li class="w2">{if $v['task_cash_coverage']}{c:$task_cove[$v['task_cash_coverage']]['start_cove']}-{c:$task_cove[$v['task_cash_coverage']]['end_cove']}{else}{c:$v['task_cash']}{/if}</li>
+		                        <li><!--{eval echo date('Y-m-d',$v['start_time'])}--></li>
+		                        <li class="w2">
+		                        	<!--{eval $task_status = call_user_func(array($model_list[$v['model_id']]['model_code'].'_task_class','get_task_status'));}-->
+		                        	 $task_status[$v[task_status]]
+								</li>
+								<li>
+									<!--{eval $opera = master_opera($v['model_id'],$v['task_id'],$origin_url,$v['task_cash']);}-->
+									  {loop $opera $v1}
+									  	<a href="{$v1['href']}" {if $v1['click']}onclick="{$v1['click']}"{/if}>
+									  		{$v1['desc']}
+									  	</a>
+									  {/loop}
+								</li>
+		                    </ul>
+		                  </dd>
+						  {/loop}
+						  {else} 
+						   <dd class="clearfix">
+								   	 <ul>				                    	
+				                        <li class="t_c w0">	{$_lang['norecord']}</li>
+									</ul>
+						   	  </dd>
+						  {/if}
+		                </dl>
+		            </div>
+				</div>
+				{/if}
+				{if $shop_open}
+				<div class="box_detail pad0" id="div_pub_2" {if $task_open}style="display:none;"{/if}>
+					<div class="list">
+		                <dl>
+		                  <dt>{$_lang['employer_trans']}</dt>
+		                  <dd class="tags">
+		                    <ul>
+		                        <li>{$_lang['goods_id']}</li>
+								<li>{$_lang['service_type']}</li>
+		                        <li class="w2 t_l">{$_lang['goods_name']}</li>
+		                        <li class="w2">{$_lang['service_price']}</li>
+		                        <li>{$_lang['pub_time']}</li>
+		                        <li class="w2">交易{$_lang['status']}</li>
+								<li>{$_lang['operate']}</li>
+		                    </ul>
+		                  </dd>
+						  {if $buy_service}
+						  {loop $buy_service $k $v}
+						  {if $k<6&&$v['service_id']}
+						  <dd class="clearfix">				                  	
+		                    <ul>				                    	
+		                        <li>{$v['service_id']}</li>
+								<li>{$model_list[$v[model_id]][model_name]}</li>	
+		                        <li class="w2  t_l">
+		                        	<a href="index.php?do=service&sid={$v['service_id']}" title="{$v['task_title']}" class="fl_l">
+		                        		<!--{eval $time = time();}-->
+		                        		{if $v['top']>$time} <img src="{$_K['siteurl']}/{$item_config['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}  
+                                        {if $v['urgent']>$time}<img src="{$_K['siteurl']}/{$item_config['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}				                        		
+										{$v['title']}
+									</a>
+								</li>
+		                        <li class="w2">{c:$v['price']}/{$v['unite_price']}</li>
+		                        
+								  <li><!--{eval echo date('Y-m-d',$v['on_time'])}--></li>
+				                        <li class="w2">
+											<!--{eval $class_name =	$model_list[$v['model_id']]['model_code']."_shop_class";}-->
+											<!--{eval $arr = call_user_func(array($class_name,'get_order_status'))}-->
+											<!--{eval echo $arr[$v['order_status']];}-->
+										</li>
+										<li>
+											<!--{eval $process_arr = call_user_func(array($class_name,'process_action'),2,$v['order_status']);}-->
+				   							<!--{eval $mark_info = get_mark_info($v['order_id'],$v['obj_id'],$v['order_uid'],$v['seller_uid']);}-->
+											{if $v['order_status']=='confirm'}
+						    					{if $mark_info['mark_status']!=1&&$mark_info['mark_count']<2}						
+													<a href="javascript:void(0);" onclick="orderMark('{$mark_info[mark_count]}','{$v[model_id]}','{$v[order_id]}','{$v[obj_id]}','{$v[order_uid]}',2);">$_lang['each_mark']</a>							
+												{/if}
+											{/if}
+                    						{if $process_arr['trans']}
+                    							{loop $process_arr['trans'] $k2 $v2}
+												<a href="javascript:void(0);"  onclick="process('{$k2}','{$v2}','{$v['order_id']}','{$v['model_id']}','{$v['obj_id']}','{$model_list[$v['model_id']]['model_code']}','{$v['seller_uid']}')">{$v2}</a><br>
+												{/loop}							
+											{/if}
+										</li>
+		                    </ul>
+		                  </dd>
+						  {/if}
+						  {/loop}
+						   {else}
+						  	<dd class="clearfix">
+								   	 <ul>				                    	
+				                        <li class="t_c w0">	{$_lang['norecord']}</li>
+									</ul>
+						   	  </dd>
+						  
+						  {/if}							  
+		                </dl>
+		            </div>
+				</div>
+				{/if}
+			</div>
+		</div>
+		{/if}
+   		<!--end 雇主交易面板-->
+		
+		<!--威客交易面板-->
+		{if $task_open||$shop_open}
+		<div class="box default model_bord mt_10 ">
+			<div class="inner">
+				<header class="box_header clearfix">
+					<h2 class="title grid_3">{$_lang['witkey_trans_panel']}</h2>
+					<nav class="box_nav clearfix grid_7">
+						<ul>
+							{if $task_open}
+								<li><a href="javascript:void(0);" onclick="swaptab('join','backLava','',2,1);show_none('more3','more4');">{$_lang['task_manage']}[<!--{eval echo intval(sizeof($join_task))}-->]</a></li>
+							{/if}
+							{if $shop_open}
+								<li><a href="javascript:void(0);" onclick="swaptab('join','backLava','',2,2);show_none('more4','more3');">{$_lang['goods_trans']}[<!--{eval echo intval(sizeof($pub_service))}-->]</a></li>
+							{/if}
+						</ul>
+					</nav>
+					
+					<a id="more3" class="pt_5 fl_r" href="index.php?do=user&view=witkey">{$_lang['more_witkey_trans']}<span class="font_simsun">>></span></a>
+					<a id="more4" style="display:none" class="pt_5 fl_r" href="index.php?do=user&view=witkey&op=shop">{$_lang['more_witkey_trans']}<span class="font_simsun">>></span></a>
+				
+				</header>
+				{if $task_open}
+				<div class="box_detail pad0" id="div_join_1">
+					<div class="list">
+		                <dl>
+		                  <dt>{$_lang['employer_trans']}</dt>
+		                  <dd class="tags">
+		                    <ul>
+		                        <li>{$_lang['task_id']}</li>
+								<li>{$_lang['order_type']}</li>
+		                        <li class="w2 t_l">{$_lang['task_title']}</li>
+		                        <li class="w2">{$_lang['task_money']}</li>
+		                        <li>{$_lang['pub_time']}</li>
+		                        <li class="w2">交易{$_lang['status']}</li>
+								<li>{$_lang['operate']}</li>
+		                    </ul>
+		                  </dd>
+						  {if $join_task}
+		                  {loop $join_task $v}
+		                  <dd class="clearfix">
+		                    <ul>				                    	
+		                        <li>{$v['task_id']}</li>
+								<li>{$model_list[$v[model_id]][model_name]}</li>	
+		                        <li class="w2 t_l">
+		                        	<a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}" class="fl_l">
+		                        		<!--{eval $time = time();}-->
+		                        		{if $v['top']>$time} <img src="{$_K['siteurl']}/{$payitem_list['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}  
+                                        {if $v['urgent']>$time}<img src="{$_K['siteurl']}/{$payitem_list['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}				                        		
+										<!--{eval echo(kekezu::cutstr($v['task_title'],28));}-->
+									</a>
+								</li>
+		                        <li class="w2">{if $v['task_cash_coverage']}{c:$task_cove[$v['task_cash_coverage']]['start_cove']}-{c:$task_cove[$v['task_cash_coverage']]['end_cove']}{else}{c:$v['task_cash']}{/if}</li>
+		                        <li><!--{eval echo date('Y-m-d',$v['start_time'])}--></li>
+		                        <li class="w2">
+		                        	<!--{eval $task_status = call_user_func(array($model_list[$v['model_id']]['model_code'].'_task_class','get_task_status'));}-->
+		                        	$task_status[$v[task_status]]
+								</li>
+								<li>
+									<!--{eval $opera = wiki_opera($v['model_id'],$v['task_id'],$v['work_id'],$url);}-->
+									
+									  {loop $opera $k $v}
+									  	<a href="{$v['href']}" {if $v['click']}onclick="{$v['click']}"{/if}>
+									  		{$v['desc']}
+									  	</a>
+									  {/loop}
+								</li>	  
+		                    </ul>
+		                  </dd>
+						  {/loop}
+						  {else}
+						  	<dd class="clearfix">
+								   	 <ul>				                    	
+				                        <li class="t_c w0">	{$_lang['norecord']}</li>
+									</ul>
+						   	  </dd>
+						  
+						  {/if}
+		                </dl>
+		            </div>
+				</div>
+				{/if}
+				{if $shop_open}
+				<div class="box_detail pad0" id="div_join_2" {if $task_open}style="display:none;"{/if}>
+					<div class="list">
+		                <dl>
+		                  <dt>{$_lang['employer_trans']}</dt>
+		                  <dd class="tags">
+		                    <ul>
+		                        <li>{$_lang['goods_id']}</li>
+								<li>{$_lang['order_type']}</li>
+		                        <li class="w2 t_l">{$_lang['goods_name']}</li>
+		                        <li class="w2">{$_lang['service_price']}</li>
+		                        <li>{$_lang['pub_time']}</li>
+		                        <li class="w2">交易{$_lang['status']}</li>
+								<li>{$_lang['operate']}</li>
+		                    </ul>
+		                  </dd>
+						  
+						  {if $pub_service}
+							  {loop $pub_service $k $v}
+								  {if $k<6&&$v['service_id']}
+								  <dd class="clearfix">				                  	
+				                    <ul>				                    	
+				                        <li>{$v['service_id']}</li>
+										<li>{$model_list[$v[model_id]][model_name]}</li>	
+				                        <li class="w2  t_l">
+				                        	<a href="index.php?do=service&sid={$v['service_id']}" title="{$v['task_title']}" class="fl_l">
+				                        		<!--{eval $time = time();}-->
+				                        		{if $v['top']>$time} <img src="{$_K['siteurl']}/{$payitem_list['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">{/if}  
+                                                {if $v['urgent']>$time}<img src="{$_K['siteurl']}/{$payitem_list['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}				                        		
+												{$v['title']}
+											</a>
+										</li>
+				                        <li class="w2" >{c:$v['price']}/{$v['unite_price']}</li>
+				                        <li ><!--{eval echo date('Y-m-d',$v['on_time'])}--></li>
+								<li class="w2">
+									<!--{eval $class_name =	$model_list[$v['model_id']]['model_code']."_shop_class";}-->
+									<!--{eval $arr = call_user_func(array($class_name,'get_order_status'))}-->
+									<!--{eval echo $arr[$v['order_status']];}-->
+								</li>
+		                        <li>
+									<!--{eval $process_arr = call_user_func(array($class_name,'process_action'),1,$v['order_status']);}-->
+		   							<!--{eval $mark_info = get_mark_info($v['order_id'],$v['obj_id'],$v['order_uid'],$v['seller_uid']);}-->
+									{if $v['order_status']=='confirm'}
+				    					{if $mark_info['mark_status']!=1&&$mark_info['mark_count']<2}						
+											<a href="javascript:void(0);" onclick="orderMark('{$mark_info[mark_count]}','{$v[model_id]}','{$v[order_id]}','{$v[obj_id]}','{$v[seller_uid]}',1);">$_lang['each_mark']</a>							
+										{/if}
+									{/if}
+            						{if $process_arr['trans']}
+            							{loop $process_arr['trans'] $k2 $v2}
+											<a href="javascript:void(0);"  onclick="process('{$k2}','{$v2}','{$v['order_id']}','{$v['model_id']}','{$v['obj_id']}','{$model_list[$v['model_id']]['model_code']}','{$v['order_uid']}')">{$v2}</a><br>
+										{/loop}							
+									{/if}
+								</li>
+				                    </ul>
+				                  </dd>
+								  {/if}
+							  {/loop}
+							  {else}
+							    <dd class="clearfix">
+								   	 <ul>				                    	
+				                        <li class="t_c w0">	{$_lang['norecord']}</li>
+									</ul>
+						   	  </dd>
+							  
+							  
+						  	{/if}							  
+		                </dl>
+		            </div>
+				</div>
+				{/if}
+				
+			</div>
+		</div>
+		{/if}
+   		<!--end 威客交易面板-->
+				
+		   </div>
+		</section>
+        <!--main end-->
+    </div>
+</div>
+<script type="text/javascript">
+	In.add('Carousel',{path:"resource/js/others/Infinite Carousel.js",type:'js'});  
+	In('Carousel');
+	
+    function show_none(id1,id2)
+    {
+    	document.getElementById(id1).style.display='block';
+    	document.getElementById(id2).style.display='none';    	
+    }
+//延期加价
+function taskDelay(url){
+		console.log(url);
+		var url = url+'&op=taskdelay';
+		showWindow('taskdelay',url,'get',0);return false;
+
+}
+//赏金托管
+function task_pay(url){
+			showWindow('hosted_amount',url,'get',0);return false;
+}
+//确认工作
+function work_over(url){
+			showWindow("work_hand",url,"get",'0');
+			return false; 
+}
+function del(obj){
+        var url = obj.href;
+        showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
+			
+           //location.href = url;
+		   formSub(url,'url',false);
+        });
+        return false;
+    }
+	function pay(obj,pay_cash,order_id){
+	
+		var url = obj.href;
+		var user_balance = parseInt($user_info['balance'])+0;
+		var user_credit = parseInt($user_info['credit'])+0;
+		var is_allow_credit = $basic_config['credit_is_allow'];
+		//alert(user_balance);
+		if(is_allow_credit==2){
+			user_credit=0;
+		}		
+		if((user_credit+user_balance)>=pay_cash){
+				 formSub(url,'url',false);
+				 return false;
+			}else{	
+			    location.href= "index.php?do=pay&order_id="+order_id;
+				return false;	
+			}         		          
+       return false;
+    }
+    
+    //弹框描述
+    function task_payitem(task_id, payitem, payitem_time){
+        var task_id = task_id;
+        var payitem = payitem;
+        var payitem_time = payitem_time;
+        var url = "index.php?do=user&view=employer&op=task&ajax=get_task_desc&task_id=" + task_id + '&payitem=' + payitem + '&payitem_time=' + payitem_time;
+        $.post(url, function(json){
+            if (json.status == 1) {
+                showDialog(json.data, "confirm", "{$_lang['task_top']}", "set_payitem('" + task_id + "','" + payitem + "','" + payitem_time + "');", 1)
+            }
+        }, 'json')
+    }
+    
+    //增值服务 
+    function set_payitem(task_id, payitem, payitem_time){
+        var task_id = task_id;
+        var payitem = payitem;
+        var payitem_time = payitem_time;
+        var url = "index.php?do=user&view=employer&op=task&ajax=set_task_payitem&task_id=" + task_id + '&payitem=' + payitem + '&payitem_time=' + payitem_time;
+        $.post(url, function(json){
+            if (json.status == 1) {
+                showDialog(json.msg, 'right', "{$_lang['friendly_notice']}");
+                return false;
+            }
+        }, 'json');
+        
+    }
+//确认工作
+function work_over(url){
+			showWindow("work_hand",url,"get",'0');
+			return false; 
+}
+    function del(obj){
+        var url = obj.href;
+        showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
+           formSub(url,'url',false);
+        });
+        return false;
+    }
+	function share(t_id){
+		var url = "{$_K['siteurl']}/index.php?do=ajax&view=share&op=center&task_id="+t_id;
+		showWindow('share',url,'get','0');return false;
+	}
+	function process(action,desc,order_id,model_id,obj_id,model_code,to_uid){
+	
+		if(check_user_login()){
+		 
+			if(action){
+			switch(action){
+				case "download":
+					download(obj_id,model_id);
+					break;
+				case "arbitral":
+					orderRreport(order_id);//订单发起维权
+					break;
+				default:	
+					showDialog(desc+"{$_lang['ma']}?","confirm","{$_lang['operate_notice']}","confirm('"+action+"','"+order_id+"','"+model_id+"','"+model_code+"')");return false;
+					break;
+			}
+		  }
+		}
+	}
+	/**
+	 * 操作提交
+	 * @param {Object} ac
+	 * @param {Object} order_id
+	 * @param {Object} model_id
+	 */
+	function confirm(ac,order_id,model_id){
+			var url="index.php?do=user&view=finance&op=order";
+			$.post(url,{ac:ac,order_id:order_id,model_id:model_id},function(json){
+				if(json.status=='1'){
+					if(ac=='delete'){
+						$(".order_"+order_id).slideUp(600).remove();
+					}
+					var jump_url = url+"&obj_type={$obj_type}&role={$role}&order_id="+order_id+"#userCenter";					
+					showDialog(json.data,'notice',json.msg,"winRload()");return false;
+				}else{
+					showDialog(json.data,'alert',json.msg);return false;
+				}
+			},'json')
+	}
+	/**
+	 * 操作提交
+	 * @param {Object} ac
+	 * @param {Object} order_id
+	 * @param {Object} model_id
+	 */
+	function confirm(ac,order_id,model_id){
+		  //alert(ac+order_id+','+model_id);return false;
+			var url="index.php?do=user&view=finance&op=order";
+			$.post(url,{ac:ac,order_id:order_id,model_id:model_id},function(json){
+				if(json.status=='1'){
+					if(ac=='delete'){
+						$(".order_"+order_id).slideUp(600).remove();
+					}
+					var jump_url = url+"&obj_type={$obj_type}&role={$role}&order_id="+order_id+"#userCenter";					
+					showDialog(json.data,'notice',json.msg,"winRload()");return false;
+				}else{
+					showDialog(json.data,'alert',json.msg);return false;
+				}
+			},'json')
+	}
+	/**
+	 * 下载
+	 * @param {Object} obj_id
+	 */
+	function download(obj_id,model_id){
+		var basic_url="{$basic_url}&download=1&model_id="+model_id+"&sid="+obj_id;
+		showWindow('filedown',basic_url,'get',0);return false;
+	}
+	function winRload(){
+	  document.location.reload();
+	}
+</script>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

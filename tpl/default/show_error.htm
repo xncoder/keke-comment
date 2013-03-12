@@ -1,0 +1,134 @@
+<!--{eval $error_id = uniqid('error'); }-->
+<style type="text/css">
+#keke_error { background: #ddd; font-size: 1em; font-family:sans-serif; text-align: left; color: #111; }
+#keke_error h1,
+#keke_error h2 { margin: 0; padding: 1em; font-size: 1em; font-weight: normal; background: #911; color: #fff; }
+#keke_error h1 a,
+#keke_error h2 a { color: #fff; }
+#keke_error h2 { background: #222; }
+#keke_error h3 { margin: 0; padding: 0.4em 0 0; font-size: 1em; font-weight: normal; }
+#keke_error p { margin: 0; padding: 0.2em 0; }
+#keke_error a { color: #1b323b; }
+#keke_error pre { overflow: auto; white-space: pre-wrap; }
+#keke_error table { width: 100%; display: block; margin: 0 0 0.4em; padding: 0; border-collapse: collapse; background: #fff; }
+#keke_error table td { border: solid 1px #ddd; text-align: left; vertical-align: top; padding: 0.4em; }
+#keke_error div.content { padding: 0.4em 1em 1em; overflow: hidden; }
+#keke_error pre.source { margin: 0 0 1em; padding: 0.4em; background: #fff; border: dotted 1px #b7c680; line-height: 1.2em; }
+#keke_error pre.source span.line { display: block; }
+#keke_error pre.source span.highlight { background: #f0eb96; }
+#keke_error pre.source span.line span.number { color: #666; }
+#keke_error ol.trace { display: block; margin: 0 0 0 2em; padding: 0; list-style: decimal; }
+#keke_error ol.trace li { margin: 0; padding: 0; }
+.js .collapsed { display: none; }
+</style>
+<script type="text/javascript">
+document.documentElement.className = document.documentElement.className + ' js';
+function koggle(elem)
+{
+	elem = document.getElementById(elem);
+	
+	if (elem.style && elem.style['display'])
+	// Only works with the "style" attr
+	var disp = elem.style['display'];
+	else if (elem.currentStyle)
+	// For MSIE, naturally
+	var disp = elem.currentStyle['display'];
+	else if (window.getComputedStyle)
+	// For most other browsers
+	var disp = document.defaultView.getComputedStyle(elem, null).getPropertyValue('display');
+	
+	// Toggle the state of the "display" style
+	elem.style.display = disp == 'block' ? 'none' : 'block';
+	return false;
+}
+</script>
+<div id="keke_error">
+  <h1><span class="type">{$type}[ {$code} ]:</span> <span class="message">{$message}</span></h1>
+  <div id="{$error_id}" class="content">
+    <p><span class="file"><!--{eval echo keke_debug::path($file); }-->[ {$line} ]</span></p>
+    <!--{eval echo keke_debug::source($file, $line); }-->
+    <ol class="trace">
+      {loop $data['trace'] $i $step}
+      <li>
+        <p> 
+		    
+			 <span class="file">
+	          {if ($step['file'])}
+			  <!--{eval $source_id = $error_id.'source'.$i; }-->
+	          <a href="# $source_id" onClick="return koggle('$source_id')">
+	          	<!--{eval echo keke_debug::path($step['file']); }--> [ {$step['line']} ]</a>
+	          {else}
+			  	<span>PHP internal call</span>
+	          {/if}
+	          </span> &raquo; 
+			  $step['function'] (
+		           {if ($step['args'])}
+				   <!--{eval $args_id = $error_id.'args'.$i; }-->
+		          <a href="#$args_id " onClick="return koggle('$args_id')">arguments</a>
+		           {/if}
+	         ) 
+		  </p>
+        {if isset($args_id)}
+        <div id="$args_id" class="collapsed">
+          <table cellspacing="0">
+            {loop $step['args'] $name $arg}
+            <tr>
+              <td><code>$name</code></td>
+              <td><pre>{$arg}</pre></td>
+            </tr>
+            {/loop}
+          </table>
+        </div>
+        {/if}
+        {if (isset($step['source']))}
+        <pre id="$source_id" class="source collapsed"><code>$step['source']</code></pre>
+        {/if}
+      </li>
+      {/loop}
+    </ol>
+  </div>
+  <h2><a href="#<!--{eval echo $env_id = $error_id.'environment'; }-->" onClick="return koggle('$env_id')">Environment</a></h2>
+  <div id="$env_id" class="content collapsed">
+    <!--{eval $included = get_included_files(); }-->
+    <h3><a href="#<!--{eval echo $env_id = $error_id.'environment_included'; }-->" onClick="return koggle('$env_id')">Included files</a> (<!--{eval echo count($included); }-->)</h3>
+    <div id="$env_id" class="collapsed">
+      <table cellspacing="0">
+        {loop $included $file}
+        <tr>
+          <td><code><!--{eval echo keke_debug::path($file); }--></code></td>
+        </tr>
+        {/loop}
+      </table>
+    </div>
+    <!--{eval $included = get_loaded_extensions(); }-->
+    <h3><a href="#<!--{eval echo $env_id = $error_id.'environment_loaded'; }-->" onClick="return koggle('$env_id')">Loaded extensions</a> (<!--{eval echo count($included); }-->)</h3>
+    <div id="$env_id" class="collapsed">
+      <table cellspacing="0">
+        {loop $included $file}
+        <tr>
+          <td><code><!--{eval echo keke_debug::path($file); }--></code></td>
+        </tr>
+        {/loop}
+      </table>
+    </div>
+	
+	{loop $vars $var}
+    {if (!empty($GLOBALS[$var]) && is_array($GLOBALS[$var]))}
+	<h3><a href="#<!--{eval echo $env_id = $error_id.'environment'.strtolower($var); }-->" onClick="return koggle('$env_id')">$<!--{eval echo $var; }--></a></h3>
+    <div id="$env_id" class="collapsed">
+      <table cellspacing="0">
+       {loop $GLOBALS[$var] $key $value}
+		<tr>
+          <td><code>$key</code></td>
+          <td><pre>{$value}</pre></td>
+        </tr>
+        {/loop}
+      </table>
+    </div>
+	{/if}
+    {/loop}
+  </div>
+</div>
+
+
+

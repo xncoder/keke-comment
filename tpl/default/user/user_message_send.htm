@@ -1,0 +1,123 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['send_message']}</h2>
+								 <nav class="box_nav">
+	                                        <ul>
+                                          <li {if $msg_type =='system'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=inbox&msg_type=system" original-title="{$_lang['system_msg']}">{$_lang['system_msg']}</a>
+                                            </li>
+                                            <li {if $msg_type=='accept'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=inbox&msg_type=accept" original-title="{$_lang['private_message']}">{$_lang['private_message']}</a>
+                                            </li>
+                                            <li {if $msg_type=='output'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=output&msg_type=output" original-title="{$_lang['private_message']}">{$_lang['sms_has_been_sent']}</a>
+                                            </li>
+                                            <li {if $msg_type=='write'}  class="selectedLava" {/if}>
+                                                <a href="index.php?do=$do&view=$view&op=send&msg_type=write" original-title="{$_lang['private_message']}">{$_lang['write_message']}</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                            <div class="prefix_1 suffix_1">
+                                <!--from表单 start-->
+                                <div class="clearfix box font14">
+                                    <form action="index.php?do=$do&view=$view&op=$op&msg_type=$msg_type" method="post" id="frm_msg">
+                                        <input type="hidden" name="hdn_pid" value="$msg_id">
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['addressee']}:
+                                            </label>
+                                            <input type="text" name="txt_to_username" value="" tips="（{$_lang['please_input_the_recipients_user_name']}）" msg="{$_lang['user_name_at_least_three']}" onblur="check_user();" tmp="1" limit="required:true;len:2-40" id="txt_to_username" msgarea="msg_txt_to_username" size="39"/>
+                                       
+                                                <span id="msg_txt_to_username">
+                                                </span>
+                                        
+                                        </div>
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['message_title']}:
+                                            </label>
+                                            <input type="text" name="txt_msg_title" id="txt_msg_title" value="" size="39" limit="type:string;required:true;len:1-50" msg="{$_lang['txt_msg_title']}" tips="{$_lang['txt_msg_title']}" msgArea="msg_title" />
+									 
+                                                <span id="msg_title">
+                                                </span> 
+                                        </div>
+                                        <div class="rowElem clearfix ">
+                                            <label class="grid_2 t_r">
+                                                {$_lang['message_content']}:
+                                            </label>
+											<div class="fl_l">
+                                            <textarea  rows="12" name="txt_msg_content" id="tar_content" msgArea="msg_content" class="" style="width:390px;" onblur="contentCheck('tar_content','{$_lang['message_content']}',1,500)" ></textarea>
+                                            </div>
+											<div class="fl_l ml_5">
+                                                <div id="msg_content">
+                                                	
+                                                </div>
+                                            </div>
+											
+                                        </div>
+                                        <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                                        <div class="rowElem clearfix form_button">
+                                            <a class="button"  onclick="check_send('frm_msg')"><span class="check icon"></span>{$_lang['send']}</a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!--from表单 end-->
+                            </div>
+                        </div>
+                        <!--main content end -->
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <!--main end-->
+            </div>
+            </div>
+            <!--contain end-->
+            <script type="text/javascript">
+            	In('form');
+                function check_send(id){
+					var name = $("#txt_to_username").attr("tmp");
+					
+					if(parseInt(name)==2){
+							if(contentCheck('tar_content',"{$_lang['message_content']}",1,500)){						
+								formSub(id,'form',true);
+							}else{
+								return false;
+								}                        	             
+					}else{
+						$("#msg_txt_to_username").addClass("valid_error").html("<span>{$_lang['username_no_exit']}</span>");return false;
+					}
+                    
+                }
+				function check_user(){
+					var username= $("#txt_to_username").val();
+					$.post("index.php?do=user&view=message&check_username="+username,function(data){						
+						if(data!=1){							
+							$("#txt_to_username").attr("tmp",1);
+							$("#msg_txt_to_username").addClass("valid_error").html("<span>{$_lang['username_no_exit']}</span>");														
+						}else{
+							$("#txt_to_username").attr("tmp",2);							
+						}
+					},'text')
+				}
+            </script>
+            <!--{template user/user_footer}-->
+<!--{template footer}-->

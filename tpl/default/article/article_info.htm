@@ -1,0 +1,118 @@
+<!--{template header}-->
+<link href="{SKIN_PATH}/css/news.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/news.css" rel="stylesheet" type="text/css">
+<div class="wrapper">
+	<!--页面头部-->
+    <header class="clearfix page_header">
+	<div class="container_24">
+		<!--{ad_show(NEWSINFO_HEAD,资讯中心_头部广告)}-->
+	    <!--页面导航-->
+	    <div class="breadcrumbs clearfix">
+	        <a href="{$pre_url}index.php">{$_lang['home']}</a> &gt;
+			<a href="index.php?do=article">{$_lang['news_center']}</a> &gt;
+			<span>{$art_info['cat_name']}</span>
+	    </div>
+	    <!--end 页面导航--><!--页面标题(搜索前)-
+	    <div class="page_title clearfix">
+	        <h2 class="title">
+                   {if $static}
+						<a href="{$pre_url}html/article/list/{$art_info['art_cat_id']}_1.htm">
+                   {else}
+                      <a href="{$pre_url}index.php?do=article&view=article_list&art_cat_id={$art_info['art_cat_id']}">
+                   {/if}{$art_info['cat_name']}</a></h2>
+	    </div>
+	    <!--end 页面标题-->
+	</div>
+	</header>
+	<!--end 页面头部-->
+<!--主内容-->
+<section class="clearfix content">
+    <div class="container_24">
+        <section class="clearfix section">
+            <div class="second_menu container_24 po_ab">
+                <div class="suffix_23 pull_1">
+                    <nav class="minor_nav box">
+                        <ul class="nav_group">
+                        	<li>
+                        		 <a href="{$pre_url}index.php?do=$do" class="" title="{$_lang['return_art_home']}"><span class="icon16 home">{$_lang['return_home']}</span></a>
+                        	</li>
+                            <li>
+                                <a href="{$pre_url}index.php?do=help" title="{$_lang['help_center']}"><span class="icon16 help">{$_lang['help_center']}</span><b class="font14 ml_5 po_re" style="top:4px;">？</b></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="show_panel container_24 po_re">
+                <div class="po_re clearfix">
+                    <!--左边内容-->
+                    <div class="grid_19">
+                        <div class="box normal clearfix">
+                            <!--资讯详细介绍-->
+                            <div class="news_detail pt_20 clearfix" >
+                                <div class=" prefix_1 suffix_1 clearfix">
+                                    <h1 class="c333">{$art_info['art_title']}</h1>
+                                    <div class="clearfix pt_5">
+                                    	<div class="fl_r operate">
+                                        	<a id="share1" href="index.php?do=ajax&view=share&oid=1&title={$art_info['art_title']}" class=""  onclick="return false" onmouseover="share(this)" title="{$_lang['share']}"><span class="icon16 share">{$_lang['share']}</span></a>
+                                            <a href="javascript:setfontsize();" class="" title="{$_lang['text_size']}"><span class="icon16 text-letter-t">{$_lang['text_size']}</span></a>
+                                            <a href="javascript:setprint('details');" class="" title="{$_lang['print']}"><span class="icon16 print">{$_lang['print']}</span></a>
+                                        </div>
+                                        <div class=" c666">
+                                        	<!--{eval echo date("Y-m-d",$art_info['pub_time'])}--> |
+											{$art_info['views']} {$_lang['view_num']} | 
+											{$_lang['author']}:{if $art_info['username']}{$art_info['username']}{else}{$_lang['ym']}{/if} | 
+											{$_lang['source']}:{if $art_info['art_source']}{$art_info['art_source']}{else}{$_lang['wz']}{/if}
+										</div>
+                                        
+                                    </div>
+			
+										
+                                    <div id="details" class="news_content mt_10">
+                                        	<!--{eval echo kekezu::filter_input($art_info[content])}-->
+									</div>
+                                </div>
+								<div class="clear"></div>
+								<!--左内容头-->
+                            <div class=" clearfix pad5" >
+									{if $art_down_info}
+										{if $static}
+											<a href="{$pre_url}html/article/info/{$art_info['art_cat_id']}_{$art_down_info['art_id']}.htm" class="fl_r mr_20">
+					                   {else}
+					                      <a href="{$pre_url}index.php?do={$do}&view={$view}&art_cat_id={$art_info['art_cat_id']}&art_id={$art_down_info['art_id']}" class="fl_r mr_20">
+					                   {/if}<strong class="font_simsun mr_5 c555">{$_lang['next_article']}：</strong><!--{eval echo kekezu::cutstr($art_down_info['art_title'],30)}--></a>
+	                                {/if}
+									{if $art_up_info}
+										{if $static}
+											<a href="{$pre_url}html/article/info/{$art_info['art_cat_id']}_{$art_up_info['art_id']}.htm" class="fl_r mr_10">
+					                   {else}
+					                      <a href="{$pre_url}index.php?do={$do}&view={$view}&art_cat_id={$art_info['art_cat_id']}&art_id={$art_up_info['art_id']}" class="fl_r mr_20">
+					                   {/if}<strong class="font_simsun mr_5 c555">{$_lang['previous_article']}：</strong><!--{eval echo kekezu::cutstr($art_up_info['art_title'],40)}--></a>
+	                                {/if}
+                            </div>
+                            <!--end 左内容头-->
+							    <div class="clear">
+                                </div>
+                               
+                            </div>
+                            <!--end 资讯详细介绍-->
+                        </div>
+                    </div>
+                    <!--end 左边部分-->
+                    <!--右边部分-->
+                    <!--{template tpl/default/article/article_right}-->
+                    <!--end 右边部分-->
+                </div>
+            </div>
+        </section>
+		<!--资讯中心_底部广告-->
+		<!--{ad_show(NEWSINFO_BOTTOM)}-->
+    </div>
+</section>
+<!--end 主内容-->
+
+<script type="text/javascript" >
+	In('print');
+</script>
+
+<!--{template footer}-->

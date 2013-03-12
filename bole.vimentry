@@ -1,0 +1,38 @@
+-- auto-gen settings (DO NOT MODIFY) --
+
+CWD=F:/work/bole/code-copy
+Version=25
+VimEntryName=bole
+VimfilesDirName=.vimfiles.bole
+
+-- ex-plugins File Settings --
+
+LangType=auto
+Project=./.vimfiles.bole/project_tree.exproject
+FilenameList=./.vimfiles.bole/filenamelist
+Tag=./.vimfiles.bole/tags
+ID=./.vimfiles.bole/ID
+Symbol=./.vimfiles.bole/symbol
+Macro=./.vimfiles.bole/macro
+Cscope=./.vimfiles.bole/cscope.out
+Inherits=./.vimfiles.bole/inherits
+Bookmarks=./.vimfiles.bole/bookmarks
+
+vimentryRefs+=
+
+-- ex-plugins Behavior Settings --
+
+RestoreBuffers=false
+AskForRestoration=true
+RestoreInfo=./.vimfiles.bole/restore_info
+
+-- LookupFile Settings --
+
+LookupFileTag=./.vimfiles.bole/filenametags
+
+-- Visual Studio Settings --
+
+vsTaskList=./.vimfiles.bole/vs_task_list
+vsOutput=./.vimfiles.bole/vs_output
+vsFindResult1=./.vimfiles.bole/vs_find_results_1
+vsFindResult2=./.vimfiles.bole/vs_find_results_2

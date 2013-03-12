@@ -1,0 +1,135 @@
+<!--{template header}-->
+<link rel="stylesheet" href="{SKIN_PATH}/css/help.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{SKIN_PATH}/theme/{$_K['theme']}/css/help.css" rel="stylesheet" type="text/css">
+ <div class="wrapper">
+ <!--页面头部-->
+ <header class="clearfix page_header">
+  <div class="container_24"> 
+   <!--页面导航-->
+    <div class="breadcrumbs clearfix"><a href="index.php">{$_lang['home']}</a> &gt; <span>{$_lang['help_center']}</span></div>
+   <!--end 页面导航-->
+   <!--页面标题(搜索前)-
+   <div class="page_title clearfix">
+     <div class="grid_4"><h2 class="title">{$_lang['help_center']}</h2></div>
+   </div>
+ <!--end 页面标题(搜索前)-->    
+ <!--页面子导航-->
+ <div class="grid_24 ">
+  <nav class="clearfix page_nav po_re">
+    <ul>
+    	{loop $first_nav $k $v}
+		{if $v[cat_type] == 'help'}
+       		 <li {if $fpid==$k}class="selected"{/if}><a href="index.php?do=help&fpid={$k}"><span>{$v['cat_name']}</span></a></li>
+		{/if}
+		{/loop}
+    </ul>
+  </nav>
+  </div>
+ <!--end 页面子导航--> 
+ </div>
+</header> 
+ <!--end 页面标题-->
+ <!--主内容-->
+  <section class="clearfix content">
+   <div class="container_24">
+     <div class="grid_24 ">
+      <div class="box  panel clearfix mb_10">
+          <!--左边导航-->
+          <div class="grid_6 alpha omega ">
+            <div class="nav_list clearfix">
+              <dl>
+              	{loop $second_nav $k $v}
+               <dt>
+                  <a class="small_nav block clearfix po_re {if $spid==$k}selected{/if}" fpid="{$fpid}" spid="{$k}" href="###">
+	                 <span class="ml_20">{$v['cat_name']}</span>
+					 
+	                 {if $third_list[$k]['art_cat_pid']}
+						 <div class="icon16 po_ab spread_back {if $spid==$k} sq-minus{else}sq-plus{/if}"></div>
+					 {/if}
+                  </a>                                           
+                </dt>
+				<dd class="clearfix">
+				 <ul>
+				 	{if $spid==$k}
+						{loop $third_nav $k2 $v2}
+					     <li tpid="{$k2}">
+					       	<a href="index.php?do=help&fpid={$fpid}&spid={$spid}&tpid={$k2}" {if $k2==$tpid}class="selected"{/if}>{$v2['cat_name']}</a>
+						</li>
+					   {/loop}
+				   {/if}
+				  </ul>
+				</dd>
+				{/loop}
+            </dl>
+          </div>
+          </div>
+          <!--end 左边导航-->
+                            
+          <!--右边主体内容-->
+      	  <div class="bord_right clearfix pb_20 grid_18 omega ">
+	            <!--右边主体上端内容-->
+				<div class="top_content clearfix">
+	              <form action="#" method="post" name="frm_help" id="frm_help" class="grid_9">
+	                  <label class="icon32 zoom mr_5 fl_l"></label>
+                      <input name="keyword" type="text" id="keyword" value="{$_lang['you_want_know']}"class="fl_l togg1 txt_input c999" t="{$_lang['you_want_know']}" size="30"/><a class="button fl_l ml_5" href="javascript:void(0);" onclick="searchKeyword();">　{$_lang['search']}&nbsp;&nbsp;&nbsp;</a>
+	              </form>
+				  <div class="fl_r clearfix mt_5">
+					  <h2 class="fl_r">{$_lang['kf_tel']}</h2>
+					  <div class="clear"></div>
+	                  <div class="font20 t_r c000">
+		                  <div class="icon16 phone-2 mt_5 mr_5"></div>
+		                  {$basic_config['kf_phone']}
+	                  </div>
+				  </div>   
+	            </div>	
+  		  		<!--end 右边主体上端内容-->
+             
+				<!--右边主体下端内容-->                  
+	             <div class="bottom_content">
+	               <div class="loadcontent newcontent clearfix">
+
+					  {loop $help_list $v}
+						<div class="all_content ws_break ">
+						 <a href="javascript:void(0);" class="question">
+							 {if $v['art_title'] != '关于我们'}
+							 <span class="icon16 br-down"></span>
+							 <strong class="q_title"> <!--{eval echo kekezu::cutstr($v['art_title'],84)}--></strong>
+							 {/if}
+						 </a>
+						 <div class="article hidden">
+							<!--{eval echo kekezu::filter_input($v['content'])}-->
+						</div>
+						</div>
+					  {/loop}	
+					  <!--page 翻页 start-->
+                       <div class="page">
+                           <span class="stats">{$_lang['count']}{$count}{$_lang['match_result']}</span>$pages['page']
+                           <div class="clear"></div>
+                       </div>
+                      <!--page 翻页 end-->	
+	               </div>
+	             </div>
+	            <!--end 右边主体下端内容--> 
+            <!--工具栏-->
+          <div class="operate mt_20 t_r">
+            <a href="index.php" class="" title="{$_lang['return_home']}"><span class="icon16 home"></span></a>
+          </div>
+        <!--end 工具栏-->
+           </div>
+		   <!--end 右边主体内容--> 
+          
+        
+
+	  </div>	  
+     </div>
+   </div>  
+  </section> 
+ <!--end 主内容--> 
+ </div>
+<script type="text/javascript">
+	
+	In.add('help',{path:"{$style_path}/js/help.js",type:'js'});
+	In('help');
+</script>
+
+<!--{template footer}-->

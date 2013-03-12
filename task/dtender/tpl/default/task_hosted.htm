@@ -1,0 +1,123 @@
+<!--{template header}--><!--弹窗-->
+<style type="text/css">
+    p {
+        overflow: hidden;
+        clear: both;
+    }
+    
+    b {
+        display: inline-block;
+        color: #c00;
+    }
+    
+    label {
+        display: inline-block;
+        width: 20em;
+        text-align: right;
+    }
+</style>
+<div class="clearfix box winbody">
+    <div class="pad10">
+        <!--from表单 start-->
+	 {if $service_cash>=$quote}
+        <div class="rowElem clearfix ">
+            <p>
+                <label>
+                    {$_lang['you_haved_trusted']}{$_lang['zh_mh']}
+                </label>
+                <b>{c:$service_cash}</b>
+            </p>
+            <p>
+                <label>
+                    {$_lang['witkey']}{$_lang['tender_price']}{$_lang['zh_mh']}
+                </label>
+                <b>{c:$quote}</b>
+            </p>
+            <p class="t_c">
+                {$_lang['not_need_host']}
+                {if $service_cash>$quote}
+					{$_lang['over_will_be_return']}
+                {/if}
+            </p>
+        </div>
+        {else}
+        <div class="rowElem clearfix ">
+            <p>
+                <label>
+                    {$_lang['tender_price']}{$_lang['zh_mh']}
+                </label>
+                <b>{c:$quote}</b>
+            </p>
+            <p>
+                <label>
+                    {$_lang['you_haved_trusted']}{$_lang['zh_mh']}
+                </label>
+                <b>{c:$service_cash}</b>
+            </p>
+            <p>
+                <label>
+                    {$_lang['still_trust']}{$_lang['zh_mh']}
+                </label>
+                <b>{c:$sy_cash}</b>
+            </p>
+        </div>
+        <div class="rowElem clearfix">
+            <p>
+                <label>
+                    {$_lang['now_your_balance']}{$_lang['zh_mh']} 
+                </label>
+                <b>{c:$user_info[balance]}</b>
+                ( {$_lang['cash']} )<b>{c:$user_info[credit]}</b>
+                ( {CREDIT_NAME} )
+            </p>
+        </div>
+        <div class="rowElem clearfix">
+            <p>
+                <label>
+                    {$_lang['trusted_cash']}{$_lang['zh_mh']}
+                </label>
+                <b>{c:$sy_cash}</b>
+            </p>
+        </div>
+        {/if}
+    </div>
+    <div class="rowElem clearfix form_button">
+        <button type="button" class="button" value="{$_lang['save']}" onclick="subWork()">
+            <span class="check icon"></span>{$_lang['save']}
+        </button>
+        <button type="button" class="button" value="{$_lang['cancel']}" onclick="closeWindow('{$op}')">
+            <span class="reload icon"></span>{$_lang['cancel']}
+        </button>
+    </div>
+    <!--from表单 end-->
+</div>
+<script type="text/javascript">
+    
+    function subWork(){
+        var furl = "{$newurl}";
+        var basic_url = "{$basic_url}";
+        furl = furl ? furl : (basic_url + '&op={$op}');
+        $.post(furl, {
+            sbt_edit: true
+        }, //$.post(basic_url+'&op={$op}',{sbt_edit:true},
+     function(json){
+            if (json.status == '1') {
+                showDialog(json.data, 'right', json.msg, "location.href='" + basic_url + "&view=work'");
+                closeWindow('{$op}');
+                return false;
+            }
+            else {
+                showDialog(json.data, 'alert', json.msg,"location.href='index.php?do=user&view=finance&op=recharge'");
+                return false;
+            }
+        }, 'json');
+    }
+    
+    function closeWindow(win){
+        hideWindow(win);
+    }
+</script>
+<script type="text/javascript">
+    In('form');
+</script>
+<!--{template footer}-->

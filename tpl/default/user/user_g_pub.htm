@@ -1,0 +1,204 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}--><!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['g_pub']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $v}
+                                            <li {if $model_id==$v['1']}class="selectedLava"{/if}>
+                                                <a href="index.php?do={$do}&view={$view}&op={$op}&model_id={$v['1']}#userCenter" title="{$v['2']}">{$v['2']}(<!--{eval echo intval($v['3'])}-->)</a>
+                                            </li>
+                                            {/loop} 
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end--><!--detail内容 start-->
+                            <article class="box_detail">
+                              {if $model_id}
+                                <div class="">
+                                    <!--from表单 start-->
+                                    <div class="clearfix box pad10">
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input  type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_10 fl_l">
+                                                    <input type="text" name="service_id" class="togg_u txt_input" value="{$_lang['please_input_service_id']}" title="{$_lang['please_input_service_id']}" size="13"/>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class="fl_l" name="ord">
+                                                        {loop $ord_arr $k $v}<option value="$k" {if $k==$ord}selected="selected"{/if}>{$v}  </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class=" fl_l">
+                                                    <select class="fl_l" name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']} </option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']} </option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']} </option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value="{$_lang['search']}">
+                                                        <span class="icon magnifier"></span>{$_lang['search']}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--date_table数据表格 start-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            {$_lang['service_id']}
+                                                        </th>
+                                                        <th scope="col" width="250px">
+                                                            {$_lang['goods_name']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['service_price']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['sale_num']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['pub_time']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['service_status']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['operate']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+                                                <tbody>
+                                                    {if $s_info}
+                                                    {loop $s_info $v}
+                                                    <tr>
+                                                        <td>
+                                                            #{$v['service_id']}
+                                                        </td>
+                                                        <td width="280px">
+                                                            <a href="{$_K['siteurl']}/index.php?do=service&sid={$v['service_id']}" target="_blank">$v['title']</a>
+                                                        </td>
+                                                        <td>
+                                                            {c:$v['price']}
+                                                        </td>
+                                                        <td>
+                                                            {$v['sale_num']}
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i',$v['on_time'])}-->
+                                                        </td>
+                                                        <td>
+                                                            {$status_arr[$v['service_status']]}
+                                                        </td>
+                                                        <td>
+                                                            <a class="button" onclick="return del(this);" href="{$url}&ac=del&ser_id=$v['service_id']"><span class="cross icon"></span>{$_lang['delete']}</a>
+                                                            <a class="button" onclick="seEdit('{$v[service_id]}');" href="###"><span class="pen icon"></span>{$_lang['edit']}</a>
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+                                                    {else}
+                                                    <tr>
+                                                        <td colspan="7" class="t_c">
+                                                            {$_lang['norecord']}
+                                                        </td>
+                                                    </tr>
+                                                    {/if}
+                                                </tbody>
+                                                <tfoot>
+                                                <td colspan="7" class="t_r">
+                                                    {$_lang['total']}:{$count}{$_lang['ge']}
+                                                </td>
+                                                </tr>
+                                            </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->
+                                        <div class="page clearfix">
+                                            <p>
+                                                {$pages['page']}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--from表单 end-->
+                                </div>
+							{else}
+								<div class='t_c fontb pad30' style="height:95px">{$_lang['no_shop_model']}</div>
+							{/if}
+                            </article>
+                            <!--detail内容 end-->
+                        </div>
+                    </div>
+                    <!--main content end -->
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+<script type="text/javascript">
+	
+	var suc = false;
+    function del(obj){
+        var url = obj.href;
+        showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
+			accCheck(url, "{$_lang['has_none_operated_order']}","reload");
+        });
+		
+        return false;
+    }
+    
+    function seEdit(sid){
+        var sid = parseInt(sid);
+        if (typeof(sid) == 'undefined' || isNaN(sid)) {
+            showDialog("$_lang['none_exists_service']", "alert", "{$_lang['operate_notice']}");
+            return false;
+        }
+        else {
+            var url = "{$url}&ac=edit&ser_id=" + sid;
+			showWindow('service_edit',url,'get',0);return false;
+        }
+    }
+    function accCheck(url, cont,type,winName){
+        $.getJSON(url, {
+            ac: 'check'
+        }, function(json){
+            if (json.status == 1) {
+                showDialog(cont, "alert", "{$_lang['operate_notice']}");return false;
+            }else{
+				switch(type){
+					case "reload":
+           				 formSub(url,'url',false);
+						break;
+					case "window":
+          					showWindow(winName, url, 'get', 0); return false;
+						break;
+				}
+			}
+        })
+    }
+</script>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

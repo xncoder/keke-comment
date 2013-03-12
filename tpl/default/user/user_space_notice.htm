@@ -1,0 +1,77 @@
+<!--{template header}--><!--contain start-->
+<style>
+.market{border-bottom:1px solid #e4e4e4;}
+.shops{color:#000; font-size:16px; font-family:"新宋体"; width:400px; margin:30px auto 0px; font-weight:bold;}
+.memb{width:400px; margin:30px auto 0px; }
+.hao{ margin:auto font-size:14px;}
+.air{text-align:left; margin-bottom:0px; color:#5a5a5a; font-size:12px; line-height:30px;}
+</style>
+<div class="wrapper">
+ <div class="container_24">
+  <!--{template user/user_nav}-->
+<!--main start-->
+<section class="clearfix section">
+ <!--{template user/user_side}-->
+  <div class="show_panel container_24 po_re">
+    <div class="prefix_3 grid_21">
+     <div class="panel clearfix box">
+      <!--main content-->
+        <div class="">
+          <!--header内容头部 start-->
+            <header class="clearfix box_header">
+               <div class="messages m_infor">
+                                    <span class="icon16">info</span>
+                                      {$_lang['open_shop']}                                                          
+                                    <a class="close" href="###">×</a>
+                                </div>
+             <div class="clear"></div>
+         </header>
+        <!--header内容头部 end-->
+      
+       <div class="prefix_1 suffix_1">
+         <div class="clearfix box market font14"> 
+                  <div class="suffix_1 clearfix  pb_20 pt_10">
+                     <div class="shops">{$_lang['had_not_open_shop']}</div>
+                     <div class="memb">
+                     	<div class="hao">{$_lang['had']}{$has_open_shop}{$_lang['ge_member']}{$_lang['open_shop']}</div >
+						<div class="air">
+						<div class="air">{$_lang['shop_desc']}</div>
+					    </div>
+						<div  class="air">{$_lang['welcome_open_shop']}</div > 
+						<div class="grid_10 t_l mt_20 alpha omega">
+							<button class="grid_3 alpha omega" onclick="open_shop();" value="{$_lang['hurry_open']}" type="submit">{$_lang['hurry_open']}</button>
+							
+						</div>
+                     </div>
+                      </div>
+                   </div>
+                 </div>
+              <!--detail内容 end-->
+            </div>
+          <!--main content end-->
+         </div>
+       <div class="clear"></div>
+     </div>
+    </div>
+   </section>
+  <!--main end-->
+  </div>
+</div>
+<!--contain end-->
+
+<script type="text/javascript">
+   var space_desc = '$space_desc';
+   function open_shop(){  
+   	if(space_desc){
+		showDialog(space_desc,"confirm","{$_lang['friendly_notice']}",function (){
+			location.href='$url';
+		});return false;
+	}else{
+		location.href='index.php?do=user&view=setting&op=space&ac=open'; 
+	}
+   		
+ 		
+   }
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

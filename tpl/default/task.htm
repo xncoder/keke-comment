@@ -1,0 +1,201 @@
+<!--{template header}-->
+<link href="{SKIN_PATH}/css/task.css" rel="stylesheet" type="text/css">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/task.css" rel="stylesheet" type="text/css">
+<!--页面内容部分-->
+<div class="wrapper">
+<header class="clearfix page_header">
+	<div class="container_24">
+
+        <!--页面导航-->
+        	<div class="breadcrumbs clearfix ">
+            	<a href="index.php">{$_lang['home']}</a> &gt; <span>任务分类</span>
+        	</div>
+        <!--end 页面导航-->
+    	</div>
+<!--end 选项卡部分-->
+</header>
+
+<!--详细内容区-->
+<section class="clearfix content">
+	<div class="container_24">
+	<div class="grid_24">
+<!--热门分类区-->
+    	<div class="box model blue">
+       		<div class="inner">
+       			<div class="hot_class clearfix">
+            	<header class="box_header clearfix po_re" style="z-index:2;">
+                	<div class="grid_4 alpha">
+                    	<h1 class="box_title"><span>{$_lang['hot_class']}</span></h1>
+                	</div>	
+            	</header>
+				</div>
+				<div class="box_detail kinds_bg clearfix">
+	         		<ul class="category_list clearfix">
+	       			<!--{eval $i=1}-->
+	       			{loop $clean_industry_arr $key $value}
+	       			{if $value['level']==0}
+	       				{if $i!=1}</div></li>{/if}<!--{eval $i++}-->
+						<li class="category_width">
+	       					<div class="item clearfix">
+              					<h2>{$value['indus_name']}</h2>
+      					  {else}
+      					  <a href="index.php?do=task_list&path=A$value['indus_pid']&indus_id=$value['indus_id']i" class="chah{if $value['is_recommend']} cc00{/if}">{$value['indus_name']}</a>
+      					  {/if}
+      				{/loop}
+      				</ul>
+		   		</div>	
+			</div>
+        </div>
+<!--end 热门分类区-->
+	</div>
+  
+  <div id="task_list" class="grid_24">
+<!--热门推荐区-->
+		<div class="box model cyan_blue mt_20" id="inner">
+          	<div class="inner clearfix">
+<!--热门推荐头部-->
+				<div class="hot_recommend">
+				<header class="box_header clearfix">
+		        	<div class="grid_4 alpha">
+		            	<h1 class="box_title"><span>{$_lang['hot_recommend']}</span></h1>
+		            </div>	
+		            <div class="grid_10 omega clearfix">
+                    	<nav class="box_nav clearfix">
+                        	<ul class="clearfix">
+                        		<li><a href="index.php?do=task&t=new#inner" original-title="{$_lang['new_task']">{$_lang['new_task']}</a></li> 
+                            	<li><a href="index.php?do=task&t=h#inner" original-title="24{$_lang['hour_task']}">24{$_lang['hour_task']}</a></li>
+                                <li><a href="index.php?do=task&t=t#inner" original-title="{$_lang['high_money_task']}">{$_lang['high_money_task']}</a></li>
+                                <li><a href="index.php?do=task&t=u#inner" original-title="{$_lang['alliance_task']}">{$_lang['alliance_task']}</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="grid_5 trade omega">
+                    	<p><!--{eval echo intval($advance_task)}-->{$_lang['ge_order_ongoing']}</p>
+                    </div>
+                    <div class="grid_5 omega">
+                    	<div class="btns">
+                        	<a class="button right" href="index.php?do=task_list" target="_blank">{$_lang['view_all_task']}<span class="rightarrow icon"></span></a>
+                        </div>
+                    </div>
+				</header>
+			</div>	
+<!--end热门推荐头部-->
+  
+<!--热门推荐内容-->
+				<div class="clear"></div>
+	
+                <div class="box_detail clearfix pad0 box ">
+                	<div class="list border_n">
+                		<dl class="border_t_c">
+							{loop $task_list $v}
+							<dd class="clearfix">
+								<ul>
+									<li class="w3 t_l pt_10 col1">
+										<a href="index.php?do=task&task_id={$v['task_id']}" class="font14b" title="{$v['task_title']}" target="_blank">{$v['task_title']}</a>
+									</li>
+									<li class="w2 pt_10 col1">
+										<span class="font14b cc00">
+										{if is_tender($model_list[$v['model_id']]['model_code'])||$v['task_cash_coverage']}
+											{c:$task_cash_cove[$v['task_cash_coverage']]['start_cove']}-{c:$task_cash_cove[$v['task_cash_coverage']]['end_cove']}
+										{else}
+											{c:$v['task_cash']}
+										{/if}
+										</span>
+									</li>
+									<li class="pt_10 col2">
+										{$model_list[$v['model_id']]['model_name']}
+									</li>
+									{if $t!='u'}
+									<li class=" col2">
+										<p>{$v['view_num']}{$_lang['people_view']}</p>
+                                		<p>{$v['work_num']}{$_lang['people_submit']}</p>
+									</li>
+									<li class="w2 col2">
+										{if $v['task_status']==2}
+		                            		<p><!--{eval echo ceil(($v['sub_time']-time())/3600);}-->{$_lang['hour']}{$_lang['after']}</p>
+											<p>{$_lang['stop']}{if is_tender($model_list[$v['model_id']]['model_code'])}{$_lang['bid']}{else}{$_lang['submit_works']}{/if}</p>
+										{elseif $v['task_status']==3}
+		                            		<p><!--{date('d天h小时',$v['end_time'])}-->{$_lang['after']}</p>
+		                               	 	<p>{$_lang['stop']}{if is_tender($model_list[$v['model_id']]['model_code'])}{$_lang['choose_bid']}{else}{$_lang['choose_works']}{/if}</p>
+										{/if}
+									</li>
+									<li class="pt_10 m_h">
+										{if $v['task_status']==2}
+												<button class="button fl_l right" type="button"  onclick="workHand('$v['uid']','$v['task_id']');">
+			                                    <span class="cog icon"></span>{$_lang['i_want']}{if is_tender($model_list[$v['model_id']]['model_code'])}{$_lang['bid']}{else}{$_lang['submit_works']}{/if}
+												</button>
+											
+										{/if}
+									</li>
+									{else}
+									<li class=" col2">
+										<p>{$v['view_num']}{$_lang['people_view']}</p>
+									</li>
+									<li class=" col2">
+                                		<p>{$v['work_num']}{$_lang['people_submit']}</p>
+									</li>
+									<li class="pt_10 m_h fl_r w2">
+										{if $v['task_status']==2}
+											<a class="button fl_l right" href="index.php?do=task&task_id=$v['task_id']&r_task_id=$v['r_task_id']">
+												{$_lang['i_want']}{$_lang['submit_works']}
+			                                   <span class="cog icon"></span>
+											</a>
+										{/if}
+									</li>
+									{/if}
+								</ul>
+								<div class="clear"></div>
+							</dd>
+							{/loop}
+                		</dl>
+
+                	</div>
+                </div>
+				
+				
+<!--end热门推荐内容-->
+			</div>
+			
+		</div>
+<!--end热门推荐区-->
+
+	<!--page 翻页 start-->
+                       <div class="page clearfix">
+                           <p class="clearfix">
+                               <span class="stats">{$_lang['total']}{$count}{$_lang['tiao']}</span>
+                                 $pages['page']
+                           </p>
+                       </div>
+					   <div class="clear"></div>
+                   <!--page 翻页 end-->
+	</div>
+	</div>
+</section>
+<!--end详细内容区-->
+</div>
+<!--end页面内容部分-->
+<script type="text/javascript">
+	var uid = '{$uid}';
+/** 稿件提交 */
+function workHand(guid,task_id) {
+	if (check_user_login()) {
+		if (uid == guid) {
+			showDialog("{$_lang['operate_disable_notice']}", 'alert', "{$_lang['operate_fail_notice']}", '', 0);
+			return false;
+		} else {
+			showWindow("work_hand",'index.php?do=task&task_id='+task_id+'&op=work_hand', "get", '0');
+			return false;
+		}
+	}
+}
+
+$(document).ready(function() {
+$(".category_list li").hover(function() {
+$(this).addClass("hover");
+}, function() {
+$(this).removeClass("hover");
+});
+});
+
+</script>
+<!--{template footer}-->

@@ -1,0 +1,79 @@
+<!--{template header}--> 
+<script type="text/javascript"  src="resource/js/system/form_and_validation.js"></script>
+<script type="text/javascript" src="resource/js/system/ajaxfileupload.js"></script>
+<div class="winbody">
+ <div class="clearfix box basic_style pad10">
+
+
+ <!--messages消息 start-->
+  <div class="messages orange">
+    <span class="icon16">{$_lang['picture_upload']}</span>
+     {$_lang['picture_upload']}
+   </div>
+  <!--messages消息 end-->
+
+    <!--from表单 start-->
+    <form method="post" id="frm_tender" name="frm_tender" action="?do=space&ac=up_pic">
+    	<input type="hidden" name="file_name" id="file_name" value="" />
+    	<input type="hidden" name="file_id" id="file_id" value="" />
+    	<div class="rowElem clearfix">
+      		<label class="fl_l">{$_lang['picture_upload']}</label>
+			 <div class="fl_l">
+			 	<input type="file" class="file" name="upload" id="upload"  msgArea="span_qq" ext="{$ext}" onchange="pic_upload('upload');">
+                <span id="span_qq"></span>
+                <div>
+                	<img id="preview" src="" width="200px;"/>
+                </div>
+			 </div>
+     	 </div>
+	 <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" name="sbt" value="{$_lang['save']}" onclick="sub_Pic()"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="cancel_upload('hide');"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+
+ </div>
+</div>
+<script type="text/javascript">
+function sub_Pic(){
+	var url="{$_K['siteurl']}/index.php?do=space&ac=up_pic";
+	var name=$("#file_name").val();
+	$.post(
+		url,
+		{view:'{$view}',file_name:name,member_id:'{$member_id}',{if $view=='index' || !$view}slide_index:'{$slide_index}',{/if}sbt:'submit'},
+		function(data){
+			if(data.status=="1"){
+				hideWindow('up_pic');
+				showDialog("{$_lang['picture_save_success']}",'right',"{$_lang['success_notice']}","location.href='?do=space&member_id={$member_id}&view={$view}'");
+			}else{
+				$("#span_qq").html("<font color='red'>{$_lang['picture_save_fail']},"+data.msg+"</font>");
+				cancel_upload(hide);
+			}
+		},'json'
+	);
+}
+function cancel_upload(hide){
+	var n=$("#file_name").val();
+	var i=$("#file_id").val();
+	$.post('?do=ajax&view=file&ajax=delete&filepath='+n+'&file_id='+i);
+	hide=="hide" && hideWindow('up_pic');
+	
+}
+function pic_upload(id){
+	if($("#file_name").val()){
+		cancel_upload();
+	}
+		upload(id,'att','front','','','e_space');
+}
+		/**
+ * 上传完成后的页面响应
+ * @param json json数据
+ */
+function uploadResponse(json){
+       $("#file_name").val(json.msg.up_file);
+       $("#file_id").val(json.fid);
+       $("#preview").attr("src",json.msg.up_file);//预览
+}
+</script>
+<!--{template footer}-->

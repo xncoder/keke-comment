@@ -1,0 +1,129 @@
+{if $ajax=='load'}<!--稿件区附件加载-->
+<ul>
+	{loop $file_list $v2}
+		<li>
+			<a class="file_down" href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$v2['file_name']}&file_path={$v2['save_name']}#file" temp="$v2['save_name']">{$v2['file_name']}<span class="c999">（{if is_file($v2['save_name'])}<!--{eval echo kekezu::get_format_size(filesize($v2['save_name']))}-->{else}file_not_exists{/if}）</span><span class="icon16 download"></span></a>
+		</li>
+	{/loop}
+ </ul>
+<script type="text/javascript">
+	$(function(){
+			var x = 5;
+			var y = 5;		
+			$("a.file_down").each(function(){
+				var href = $(this).attr('temp');
+				var aa = href.split('.');
+				var exten = aa['1'];				
+				if(is_display(exten)){
+					$(this).mouseover(function(e){						
+						var divAppend="<div id='tooltip'><img src='"+ href +"' style='width:70%;border-radius:5px;box-shadow:2px 2px 2px gray;' /></div>";						
+						$("body").append(divAppend);
+						$("#tooltip").css({
+							"position":"absolute",
+							"z-index":40,
+							"top":(e.pageY+y)+'px',
+							"left":(e.pageX+x)+'px'
+						}).show('fast');
+					}).mouseout(function(){
+						$("#tooltip").remove();
+					})
+				}				
+			})
+			var loading = parseInt($(".process li.selected").index()) + 1;
+			$(".progress_bar").css("width", loading * 33.3 + "%");
+			
+		})
+		
+		function is_display(str){
+			var aa = 0;
+			var ext_display = Array('jpg','bmp','png','gif');	
+			var length = ext_display.length;
+			for(var i=0;i<length-1;i++){
+				if(ext_display['i']==str){
+					aa = 1;
+				}
+			}
+			return aa;
+		}
+</script>
+{elseif $ajax=='goods_filedown'}
+<!--{template header}--><!--用户中心作品文件下载-->
+<section class="content box {$_K['theme']}_style">
+ <!--布局框-->  
+<div class="clearfix">
+     <!--左边部分-->
+      <div class="grid_17 ">
+        <div class="pad10 border_r_c"> 
+	{if $service_info['submit_method']=='inside'}
+	  {if $file_list['0']} 
+		  <ul>
+	  	   {loop $file_list $v2}
+			<li>
+			  <!--{eval $name = substr($v2,strrpos($v2,'/')+1)}-->
+			  <a href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$name}&file_path={$v2}#file" temp="$v2">{$name}<span class="c999">（<!--{eval echo kekezu::get_format_size(filesize($v2))}-->）</span><span class="icon16 download"></span></a>
+		   </li>
+	      {/loop}
+   		 </ul>
+		{else}
+			{$_lang['this_work_no_update']}
+		{/if}
+	{else}
+	{$_lang['this_work_no_out']}
+	{/if}
+	</div>
+  </div>
+</div>
+</section>
+{elseif $ajax=='sreward_filedown'}
+<!--{template header}--><!--用户中心单人悬赏源文件下载-->
+<section class="content box {$_K['theme']}_style">
+ <!--布局框-->  
+<div class="clearfix">
+     <!--左边部分-->
+      <div class="grid_17 ">
+        <div class="pad10 border_r_c"> 
+
+	    {if $file_arr} 
+		  <ul>
+	  	   {loop $file_arr $v3}
+			<li>
+			  <a href="{$_K['siteurl']}/index.php?do=ajax&view=file&ajax=download&file_name={$v3[file_name]}&file_path={$v3[save_name]}#file" temp="$v2">{$v3[file_name]}<span class="c999">（<!--{eval echo kekezu::get_format_size(filesize($v3[save_name]))}-->）</span><span class="icon16 download"></span></a>
+		   </li>
+	      {/loop}
+   		 </ul>
+		{else}
+			没有可供下载的源文件
+		{/if}
+	
+	</div>
+  </div>
+</div>
+</section>
+<!--{template footer}-->
+{elseif $ajax=='help_second'}<!--帮助中心左边二级菜单-->
+ <ul>
+	{loop $second_list $v}
+     <li>
+       	<a href="index.php?do=help&fpid={$fpid}&spid={$spid}&tpid=$v['art_cat_id']">$v['art_title']</a>
+	</li>
+   {/loop}
+  </ul>
+{elseif $ajax=='help_search'}<!--帮助中心搜索结果-->
+	  <div class="all_content">
+		{$_lang['count']}<!--{eval echo count($search_list);}-->{$_lang['match_result']}
+	  </div>
+	  {loop $search_list $v}
+		<div class="all_content">
+		  <div class="question mt_10">
+		     <div class="left_bk fl_l"></div>
+		      <h3 class="q_title pl_20">
+		      	<!--{eval $art_title = kekezu::cutstr(strip_tags($v['art_title']),84)}-->
+			 	<!--{eval echo str_ireplace($keyword,"<font color='red'>".$keyword."</font>",$art_title);}-->
+			</h3>
+		  </div>
+		  <div class="article pl_20 pr_20 pb_20">
+		    <!--{eval echo kekezu::filter_input($v['content'])}-->
+		  </div>
+		  </div>
+	  {/loop}
+{/if}

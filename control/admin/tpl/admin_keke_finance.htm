@@ -1,0 +1,18 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$_lang['financial_model']}</h1>
+</div>
+{if trim($config['keke_app_id'])}
+
+<div class="box list">
+    <div class="detail">
+    	<iframe src="{$gate}/remote.php?app_id={$config[keke_app_id]}&do=fina" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="530px"></iframe>
+    </div>
+        
+    </div>
+{else}
+<div class="box list">
+     <div class="detail t_c"><b>{$_lang['api_not_approved_unable']}</b></div>
+</div>
+{/if}
+    <!--{template control/admin/tpl/admin_footer}-->

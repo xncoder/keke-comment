@@ -1,0 +1,13 @@
+ <!--{template header}-->
+{if $ac == 'cate_add'}<!--用户中心空间案例分类添加-->
+ <div class="rowElem clearfix">
+   	    <label class="grid_2 t_r">{$_lang['cate_name']}</label>
+		  <div class="grid_15">
+     		<input name="cate_name" size="19" type="text" id="case_name" value="{$case_info['case_name']}"/>
+     	   <button type="button" onclick="ajax_cate()" id="sbt_cate" value="{$_lang['add']}"><span class="check icon"></span>{$_lang['add']}</button>
+   		 </div>
+</div>
+{/if}
+<!--{template footer}-->
+
+

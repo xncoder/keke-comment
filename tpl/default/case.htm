@@ -1,0 +1,102 @@
+<!--{template header}-->
+<!--案例样式-->
+<link href="{SKIN_PATH}/css/case.css" rel="stylesheet" type="text/css">
+ <link href="{SKIN_PATH}/theme/{$_K['theme']}/css/case.css" rel="stylesheet">
+	<div class="wrapper">
+		<!--页面头部-->
+		<header class="clearfix page_header">
+	    	<div class="container_24">
+	    	
+	        <!--页面导航-->
+	        	<div class="breadcrumbs clearfix">
+	            	<a href="#">{$_lang['home']}</a> &gt; <span>{$_lang['success_case']}</span>
+	        	</div>
+	        <!--end 页面导航-->
+			
+			<!--页面标题(搜索前)-
+	        	<div class="page_title clearfix">
+	            	<div class="grid_20">
+	                	<h2 class="title">{$_lang['success_case']}</h2>
+	            	</div>   
+	        	</div>
+	        <!--end 页面标题-->
+	     
+	    	</div>
+		</header>
+		<!--end 页面标题-->           
+        <!--页面内容-->
+		<section class="content clearfix">
+        <div class="container_24 clearfix">
+            
+			<div class="grid_24">
+				<div class="box normal clearfix">
+					<div class="inner">
+                 		<div class="case clearfix">
+						 
+						
+						 <article class=" box_detail mar0 pb_10 clearfix">
+							<ul class="case_list clearfix ">
+								{if $case_arr}
+								{loop $case_arr $k $v}
+								<!--eval $k = $k+1;-->
+								<li {if $k%3==2} class="no_rborder" {/if} class="clerfix">
+									<div class="case_con clearfix">
+										
+										<a {if $v['obj_type']=='task'} href="index.php?do=task&task_id=$v['obj_id']" {else} href="index.php?do=service&sid=$v['obj_id']" {/if} ><img name="lazyImg" lazy_src="{if $v['case_img']}$v['case_img']{else}<!--{eval echo 'resource/img/system/shop_default_big.jpg'}-->{/if}" 
+										onerror="this.src='resource/img/style/shop_default_big.jpg'" alt="{if $v['obj_type']=='task'}{$v['task_title']}{else}{$v['title']}{/if}" title="{if $v['obj_type']=='task'}{$v['task_title']}{else}{$v['title']}{/if}"></a>
+										
+										
+										<div class="mt_5 img_title clearfix">
+											<a {if $v['obj_type']=='task'}
+													 href="index.php?do=task&task_id=$v['obj_id']" 
+											 {else} href="index.php?do=service&sid=$v['obj_id']"{/if} class="case_name" title="$v['case_title']"><span class="font14 cc00 mr_5">{c:$v['case_price']}</span>$v['case_title']</a>
+										</div>
+										
+										<div class="clearfix">
+											{if  $v['obj_type']=='service'}
+												<span style="color:#2f549f;">{$indus_arr[$v['c_indus_pid']]['indus_name']} / $indus_arr[$v['c_indus_id']]['indus_name']</span>
+											{else}	
+													<span style="color:#2f549f;">$indus_arr[$v['b_indus_pid']]['indus_name'] / $indus_arr[$v['b_indus_id']]['indus_name'] </span>
+											{/if}
+											
+											<div class="clear"></div>
+											<span class="fl_l">{$_lang['view']}{$_lang['zh_mh']}{if $v['obj_type']=='service'}$v['views'] {else} $v['view_num'] {/if}</span>
+											<span class="fl_r">{if $v['obj_type']=='service'}{$_lang['sales_volume']}{$_lang['zh_mh']}$v['sale_num'] {else} {$_lang['submit_works']}{$_lang['zh_mh']}$v['work_num'] {/if}</span> 
+											<div class="clear"></div>
+											<span class="fl_l">{$_lang['case_type']}{$_lang['zh_mh']}{if $v['obj_type']=='task'}$model_type_arr[$v['b_model_id']]{else}$model_type_arr[$v['c_model_id']] {/if}</span>
+											<a {if $v['obj_type']=='task'} href="index.php?do=task&task_id=$v['obj_id']" {else} href="index.php?do=service&sid=$v['obj_id']" {/if} class="fl_r">{$_lang['view_detail']}<span class="font_simsun">>></span></a>								
+										</div>
+									</div>
+								</li>
+								{/loop}
+								{else}
+								    <li class="t_c w0">	{$_lang['norecord']}</li>
+								{/if}
+							</ul>	
+								 
+					</article>
+						 
+				 	</div>
+			    	</div>
+				</div>
+				<!--page 翻页 start-->
+                                    <div class="page">
+                                        <p class="clearfix">
+                                            <span class="stats">{$_lang['count']} $count {$_lang['tiao']} </span>
+                                            $pages['page']
+                                        </p>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                    <!--page 翻页 end-->      	
+            </div>
+		</div>	
+        </section>
+		<!--end 页面内容-->
+	</div>	
+<script type="text/javascript">
+In('lazy',function(){
+	loadPics();
+});
+</script>
+<!--{template footer}-->

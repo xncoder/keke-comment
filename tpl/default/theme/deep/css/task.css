@@ -1,0 +1,137 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+ 	
+ 	内容 CONTENTS:
+ 	1. 任务首页
+ 		1.1 banner部分
+ 		1.2  选项卡
+ 		1.3  热门分类区
+ 		1.4  热门推荐区
+ 	2. 任务列表
+ 	3. 任务地图（地图搜索下拉按钮）
+ 	4. 任务详细
+ 		4.1 任务描述
+ 		4.2 任务稿件
+ 		4.3 任务作品
+ 		4.4 任务工具 
+ 	5. 页面元素
+ 		5.1  通用
+ 		5.2 icon图标
+ 		5.3   链接	
+ 		5.4  头部标题
+ 		5.5  其他标记
+ 		5.6 right列表
+ 		5.7  广告位 
+ 		5.8 evaluate辅助评价
+ 		5.9   用户隐藏层	
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1. 任务首页
+ --------------------------------------*/
+/* 公用*/
+.comment_item{ border-left:2px solid #4E4F52; background-color:#2E2E2E;}
+/* 1.1 banner部分 */
+.container{ background:none; margin-top:0;}
+		.banner_info{_bottom:-1px;}	
+		
+/* 1.2 选项卡 */
+.tasktab{background:#131315;}
+.content{border-top:1px solid #4e4f52;}
+
+/* 1.3 热门分类区 */
+	.item h2{color:#887613;}
+		.box_detail ul.category_list li .item a{color:#999;}
+			.box_detail ul.category_list li .item a:hover{color:#88bebe;}
+			.kinds_bg{background:#131315;}
+			.box.model .box_detail{border-top:1px solid #252528;}
+			.category_list .item:hover,.category_list .item.hover{background:#2e2e2e;}
+			.list dl{border:1px solid #252528;}
+			.breadcrumbs a{color:#59B8D3;}
+			
+/* 1.4热门推荐区 */
+.trade p{color:#000;}
+	.deep_style p{ margin-bottom:0; color:#adaaaa;}
+	.page .stats{border-right:2px solid #5A5B61;}
+	.list dd.hover,.list dd:hover{ background:#41444c;}
+	.page a, .page span, .min_page a{color:#C3C3C3 !important;}
+
+/* 2. 任务列表
+ --------------------------------------*/
+.box.deep_style .list .operate{position:absolute;}
+.condition dt{color:#989AA1;}
+.box.normal .inner{border:#000;}
+.condition{border-bottom:1px solid #25292a;}
+.select_condition{border-top:1px solid #252528;}
+.condition dd a{color:#59B8D3;}
+.box.normal .title{color:#E4E847;}
+.box.normal span{color:#999;}
+.min_page{border-left:1px solid #252528;}
+.page_count{border-left:1px solid #252528;}
+.box.normal .border_b_c{border-bottom:1px solid #4E4F52;} 
+
+
+/* 2. 帮助
+ --------------------------------------*/
+.minor_nav ul.nav_group{background:#131315; border:1px solid #4E4F52;}
+.minor_nav a{background:#4E4F52; border:1px solid #25292a;}
+.minor_nav a:hover{background:#565a5b;}
+
+/* 3. 任务地图-----地图搜索下拉按钮------
+ --------------------------------------*/
+.deep_style .condition dd .jqTransformSelectWrapper a.selected, .deep_style .condition dd .jqTransformSelectWrapper a.selected:hover{ border-radius:0px;}
+.deep_style .jqTransformSelectWrapper ul a:hover{ background:#ED8888;}	
+.deep_style .footer .jqTransformSelectWrapper ul a:hover.selected{background:#951a1a;}
+
+
+/* 4. 任务详细
+ --------------------------------------*/
+
+/* 4.1 任务描述 */
+	ul.fans li{border-left:1px solid #2F549F; margin-top:10px; margin-right:10px; line-height:20px; border-width:2px; background:#FDFDFC; float:left; width:45%;}
+		ul.fans li strong{padding:0 10px;}
+	.deep_style .panel{color:#999;}
+	.deep_style .panel .border_b_c{border-bottom:1px solid #4e4f52;}
+	ol.fans li{background:none;}
+	aside .item a{background:url(../img/style/dot.png) no-repeat 0 2px;}
+	.deep_style aside .item a:hover{background-color:#131315;}
+/* 4.2 任务稿件 */
+
+.sum_title .gj_bg{ background: #951a1a;  width:180px;}
+.arr.arrow_t{border-color:transparent; border-bottom-color:#F3F3F3;border-width:10px;  bottom:-12px; position:absolute; z-index:2; left:-12px;}
+.sum_title .gj_bg{background:#94BB3F;}
+#ie6 .sum_title .gj_bg{height:40px; line-height:40px;}
+.sum_title{border:1px solid #4e4f52; background:#545252;}
+.sum_content{border:1px solid #4e4f52;}
+.sc_left{border-right:1px solid #4e4f52;}
+.user_detail{background:#545252; border:1px solid #282828;}
+/* 4.4 任务工具 */
+.deep_style .tool_text p{margin:0 5px; margin-bottom:0;}
+.deep_style .ly_notice{background:#737070;}
+.deep_style .page_nav ul li a{color:#999;}
+.deep_style .box.normal2 .title{color:#b3b1b1;}
+.deep_style .tool_list{border:1px solid #4e4f52;}
+.deep_style .tool_text{background:#2e2e2e;}
+.deep_style .top1{background:#2e2e2e;}
+.border_r_c{border-right:1px solid #282828;}
+
+
+
+/* 5. 页面元素
+ --------------------------------------*/
+.deep_style{color:#999;}
+
+
+
+.show_panel .box_nav a{padding:5px 6px;}	
+.top1{ background:#4E4F54;}
+		
+		
+		
+		
+		

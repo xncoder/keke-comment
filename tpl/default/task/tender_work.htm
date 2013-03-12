@@ -1,0 +1,141 @@
+<!--{template header}--> 
+ <style type="text/css">
+ 	.file{position:absolute; font-size:20px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
+ </style>
+<div class="winbody">
+ <div class="clearfix box  pad10">
+ <!--messages消息 start-->
+  <div class="messages m_warn">
+    <span class="icon16">warning</span>
+     {$_lang['please_fill_in_content']}.
+   </div>
+  <!--messages消息 end-->
+
+    <!--from表单 start-->
+    <form method="post" id="frm_tender" name="frm_tender" action="">
+ 	
+				
+		 <div class="rowElem clearfix">
+
+      		<label class="fl_l">{$_lang['job_offer']}{$_lang['zh_mh']}</label>
+			 <div class="fl_l"> 
+				<input type="text" name="work_frm[txt_cash]" id="txt_cash" class="txt_input" limit="required:true;type:float" title={$_lang['input_amount_offer']} msgarea="msg_cash" msg={$_lang['you_input_offer_right_amount']}> {$_lang['yuan']}
+				<span id="msg_cash"></span> 
+				<span id="xxx" style="color:red"></span>
+			 </div>
+
+     	 </div>
+		 
+
+	  	 <div class="rowElem clearfix">
+      		<label class="fl_l">{$_lang['work_cycle']}{$_lang['zh_mh']}</label>
+			 <div class="fl_l">
+			 	<input type="text" name="work_frm[task_over_time]" class="txt_input" title={$_lang['enter_work_cycle']} id="task_over_time" onkeyup="clearstr(this)" limit="required:true;type:int" msg={$_lang['enter_expected_complete_task_cycle']} tilte={$_lang['enter_expected_complete_task_cycle']} msgArea="span_qq"> {$_lang['day']}
+                <span id="span_qq"></span>
+			 </div>
+     	 </div>
+	  
+	  	  	  
+     <div class="rowElem clearfix">
+
+      		<label class="fl_l">{$_lang['area']}{$_lang['zh_mh']}</label>
+			 <div class="fl_l">
+			 		<select name="province" id="province"></select><select name="city" id="city"></select><select name="area"></select>
+			 </div>
+
+      </div>
+	  
+	  
+	 {if $workhide_exists>0}
+	 <div class="rowElem clearfix">
+      		 <label class="fl_l t_r">{$_lang['hide_manuscript']}{$_lang['zh_mh']} </label>
+			 <div class="fl_l">			 	
+      		 	 <input type="radio" name="work_frm[workhide]" value="1"/><label>{$_lang['yes']}</label>
+              	<input type="radio" name="work_frm[workhide]" value="2" checked /><label>{$_lang['no']}</label>
+			 </div>
+      </div>
+	  <div class="rowElem clearfix" id="desc">
+         <div class="messages">
+         	<span class="icon16"></span>{$_lang['you_have']}{$workhide_exists}{$_lang['time_delivery_authority']}<br/>             
+         </div>
+      </div>	  
+	  {/if}
+       <div class="rowElem clearfix" id="desc">
+
+      		 <label class="fl_l">{$_lang['manuscript_description']}{$_lang['zh_mh']}</label>
+             <div class="fl_l">
+      		 	<textarea cols="68" rows="8" name="work_frm[tar_content]" id="tar_content"  class="txt_input" onkeydown="checkInner(this,'100',event)" style="width:350px;height:100px"></textarea>
+      		 <div class="clear"></div>
+             <div class="c999" id="length_show">{$_lang['enter_info']}</div>
+             {if !$workhide_exists}
+                 <div class="messages">
+                      <span class="icon16"></span>{$_lang['hide_your_manuscript']}
+                     <p>
+                     	<span class="font_simsun">
+                     		<a href="{$_K['siteurl']}/index.php?do=user&view=payitem&op=toolbox&show=buy#userCenter" target="_blank">{$_lang['to_purchase']}&gt;&gt;</a>
+                     		<a href="{$_K['siteurl']}/index.php?do=help&fpid=290&spid=301#pageTop" target="_blank">{$_lang['what_is_the_hidden_manuscripts']}</a>
+						</span>
+					 </p>
+                 </div>
+              {/if}   
+             </div>
+
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" value={$_lang['save']} onclick="subWork()" id="sbt_btn"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('work_hand')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+
+ </div>
+
+</div>
+
+
+<script type="text/javascript">
+	 
+	In.add('pop_window',{path:"{$_K['siteurl']}/resource/js/system/pop_window.js",type:'js'});
+	In('form','pop_window','pcas',function(){
+	    new PCAS("province","city","area","{$loca['0']}","{$loca['1']}","{$loca['2']}");
+	});
+	function subWork(){
+		var i = checkForm(document.getElementById('frm_tender'));
+		if(i){
+		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'frm_tender');
+			if(shtml){
+				$("#sbt_btn").attr("disabled","disabled");
+				var data= $("#frm_tender").serialize(); 
+				var url = 'index.php?do=task&task_id={$task_id}&op=work_hand&'+data+'&sbt_edit=1';
+				hideWindow('work_hand');	
+				$.post(url,
+				function(json){
+					if(json.status=='1'){
+						showDialog(json.data,'right',json.msg,"location.href='index.php?do=task&task_id={$task_id}&view=work'");
+						return false;
+						}
+					else{ 
+						showDialog(json.data,'alert',json.msg);
+						return false;
+					}
+						
+			},'json');
+			}
+		}
+	} 
+
+ 
+	function slt_task_cash(){
+	var cash = $("#slt_cash").val();
+	 if(cash){
+	 	
+		$("#xxx").html(' ');	
+	 }else{ 
+		$("#xxx").html("{$_lang['select_task_quotation_interval']}"); 
+	 }
+	} 
+	
+
+</script>
+
+<!--{template footer}-->

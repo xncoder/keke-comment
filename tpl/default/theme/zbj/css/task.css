@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+ 	
+ 	内容 CONTENTS:
+ 	1. 任务首页
+ 		1.1 banner部分
+ 		1.2  选项卡
+ 		1.3  热门分类区
+ 		1.4  热门推荐区
+ 	2. 任务列表
+ 	3. 任务地图（地图搜索下拉按钮）
+ 	4. 任务详细
+ 		4.1 任务描述
+ 		4.2 任务稿件
+ 		4.3 任务作品
+ 		4.4 任务工具 
+ 	5. 页面元素
+ 		5.1  通用
+ 		5.2 icon图标
+ 		5.3   链接	
+ 		5.4  头部标题
+ 		5.5  其他标记
+ 		5.6 right列表
+ 		5.7  广告位 
+ 		5.8 evaluate辅助评价
+ 		5.9   用户隐藏层		
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1. 任务首页
+ --------------------------------------*/
+/* 1.4热门推荐区 */
+	 p{ margin-bottom:0}
+	.box .list dd{ border-left:none; border-right:none;overflow:hidden; position:relative;}
+		.box .list dd li.w4{ white-space:normal}
+
+/* 2. 任务列表
+ --------------------------------------*/
+.box .list .operate { position:absolute;}
+.list dd.odd{ background:#fff;}
+.shop_author{background:#fff;}
+/* 4. 任务详细
+ --------------------------------------*/	
+/* 4.2 任务稿件 */
+.work_9_big{ background:url(../img/task/task_9_big.gif) no-repeat}
+.work_10_big{ background:url(../img/task/task_10_big.gif) no-repeat}
+
+/* 5. 页面元素
+ --------------------------------------*/
+/*5.9 用户隐藏层 */
+.box .stars{ width:80px; height:15px; margin:3px auto; white-space:nowrap; overflow:hidden;}
+
+/* 多人悬赏 */}
+.blue_style .mre_l_con	.page_title .page_sub_title span span.ml_5{color:#689514;}
+a.mre_task_kind{ }
+.mre_task_kind span{ background:url(../img/style/arrow_down.png) no-repeat; width:7px; height:4px; display:inline-block; vertical-align:middle; _margin-bottom:-20px; margin-left:5px;}
+.mre_btns a{margin-bottom:10px;}
+.mre_btns span{margin-right:5px;}
+.mre_btns .eye.icon16{opacity:0.5; filter:alpha(opacity=50);}
+.award_top .a_des{line-height:30px;  color:#333; font-family:"宋体";}
+			.award_top .a_des p span{color:#c50600;}
+	.award_specific{border:1px solid #dadada; background:#f4f4f4;}
+		.specif_top p{line-height:16px; font-family:"宋体";}
+	.specif_title{border-top:1px solid #dbd8df; border-bottom:1px solid #dbd8df; height:190px; overflow:hidden;}
+		.specif_title img{width:100%;}	
+		.specif_comment span{color:#cb0000; font-weight:bold;}
+		.specif_comment span.time{color:#9f9f9f; font-weight:normal;}
+		.specif_comment p{line-height:20px; color:#666;}
+		.srewar_user{border-top:1px solid #cacaca;}
+			.srewar_user ul{padding-left:5px padding-right:5px;}
+				.srewar_user ul li{float:left; margin:10px 4px 0;}
+.shop_author	h2{color:#333; font-size:12px;}
+	.shop_sign a{padding-bottom:4px; margin:0;}
+	.shop_author .inner{border:1px solid #fff;}
+	.shop_author p{padding:1px 0 1px 1px;}
+	.shop_author p span{margin:0;}
+		.shop_author p em{ font-style:normal; margin:0 3px;}	
+	.shop_author_link{padding:3px 15px;
+		  background-color: #f6f6f6;
+		  background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#f0f0f0)); 
+		  background-image: -webkit-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:    -moz-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:     -ms-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:      -o-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:         linear-gradient(top, #f6f6f6, #f0f0f0);
+		  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f6f6f6', EndColorStr='#f0f0f0'); 
+	}
+	.shop_author_link a{margin-bottom:0;}
+		.shop_author_link a:hover{ text-decoration:underline;}					
+
+		
+		

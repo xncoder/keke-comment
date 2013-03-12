@@ -1,0 +1,131 @@
+<!--{template header}-->
+<div class="winbody">
+ <div class="clearfix pad10">
+
+ <!--messages消息 start-->
+ 
+  <div class="messages m_infor" id="notice_id">
+    <span class="icon16">warning</span>
+                 {$_lang['please_fill_manuscript_content']}.
+   </div>
+
+   
+  <!--messages消息 end-->
+
+   <div class="clearfix box" id="upload_tip">
+    <!--from表单 start-->
+    <form method="post" id="frm_reward" name="frm_reward" action='#'>
+    	<input type="hidden" name="sbting" id="sbting" value="">
+     <div class="rowElem clearfix">
+      		 <label class="fl_l t_r">{$_lang['add_attachment']}{$_lang['zh_mh']} </label>
+			 <div class="fl_l" style="width:350px">
+			 	<!--{eval $flie_types = kekezu::get_ext_type();}-->
+			 	<input type="hidden" name="file_ids" id="file_ids">
+			 	<input type="file" class="file" name="upload" id="upload">
+		  	 	{$_lang['a_maximum_of_5']}{$basic_config['max_size']}M,{$_lang['format']}:
+			<div class="upfile ws_break">
+                 <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$flie_types}</span>
+            </div>
+			</div>
+
+      </div>
+	  {if $workhide_exists>0}	  
+	 <div class="rowElem clearfix">
+      		 <label class="fl_l t_r">{$_lang['hide_manuscript']}{$_lang['zh_mh']} </label>
+			 <div class="fl_l">			 	
+      		 	<input type="radio" name="workhide"  value="1"/><label>{$_lang['yes']}</label>
+              	<input type="radio" name="workhide" value="2" checked /><label>{$_lang['no']}</label>
+				<div class="clear"></div>
+				<div class="messages">
+				 <span class="icon16"></span>{$_lang['you_have']}{$workhide_exists}{$_lang['time_delivery_authority']}<br/>
+                </div>
+			 </div>
+      </div>	  	  
+	  {/if}
+	  
+	  
+       <div class="rowElem clearfix" id="desc">
+
+      		 <label class="fl_l t_r">{$_lang['manuscript_description']}{$_lang['zh_mh']} </label>
+			 <div class="fl_l">
+	      		 <textarea cols="68" rows="8" name="tar_content" id="tar_content" class="txt_input" onkeydown="checkInner(this,'100',event)" style="width:350px;height:100px"></textarea>
+	      		 <div class="clear"></div>
+	             <div class="c999" id="length_show">{$_lang['enter_info']}</div>
+				 {if !$workhide_exists}
+                 <div class="messages">
+				  <span class="icon16"></span>{$_lang['hide_your_manuscript']}{$_lang['zh_jh']}
+				<p>
+					<span class="font_simsun">
+						<a href="{$_K['siteurl']}/index.php?do=user&view=payitem&op=toolbox&show=buy#userCenter" target="_blank">{$_lang['to_purchase']}&gt;&gt;</a>
+				 		<a href="{$_K['siteurl']}/index.php?do=help&fpid=290&spid=301#pageTop" target="_blank">{$_lang['what_is_the_hidden_manuscripts']}?</a>
+				 	</span>
+				</p>
+                 </div>
+				 {/if}
+			 </div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button"  value={$_lang['save']} onclick="subWork();" id="sbt_btn" ><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('work_hand');"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+  </div>
+
+
+ </div>
+</div>
+<script type="text/javascript">
+	In('form');
+	$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$flie_types}',
+					limit:5}
+				,{
+					task_id:'{$task_id}',
+					obj_id:'{$obj_id}',
+					objType:'work'
+				});
+		})
+	function subWork(){
+		var i = checkForm(document.getElementById('frm_reward'));		
+		if(i){
+		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'upload_tip');
+			if(shtml){
+				$("#sbt_btn").attr("disabled","disabled");
+				var data= $("#frm_reward").serialize();
+				var url = 'index.php?do=task&task_id={$task_id}&op={$op}&sbt_edit=1';
+				$.post(url,data,function(json){
+					if(json.status=='1'){
+						
+						showDialog(json.data,'right',json.msg,"location.href='index.php?do=task&task_id={$task_id}&view=work&ut=my'");
+						hideWindow('work_hand');
+					}else{
+						showDialog(json.data,'alert',json.msg);
+					}
+						return false;
+				},'json');
+			}
+		}
+	}
+	
+
+	/**
+	 * 上传完成后的后续操作
+	 * @param data 响应的json对象
+	 */
+	function uploadResponse(json){
+		if($("#"+json.fid).length<1){
+				var file_ids = $("#file_ids").val();
+				 if(file_ids){
+					$("#file_ids").val(file_ids+','+json.fid)
+				}else{	
+					$("#file_ids").val(json.fid);
+					$("#upload").val('');
+				}
+		}
+	}
+</script>
+<!--{template footer}-->

@@ -1,0 +1,118 @@
+<!--{template header}-->
+ 
+<div id="div_map">
+
+		<div class="rowElem clearfix mt_5 mb_5">
+			<form  method="post">
+	      		<label class="fl_l ml_5">{$_lang['please_choose_area']}</label>
+	      		<div id="show_area" class="fl_l mr_5">
+	      		<select name="province" id="province" ></select><select name="city" id="city"></select><select name="area" id="area"></select></div>
+				<label class="fl_l">{$_lang['detail_address']}</label><input type="text" name="address" size="18" id="address" ><button id="map_search"  type="button" class="ml_5"><span class="icon magnifier"></span>{$_lang['search']}</button>
+	    		<button id="sbt_map" type="button" name="sbt_map"  style="*margin-left:5px;"><span class="icon check"></span>{$_lang['confirm_coordinate']}</button>	
+			</form>
+		</div>
+		<div id="container" style="width:800px;height:300px"></div>
+		
+		<!--{eval $aa = explode(",",$release_info['province'])}-->					
+	</div>
+	
+	<!--{eval $user_info['residency'] = explode(',',$user_info['residency']);
+	    
+	}-->
+
+<script type="text/javascript">	
+In('pcas',function(){new PCAS("province","city","area","{$local['0']}","{$local['1']}","{$local['2']}",'map');});
+var map = new BMap.Map("container");
+map.enableScrollWheelZoom(); //鼠标滑动设置地图级别
+map.addControl(new BMap.NavigationControl()); //添加平移缩放控件
+map.centerAndZoom(new BMap.Point(116.404, 39.915),15);  
+map.addEventListener("click",function(e){
+		document.getElementById("px").value=e.point.lat;
+		document.getElementById("py").value=e.point.lng;								
+		map.clearOverlays();
+		map.addOverlay( new BMap.Marker(e.point)); 
+})       
+
+
+//map.setViewport(new BMap.Point(116.404, 39.915));
+//地图搜索，传入参数为一个详细地址的字符串
+function local_search(address){
+	var options = {onSearchComplete: function(results){  
+	   if (local.getStatus() == BMAP_STATUS_SUCCESS){  // 判断状态是否正确  		
+			map.clearOverlays();
+			marker = new BMap.Marker( results.getPoi(0).point);
+			map.addOverlay(marker);   //添加标注 	
+			//map.centerAndZoom(results.getPoi(0).point,15);   
+			map.panTo(results.getPoi(0).point) 
+			$("#px").val(results.getPoi(0).point.lat);
+			$("#py").val(results.getPoi(0).point.lng);
+	   }
+	 }  
+	};  
+	var local = new BMap.LocalSearch(map, options);									
+	local.search(address);
+}
+
+{if $user_info['residency']}
+local_search($("#province").val()+','+$("#city").val()+','+$("#area").val());
+{/if}
+//搜索地址
+$("#map_search").click(function(){
+		if($("#province").val().length<=0){
+		
+				showDialog("{$_lang['please_choose_search_province']}",'alert',"{$_lang['message_notice']}","$('#province').focus()",0);return false;
+		}else if($("#city").val().length<=0){
+			showDialog("{$_lang['please_choose_search_city']}",'alert',"{$_lang['message_notice']}","$('#city').focus()",0);return false;					
+		}else{ 
+			 local_search($("#province").val()+','+$("#city").val()+','+$("#area").val());
+			 $("#hdn_province").val($("#province").val()+','+$("#city").val()+','+$("#area").val());
+			 $("#point").val($("#px").val()+","+$("#py").val());
+		}
+	}
+)
+
+//确定坐标
+$("#sbt_map").click(function(){
+		if($("#province").val().length<=0){
+				showDialog("{$_lang['please_choose_search_province']}",'alert',"{$_lang['message_notice']}","$('#province').focus()",0);return false;
+		}else if($("#city").val().length<=0){
+			showDialog("{$_lang['please_choose_search_city']}",'alert',"{$_lang['message_notice']}","$('#city').focus()",0);return false;					
+		}else{
+			 $("#hdn_province").val($("#province").val()+','+$("#city").val()+','+$("#area").val());
+			 $("#point").val($("#px").val()+","+$("#py").val());
+			 if($("#hdn_province").val().length<=0||$("#point").val().length<=0){
+			 	showDialog("{$_lang['please_choose_search_province']}",'alert',"{$_lang['message_notice']}","$('#province').focus()",0);return false;
+			 }else{
+			 	showDialog("{$_lang['coordinate_confirm_complete']}",'right',"{$_lang['operate_notice']}","hideWindow('map')");
+			 }
+		}
+	}
+)
+
+//province下拉框搜索
+function province_search(){
+		if($("#province").val().length<=0){
+				showDialog("{$_lang['please_choose_search_province']}",'alert',"{$_lang['message_notice']}","$('#province').focus()",0);return false;
+		}else{
+			 local_search($("#province").val()+','+$("#city").val()+','+$("#area").val());
+			 $("#hdn_province").val($("#province").val()+','+$("#city").val());
+			 $("#point").val($("#px").val()+","+$("#py").val());
+		}
+}
+
+//city下拉框搜索
+function city_search(){
+		if($("#province").val().length<=0){
+				showDialog("{$_lang['please_choose_search_province']}",'alert',"{$_lang['message_notice']}","$('#province').focus()",0);return false;
+		}else if($("#city").val().length<=0){
+			showDialog("{$_lang['please_choose_search_city']}",'alert',"{$_lang['message_notice']}","$('#city').focus()",0);return false;					
+		}else{
+			 local_search($("#province").val()+','+$("#city").val()+','+$("#area").val());
+			 $("#hdn_province").val($("#province").val()+','+$("#city").val());
+			 $("#point").val($("#px").val()+","+$("#py").val());
+		}
+}
+
+
+ </script>
+<!--{template footer}-->					

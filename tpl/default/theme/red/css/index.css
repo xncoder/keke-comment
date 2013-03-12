@@ -1,0 +1,113 @@
+@charset "gbk";
+/*-------------------------------------------------
+--------------------------------------------------- 
+    注释 DEFINITIONS	: mg
+	作者 AUTHOR 		: hk
+	版本 VERSION		: 2012-05-25
+	
+	内容CONTENTS:
+		1.全局样式
+			1.1 首页高度定义
+		2.首页分类
+		3.banner切换广告
+		4.site_stats首页统计
+		5.guide首页向导
+		6.moving首页动态
+		7.notice公告
+		8.activity活动
+		9.task任务
+		10.shop商城
+		11.news资讯
+		12.case案例展示
+		13.talent人才
+		
+			
+*/
+/*1.全局样式
+-----------------------------------------------------*/
+.box.default .notice .box_detail a,
+.box.model .news .box_detail .small_list .item a, 
+.box.model .news .box_detail .small_list .main_title a{ background:url(../img/style/dot.png) no-repeat }
+.box.default .box_header .box_nav a{padding:5x 6px;}
+
+/*2.首页分类*/
+.category{background:#8D7F7E;}
+	.category a{color:#fff; height:30px; line-height:30px;}
+		.category a:hover{color:#fff !important; text-shadow:0 0 2px #000; text-decoration:underline;}
+		/*分类切换*/
+		 .category .tab{  position:static; z-index:2; width:auto;}
+			 .category .tab li{background-image:none; width:50%; float:left; clear:none;}
+				 .category .tab a{border:none; color:#fff;background:#736867; padding:0 0; background:#736867; text-shadow:0 1px 1px #000; height:30px; line-height:30px;}
+				 	.category .tab a:hover{color:#fff; background:#736867; text-shadow:0 1px 1px #000;}
+				 		.category .tab a:hover span{color:#fff !important;}
+				 			.category .tab li a.selected,.category .tab a.selected:hover{
+								 					color:#fff; border:none;
+													background-color: #951a1a;
+												    background-image: -webkit-gradient(linear, left top, left bottom, from(#cc1e1e), to(#820101)); 
+												    background-image: -webkit-linear-gradient(top, #cc1e1e, #820101); 
+												    background-image:    -moz-linear-gradient(top, #cc1e1e, #820101); 
+												    background-image:     -ms-linear-gradient(top, #cc1e1e, #820101); 
+												    background-image:      -o-linear-gradient(top, #cc1e1e, #820101); 
+												    background-image:         linear-gradient(top, #cc1e1e, #820101);
+													filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cc1e1e', endColorstr='#820101');
+													box-shadow:0 2px 5px rgba(0,0,0,.5);
+									}
+				.category a.purple,.category a:hover.purple{color:#fff;}
+		/*二次分类*/
+		.category .indus_list li ul.s_all li.s_all_li:nth-of-type(1),
+		.category .indus_list li ul.s_all li.s_all_li:nth-of-type(2){border-top:none;}
+		.category .indus_list li ul.s_all li.s_all_li:nth-last-of-type(1),
+		.category .indus_list li ul.s_all li.s_all_li:nth-last-of-type(2){border-bottom:none;}
+		.category .indus_list{/*padding-top:32px;*/}
+			.category .indus_list li{border-top-color:#928685; border-bottom-color:#807473}
+			.category .indus_list li a.selected{ border:none; border-right:none; background:#736867; margin:0;box-shadow:none;}
+				.category .indus_list li ul.s_nav{ right:-228px; top:0;  border:none; background:#736867;}
+					.category .indus_list li ul.s_nav li,
+					.category .indus_list li ul.s_all li{ border-top:none; border-bottom:1px dotted #595050;}
+					.category .indus_list li ul.s_nav li:before,
+					.category .indus_list li ul.s_all li:before{ content: "."; display: block; width: 20px; height: 30px; position: absolute; top: 0; right: 0; text-indent: -9999px; 
+					background: -moz-linear-gradient(left, rgba(115, 104, 103,0) 0%, rgba(115, 104, 103,1) 100%); 
+					background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(115, 104, 103,0)), color-stop(100%,rgba(115, 104, 103,1))); 
+					background: -webkit-linear-gradient(left, rgba(115, 104, 103,0) 0%,rgba(115, 104, 103,1) 100%); 
+					background: -o-linear-gradient(left, rgba(115, 104, 103,0) 0%,rgba(115, 104, 103,1) 100%); 
+					background: -ms-linear-gradient(left, rgba(115, 104, 103,0) 0%,rgba(115, 104, 103,1) 100%); 
+					background: linear-gradient(left, rgba(115, 104, 103,0) 0%,rgba(115, 104, 103,1) 100%);}
+					.category .indus_list li ul.s_all{border:none;background:#736867; right:-558px;}
+					
+				#ie6 .category .indus_list li ul.s_nav{right:-230px;}								
+					#ie6 .category .indus_list li ul.s_all{right:-559px;}						
+			
+/***3.banner切换广告***/			
+	.red_style .banner #slides a.next:hover,.red_style .banner #slides a.prev:hover{ background:#951a1a; background:rgba(149, 26, 26,.9);}
+
+/***4.site_stats首页统计***/	
+		.box.default .site_stats .shop_stats{ height:40px;overflow:hidden;}
+		.box.default .site_stats .num{ font:12px/25px Arial, Helvetica, sans-serif; display:inline-block; padding-right:20px; }
+			.box.default .site_stats .num.godown{ color:#458803; background:url(../img/godown.gif) no-repeat right center;}
+			.box.default .site_stats .num.goup{ color:#c00;background:url(../img/goup.gif) no-repeat right center;}
+		.box.default .site_stats .box_detail{ height:105px; overflow:hidden;}
+		.box.default .site_stats #up a,.box.default .site_stats #down a{background:url(../img/in_top.gif) no-repeat; display:block; text-indent:-999px; width:16px; height:16px;overflow:hidden;}
+		.box.default .site_stats #up a{background:url(../img/index/in_top.gif) no-repeat;}
+		.box.default .site_stats #down a{ background:url(../img/index/in_bot.gif) no-repeat;}
+		.box.default .site_stats #up{ position:absolute; right:15px; top:10px;}
+		.box.default .site_stats #down{position:absolute;right:32px; top:10px; }
+		
+/**5.guide首页向导**/
+		 .box .guide .guide_earn a{ background-image:url(../img/index/money_bag32.png);}
+		 .box .guide .guide_find a{background-image:url(../img/index/find32.png);}
+		 .box .guide .guide_file a{background-image:url(../img/index/script32.png);}
+		 .box .guide .guide_part a{background-image:url(../img/index/schedule32.png); }
+		 .box .guide .guide_tool a{background-image:url(../img/index/tool32.png); }
+		 .box .guide .guide_share a{background-image:url(../img/index/share32.png);}
+		 
+/**6.moving首页动态**/		
+	.box.default .moving p{color:#666;}
+	.box.default .moving .show_area a:hover,.box.default .moving .show_area a:hover strong{ text-decoration:underline;}
+	
+/*task*/
+	.box.model .task .box_detail .small_list .item a,.box.model .task .box_detail .small_list .item .task_status{background:#fff;}
+/*case*/
+	.box.model .case .box_detail .small_list li.first{ background:#fff;}
+		.box.model .case .box_detail .small_list li.first .main_title a:hover{ background:#fff;}
+	
+

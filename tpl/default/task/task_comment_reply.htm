@@ -1,0 +1,78 @@
+ {if $tmp =='pub_comment'}
+ <div class="ly1 mt_20 mb_10" id="p_$v['comment_id']">
+                        <div class="top1 clearfix mt_10 po_re">
+                            <a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}">
+                            	<!--{userpic($v['uid'],'small')}-->
+							</a>
+							<a href="{$_K['siteurl']}/index.php?do=space&member_id={$v['uid']}" class="ml_10 mr_20">{$v['username']}</a>
+                            <span><!--{date('Y-m-d H:i:s',$v['on_time'])}--></span>
+                            {if $uid ==ADMIN_UID||$user_info['group_id']==7}
+							<div class="operate po_ab hidden"> 
+								<a href="javascript:;" title="{$_lang['delete']}" onclick="comment_del('p_{$v[comment_id]}','$v[comment_id]');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
+                            </div>
+							{/if}
+                        </div>
+                        <div class="pad10">
+                             <p class="font14">{$v['content']}</p> 
+                        </div>
+						<!--留言回复开始-->
+							<div class="cc pl_30 mt_10" id="p_reply_{$v['comment_id']}">
+							{loop $reply_arr $k1 $v1}
+							    {if $v1['p_id']==$v['comment_id']}
+								 <div id="div_reply_$v1['comment_id']" class="comment_item po_re clearfix">
+
+										<div class="fl_l mr_10">
+									    	<a href="index.php?do=space&member_id=$v1['uid']" title="{$v1['username']}"><!--{userpic($v1['uid'],'small')}--></a>
+										</div>
+										<div class="grid_19 alpha">
+											<a href="index.php?do=space&member_id=$v1['uid']">{$v1['username']}</a> {$_lang['yu']}<!--{date('Y-m-d H:i:s',$v1['on_time'])}-->{$_lang['comment']}:
+											<p class="db ws_break">{$v1['content']}</p>
+										</div>
+										<div class="operate po_ab hidden">
+											{if $uid == $v1['uid'] || $uid ==ADMIN_UID||$user_info['group_id']==7}
+										 	<a href="javascript:;" title="{$_lang['delete']}" onclick="comment_del('div_reply_$v1[comment_id]','$v1[comment_id]');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
+		                                	{/if}
+										</div>
+										<div class="clear"></div>
+
+								 </div>
+								{/if}
+					 		{/loop}
+							</div>
+						<!--留言回复结束-->
+                    </div>
+					{if $uid==$task_info['uid']||$uid==$owner_info['uid']}
+							 <!--有留言才有回复-->
+							<div class="work_answer pl_30 pt_10 pb_10 clearfix" id="answers_$v['comment_id']">
+								<div class="answer-form ">
+			                    	<div class="grid_10 alpha">
+									<textarea class=" txt_input reply_comment" onkeyup="checkCommentInner(this,'event')" cols="70" id="txt_reply_{$v['comment_id']}" style="height:15px;">{$_lang['reply']}</textarea>
+			                       	   <div class="answer-textarea  answer-zone pt_10 hidden" >
+			                                <button type="button" class="button answer-zone" value="{$_lang['confirm']}" onclick="comment_reply('$v[comment_id]')"><span class="check icon"></span>{$_lang['reply']}</button>
+			                                <span class="answer_word">{$_lang['you_can_input']}</span>
+			                            </div>
+			                        </div>
+								</div>
+						  </div>
+						  {/if}
+	{elseif $tmp =='replay_comment'}
+ <div id="div_reply_$v1['comment_id']" class="comment_item po_re clearfix">
+
+		<div class="fl_l mr_10">
+	    	<a href="index.php?do=space&member_id=$v1['uid']" title="{$v1['username']}"><!--{userpic($v1['uid'],'small')}--></a>
+		</div>
+		<div class="grid_19 alpha">
+			<a href="index.php?do=space&member_id=$v1['uid']">{$v1['username']}</a>{$_lang['yu']}<!--{date('Y-m-d H:i:s',$v1['on_time'])}-->{$_lang['comment']}:
+			<p class="db ws_prewrap ws_break">{$v1['content']}</p>
+		</div>
+		<div class="operate po_ab hidden">
+	
+		 	<a href="javascript:;" title="{$_lang['del']}" onclick="comment_del('div_reply_$v1[comment_id]','$v1[comment_id]');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
+    
+		</div>
+		<div class="clear"></div>
+
+ </div>
+	 
+	
+	{/if}

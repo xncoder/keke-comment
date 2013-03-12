@@ -1,0 +1,164 @@
+<!--{template header}-->
+<link href="{SKIN_PATH}/css/shop.css" rel="stylesheet" type="text/css" charset="{CHARSET}">
+<link href="{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css" rel="stylesheet" type="text/css" charset="{CHARSET}">
+<!--页面内容部分-->
+<div class="wrapper">
+	<header class="clearfix page_header">
+		<div class="container_24">
+        <!--页面导航-->
+        	<div class="breadcrumbs clearfix">
+				<a href="index.php">首页</a>
+					>
+				<span>商城分类</span>
+			</div>
+        <!--end 页面导航-->
+    	</div>
+	</header>
+
+
+
+
+<!--详细内容区-->
+<section class="clearfix content">
+	<div class="container_24">
+		<div class="grid_24">
+        	<div class="box model purple">
+        		<div class="inner">
+        		 <header class="box_header clearfix">
+                <div class="grid_4 alpha">
+                    <h1 class="box_title"><span>{$_lang['hot_class']}</span></h1>
+                </div>	
+            	</header>
+                <div class="box_detail kinds_bg clearfix">
+		      		<ul class="category_list clearfix">
+	       				<!--{eval $i=1}-->
+	       				{loop $clean_industry_arr $key $value}
+	       				{if $value['level']===0}
+	       					{if $i!=1}</div></li>{/if}<!--{eval $i++}-->
+						<li class="category_width">
+	       					<div class="item clearfix">
+              					<h2>{$value['indus_name']}</h2>
+      							{else}
+      							<a href="index.php?do=shop_list&path=A$value['indus_pid']&indus_id=$value['indus_id']i" class="chah{if $value['is_recommend']} cc00{/if}">{$value['indus_name']}</a>
+      							{/if}
+	
+      					{/loop}
+      				</ul>
+				  </div>
+				</div>
+          </div>
+
+<!--第二部分内容-->
+
+
+        		<div class="box model rose mt_20">
+					<div class="inner" id="inner"><!-- class="shop" -->
+<!--热门推荐头部-->
+
+					<header class="box_header clearfix">
+		                <div class="grid_4 alpha">
+		                    <h1 class="box_title"><span>{$_lang['hot_recommend']}</span></h1>
+		                </div>	
+		            
+                        <div class="grid_8 omega">
+                        	<nav class="box_nav clearfix">
+                            	<ul>
+                                    <li><a href="index.php?do=shop&status=latest#inner" title="{$_lang['newest_goods']}">{$_lang['newest_goods']}</a></li>
+                                    <li><a href="index.php?do=shop&status=highprice#inner" title="{$_lang['high_money_goods']}">{$_lang['high_money_goods']}</a></li>
+                                   
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="grid_7 jy omega">
+                        	<p>{$count_record}{$_lang['order_is_ongoing']}</p>
+                        </div>
+                        <div class="grid_4 omega">
+                        	<div class="btns">
+                        		<a class="button right" href="index.php?do=shop_list">{$_lang['view_all_goods']}
+                            <span class="rightarrow icon"></span></a>
+                        	</div>
+                        </div>
+     
+					</header>
+					
+					
+						
+<!--end热门推荐头部-->
+                   
+                  <div class="box_detail">   
+<!--热门推荐内容-->
+				<div class="contents clearfix">
+                	<div class="left">
+                    	<div class="pic"><a href="index.php?do=service&sid={$top2['0']['service_id']}"><img name="lazyImg" lazy_src="<!--{eval echo keke_shop_class::output_pics($top2['0']['pic'],210,1);}-->"></a></div>
+                        <div class="item_title">
+                        	<div class="title"><a href="index.php?do=service&sid={$top2['0']['service_id']}" original-title="{$top2['0']['title']}"><h5><!--{eval echo kekezu::cutstr($top2['0']['title'],30)}-->...</h5></a></div>
+                            <p class="text ws_break"><!--{eval echo kekezu::cutstr(strip_tags(htmlspecialchars_decode($top2['0']['content'])),60)}-->...</p>
+                            <p class="review">{$_lang['comment']}({$top2['0']['leave_num']}) |{$_lang['buy_times']}({$top2['0']['sale_num']})</p>
+                            <div class="btn"><a href="index.php?do=service&sid={$top2['0']['service_id']}" class="button right">{$_lang['view_goods_detail']}</a></div>
+							<div class="btn"><a href="index.php?do=shop_order&sid={$top2['0']['service_id']}" class="button right" >{$_lang['pay_money_download_goods']}</a></div>
+						</div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="rights">
+                    	<div class="pic"><a href="index.php?do=service&sid={$top2['1']['service_id']}"><img name="lazyImg" lazy_src="<!--{eval echo keke_shop_class::output_pics($top2['1']['pic'],210,1)}-->"></a></div>
+                        <div class="item_title">
+                        	<div class="title">
+                        	<a href="index.php?do=service&sid={$top2['1']['service_id']}" original-title="{$top2['1']['title']}"><h5><!--{eval echo kekezu::cutstr($top2['1']['title'],30)}-->...</h5></a></div>
+                            <p class="text ws_break"><!--{eval echo kekezu::cutstr(strip_tags(htmlspecialchars_decode($top2['1']['content'])),60)}-->...</p>
+                            <p class="review">{$_lang['comment']}({$top2['1']['leave_num']}) |{$_lang['buy_times']}({$top2['1']['sale_num']})</p>
+                            <div class="btn"><a href="index.php?do=service&sid={$top2['1']['service_id']}" class="button right">{$_lang['view_goods_detail']}</a></div>
+							<div class="btn"><a href="index.php?do=shop_order&sid={$top2['1']['service_id']}" class="button right">{$_lang['pay_money_download_goods']}</a></div>
+						</div>
+                    </div>
+              
+                </div>
+ <!--end热门推荐-->
+ 
+			<!--KPPW图片部分-->
+			<div class="picture clearfix">
+ 			<!--{eval $a=1}-->
+ 			{loop $services_list $key $value}
+ 				{if $a==1}<div class="pic_top clearfix">{elseif $a==8}<div class="pic_top clearfix">{/if}
+ 					<div class="one ws_break">
+ 						<a href="index.php?do=service&sid={$value['service_id']}">
+ 							<img name="lazyImg" lazy_src="<!--{eval echo keke_shop_class::output_pics($value['pic'],100,1);}-->">
+						</a>
+						<p class="clearfix">
+							<span class="rmb block">{c:$value['price']}</span>
+							<a class="shop_word fl_l" href="index.php?do=service&sid={$value['service_id']}" title="<!--{eval echo kekezu::cutstr($value['title'],20)}-->">
+								<!--{eval echo kekezu::cutstr($value['title'],20)}-->
+							</a>
+						</p>
+					</div>
+ 					<!--{eval $a++}-->
+ 				{if $a==8||$a==15}</div>{/if}
+ 			{/loop}
+ 		</div>
+ 	<!--end KPPW图片部分-->
+	<div class="clear"></div>
+ 				</div>
+                
+                </div>
+                
+				</div>
+	
+     			</div>
+ 		</div>
+	</div>
+
+
+</section>
+
+<script type="text/javascript">
+$(document).ready(function() {
+$(".category_list li,.pic_top .one").hover(function() {
+$(this).addClass("hover");
+}, function() {
+$(this).removeClass("hover");
+});
+});
+In('lazy',function(){
+	loadPics();
+});
+</script>
+<!--{template footer}-->

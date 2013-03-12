@@ -1,0 +1,213 @@
+<!--{template header}-->
+<div class="wrapper">
+<div class="container_24">
+<!--{template user/user_nav}-->
+	<!--main start-->
+<section class="clearfix section">
+<!--{template user/user_side}-->
+<div class="show_panel container_24 po_re">
+ <div class="prefix_3 grid_21">
+  <div class="panel clearfix box">
+   <!--main content-->
+  <div class="">
+   <!--header内容头部 start-->
+   <header class="clearfix box_header" >
+    <h2 class="grid_4 alpha omega box_title t_c">{$_lang['auth_center']}</h2>
+      <div class="grid_17 alpha omega">
+       <nav class="box_nav">
+         <ul>
+          {loop $auth_item_list $v}
+            <li {if $auth_code==$v['auth_code']}class="selectedLava"{/if}>
+             <a href="index.php?do={$do}&view={$view}&op={$op}&auth_code={$v[auth_code]}#userCenter" title="{$v[auth_title]}{$_lang['info']}">{$v[auth_title]}</a>
+			</li>
+		  {/loop}
+         </ul>
+       </nav>
+      </div>
+    <div class="clear"></div>
+  </header>
+  <!--header内容头部 end-->
+  
+   {if $verify}
+		 <!--{template verify_secode}-->
+{else}
+  <!--detail内容 start-->
+   <article class="box_detail last_step_three">
+     <!--messages消息 start-->   
+      <div class="messages m_infor">
+         <div class="icon16">warning</div>
+                           {$_lang['email_handling_fee']}:{c:$auth_item['auth_cash']}. {$_lang['customer_service_personnel_will']} {$auth_item[auth_day]}{$_lang['working_days_to_complete_certification']}{$_lang['zh_mh']}{$basic_config['kf_phone']}
+           <a href="###" class="close">&times;</a>
+      </div> 
+     <!--messages消息 end-->
+     <div class="prefix_1 suffix_1 clearfix">
+        <!--step步骤 start-->
+        <div class="step_progress clearfix">
+          {loop $step_arr $k $v}
+			<div class="step {$k} {if $k==$auth_step}selected{/if}">
+                <span class="icon32">{$k}</span><strong>{$v[0]}</strong>{$v[1]}
+            </div>
+		 {/loop}
+        </div>
+        <!--step步骤 end-->
+{if $auth_step=='step1'}
+<div class="pad10  form_box">
+ <form>
+ 	<div class="rowElem clearfix">
+		<label class="prefix_1 grid_5 clearfix">
+			<div class="fl_r pr_10">
+				<img src="{$auth_item['auth_big_ico']}" alt="" />&nbsp;
+			</div>
+		</label>
+		<div class="grid_6"> <strong class="font14b">{$auth_item['auth_title']}</strong> <span class="c999 block">{$auth_item['auth_desc']}</span> </div>
+   </div>
+  <div class="rowElem clearfix">
+    <label class="grid_5 t_r">{$_lang['mail_address']}{$_lang['zh_mh']}</label>
+      <input type="text" name="fds[email]" id="email" msgArea="span_email"
+		size="40" value="{$user_info[email]}"
+	   limit="required:true;type:email" msg="{$_lang['please_fill_out_the_common_mailbox']}" title="{$_lang['tips_about_common_mailbox']}">
+		<span id="span_email"></span>
+  </div>
+  <div class="rowElem clearfix">
+    <label class="grid_9 t_r">{$_lang['after_auth_success']}{$_lang['zh_mh']}</label>
+  </div>
+  <div class="rowElem clearfix">
+	<label class="grid_4 t_r">&nbsp;</label>
+	<ul class="grid_14">
+		<li class="grid_13"> <b>{$_lang['email_login']}</b>{$_lang['use_email_login_keke']} </li>
+		<li class="grid_13"> <b>{$_lang['important_event_tips']}</b>{$_lang['can_pay_email_notice']} </li>
+		<li class="grid_13"> <b>{$_lang['on_time_feed']}</b>{$_lang['zh_jh']} </li>
+	</ul>
+  </div>
+   <div class="rowElem clearfix form_button">
+        <button type="button" name="sbt_add" class="button" value="{$_lang['next_step']}" onclick="user_auth();">{$_lang['next_step']}</button>
+   </div>
+  </form> 
+ </div> 
+{elseif $auth_step=='step2'}
+ <div class="box complete form_box ml_40 mr_40">
+  <div class="prefix_2 suffix_2">
+   <div class="completedata">
+     <ul>
+       <li class="clearfix">
+             <p class="ws_break">{$_lang['mail_confirmation_link']}
+				<a class="at_but b_1_y" onclick="gomail('{$mail_ext}');" href="javascript:void(0)">
+				<u></u>{$_lang['immediately_check_mail']}</a>
+			 </p>
+       </li>
+	   <li class="clearfix">
+		<div>
+		  <p class="f140">{$_lang['if_you_do_not_receive_mail']}</p>
+			{$_lang['mail_to_reach_the_required_few_minutes']}<strong>{$_lang['rubbish']}</strong>{$_lang['or']}
+					<a href="javascript:void(0)" onclick="resend()">{$_lang['retry_again']}</a><br>
+					{$_lang['error_email_address_we_recommend_that_you']}<a href="index.php?do=user&view=payitem&op=auth&del_auth_id=$auth_info[email_a_id]&auth_step=step1&auth_code=email#userCenter">{$_lang['change_mail_address']}</a>
+		</div>
+
+       </li>
+      </ul>
+     </div>
+   </div>
+</div>
+{elseif $auth_step=='step3'}  
+  <div class="box complete border_n  ">
+        
+          	<div class="last_success_step clearfix">
+          	<div class="fl_l {$auth_style} po_re" style="top:30px; left:30px; _left:0px;">
+					<span class="tip_icon"></span>
+            </div>
+            <div class="completedata clearfix">                        		
+               <ul>
+               	<li class="clearfix">                        
+                     <div class=" "><img src="{$auth_item['auth_big_ico']}" /></div>                                 
+                <div class="font14b">{$auth_item['auth_title']}<span class="font12">（{$auth_tips}）  </span></div>
+                      <div class="c999 ">{$auth_item['auth_desc']}</div>
+                 </li>
+				 
+				 <li class="clearfix">
+						<div class="  ">{$_lang['username']}{$_lang['zh_mh']}</div>
+					<div class=" font14b">{$auth_info['username']}</div>
+               	 </li>
+				<li class="clearfix">                          
+					<div class="  ">{$_lang['email_address']}{$_lang['zh_mh']}</div>
+					 <div class="c999"> {$auth_info['email']}</div>
+               	 </li>
+		 
+            </ul>
+        </div>
+       		<div class="fl_r pad10">
+				<a href="{$ac_url}&auth_step=step1" class="button">{$_lang['return_and_modify']}</a>
+			</div>
+		</div>
+	
+     </div>
+  
+ 
+</div> 
+{/if}
+ </div> 
+ <div class="clear"></div> 
+</article>
+<!--detail内容 end-->
+{/if}
+</div>
+<!--main content end -->
+<div class="clear"></div>
+</div>
+</div>
+ </section>
+ <!--main end-->
+ </div>
+</div>
+<script type="text/javascript">
+	function gomail(type){
+		var url = 'http://mail.'+type+'';
+		window.open(url); 
+	}
+	function resend(){
+		$.getJSON("{$ac_url}&auth_step=step2&resend=1",function(json){
+			showDialog(json.msg,'notice',"{$_lang['operate_tips']}");return false;
+		});
+	}
+	function user_auth(){
+		var user_balance = parseInt($user_info['balance'])+0;
+		var user_credit = parseInt($user_info['credit'])+0;
+		var is_allow_credit = $basic_config['credit_is_allow'];
+		var pay_cash = parseInt($auth_item['auth_cash'])+0;
+
+		if(pay_cash<=0){
+			mail_send();
+		}else{
+			if((user_credit+user_balance)>=pay_cash){
+				if(is_allow_credit==1){
+					if(user_credit>=pay_cash){
+						showDialog("{$_lang['from_your']}{CREDIT_NAME}{$_lang['take_off']}{c:$auth_item['auth_cash']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
+					}else{
+						showDialog("{$_lang['will_take_off_from_your_account']}"+(pay_cash-user_credit)+"{CREDIT_NAME}"+user_credit+"{$_lang['point']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
+					}
+				}else{
+					showDialog("{$_lang['will_take_off_from_your_account']}{c:$auth_item['auth_cash']}", 'confirm', "{$_lang['operate_tips']}",'mail_send()',0);
+				}
+			}else{
+				showDialog("{$_lang['your_balance_is_insufficient_need_to_pay_online']}{c:$auth_item['auth_cash']}", 'confirm', "{$_lang['online_pay']}",'online_pay('+pay_cash+')',0);
+			}
+			return false;
+		}
+		
+	}
+	function mail_send(){
+		var email=$("#email").val();
+		$.getJSON("{$ac_url}&auth_step=step2&send_mail=1&email="+email,function(json){
+			if(json.status=='1'){
+				showDialog(json.msg,'right',"{$_lang['operate_tips']}",'location.href="{$ac_url}&auth_step=step2#userCenter"');
+			}else{
+				showDialog(json.msg,'alert',"{$_lang['operate_tips']}");
+			}
+			return false;
+		})
+	}
+	function online_pay(cash){
+		window.location.href='index.php?do=user&view=finance&op=recharge&cash='+cash+'#userCenter';
+	}
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

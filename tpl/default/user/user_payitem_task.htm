@@ -1,0 +1,79 @@
+<!--{template header}-->
+<!--用户中心样式-->
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
+<!--contain start-->
+
+   <div class="winbody">
+     <div class=" clearfix box {$_K['theme']}_style pad10">
+     <!--main content-->
+
+       
+	<!--detail内容 start-->
+    <article class="box_detail">
+      <div class="messages m_infor">
+        <div class="icon16"></div>
+           {$_lang['make_you_more_competitive']} <a href="###" class="close">&times;</a>
+      </div>
+     <div class="prefix_1 suffix_1 ">
+      <div class="list">
+        <dl>
+        	<dd class="tags">
+            	<ul>
+                    <li class="w3 t_l">{$_lang['tool_name']}</li>
+                    <li class="w2">{$_lang['cash_idea']}</li>
+                    <li class="w2">{$_lang['in_use']}</li>
+                    <li>{$_lang['remain']}</li>
+                    <li class="w2">{$_lang['operate']}</li>
+                </ul>
+            </dd>
+      {loop $payitem_list $k $v}
+      	<dd class="clearfix" style="height:inherit;">
+		<!--{eval $remain= keke_payitem_class::payitem_exists($uid,"$k",$v['item_type']);}-->
+			<ul>
+              <li class="">
+                  <img src="{$_K['siteurl']}/{$v['big_pic']}" alt="{$v['item_name']}" title="{$v['item_name']}"/>
+              </li>
+              <li class="w2 t_l">
+               		<h3 class=" pl_10">{$v['item_name']}</h3>
+                    
+               </li>
+               <li class="w2">
+               		<div><strong style="color:#FF6600"><!--{eval echo floatval($v['item_cash'])}-->({$_lang['yuan']}/{$payitem_standard[$v['item_standard']]})</strong></div>
+               		
+               </li>
+               <li class="w2">
+               		<div>{$payitem_type[$v['item_type']]}&nbsp;</div>
+               </li>
+               <li>
+               		<div><strong style="color:#FF6600"><!--{eval echo intval($remain)}--></strong>{$payitem_standard[$v['item_standard']]}</div>
+
+               
+               </li>
+			   <li class="w7 t_l">
+			 	<div class="c999 info pl_10">{$v['item_desc']}</div>
+			</li>
+               <li class="w2">
+
+		          <button class="block fl_l" type="button" value="{$_lang['buy_now']}" name="{$_lang['buy_now']}" onclick="location.href='{$origin_url}&op={$op}&show={$show}&item_code={$k}#userCenter'">
+		              <span class="icon plus">&nbsp;</span>{$_lang['now_use']}
+		           </button> 
+             </li>
+			 </ul></dd>
+    	{/loop}
+            </dl>
+        </div>
+    </div>
+    </article>
+   <!--detail内容 end-->
+
+  <!--main content end -->
+   <div class="clear"></div>
+   
+
+   <!--main end-->
+	</div>
+</div>
+
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

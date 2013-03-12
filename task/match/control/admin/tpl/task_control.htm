@@ -1,0 +1,135 @@
+<!--{template control/admin/tpl/admin_header}--> 
+<style type="text/css">
+	table tr .t_r{text-align:right}
+</style>
+<div class="page_title">
+  <h1>{$model_info[model_name]}{$_lang['task_config']}</h1>
+    <div class="tool">
+      <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=config">{$_lang['basic_config']}</a>
+      <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=control" class="here">{$_lang['control_config']}</a>
+      <a href="index.php?do={$do}&model_id={$model_id}&view={$view}&op=priv">{$_lang['private_config']}</a>
+    </div>
+</div>
+<div class="box post">
+<div class="tabcon">
+ <div class="title"><h2>{$_lang['control_config']}</h2></div>
+  <form name="frm_config_reward" action="{$ac_url}" method="post" id="frm_config_reward">
+  <input type="hidden" name="pk[model_id]" value="{$model_id}">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  	
+	<tr>
+		 <th scope="row" width="200"> <b>{$_lang['task_commission_strategy']}</b>{$_lang['zh_mh']}</th><td>&nbsp;</td>
+	</tr>
+	
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_royalty_rate']}{$_lang['zh_mh']}</th> 
+		<td>
+			<input type="text" size="10" name="conf[task_rate]" id="task_rate" value="{$task_rate}" limit="type:int;len:1-2;between:0-99" msg={$_lang['task_royalty_rate_notice']} title={$_lang['task_royalty_rate_title']} msgArea="task_rate_msg" class="txt"/>%{$_lang['task_royalty_rate_title']}<span id="task_rate_msg"></span>
+		</td>
+	</tr>	
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_deposit']}{$_lang['zh_mh']}</th> 
+		<td>
+			<input type="text" size="10" name="conf[deposit]" id="deposit" value="{$deposit}" limit="required:true;type:int;len:1-3;between:0-1000" msg="{$_lang['deposit_cash_between_0_1000']}" title="{$_lang['please_enter_deposit_cash']}" msgArea="task_deposit_msg" class="txt"/>{$_lang['yuan']}<span id="task_deposit_msg"></span>
+		</td>
+	</tr>	
+	
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_deposit_drawn_rate']}{$_lang['zh_mh']}</th> 
+		<td>
+			<input type="text" size="10" name="conf[deposit_rate]" id="deposit_rate" value="{$deposit_rate}" limit="type:int;len:1-2;between:0-99" msg="{$_lang['website_deposit_drawn_rate_0_100']}" title="{$_lang['website_deposit_drawn_rate_0_100']}" msgArea="task_deposit_rate_msg" class="txt"/>%{$_lang['website_deposit_drawn_rate_0_100']}<span id="task_deposit_rate_msg"></span>
+		</td>
+	</tr>	
+    <tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_refund_processing']}{$_lang['zh_mh']}</th> 
+		<td>
+			<label for="rdo_defeated_money_yes">
+				 <input  type="radio" name="conf[defeated]" {if !$defeated||$defeated==1}checked="checked"{/if} value="1" id="rdo_defeated_money_yes">{$_lang['return_cash']}
+			</label>({$_lang['first_deduction_vouchers']})
+			<label for="rdo_defeated_money_no">
+				 <input type="radio" name="conf[defeated]" {if $defeated==2}checked="checked"{/if} value="2"  id="rdo_defeated_money_no">{$_lang['return_cash_coupon']}
+			</label>
+		 </td>
+	</tr>
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_fail_returned_smoke_scale']}{$_lang['zh_mh']}</th> 
+		<td>
+			<input type="text" size="10" name="conf[task_fail_rate]" id="task_fail_rate" value="{$task_fail_rate}" limit="type:int;len:1-2;between:0-99" msg={$_lang['task_royalty_rate_notice']} title={$_lang['task_royalty_rate_title']} msgArea="task_fail_rate_msg" class="txt"/>%{$_lang['task_royalty_rate_title']}<span id="task_fail_rate_msg"></span>
+		</td>
+	</tr>
+		<tr>
+			<th scope="row" width="200">{$_lang['cash_cove_config']}{$_lang['zh_mh']}</th>
+				<td><a class="button" href="index.php?do=model&model_id=$model_id&view=config&op=cash_rule&ac=add">
+						<span class="pen icon"></span>{$_lang['add_new_cove']}
+					</a>
+				</td>
+		</tr>
+		<tr>
+			<th scope="row" width="200" class="t_r">&nbsp;</th> 
+				<td>
+				<ul>
+					{loop $cash_cove $k $v}
+								<li>
+									{$v['cove_desc']}&nbsp;&nbsp;&nbsp;
+										<a class="button" href="index.php?do=model&model_id=$model_id&view=config&op=cash_rule&ac=edit&rule_id={$k}">
+											<span class="pen icon"></span>{$_lang['edit']}
+										</a>&nbsp;&nbsp;
+										<a class="button" href="index.php?do=model&model_id=$model_id&view=config&op=cash_rule&ac=del&rule_id={$k}">
+											<span class="trash icon"></span>{$_lang['delete']}
+										</a>
+								</li>
+							{/loop}
+						</ul>
+					</td>
+		</tr>
+  	<tr><th scope="row" width="200">{$_lang['task_time_rule_set']}{$_lang['zh_mh']}</th><td>&nbsp;</td></tr>
+
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_min_day']}{$_lang['zh_mh']}</th>
+		 <td>
+			<input type="text" size="10" id="min_day"  name="conf[min_day]"  value="{$min_day}" limit="type:int;require:true;between:1-" msg={$_lang['task_least_one_day']} title={$_lang['task_min_time_one_day']} msgArea="span_min_day" class="txt">{$_lang['days']}
+			<span id="span_min_day"></span>
+		 </td>
+	</tr>
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_max_day']}{$_lang['zh_mh']}</th>
+		 <td>
+			<input type="text" size="10" id="max_day"  name="conf[max_day]"  value="{$max_day}" limit="type:int;require:true;between:2-" msg="{$_lang['task_max_day_min_2_day']}" title="{$_lang['task_custom_max_day_min_2_day']}" msgArea="span_min_day" class="txt">{$_lang['day']}{$_lang['min_day_is_2_day']}
+			<span id="span_min_day"></span>
+		 </td>
+	</tr>		
+	<tr>
+		<th scope="row" width="200" class="t_r">{$_lang['task_cutdown']}{$_lang['zh_mh']}</th> 
+		 <td>
+			<input type="text" size="10" name="conf[cutdown]" id="cutdown" value="{$cutdown}"  limit="type:int;between:0-60" msg="{$_lang['task_cutdown_0_60']}" title="{$_lang['task_cutdown_0_60']}"  msgArea="span_cutdown_time" class="txt">{$_lang['minute_0_can_bid']}<span id="span_cutdown_time"></span>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row" width="200">&nbsp;</th>
+		<td>
+            <div class="clearfix padt10">
+			 <button type="submit" name="sbt_edit" class="positive primary  button" value="1" onclick="return checkForm(document.getElementById('frm_config_reward'))"><span class="check icon"></span>{$_lang['submit']}</button>
+			</div>
+		</td>
+	</tr>
+  </table>
+  </form>
+   </div>
+ </div>
+<script type="text/javascript">
+$(function(){
+	if($("#end_action_1").attr("checked")==true){
+		$("#slt").hide();
+	}
+	if($("#end_action_2").attr("checked")==true){
+		 $("#slt").show();
+	 }
+	$("#end_action_1").click(function(){
+		$("#slt").hide();
+	})
+	$("#end_action_2").click(function(){
+		  $("#slt").show();
+	})
+  })
+</script>
+<!--{template control/admin/tpl/admin_footer}-->

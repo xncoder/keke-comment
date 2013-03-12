@@ -1,0 +1,88 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+<div class="main_con mb_20" id="taskScroll">
+    <h1>{$_lang['related_task']}</h1>
+    <!--tab_select-->
+    
+	
+	<div class="tab pt_5">
+		
+         <a href="index.php?do=space&member_id=$member_id&view=task&action=pub#taskScroll" {if $action=='pub'} class="selected"{/if}>{$_lang['reward_task']}<b class="arrow arrow_b"></b></a>
+         <a href="index.php?do=space&member_id=$member_id&view=task&action=join#taskScroll" {if $action=='join'} class="selected"{/if}>{$_lang['to_task']}<b class="arrow arrow_b"></b></a>
+
+		 <span class="ml_20">{$_lang['order_way']}{$_lang['zh_mh']}</span>
+		 {if $ord==1||!$ord}
+			<a href="index.php?do=space&member_id=$member_id&view=task&action=$action&page=$page&page_size=$page_size&ord=2#taskScroll" class="select_method">{$_lang['time']}¡ü</a>
+		{/if}
+         {if $ord==2}
+		 	<a href="index.php?do=space&member_id=$member_id&view=task&action=$action&page=$page&page_size=$page_size&ord=1#taskScroll"> {$_lang['time']}¡ý</a>
+		{/if}
+		
+		
+    </div>
+	
+    <!--end tab_select--><!--task_list_con-->
+    <div id="task_list" class="border_t_c  clearfix">
+    	
+		<dl class="task_list list mb_20">
+			<dd class="tags">
+                    <ul>
+                        <li style="width:8%">
+                            &nbsp;
+                        </li>
+                        <li style="width:32%">
+                            {$_lang['title']}
+                        </li>
+                        <li style="width:22%">
+                            {$_lang['cash']}
+                        </li>
+                        <li style="width:22%">
+                            {$_lang['hand_focus_leave']}
+                        </li>
+                        <li style="width:10%">
+                            {$_lang['pub_time']}
+                        </li>
+                    </ul>
+                </dd>
+				{loop $task_arr $k $v}
+  
+                    <dd class="clearfix">
+                        <ul>
+                            <li style="width:8%">
+                                [<span>{$model_list[$v['model_id']]['model_name']}</span>]
+                            </li>
+                            <li style="width:32%">
+                                <a href="index.php?do=task&task_id=$v['task_id']" target='_blank' class="grid_7"><!--{eval echo kekezu::cutstr($v['task_title'], 50);}--></a>
+                            </li>
+                            <li style="width:22%">
+                                {if $v['task_cash_coverage']}
+                               		 {c:$cash_cove[$v['task_cash_coverage']]['start_cove']}
+									 ~{c:$cash_cove[$v['task_cash_coverage']]['end_cove']}
+                                {else}{c:$v['task_cash']}
+                                {/if}
+                            </li>
+                            <li style="width:22%">
+                                {$v['work_num']} | {$v['focus_num']} | {$v['leave_num']} 
+                            </li>
+                            <li style="width:10%">
+                                <!--{date('Y-m-d',$v['start_time'])}-->
+                            </li>
+                        </ul>
+                    </dd>
+      
+                {/loop}
+		</dl>
+
+                <!--page ·­Ò³ start-->
+                <div class="pages">
+                    $pages['page']
+                </div>
+                <!--page ·­Ò³ end-->
+
+        
+    </div>
+    <!--end task_list_con-->
+</div>
+</div>
+<div class="clear">
+</div>
+<!--{template footer}-->

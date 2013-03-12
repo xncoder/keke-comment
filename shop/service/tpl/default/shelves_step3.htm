@@ -1,0 +1,99 @@
+{if $_K['map_api']=='baidu'}
+<script type="text/javascript" src="{$_K['baidu_api']}"></script>
+{else}
+<script type="text/javascript" src="{$_K['google_api']}"></script>
+{/if}
+<div class="prefix_1 suffix_1">
+    <h5 class="font14 mt_10 mb_10">{$_lang['list_list']}</h5>
+    <div class="list border_n" style="min-height:100px">
+         <form action="{$basic_url}" method="post" name="frm_step3" id="frm_step3">
+	  	<input type="hidden" name="p_step" value="">
+	  	<input type="hidden" name="formhash" value="{FORMHASH}">
+            <dl>
+                <dd class="tags">
+                    <ul>
+                        <li class="t_l ">{$_lang['goods_model']}</li>
+                        <li class="w6 t_l ">{$_lang['goods_title']}</li>
+                        <li>{$_lang['money']}($_lang['yuan'])</li>
+                    </ul>
+                </dd>
+                <dd class="clearfix">
+                    <ul>
+                        <li class="clearfix">
+                           <span>{$model_info[model_name]}</span>
+                        </li>
+                        <li class="w6 t_l font14">
+                            <a href="javascript:void(0);" title="{$release_info[txt_title]}">{$release_info[txt_title]}</a>
+                        </li>
+                        <li class="font18 c900">
+                        	 {c: $release_info['txt_price']}
+                        </li>
+                    </ul>
+                </dd>
+		{if $item_list}
+                <dt class="block">
+                 {$_lang['you_may_be_need']}
+                </dt>
+				{loop $item_list $k $v}
+                <dd class="clearfix">
+                    <ul> 
+					<li class="clearfix">
+						<label style='float:left;display:inline;cursor:pointer;'>
+                            <input type="checkbox" name="item['{$v[item_id]}']" value="{$v[item_name]}" class="item" {if $v[item_code]=='map'}id="item_map"{/if} item_code="{$v[item_code]}"
+							 item_id="{$v[item_id]}" item_cash="{$v[item_cash]}" id="checkbox_$v[item_code]" onclick="show_payitem_num(this,'$v[item_code]');">
+                       </label>
+							<img class="block ml_5" src="{$v[small_pic]}" title="{$v[item_name]}" alt=''>
+						</li>
+                        <li class="w6 t_l font14">
+                           
+							<span>{$_lang['haved_buy']}: <strong class="red"><!--{eval echo  keke_payitem_class::payitem_exists($uid,"$v[item_code]");}--></strong>$payitem_standard[$v[item_standard]] {if $v[item_code]!='map'}<span class="font12 ml_8">({$_lang['value_added_can_bigger_not_than_delivery_time']})</span>{/if}</span>
+							
+							{if $v[item_code]=='map'}
+							<a href="javascript:void(0)" id="set_map" onclick="set_map();" style="display:none;" class="red">{$_lang['set_map_coordinate']}</a>
+							<script type="text/javascript">
+								$(function(){
+									if($("#item_map").attr("checked")==true){
+										$("#set_map").show();
+									}else{
+										$("#set_map").hide();
+									}
+								})
+								function set_map(){
+									showWindow("map","index.php?do=release&r_step=step3&ac=show_map",'get',0);return false;						
+								}								
+							</script>
+							{/if}
+                        </li>
+                        <li class="c900 w2 t_l pl_10">
+                           {c:$v[item_cash]} /{$standard[$v[item_standard]]}
+						   {if $v[item_code]=='map'}
+						   <input type="hidden" name="px" id="px" value="{if $release_info[px]}$release_info[px]{else}30.51667{/if}"/>
+						   <input type="hidden" name="py" id="py" value="{if $release_info[py]}$release_info[py]{else}114.31667{/if}"/>					 
+						   <input type="hidden" name="zo" id="zo" value="{if $release_info[zo]}$release_info[zo]{else}10{/if}"/>
+						   <input type="hidden" name="point" id="point">
+						   <input type="hidden" name="province" id="hdn_province"/>
+						   {/if}
+                        </li>
+						
+						   <li class="w3">
+						   	{if  $v[item_code]!='map'}
+							<span id="span_$v[item_code]" {if !$item_info[$v[item_id]]} style="display:none" {/if} class="payitem"> 
+                        		<label>{$_lang['use']}:</label> <input type="text" name="payitem_ids[{$v[item_code]}]" id="payitem_{$v[item_code]}"  size="4" onblur="edit_payitem('$v[item_code]');" limit="required:true;type:int;between:1-10" title="{$_lang['value_added_can_bigger_not_than_delivery_time']}{$_lang['zh_jh']}" msg="{$_lang['payment_item_msg_error']}" msgarea="msg_$v[item_code]" ><label>{$_lang['tian']}</label><span id="msg_$v[item_code]"></span> 
+						 	</span>
+							{/if}
+                        </li>
+                    </ul>
+                </dd>
+				{/loop}
+          {/if}  
+                <dd class="pub_sum font14b">
+                  {$_lang['sould_pay_total_money']}{$_lang['zh_mh']} <span class="font18" id="total">{c:$total_cash}</span><font color="red" class="font18"></font>
+                </dd>
+            </dl>	<input type="hidden" name="ago_total" id="ago_total" value="{if $total_cash}$total_cash{else}0{/if}">
+        </form>
+    </div>
+    <div class="t_c pt_15 mb_10">
+    	<div class="step_button"> <button type="submit" name="is_submit" onclick="stepCheck();" class="big button"><span class="icon check"></span>{$_lang['confirm_submit']}</button></div>
+    </div>
+</div>
+<!--end ÁÐ±íÄÚÈÝ-->

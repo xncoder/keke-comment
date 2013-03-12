@@ -1,0 +1,15 @@
+@charset "gbk";
+/* CSS Document */
+
+/* ×ó±ßµ¼º½ */
+.nav_list dt a:hover{background:#ff8a00;}
+.nav_list dt a.selected,.nav_list dt a.selected:hover{color:#FF8A00;}
+								
+/* ÏÂ¶ËÄÚÈÝ */
+.question{background:#FFB966; height:32px; border-color:#f60;}
+	.left_bk{background:#FF8A00; width:5px; height:32px;}
+		.question:hover{background:#FFAD4C;}
+			.q_title{ color:#fff;}
+				.article{padding:0 30px;}
+												
+					

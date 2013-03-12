@@ -1,0 +1,258 @@
+<!--{template header}-->
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box  pad10">
+{if $op=='work_hand'}<!--抢标start-->
+   <div class="messages m_infor" id="notice_id">
+      <span class="icon16">information</span>
+		{$_lang['match_you_need_pay']}<b>{c:$task_config['deposit']}</b>{$_lang['match_deposit_can_high_bid_success']}.
+		{$_lang['match_available_cash_of_your_account']}:<font color="red">{c:$user_info['balance']}</font>,{$_lang['match_can_use']}{CREDIT_NAME}:<font color="red">{$user_info['credit']}</font>
+ </div>
+  <!--messages消息 end-->
+   <div class="clearfix box">
+   	{if !$m_handed}
+   	{if $consume['cash']>-1}
+    <!--from表单 start-->
+    <form method="post" id="frm_work_hand" name="frm_work_hand" action='#'>
+    	<div class="lit_form">
+            <div class="info t_l clearfix">
+                <input class="border_n" type="checkbox" name="contact" id="mobile" checked disabled="true">
+                <label>{$_lang['match_mobile']}</label>
+                <input class="border_n" type="checkbox" name="contact" id="email" checked disabled="true">
+                <label> {$_lang['email']}</label>
+                <input class="border_n" type="checkbox" name="contact" id="qq" >
+                <label>Q Q</label>
+                <input class="border_n" type="checkbox" name="contact" id="msn">
+                <label>MSN</label>
+            </div>
+            <div class="clearfix pad10">
+                <label>{$_lang['match_mobile']}{$_lang['zh_mh']}</label>
+               <input type="text" name="con[mobile]" class="txt_input mr_5" id="con_mobile" limit="required:true;type:mobileCn"
+				msg="{$_lang['natch_your_mobile_call']}" msgArea="span_mobile" title="{$_lang['natch_your_mobile_call']}" value="{$user_info['mobile']}"><span id="span_mobile">{$_lang['match_required']}</span>
+            </div>
+            <div class="clearfix pad10" id="ct_email">
+                <label>  {$_lang['email']}{$_lang['zh_mh']}</label>
+               <input type="text" name="con[email]" class="txt_input mr_5" id="con_email" limit="required:true;type:email"
+				msg="{$_lang['match_your_email']}" msgArea="span_email" title="{$_lang['match_your_email']}" value="{$user_info['email']}"><span id="span_email">{$_lang['match_required']}</span>
+            </div>
+            <div class="clearfix pad10 hidden" id="ct_qq">
+                <label> Q Q {$_lang['zh_mh']} </label>
+               <input type="text" name="con[qq]" class="txt_input mr_5" id="con_qq" limit="required:false;type:int;len:6-13"
+				msg="{$_lang['match_your_qq']}" msgArea="span_qq" title="{$_lang['match_your_qq']}" value="{$user_info['qq']}"><span id="span_qq">{$_lang['match_optional']}</span>
+            </div>
+            <div class="clearfix pad10 hidden" id="ct_msn">
+                <label> MSN{$_lang['zh_mh']}</label>
+                <input type="text" name="con[msn]" class="txt_input mr_5" id="con_msn" limit="required:false;type:email"
+				msg="{$_lang['match_msn_can_not_be_null']}" msgArea="span_msn" title="{$_lang['match_your_msn']}" value="{$user_info['msn']}"><span id="span_msn">{$_lang['match_optional']}</span>
+            </div>
+        </div>
+	  <div class="rowElem clearfix">
+			 <div class="messages">
+			  	<ul>
+			  		<li>1.{$_lang['match_you_need_pay']}{c:$task_config['deposit']}{$_lang['match_deposit_can_high_bid_success']}.</li>
+					<li>2.{$_lang['match_fill_in_real_contact_to_facilitate_the_two_sides']}.</li>
+					<li>3.{$_lang['match_after_give_up_website_will_deduct_your_deposit_cash']}.</li>
+					<li>4.{$_lang['match_when_task_over_website_will_refund_your_deposit_cash']}.</li>
+			  	</ul>
+			  </div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 <button type="button" class="button" value="{$_lang['save']}" onclick="subBid();"><span class="check icon"></span>{$_lang['save']}</button>
+		 <button type="button" class="button" value="{$_lang['cancel']}" onclick="hideWindow('work_hand');"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+  {else}
+  <div class="t_c">{$_lang['match_account_balance_shortage']}<a href="{$_K['siteurl']}/index.php?do=user&&view=finance&op=recharge" class="red">{$_lang['match_go_to_recharge']}>></a></div>
+  {/if}
+  {else}
+  	<div class="t_c red">{$_lang['match_had_given_up_and_can_not_bid']}</div>
+ {/if}
+  </div>
+  <script type="text/javascript">
+  	$(function(){
+		In('form');
+		$("#qq").click(function(){
+			$("#ct_qq").toggleClass("hidden");
+		})
+		$("#msn").click(function(){
+			$("#ct_msn").toggleClass("hidden");
+		})
+	})
+	function subBid(){
+		var i = checkForm(document.getElementById("frm_work_hand"));
+		if(i){
+			hideWindow('work_hand');
+			var url = "index.php?do=task&task_id={$task_id}";
+			var data = $("#frm_work_hand").serialize();
+			var requrl = url+'&op={$op}&sbt_edit=1&'+data;
+			getJson(requrl,url+'&view=work');
+		}
+	}
+  </script>
+{/if}<!--抢标end-->
+{if $op=='get_contact'}<!--联系方式 start-->
+  <div class="messages m_infor" id="notice_id">
+    <span class="icon16">information</span>
+        {$_lang['match_you_can_use_following_contact']}{if $type==2}{$_lang['match_hirer']}{else}{$_lang['match_wiki']}{/if}{$_lang['match_contact_to_confirm_related_work']}.
+   </div>
+     <div class="pad10 contact">
+        <span class="clearfix">{$_lang['match_mobile']}{$_lang['zh_mh']} {if $contact['mobile']}$contact['mobile']{else}{$_lang['now_no']}{/if}</span></br>
+        <span class="clearfix">Q  Q{$_lang['zh_mh']} {if $contact['qq']}$contact['qq']{else}{$_lang['now_no']}{/if}</span></br>
+        <span class="clearfix">MSN{$_lang['zh_mh']}  {if $contact['msn']}$contact['msn']{else}{$_lang['now_no']}{/if}</span></br>
+        <span class="clearfix">{$_lang['email']}{$_lang['zh_mh']} {if $contact['email']}$contact['email']{else}{$_lang['now_no']}{/if}</span>
+      </div>
+
+{/if}<!--联系方式 end-->
+{if $op=='task_host'}<!--托管start-->
+<div class="messages m_infor" id="notice_id">
+      <span class="icon16">information</span>
+		{$_lang['match_be_assured_that_hosting_the_bounty']}.
+ </div>
+  <!--messages消息 end-->
+   <div class="clearfix box">
+    <!--from表单 start-->
+    <form method="post" id="frm_task_host" name="frm_task_host" action='#'>
+    	<div class="rowElem clearfix">
+			<label class="fl_l">{$_lang['match_host_amount']}{$_lang['zh_mh']}</label>
+			 <div class="fl_l">
+				<input type="text" name="host_cash" class="txt_input" id="host_cash" limit="required:true;type:int;between:{$limit}-"
+					value="{$limit}" msg="{$_lang['match_host_amount_can_not_less_than_1_yuan']}" title="{$_lang['match_please_fill_in_host_amount']}" msgArea="span_host"><span id="span_host"></span></br>{$_lang['match_please_ensure_that_the_negotiated_reward']}{$_lang['match_can_not_less_than']}{$limit}{$_lang['yuan']}
+		</div>
+      </div>
+	  <div class="rowElem clearfix">
+			 <div class="messages">
+			  	<ul>
+					<li>1.{$_lang['match_please_fill_in_host_amount']}.</li>
+			  		<li>2.{$_lang['match_make_sure_that_the_agreed_amount']}.</li>
+					<li>3.{$_lang['match_notice_the_wiki_start_working']}.</li>
+					<li>4.{$_lang['match_you_can_submit_rights']}.</li>
+			  	</ul>
+			  </div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 <button type="button" class="button" value="{$_lang['save']}" onclick="subHost();"><span class="check icon"></span>{$_lang['save']}</button>
+		 <button type="button" class="button" value="{$_lang['cancel']}" onclick="hideWindow('task_host');"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+  </div>
+  <script type="text/javascript">
+  	$(function(){
+		In('form');
+	})
+	function subHost(){
+		var i = checkForm(document.getElementById('frm_task_host'));
+		if(i){
+			hideWindow('task_host');
+			showDialog("{$_lang['match_confirm_host_reward_ma']}",'confirm',"{$_lang['operate_notice']}",function(){
+			var url = "index.php?do=task&task_id={$task_id}";
+			var requrl = url+'&op={$op}&sbt_edit=1&host_cash='+$("#host_cash").val();
+				getJson(requrl,url+'&view=work');
+			});return false;
+		}
+	}
+  </script>
+{/if}<!--托管end-->
+{if $op=='work_over'}<!--完工start-->
+ <!--messages消息 start-->
+  <div class="messages m_infor" id="notice_id">
+    <span class="icon16">warning</span>
+		{$_lang['match_confirm_the_attachment']}.
+   </div>
+  <!--messages消息 end-->
+   <div class="clearfix box" id="upload_tip">
+    <!--from表单 start-->
+    <form method="post" id="frm_work_over" name="frm_work_over" action='#'>
+     <div class="rowElem clearfix">
+      		 <label class="fl_l t_r">{$_lang['add_attachment']}{$_lang['zh_mh']} </label>
+			  <div class="fl_l" style="width:350px">
+			 	<!--{eval $flie_types = kekezu::get_ext_type();}-->
+			 	<input type="hidden" name="file_id" id="file_id">
+				<input type="hidden" name="file_name" id="file_name">
+			 	<input type="file" class="file" name="upload" id="upload">
+		  	 	{$_lang['match_upload_1_file_once']}{$basic_config['max_size']}M,{$_lang['format']}:
+			<div class="upfile ws_break">
+                 <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$flie_types}</span>
+            </div>
+			</div>
+
+      </div>
+	   <div class="rowElem clearfix">
+			 	<ul id="upfile" class="mt_10 mb_10" style="padding-left:60px;width:400px">
+				{if $wiki_info['work_file']}
+				 <li class="clearfix border_t_c border_b_c" id="{$wiki_info['work_file']}">
+	                 <div class="font14 fl_l">
+	                 	<a href="javacript:void(0);" target="_blank">{$wiki_info['work_pic']}</a>
+               		 </div>
+					 <a href="javascript:;" onclick="del_file('$wiki_info[work_file]');" class='fl_r mr_30' >
+					 	{$_lang['delete']}
+					</a>
+				</li>
+				{/if}
+				</ul>
+      </div>
+       <div class="rowElem clearfix" id="desc">
+      		 <label class="fl_l t_r">{$_lang['match_work_over_desc']}{$_lang['zh_mh']} </label>
+			 <div class="fl_l">
+	      		 <textarea cols="68" rows="6" name="tar_content" id="tar_content" class="txt_input" onkeydown="checkInner(this,'100',event)" style="width:350px;height:100px">{$wiki_info['work_desc']}</textarea>
+	      		 <div class="clear"></div>
+	             <div class="c999" id="length_show">{$_lang['enter_info']}</div>
+			 </div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" id="sbt_btn" value="{$_lang['save']}" onclick="subOver();"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="hideWindow('work_over');"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+  </div>
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$flie_types}',
+					text:'上传文件',
+					limit:1}
+				,{
+					task_id:'{$task_id}',
+					work_id:"{$wiki_info['work_id']}",
+					obj_id:"{$wiki_info['work_id']}",
+					objType:'work',
+				});
+		})
+</script>
+<script type="text/javascript">
+	In('form');
+	function subOver(){
+		var i = checkForm(document.getElementById('frm_work_over'));		
+		if(i){
+		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'upload_tip');
+			if(shtml){
+				$("#sbt_btn").attr("disabled","disabled");
+				hideWindow('work_over');
+				showDialog("{$_lang['match_confirm_work_over_ma']}",'confirm',"{$_lang['operate_notice']}",function(){
+					var data= $("#frm_work_over").serialize();
+					var url = "index.php?do=task&task_id={$task_id}";
+					var requrl = url+'&op={$op}&modify={$modify}&sbt_edit=1&'+data;
+						getJson(requrl,url+'&view=work');
+					});return false;
+			}
+		}
+	}
+	/**
+	 * 上传完成后的后续操作
+	 * @param data 响应的json对象
+	 */
+	function uploadResponse(json){
+		if($("#"+json.fid).length<1){
+				$("#file_id").val(json.fid);
+				$("#file_name").val(json.msg.localname);
+				$("#upload").val('');
+		}
+	}
+</script>
+{/if}<!--完工end-->
+ </div>
+</div>
+<!--{template footer}-->

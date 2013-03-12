@@ -1,0 +1,105 @@
+<!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css" charset="{$_K['charset']}">
+<link href="{SKIN_PATH}/css/guide.css" rel="stylesheet" type="text/css" charset="{$_K['charset']}">
+<div class="wrapper">
+<!--页面头部-->
+<header class="clearfix page_header">
+    <div class="container_24 page_title">
+  		<h2 class="mt_10 mb_10 title"><b>{$_lang['perfect_data']}</b></h2>
+    </div>
+</header>
+<!--end 页面标题--><!--主内容-->
+
+<section class="clearfix content box">
+	
+    <div class="container_24">
+        <div class="form_box  clearfix">
+            
+            	
+				<!--star 进度选项-->
+						<div class="step_progress clearfix">
+							<div class="step step1 {if !$step||$step==1} selected {/if}">
+							<span class="icon32 pub  ">1</span>
+							<strong>{$_lang['one_step']}</strong>
+							{$_lang['choose_identity']}
+							</div>
+							<div class="step step2 {if $step==2} selected {/if}">
+							<span class="icon32 pub ">2</span>
+							<strong>{$_lang['two_step']}</strong>
+							{$_lang['fill_data']}
+							</div>
+							<div class="step step3 {if $step==3} selected {/if}">
+							<span class="icon32 pub  ">3</span>
+							<strong>{$_lang['three_step']}</strong>
+							{$_lang['data_success']}
+							</div>
+						</div>
+						<!--end 进度选项-->
+				
+            
+            			
+						
+						<div class="step1_detail pl_5 pr_5 clearfix">
+														
+							<div class="prefix_7 suffix_3 grid_9 mt_10 clearfix">
+							<div class="selecter clearfix">
+								<ul>
+									<li>
+										<a  class="clearfix" href="index.php?do=register_wizard&step=p2&refer={$refer}">
+											<p class="grid_1">
+												<span class="icon32">{$_lang['person']}</span>
+											</p>
+											<div class="fl_l" style="width:280px;">
+												<p>
+													<strong class="font14b">{$_lang['person']}</strong>
+													<em class="c999 block"></em>
+												</p>
+												<ul>
+													<li>
+														<em class="c999 block">
+														{$_lang['person_according']}
+														<br>
+														</em>
+													</li>
+												</ul>
+											</div>	
+										</a>
+									</li>
+									
+									<li>
+										<a  class="clearfix" href="index.php?do=register_wizard&step=e2">
+											<p class="grid_1">
+												<span class="icon32">{$_lang['company']}</span>
+											</p>
+											<div class="fl_l" style="width:280px;">
+												<p>
+													<strong class="font14b">{$_lang['company']}</strong>
+													<em class="c999 block"></em>
+												</p>
+												<ul>
+													<li>
+														<em class="c999 block">
+														{$_lang['company_according']}
+														<br>
+														</em>
+													</li>
+												</ul>
+											</div>	
+										</a>
+									</li>
+								</ul>
+					        </div>
+					  		</div>
+							<div class="clear"></div>
+							<div class="rowElem clearfix t_r pt_10 pb_30 pr_30">
+								<a href="{if $_K['refer']}{$_K['refer']}{else}index.php{/if}" class="button">{$_lang['skip']}</a>
+							</div>
+						</div>
+						 
+            		
+          
+		</div>
+	</div>
+</section>
+</div>			    
+ <!--{template footer}-->

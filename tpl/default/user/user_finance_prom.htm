@@ -1,0 +1,256 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}--><!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['prom_make_money']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul> 
+                                            <li {if $show=='income'}class="selectedLava"{/if}>
+                                                <a href="index.php?do=user&view=finance&op=prom&show=income#userCenter" title="{$_lang['prom_profit']}">{$_lang['prom_profit']}</a>
+                                            </li>
+                                            <li {if $show=='relation'}class="selectedLava"{/if}>
+                                                <a href="index.php?do=user&view=finance&op=prom&show=relation#userCenter" title="{$_lang['prom_relation']}">{$_lang['prom_relation']}</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end--><!--detail内容 start-->
+                            <article class="box_detail">
+                                <!--messages消息 start-->
+                                <div class="messages m_infor clearfix">
+                                    <span class="icon16 fl_l">info</span>
+                                    <div class="grid_18">
+									{if $show=='income'}
+                                    {$_lang['prom_total_income']}:
+                                    <font color="red">
+                                        {c: $prom_count['0']['cash']}
+                                    </font>{CREDIT_NAME}
+                                    <font color="red">
+                                        <!--{eval echo number_format($prom_count['0']['credit'],2)}-->
+                                    </font>
+                                    {$_lang['zh_jh']}
+                                    {elseif $show=='relation'}
+                                    {$_lang['prom_relation_notice']}
+                                    {/if}
+									</div>
+                                </div>
+                                <!--messages消息 end-->
+                                <div class="">
+                                    <div class="clearfix box pad10">
+                                        {if $show=='income'}<!--from表单 start-->
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_5 fl_l">
+                                                    <input type="text" name="event_id" class="togg_u txt_input" value="{$_lang['please_input_prom_id']}" title="{$_lang['please_input_prom_id']}"}  size="13"/>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select name="ord">
+                                                        {loop $ord_arr $k $v}<option value="$k" {if $k==$ord}selected="selected"{/if}>{$v}  </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']} </option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']} </option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']}><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--from表单 end--><!--date_table数据表格 start--><!--推广收入-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            {$_lang['event_id']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['prom_event']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['prom_downline']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['get_money']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['get']}{CREDIT_NAME}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['event_status']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                	{if $event_arr}
+                                                    {loop $event_arr $v}
+                                                    <tr>
+                                                        <td>
+                                                            $v['event_id']
+                                                        </td>
+                                                        <td>
+                                                            $v['event_desc']
+                                                        </td>
+                                                        <td>
+                                                            $v['username']
+                                                        </td>
+                                                        <td>
+                                                            {c:$v['rake_cash']}
+                                                        </td>
+                                                        <td>
+                                                            $v['rake_credit']
+                                                        </td>
+                                                        <td>
+                                                            {$status_arr[$v['event_status']]}
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+													{else}
+													<tr  >
+													    <td colspan="8" class="t_c">
+                                                            {$_lang['norecord']}
+                                                        </td>
+                                                    </tr> 
+													{/if}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan=5>&nbsp;</td>
+                                                        <td>
+                                                            {$_lang['total']}:{$count}{$_lang['tiao']}
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->{elseif $show=='relation'}<!--from表单 start-->
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_10 fl_l">
+                                                    <input type="text" name="relation_id" class="togg_u txt_input" value="{$_lang['please_input_relation_id']}" title="{$_lang['please_input_relation_id']}" size="13"/>
+                                                </div>
+                                                <div class=" fl_l">
+                                                    <select name="ord">
+                                                        {loop $ord_arr $k $v}<option value="$k" {if $k==$ord}selected="selected"{/if}>{$v}  </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']} onclick="check('frm');"><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--from表单 end--><!--date_table数据表格 start--><!--推广关系-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                      {$_lang['relation_id']}                                                      
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['relation_type']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['prom_downline']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['prom_time']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['relation_status']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                	{if $relation_arr}
+                                                    {loop $relation_arr $v}
+                                                    <tr>
+                                                        <td>
+                                                            #{$v['relation_id']}
+                                                        </td>
+                                                        <td>
+                                                            {$type_arr[$v['prom_type']]['prom_item']}
+                                                        </td>
+                                                        <td>
+                                                            $v['username']
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i:s',$v['on_time'])}-->
+                                                        </td>
+                                                        <td>
+                                                            {$status_arr[$v['relation_status']]}
+                                                        </td>
+                                                    </tr>
+                                                    {/loop}
+													{else}
+													<tr>
+													    <td colspan="8" class="t_c">
+                                                            {$_lang['norecord']}
+                                                        </td>
+                                                    </tr>
+													
+													{/if}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                        </td>
+                                                        <td>
+                                                            {$_lang['total']}:{$count}{$_lang['tiao']}
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->
+                                        {/if}
+                                        <div class="page clearfix">
+                                            <p>
+                                                {$pages['page']}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end -->
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <!--main end-->
+            </div>
+            </div>
+            <!--contain end-->
+            <!--{template user/user_footer}-->
+<!--{template footer}-->

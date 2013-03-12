@@ -1,0 +1,50 @@
+<!--{if !isset($inajax)}-->
+
+<!--页脚 satrt-->
+<footer class="footer clearfix" style="text-align:center;">
+<!--网站链接以及语言栏 关注我们 搜索 start-->
+			<section class="site_info">
+            	<a href="index.php?do=double&art_id=310" title="关于我们">关于我们</a><i>|</i>
+                <a href="javascript:void(0);" title="意见反馈" onclick="report('kppw21','3','','','')">意见反馈</a><i>|</i>
+                <a href="index.php?do=double&art_id=311" title="诚征英才">诚征英才</a><i>|</i>
+                <a href="index.php?do=double&art_id=312" title="友情链接">友情链接</a><i>|</i>
+                <a href="index.php?do=double&art_id=300" title="联系我们">联系我们</a><i>|</i>
+                <a href="index.php?do=help&fpid=100&spid=368#pageTop" title="常见问题">常见问题</a><i>|</i>
+                <a href="index.php?do=double&art_id=314" title="隐私保护">隐私保护</a>
+            </section>
+
+			<section class="site_filing">
+            	<p>{$_lang['company']}{$basic_config['company']}<span class="pad10">{$_lang['address']}{$basic_config['address']}</span>{$_lang['contact_phone']}{$basic_config['phone']}<span class="pad10"><a href="http://icp.valu.cn/" target="_blank">{$basic_config['filing']}</a></span></p>
+            </section>
+            
+            <!--返回顶部 start-->
+        	<a class="top animated hidden" href="javascript:void(0);" title="{$_lang['return_top']}"><em>&diams;</em>Top</a></li>
+            <!--返回顶部 end-->
+    </footer>
+    <!--页脚 end-->
+</div>
+{if $uid}
+	<!--{eval kekezu::update_oltime($uid,$username)}-->
+{/if}
+<script type="text/javascript">
+	var uid='{$uid}';
+	var xyq = "<!--{eval echo $xyq = session_id();}-->";
+{if $exec_time_traver}
+$(function(){
+   $.get('js.php?op=time&r='+Math.random());	
+})
+{/if}
+
+//js异步加载
+In('header_top','custom','lavalamp','tipsy','autoIMG','slides');
+
+</script>
+<script src="resource/js/uploadify/jquery.uploadify-3.1.min.js" type="text/javascript"></script>
+<script src="resource/js/jsplugins/jquery.print.js" type="text/javascript"></script>
+<link href="resource/js/uploadify/uploadify.css" rel="stylesheet">
+<!--[if IE 6]></div><![endif]-->
+<!--[if IE 7]></div><![endif]-->
+<!--[if IE 8]></div><![endif]-->
+</body>
+</html>
+<!--{/if}-->

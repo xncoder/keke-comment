@@ -1,0 +1,396 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+ <div class="container_24">
+  <!--{template user/user_nav}-->
+<!--main start-->
+  <section class="clearfix section">
+   <!--{template user/user_side}-->
+    <div class="show_panel container_24 po_re">
+     <div class="prefix_3 grid_21">
+      <div class="panel clearfix box">
+       <!--main content-->
+        <div class="">
+         <!--header内容头部 start-->
+          <header class="clearfix box_header">
+            <h2 class="grid_4 alpha box_title t_c">{$_lang['account_withdraw']}</h2>
+             <div class="fl_r">
+                <button class="fl_l block mr_5" type="button" value={$_lang['i_want_to_recharge']} onclick="location.href='index.php?do=user&view=finance&op=recharge#userCenter'">
+                 {$_lang['i_want_to_recharge']}
+                </button>
+                <button class="fl_l block" type="button" value={$_lang['i_want_to_withdraw']} onclick="location.href='index.php?do=user&view=finance&op=withdraw#userCenter'">
+                   {$_lang['i_want_to_withdraw']}
+                </button>
+             </div>
+            <div class="clear"></div>
+          </header>
+          <!--header内容头部 end-->
+		  {if $verify}
+		  	 <!--{template verify_secode}-->
+		  {else}
+          <h2 class="bf7 pl_10">{$_lang['account_balance']}{$_lang['zh_mh']}
+            <font color="red">{c:$user_info['balance']}</font>{if $user_info['credit']>0.00}&nbsp;&nbsp;&nbsp;{$_lang['remain']}{CREDIT_NAME}{$_lang['zh_mh']}
+               <font color="red">$user_info['credit']</font>{/if}
+          </h2>
+		  <!--detail内容 start-->
+            <article class="box_detail">
+              <!--messages消息 start-->
+               <div class="messages m_infor clearfix">
+                  <span class="icon16 fl_l">warning</span>
+                     {$_lang['day_withdraw_min_money']}:{c:$pay_arr['withdraw_min']['v']}{$_lang['zh_jh']}{$_lang['day_withdraw_max_money']}:{c:$pay_arr['withdraw_max']['v']}{$_lang['zh_jh']}{$_lang['problem_contact_notice']}{$_lang['zh_mh']}{$basic_config['kf_phone']}<a href="###" class="close">&times;</a>
+               </div>
+               <div class="messages m_warn clearfix">
+                  <div class="icon16 fl_l">warning</div>
+                      {$_lang['alert']}{CREDIT_NAME}{$_lang['not_withdraw_only_credit']}{$_lang['zh_jh']}<a href="###" class="close">&times;</a>
+               </div>
+             <!--messages消息 end-->
+              <div class="prefix_1 suffix_1 clearfix">
+                <!--step步骤 start-->
+                  <div class="step_progress clearfix">
+                    {loop $step_list $k $v}
+                       <div class="step {$k} {if $k==$step}selected{/if}">
+                         <span class="icon32">{$k}</span><strong>{$v['0']}</strong>{$v['1']}
+                       </div>
+                    {/loop}
+                  </div>
+               <!--step步骤 end-->
+			   {if $step=='step1'}
+                <div class="pad10  form_box">
+                  <div class="prefix_1 suffix_1">
+                     <div class="clearfix box font14">
+                     	{if $user_info['balance']<floatval($pay_arr['withdraw_min']['v'])}
+							<font color="red">
+                                    {$_lang['you_account_money_less']}{$pay_arr['withdraw_min']['v']}{$_lang['yuan']}，{$_lang['not_withdraw']}
+                            </font>
+						{else}
+                      <form action="$ac_url&step=step1&choose_cash=1" method="post">
+                         <div class="rowElem clearfix">
+                             <label class="grid_4 t_r">{$_lang['please_input_withdraw_money']}{$_lang['zh_mh']}</label>
+							<div class="grid_12">
+                              <input type="text" class="txt_input mr_5" size="25" id="withdraw_cash" name="withdraw_cash" limit="required:true;type:int;between:{$pay_arr['withdraw_min']['v']}-{$pay_arr['withdraw_max']['v']}" msg="{$_lang['money_inoput_error']},{$pay_arr['withdraw_min']['v']}-{$pay_arr['withdraw_max']['v']}{$_lang['yuan']}!" msgArea="span_withdraw_cash" title="（{$_lang['withdraw_money_notice']}{$pay_arr['withdraw_min']['v']}-{$pay_arr['withdraw_max']['v']}{$_lang['yuan']}）" onkeyup="clearstr(this)"/>
+							  	<span class="mr_5">{$_lang['yuan']}</span> 
+								<span id="span_withdraw_cash"></span>
+							</div>
+                         </div>
+                      </form>
+					  {/if}
+                     </div>
+                    </div>
+                </div>
+               {if $user_info['balance']>=floatval($pay_arr['withdraw_min']['v'])}
+                   <div class="rowElem clearfix t_c">
+                       <button type="button" value={$_lang['next_step']} style="width:100px" onclick="next_step();">
+                          {$_lang['next_step']}
+                       </button>
+                   </div>
+               {/if}
+             {elseif $step=='step2'}
+               <div class="pad10  form_box">
+                 <div class="form_tip ml_10 mr_10">
+                  <p class="cf90 font14">
+                  <!--{eval $real_cash = keke_finance_class::get_to_cash($withdraw_cash);}-->
+                    {$_lang['you_input_withdraw_money_is']}:<b class="cc33">{c:$withdraw_cash}</b>
+                    <font color=red>({$_lang['real_get']}：{c:$real_cash})</font>
+                  </p>
+               </div> 
+         <!--页面子导航-->
+            <nav class="clearfix page_nav po_re mt_10">
+                <ul>
+                <li class="selected" onclick="swaptab('cont','selected','',2,1);show_next2();" id="tab_cont_1">
+                	<a href="javascript:void(0);"><span>{$_lang['third_trans_platform']}</span></a>
+				</li>
+                <li onclick="swaptab('cont','selected','',2,2);show_next1();" id="tab_cont_2">
+                	<a href="javascript:void(0);"><span>{$_lang['offline_pay_way']}</span></a>
+				</li>
+				
+              </ul>
+              </nav>
+          <!--end 页面子导航--> 
+                 
+		  <!--start 三方支付方式-->
+           <div class="suffix_1 online" id="div_cont_1">
+              <div class="mt_10 mb_10 font12 account1">
+               <!--{eval $k=0;}-->
+                 <fieldset>
+                    <legend>{$_lang['optional_account']}</legend>
+             		 {if $payment_list['alipayjs']&&$payment_list['alipayjs']['pay_status']}
+					  	 <div class="grid_4 t_c">
+                             <input type="radio" name="online" value="alipayjs" checked="checked"/>
+							 </br><img src="payment/alipayjs/{$payment_list['alipayjs']['img']}" align="absmiddle" title="{$_lang['alipay']}">
+                         </div>
+					  	 <div class="grid_12 data_list">
+					  	 	<table cellpadding="0" cellspacing="0" class="data_table">
+                               <tbody>
+                                 <tr>
+                                    <td>{$_lang['single_cash']}<img src="{$_K['siteurl']}/resource/img/ico/info.gif"
+										 title="{$_lang['single_cash_msg']}{$pay_config['per_charge']['v']}%{$_lang['single_cash_msg_ext']}"></td>
+                                    <td>{$_lang['single_low_cash']}<img src="{$_K['siteurl']}/resource/img/ico/info.gif"
+									 title="{$_lang['single_low_cash_msg']}<!--{eval echo number_format($pay_config['per_low']['v'],2)}-->{$_lang['yuan']}{$_lang['single_cash_msg_ext']}"></td>
+									<td>{$_lang['single_hign_cash']}<img src="{$_K['siteurl']}/resource/img/ico/info.gif"
+									 title="{$_lang['single_hign_cash_msg']}<!--{eval echo number_format($pay_config['per_high']['v'],2)}-->{$_lang['yuan']}{$_lang['single_cash_msg_ext']}"></td>
+                                    </tr>
+                                 <tr>
+                                    <td>{$_lang['single']}{$pay_config['per_charge']['v']}%</td>
+                                    <td><!--{eval echo number_format($pay_config['per_low']['v'],2)}-->{$_lang['yuan']}</td>
+                                    <td><!--{eval echo number_format($pay_config['per_high']['v'],2)}-->{$_lang['yuan']}</td>
+								</tr>
+                              </tbody>
+							</table>
+                         </div>
+					{else}
+					  	 <div class="grid_8">  {$_lang['website_notice']} </div>
+					{/if}
+                  </fieldset>
+               </div>
+            </div>
+			<!--end 三方支付方式-->
+		  <!--start 绑定银行支付方式-->
+           <div class="suffix_1 offline" id="div_cont_2" style="display:none;">
+		  {if $bank_auth}
+              <div class="mt_9 mb_9 font12 account1">
+                 <fieldset>
+                   <legend>{$_lang['optional_account']}</legend>
+					 {if $offline_list}
+						{loop $bind_list $v}
+					
+                         <div class="grid_6">
+                            <div class="grid_6">
+                               <input type="radio" name="offline" value="{$v['bank_name']}" checked/><img src="resource/img/system/kppw_2.0_{$v['bank_name']}.png" alt="{$bank_arr[$v['bank_name']]}" title="{$bank_arr[$v['bank_name']]}">
+                            </div>
+                        </div>
+						<div class="grid_10 data_list">
+					  	 <table cellpadding="0" cellspacing="0" class="data_table">
+                           <tbody>
+                              <tr>
+                                 <td>{$_lang['single_cash']}<img src="resource/img/ico/info.gif"
+									title="{$_lang['single_cash_msg']}{$pay_config['per_charge']['v']}%{$_lang['single_cash_msg_ext']}"></td>
+                                 <td>{$_lang['single_low_cash']}<img src="resource/img/ico/info.gif"
+									 title="{$_lang['single_low_cash_msg']}<!--{eval echo number_format($pay_config['per_low']['v'],2)}-->{$_lang['yuan']}{$_lang['single_cash_msg_ext']}"></td>
+								<td>{$_lang['single_hign_cash']}<img src="resource/img/ico/info.gif"
+									 title="{$_lang['single_hign_cash_msg']}<!--{eval echo number_format($pay_config['per_high']['v'],2)}-->{$_lang['yuan']}{$_lang['single_cash_msg_ext']}"></td>
+                               </tr>
+                              <tr>
+                                   <td>{$_lang['single']}$pay_config['per_charge']['v']%</td>
+                                   <td> <!--{eval echo number_format($pay_config['per_low']['v'],2)}--> {$_lang['yuan']}</td>
+                                   <td><!--{eval echo number_format($pay_config['per_high']['v'],2)}-->{$_lang['yuan']}</td>
+							 </tr>
+                           </tbody>
+						 </table>
+                         </div>
+					
+					     {/loop}
+					  {else}
+					  	 <div class="grid_8">  {$_lang['website_offline_notice']} </div>
+					  {/if}
+                  </fieldset>
+              </div> 
+			{else}
+            <div class="form_box pad10">
+                   <div class="rowElem clearfix  pt_10 t_l">
+                    {$_lang['no_bank_auth_no_withdraw']}
+                         <button type="button" value={$_lang['bank_auth']} name={$_lang['bank_auth']} onclick="location.href='index.php?do=user&view=payitem&op=auth&auth_code=bank#userCenter'">
+                             <span class="icon plus">&nbsp;</span>{$_lang['bank_auth']}
+                         </button>
+                   </div>
+             </div>
+             {/if}
+			<!--end 绑定银行支付方式-->
+                 </div>
+              </div>
+                  <div class="rowElem clearfix t_c">
+                  	 <span class="button1">
+                     <button id="button1" type="button" value={$_lang['next_step']} style="width:100px" onclick="user_withdraw();">
+                         {$_lang['next_step']}
+                      </button>
+					  </span>
+                      <button type="button" value={$_lang['return']} style="width:100px" onclick="location.href='$ac_url&step=step1&reset=1#userCenter'">
+                         {$_lang['return']}
+                      </button>&nbsp;&nbsp;&nbsp;
+                   
+                  </div>
+             </div>
+                                
+             <div class="clear"></div>
+             
+			 {elseif $step=='step3'}
+               <div class=" prefix_1 suffix_1 ">
+                  <form action="{$ac_url}&step=step4" method="post" name="withdraw" id="withdraw">
+                    <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}"><input type="hidden" name="pay_type" value="{$pay_type}"><input type="hidden" name="withdraw_cash" value="{$withdraw_cash}">
+                      <div class="form_box pad10">
+                        <ul>
+                            {if $paymode=='online'}
+                               <li class="border_b_c clearfix pad20">
+                                 <div class="grid_4"> &nbsp;</div>
+                                 <div class="grid_5">
+                                     <img src="payment/{$pay_info['pay_dir']}/{$pay_info['img']}" align="absmiddle" title="{$pay_info['pay_name']}" alt="{$pay_info['pay_name']}">
+                                 </div>
+                                 <div class="rowElem clearfix">
+                                   <label class="grid_3 t_r">
+                                       {$pay_info['pay_name']}{$_lang['account_number']}{$_lang['zh_mh']}
+                                   </label>
+                                  <input type="text" class="txt_input mr_5" name="pay_account" id="pay_account" size="39" msgArea="span_pay_account" limit="required:true;len:10-30" msg="{$_lang['please_input_you_right']}{$pay_info['pay_name']}{$_lang['account_number']}" title="{$_lang['please_input_you_right']}{$pay_info['pay_name']}{$_lang['account_number']}"/>
+								  <span id="span_pay_account"></span>
+								  </div>
+                                 <div class="rowElem clearfix">
+                                   <label class="grid_3 t_r">
+                                       {$pay_info['pay_name']}{$_lang['username']}{$_lang['zh_mh']}
+                                   </label>
+                                  <input type="text" class="txt_input" name="pay_username" id="pay_username" size="39" msgArea="span_pay_account"    title="{$_lang['please_input_your']}{$pay_info['pay_name']}{$_lang['username']}"/>
+								  </div>
+                                 	
+                               </li>
+                             {elseif $paymode=='offline'}
+                              <li class="border_b_c clearfix pad20">
+                                  <div class="grid_4">&nbsp;</div>
+                                  <div class="grid_5">
+                                    <img src="resource/img/system/kppw_2.0_{$bank_info['bank_name']}.png" alt="{$bank_info['bank_name']}" title="{$bank_info['bank_name']}"/>
+                                  </div>
+                                  <div class="rowElem clearfix">
+                                    <label class="grid_3 t_r">{$_lang['card_number']}{$_lang['zh_mh']}</label>
+                                    <input type="txt_input" class="txt_input" name="pay_account" id="pay_amount" value="{$bank_info['bank_account']}" size="39" readonly="readonly" style="color:#999"/>
+                                  </div>
+								  
+                                 <div class="rowElem clearfix">
+                                   <label class="grid_3 t_r">
+                                       	{$_lang['accept_account_name']}{$_lang['zh_mh']}
+                                   </label>
+                                  <input type="txt_input"  class="txt_input" name="pay_username" id="pay_username" size="39" msgArea="span_pay_username" value="$user_bank_info['0']['real_name']"
+								    limit='required:true;len:2-50' msg="{$_lang['pay_username']}" msgArea="span_pay_name" title="{$_lang['please_input_your']}【{$bank_info['bank_name']}】{$_lang['account_name']}"/>
+								  	<span id="span_pay_name"></span>
+								  </div>
+                                 <div class="rowElem clearfix">
+                                   <label class="grid_3 t_r">&nbsp;</label>
+                                 	<span id="span_pay_username"></span>
+                                 </div>
+                               </li>
+							  {/if}
+                             </ul>
+                             <div class="rowElem clearfix  pt_10 t_c">
+                                <input type="hidden" name="sbt_withdraw" value="1">
+                                  <button type="button" value="{$_lang['confirm_withdraw']}" name="{$_lang['confirm_withdraw']}" onclick="formSub('withdraw','form',true);"/>
+                                    <span class="icon check">&nbsp;</span>{$_lang['confirm_withdraw']}
+                                  </button>
+                             </div>
+                          </div>
+                      </form>
+                   </div>
+                  {elseif $step=='step4'}
+                   <div class="box complete form_box ml_40 mr_40">
+                      <div class="form_tip">{$_lang['your_withdraw_apply_success']}</div>
+                      <div class="prefix_4 suffix_4">
+                        <div class="completedata">
+                          <ul>
+                            <li>
+                              <div class="pad10">
+                                 <div class="grid_2"><!--{userpic($uid,'small')}--></div>
+                                 <div class=" grid_6 "> <!--{eval $real_cash = keke_finance_class::get_to_cash($withdraw_cash);}-->
+                                    <div class="font14b c690">{$_lang['withdraw_money']}:{$withdraw_cash}{$_lang['yuan']}</div>
+                                    <div class="font14b c690">
+                                       {$_lang['real_money']}:$real_cash {$_lang['yuan']}
+                                    </div>
+                                    <div class="font14b c690">
+                                       {$_lang['remain_money']}:{$user_info['balance']}{$_lang['yuan']}
+                                    </div>
+								
+                                     
+                                 </div>
+                                 <div class="clear"></div>
+                             </div>
+                            </li>
+                            <li>
+                              <div class="pad10">
+                                <div class=" grid_2">&nbsp;</div>
+                                <div class="grid_6">
+                                  <div>{$_lang['recharge_record_save']}
+                                     <p>
+                                        <a href="index.php?do=user&view=finance&op=detail&action=withdraw#userCenter" target="_blank">{$_lang['view_withdraw_record']}&gt;&gt;</a>
+                                     </p>
+                                  </div>
+                                </div>
+                                <div class="clear"></div>
+                              </div>
+                             </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+               {/if}
+                            
+               <div class="clear"></div>
+           </article>
+         <!--detail内容 end-->
+		 {/if}
+        </div>
+       <!--main content end -->
+       <div class="clear"></div>
+       </div>
+     </div>
+    </div>
+  </section>
+  <!--main end-->
+</div><!--contain end-->
+</div>
+
+            <script type="text/javascript">
+            	In('form');
+				function show_next1(){
+					var auth_bank = '{$bank_auth[auth_status]}';
+					if(auth_bank!=1){
+						$("span.button1").hide();
+					}else{
+						$("span.button1").show();
+					}
+				}
+				function show_next2(){
+					$("span.button1").show();
+				}
+                function next_step(){
+			
+                    var withdraw_cash = parseFloat($("#withdraw_cash").val());
+                    var withdraw_min = parseFloat($pay_arr['withdraw_min']['v']);
+                    var withdraw_max = parseFloat($pay_arr['withdraw_max']['v']);
+                    var balance = parseFloat($user_info['balance']);
+                    
+                    if (balance < withdraw_cash) {
+                        showDialog("{$_lang['withdraw_money_too_big']}", "alert", "{$_lang['msg_tips']}");
+                        return false;
+                    }
+                    else {						
+						if (withdraw_max < withdraw_cash) {
+                            showDialog("{$_lang['day_withdraw_max_not_great']}" + withdraw_max + "{$_lang['yuan']}", "alert", "{$_lang['msg_tips']}");
+                            return false;
+                        }
+                        else {
+							if (withdraw_min > withdraw_cash) {
+                                showDialog("{$_lang['day_withdraw_max_not_less']}" + withdraw_min + "{$_lang['yuan']}", "alert", "{$_lang['msg_tips']}");
+                                return false;
+                            }
+                            else {
+                                location.href = "$ac_url&step=step1&choose_cash=1&withdraw_cash=" + withdraw_cash;
+                            }
+						}
+					}
+                        
+                            
+                }
+                
+                function user_withdraw(){
+					 var paymode = 'online';;
+				     if($("div#div_cont_2").hasClass("block")){
+						paymode  = 'offline';
+					 }
+                    switch (paymode) {
+                        case "online":
+                            var pay_type = $(":radio[name='online']:checked").val();
+                            location.href = "$ac_url&step=step3&paymode=" + paymode + "&pay_type=" + pay_type + "&withdraw_cash=$withdraw_cash#userCenter";
+                            break;
+                        case "offline":
+                            var pay_type = $(":radio[name='offline']:checked").val();
+							var pay_bank = $("input[@type=radio][name=offline][checked]").val();
+							//alert(pay_bank);
+                            location.href = "$ac_url&step=step3&paymode=" + paymode + "&pay_type=" + pay_type + "&pay_bank="+pay_bank+"&withdraw_cash=$withdraw_cash#userCenter";
+                            break;
+                    }
+                }
+            </script>
+            <!--{template user/user_footer}-->
+ <!--{template footer}-->

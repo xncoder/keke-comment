@@ -1,0 +1,233 @@
+            <div class="grid_24 po_re">
+            	 <div class="panel clearfix box">
+                <header class="clearfix box_header">
+                	<div class="fl_l pl_10 pr_20">	
+                    	<h3 class="font16b">{$_lang['leave_word']}[{$task_info['leave_num']}]</h3>
+					</div>
+                </header>
+                <div class="prefix_1 suffix_1">
+                	<div id="comment_page">
+                    <!--留言-->
+					{loop $comment_data $k $v}
+                    <div class="ly1 mt_20 mb_10" id="p_$v['comment_id']">
+                        <div class="top1 clearfix mt_10 po_re">
+                            <a href="index.php?do=space&member_id=$v[uid]" class="block fl_l">
+                            	<!--{userpic($v[uid],'small')}-->
+							</a>
+							<a href="index.php?do=space&member_id=$v[uid]" class="ml_10 mr_20  block mt_5 pt_10 fl_l">{$v['username']}</a>
+                            <span class="pt_10 mt_5 block"><!--{date('Y-m-d H:i:s',$v['on_time'])}--></span>
+                            {if $uid ==ADMIN_UID||$user_info['group_id']==7}
+							<div class="operate po_ab hidden"> 
+								<a href="javascript:;" title="{$_lang['delete']}" onclick="comment_del('p_{$v[comment_id]}','$v[comment_id]');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
+                            </div>
+							{/if}
+                        </div>
+                        <div class="pad10">
+                             <p class="font14 pl_40 ml_10 ws_prewrap ws_break">{$v['content']}</p> 
+                        </div>
+						<!--留言回复开始-->
+							<div class="cc pl_30 mt_10" id="p_reply_{$v[comment_id]}">
+							{loop $reply_arr $k1 $v1}
+							    {if $v1['p_id']==$v['comment_id']}
+								 <div id="div_reply_$v1['comment_id']" class="comment_item po_re clearfix">
+
+										<div class="fl_l mr_10">
+									    	<a href="index.php?do=space&member_id=$v1[uid]" title="{$v1['username']}"><!--{userpic($v1[uid],'small')}--></a>
+										</div>
+										<div class="grid_19 alpha">
+											<a href="index.php?do=space&member_id=$v1[uid]">{$v1['username']}</a>{$_lang['yu']}<!--{date('Y-m-d H:i:s',$v1[on_time])}-->{$_lang['comment']}:
+											<p class="db ws_prewrap ws_break">{$v1[content]}</p>
+										</div>
+										<div class="operate po_ab hidden">
+											{if $uid == $v1['uid'] || $uid ==ADMIN_UID||$user_info['group_id']==7}
+										 	<a href="javascript:;" title="{$_lang['delete']}" onclick="comment_del('div_reply_$v1[comment_id]','$v1[comment_id]');return false;"><span class="icon16 trash">{$_lang['delete']}</span></a>
+		                                	{/if}
+										</div>
+										<div class="clear"></div>
+
+								 </div>
+								{/if}
+					 		{/loop}
+							</div>
+						<!--留言回复结束-->
+                    </div>
+					
+							 <!--有留言才有回复-->
+							 {if $uid==$task_info[uid]}
+							<div class="work_answer pl_30 pt_10 pb_10 clearfix" id="answers_$v['comment_id']">
+								<div class="answer-form ">
+			                    	<div class="grid_10 alpha">
+									<textarea class=" txt_input reply_comment" onkeydown="checkCommentInner(this,event)" cols="70" id="txt_reply_{$v[comment_id]}" style="height:15px;">{$_lang['reply']}</textarea>
+			                       	   <div class="answer-textarea  answer-zone pt_10 hidden" >
+			                                <button type="button" class="button answer-zone" value="{$_lang['confirm']}" onclick="comment_reply('$v[comment_id]')"><span class="check icon"></span>{$_lang['reply']}</button>
+			                                <span class="answer_word">{$_lang['you_can_input']}</span>
+			                            </div>
+			                        </div>
+								</div>
+						  	</div>
+							{/if}
+					{/loop}
+				
+					<!--end留言-->
+                <!--page 翻页 start-->
+                {if $comment_page['page']}
+				<div class="page">
+                    <p class="clearfix">                       
+                         {$comment_page['page']}
+                    </p>
+					<div class="clear">
+                    </div>
+                </div>
+				{/if}
+                <!--page 翻页 end-->
+                <div class="clear">
+                </div></div>
+				</div>
+				<div class="clear"></div>
+				<header class="clearfix box_header">
+                	<div class="fl_l pl_10 pr_20">	
+                    	<h3 class="font16b" id="h3_pub_comment">{$_lang['pub_new_msg']}</h3>
+					</div>
+                </header>
+                <!--留言部分-->
+                <div class="lyk prefix_1 mt_10 mb_10 clearfix">
+                    <div class="grid_14">
+                    	
+				 <div class="work_answer">
+					<div class="answer-form">
+                       <textarea class="font14 txt_input"  id="tar_comment"  cols="100" onkeydown="checkCommentInner(this,event)">{$_lang['pub_new_msg']}</textarea>
+						<div class=" ">
+							<button type="button" class="button block fl_l" value="{$_lang['send_comment']}" onclick="comment_add()"><span class="check icon"></span>{$_lang['public']}</button>
+						<span class="answer_word">{$_lang['you_can_input']}</span>
+						</div>
+					</div>
+				</div>
+						
+                    </div>
+                    <div class="grid_8">
+                        <p class="ly_notice">
+                            	{$_lang['to_people_notice']}
+                        </p>
+                    </div>
+                </div>
+                <!--end 留言部分-->
+            </div>
+</div>
+<script>
+	$(function (){ 
+		notice_comment();
+	})
+	//增加评论
+	function comment_add()
+	{
+		var uid = '$uid';
+			if(check_user_login())
+			{
+			var t = $("#tar_comment").val().toString().substr(0,100);
+			if(t=="{$_lang['pub_new_comment']}"||t==''){
+				showDialog("{$_lang['say_little']}..",'alert',"{$_lang['msg_fail']}","",1);return false;
+			}else{
+			$.post(basic_url+"&view=comment&op=add",{content:t},function(text){ 
+				if(text=='2'){
+					showDialog("{$_lang['donot_submit_again']}",'alert',"{$_lang['operate_fail']}","",1);
+					
+				}else if(text=='3'){
+					showDialog("{$_lang['sensitive_word']}",'alert',"{$_lang['deal_fail']}","",1); 
+				}else{
+					var text_val = $(text);
+					$("#comment_page").after(text_val); 
+					comment();
+					notice_comment();
+				}
+			
+			 },'text');
+			  $("#tar_comment").val('');  
+			}
+			}
+	}
+		//删除评论
+		function comment_del(obj,comment_id){ 
+			var obj = obj ;
+			var comment_id = comment_id;
+			$.post(basic_url+"&view=comment&op=del",{comment_id:comment_id},function(json){
+				if(json.status!=0){ 
+					$("#"+obj).slideUp(600);  
+					$("#answers_"+comment_id).slideUp(600); 
+				}else{ 
+				     showDialog(json.data,"alert",json.msg);	
+				} 
+			},'json');  
+		}
+		//回复
+		function comment_reply(comment_id){ 
+				var comment_id = comment_id;
+				var t = $("#txt_reply_"+comment_id).val().toString().substr(0,100);
+				$.post(basic_url+"&view=comment&op=reply",{content:t,pid:comment_id},function(text){
+					if(text=='2'){
+					showDialog("{$_lang['you_haved_replied']}",'alert',"{$_lang['deal_fail']}","",1); 
+				}else if(text=='3'){
+					showDialog("{$_lang['sensitive_word']}",'alert',"{$_lang['deal_fail']}","",1); 
+				}else{ 
+					var text_val = $(text);
+					$(text_val).appendTo($("#p_reply_"+comment_id)); 
+					text_val.hide(); 
+					text_val.slideDown(500); 
+					comment();
+				}
+				},'text'); 
+				$("#txt_reply_"+comment_id).val('');
+		} 
+			function comment(){
+				$('.operate a').tipsy({gravity:$.fn.tipsy.autoNS}).hover(function(){
+				$(this).children('.icon16').addClass("reverse");
+				}, function(){
+				$(this).children('.icon16').removeClass("reverse");
+			});
+			//评论鼠标移动事件显示工具栏
+			$(".top1,.comment_item").hover(function(){
+				$(this).children('.operate').removeClass('hidden');
+				
+			},function(){
+				$(this).children('.operate').addClass('hidden');
+			}); 
+		};
+	
+	function notice_comment(){
+		
+		$(".reply_comment").focus(function(){ 
+	    var content = $(this).val(); 
+	    if (content == "{$_lang['reply']}") {
+			
+	        $(this).val("");
+			$(this).siblings('.answer-zone').removeClass('hidden');
+	    }
+	    }); 
+	    $(".reply_comment").blur(function(){
+	        var content = $(this).val();
+	        if (!content) {
+	            $(this).val("{$_lang['reply']}");
+				$(this).siblings('.answer-zone').addClass('hidden');
+	        }
+	    });
+	}
+	$(function (){ 
+		$(".reply_comment").live('click',function(){
+			notice_comment();
+		})
+		$("#tar_comment").focus(function(){
+			this.value='';
+		}).blur(function(){
+			this.value==''?this.value="{$_lang['pub_new_comment']}":'';
+		})
+		$(".top1,.comment_item").live("hover",function(){
+				$(this).children('.operate').removeClass('hidden');
+				
+		}),
+		$(".top1,.comment_item").live("mouseleave",function(){
+				$(this).children('.operate').addClass('hidden');
+		}); 
+	})
+</script>
+<script type="text/javascript" >
+	//In('xheditor');
+</script>

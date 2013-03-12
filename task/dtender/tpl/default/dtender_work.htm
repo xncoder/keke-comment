@@ -1,0 +1,153 @@
+<!--{template header}--><!--弹窗--> 
+<div class="winbody {$_K['theme']}_style" style="width:700px">
+ <div class="clearfix pad10">  
+ <!--messages消息 start-->
+  <div class="messages m_infor">
+    <span class="icon16">warning</span>
+                 {$_lang['check_bid_content']}
+   </div>
+  <!--messages消息 end-->
+
+    <!--from表单 start-->
+    <form method="post" id="frm" name="frm" action=''>
+    	<input type="hidden" name="bid_id" value="{$bid_id}"/>
+		<input type="hidden" name="min" value="<!--{date('Y-m-d',time())}-->" id="min">
+    	<div class="rowElem clearfix">
+				<div style='display:inline;'>
+					<label>{$_lang['tender_quotation']}:</label>
+		 			 	<input type="text" size="4" name="quote" class="txt" value="{$base_info[quote]}" id="quote" onkeyup="clearstr(this)" limit="required:true;type:float" maxlength="6" msg="{$_lang['bid_price_wrong']}" tilte="{$_lang['fill_bid_price']}" msgArea="span_cycle">
+	                    <span class="ml_5">{$_lang['yuan']}</span>
+					<label>,{$_lang['work_time']}{$_lang['zh_mh']}</label>
+					 	<input type="text" size="1" name="cycle" class="txt" value="{$base_info[cycle]}" id="cycle" onkeyup="clearstr(this)" limit="required:true;type:int" maxlength="4" msg="{$_lang['work_time_wrong']}" tilte="{$_lang['fill_work_time']}" msgArea="span_cycle">
+	                    <span class="ml_5">{$_lang['day']}</span>
+					<span id="span_cycle"></span>
+				</div>
+	      </div>
+    	<div class="rowElem clearfix">
+			<label>{$_lang['tender_area']}{$_lang['zh_mh']}</label>
+			<select name="province" id="province"></select><select name="city" id="city"></select><select name="area"></select>
+		</div>
+       <div class="rowElem clearfix" id="desc">
+      		 <label class="">{$_lang['bid_bz']}{$_lang['zh_mh']} </label>
+      		 <textarea cols="40" rows="2" name="tar_content" id="tar_content" class="txt_input" onkeydown="checkInner(this,'100',event)" style="width:350px;height:40px">{$base_info[message]}</textarea>
+      		<span class="c999" id="length_show">{$_lang['you_can_input']}</span>
+	   </div>	   
+		{if $workhide_exists>0}
+		<div class="rowElem clearfix">
+			<label class="fl_l t_r">{$_lang['hide_manuscript']}{$_lang['zh_mh']} </label>
+			<div class="fl_l">				
+				<input type="radio" name="bid_hide" value="1"/><label>{$_lang['yes']}</label>
+				<input type="radio" name="bid_hide" value="2" checked /><label>{$_lang['no']}</label>
+			</div>
+		</div>
+		<div class="rowElem clearfix" id="desc">      		 
+         <div class="messages">
+			<span class="icon16"></span>{$_lang['you_have']}{$workhide_exists}{$_lang['time_delivery_authority']}<br/>
+         </div>
+       </div>
+	   {/if}
+ 	 <div class="rowElem clearfix">	      
+			<fieldset><legend>{$_lang['work_plan']}</legend>
+				<div class="clear"></div>
+				<div id="plan" class="clearfix po_re">
+					<div id="plan_add">
+					{if $plan_info}					
+					{loop $plan_info $k $v}
+					<!--{eval $i=$k+1;}-->
+					<div id="plan_step_{$i}" name="plan_step_{$i}" class="rowElem clearfix">
+						<label>{$_lang['plan_cash']}{$_lang['zh_mh']}</label>
+						<input type="text" size="3" name="plan_amount[]" class="txt_input" id="plan_amount_{$i}" value="$v[plan_amount]" onkeyup="clearstr(this);" limit="required:true;type:float" maxlength="5" msg="{$_lang['plan_cash_wrong']}" tilte="{$_lang['fill_plan_cash']}" msgArea="span_plan_cash_{$i}"><span>{$_lang['yuan']}</span>
+                        <label>{$_lang['start_time']}{$_lang['zh_mh']}</label>
+						<input type="text" size="9" name="start_time[]" class="txt_input" id="start_time_{$i}" value="<!--{eval echo(date('Y-m-d',$v[start_time]))}-->" onkeyup="clearstr(this);" limit="required:true;type:date{if $k!=0};than:end_time_$k{/if}" maxlength="12"  onclick="showcalendar(event, this, 0);" msg="{$_lang['start_time_wrong']}" tilte="{$_lang['fill_start_time']}" msgArea="span_plan_cash_{$i}">
+						<label>{$_lang['end_time']}{$_lang['zh_mh']}</label>
+						<input type="text" size="9" name="end_time[]" class="txt_input" id="end_time_{$i}" value="<!--{eval echo(date('Y-m-d',$v[end_time]))}-->" onkeyup="clearstr(this);" limit="required:true;type:date;than:start_time_{$i}" maxlength="12"  onclick="showcalendar(event, this, 0);" msg="{$_lang['end_time_wrong']}" tilte="{$_lang['fill_end_time']}" msgArea="span_plan_cash_{$i}">
+                        <label>{$_lang['work_goal']}{$_lang['zh_mh']}</label>
+						<input type="text" size="11" name="plan_title[]" class="txt_input" id="plan_target_{$i}" value="$v[plan_title]" limit="required:true" maxlength="20" msg="{$_lang['work_goal_wrong']}" tilte="{$_lang['fill_work_goal']}" msgArea="span_plan_cash_{$i}">
+						<i style="display:none;">$i</i>
+					</div>
+					<span id="span_plan_cash_{$i}"></span>
+					{/loop}
+					{else}					
+					<div id="plan_step_1" class="pb_10 pl_10">
+                    	<div class="rowElem clearfix">
+							<label>{$_lang['plan_cash']}{$_lang['zh_mh']}</label>
+							<input type="text" size="3" name="plan_amount[]" class="txt_input" id="plan_amount_1" onkeyup="clearstr(this);" limit="required:true;type:int" maxlength="5" msg="{$_lang['plan_cash_wrong']}" tilte="{$_lang['fill_plan_cash']}" msgArea="span_plan_cash_1">
+	                        <span class="ml_5">{$_lang['yuan']}</span>
+							<label>,{$_lang['start_time']}{$_lang['zh_mh']}</label>
+							<input type="text" size="8" name="start_time[]" class="txt_input" id="start_time_1" onkeyup="clearstr(this);" limit="required:true;type:date;than:min" maxlength="12"  onclick="showcalendar(event, this, 0)" msg="{$_lang['start_time_wrong']}" tilte="{$_lang['fill_start_time']}" msgArea="span_plan_cash_1">
+							<label>,{$_lang['end_time']}{$_lang['zh_mh']}</label>
+							<input type="text" size="8" name="end_time[]" class="txt_input" id="end_time_1" onkeyup="clearstr(this);" limit="required:true;type:date;than:start_time_1" maxlength="12"  onclick="showcalendar(event, this, 0)" msg="{$_lang['end_time_wrong']}" tilte="{$_lang['fill_end_time']}" msgArea="span_plan_cash_1">
+	                        <label>,{$_lang['work_goal']}{$_lang['zh_mh']}</label>
+							<input type="text" size="11" name="plan_title[]" class="txt_input" id="plan_target_1"  limit="required:true" maxlength="20" msg="{$_lang['work_goal_wrong']}" tilte="{$_lang['fill_work_goal']}" msgArea="span_plan_cash_1">
+	                    	<button type="button"  class="mt_5" value="{$_lang['add']}" id="add_plan" name="add_plan" onclick="add_task_plan()" >{$_lang['add']}</button>
+		               </div>
+		                 <span id="span_plan_cash_1"></span>
+						<i style="display:none;">1</i>
+				 	</div>
+					{/if}
+			  	</div>
+             </div>
+             </fieldset>
+	      </div>
+		{if !$workhide_exists}
+		<div class="rowElem clearfix" id="desc">      		 
+             <div class="messages">             	
+				 <span class="icon16"></span>{$_lang['hide_your_manuscript']}
+                 <p>
+                 	<a href="{$_K[siteurl]}/index.php?do=user&view=payitem&op=toolbox&show=buy#userCenter" target="_blank">{$_lang['to_purchase']}&gt;&gt;</a>
+                 <a href="{$_K[siteurl]}/index.php?do=help&fpid=290&spid=301#pageTop" target="_blank">{$_lang['what_is_the_hidden_manuscripts']}</a></p>				             
+             </div>
+      </div> 
+	  {/if} 	 
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" id="sbt_btn" value="{$_lang['save']}" onclick="subWork()"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="closeWindow('{$op}')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+  </div>
+
+</div> 
+<script type="text/javascript">
+	In.add('pop_window',{path:"{$_K[siteurl]}/resource/js/system/pop_window.js",type:'js'});
+	In.add('dtender_task',{path:"task/{$model_code}/{SKIN_PATH}/{$model_code}_task.js",type:'js'});
+	In('form','dtender_task','pop_window','calendar','pcas',function(){
+	    new PCAS("province","city","area","{$loca[0]}","{$loca[1]}","{$loca[2]}");
+	});
+function subWork(){
+	var i = checkForm(document.getElementById('frm'));	
+	if(i&&check_cash()){
+		var shtml 	 = contentCheck();
+		if(shtml){
+			$("#sbt_btn").attr("disabled","disabled");
+			var data= $("#frm").serialize();
+			$.post('index.php?do=task&task_id={$task_id}&op={$op}&'+data,{sbt_edit:true},
+			function(json){
+				if(json.status=='1'){
+					showDialog(json.data,'right',json.msg,"location.href='index.php?do=task&task_id={$task_id}&view=work'");closeWindow('{$op}');return false;
+					}
+				else{
+					showDialog(json.data,'alert',json.msg);return false;
+				}
+			},'json');
+		}
+	}
+}
+	/**
+	 * 稿件描述检测
+	 */	
+	function contentCheck(){
+		var shtml = $("#tar_content").val();
+			if(shtml.length>100){
+				showDialog("{$title}{$_lang['conent_limit_length']}","alert","{$_lang['operate_notice']}");return false;
+			}else{
+				return shtml;
+			}
+	}
+	function closeWindow(win){
+		hideWindow(win);
+	}	
+                 
+</script>
+
+<!--{template footer}-->

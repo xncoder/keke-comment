@@ -1,0 +1,143 @@
+<!--{template header}-->
+<div class="wrapper">
+	<div class="container_24 ">
+		<section class="section clearfix">
+			<div class="box model blue ">
+        		<div class="inner">
+        	 <header class="box_header clearfix pad10">
+            	<div class="grid_10 alpha omega">
+            		<h1 class="box_title">{$_lang['account_bind']}  Binding Account</h1>
+				</div>
+				<div class="fl_l">
+					<nav class="box_nav">
+						<ul>
+                			<li><a href="index.php?do=oauth_register&type=$type" class="fl_r">{$_lang['improve_information']}</a></li>
+						</ul>
+					</nav>
+				</div>
+            </header>
+            
+            <div class="box_detail clearfix po_re box ">
+                <div class="grid_17" >
+                    <div class="use_now">
+	                	<h3 class="font14">{$_lang['you_user_account']}</h3>
+	                    <p>$oauth_type_arr[$type]['name']{$_lang['zh_mh']}<img src="resource/img/ico/{$type}_t.gif" style="width:17px; height:17px; vertical-align:middle; margin-right:5px" alt=''><span class="font14">{if $type==taobao}$nick{else}$oauth_user_info['name']{/if}</span></p>
+                	</div>
+                                                
+                    <!--from表单 start-->
+                    <div class="form_box clearfix box">
+                    	<form action="index.php?do=oauth_login" method="post" id="oauth_login_frm"  name="oauth_login_frm">
+                    		
+                    		<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+							<input type="hidden" name="handlekey" value="oauth_login_frm1">
+							<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
+							<input type="hidden" name="type" value="$type">
+                    		<!--账号-->
+                        	 <div class="rowElem clearfix po_re">
+                                <label class="grid_4">{$_lang['account']}</label>
+                                <div class="fl_l mr_5 ml_5">
+                                    <input  type="text" value="{$_lang['you_can_use_more_login_way']}" class="txt" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20" msg="{$_lang['user_error']}" title="{$_lang['username_can_zh']}" msgArea="login_account_msg" />
+                               </div>
+                                <span class="msg" id="login_account_msg"></span>
+                             </div>
+						 
+        
+                             <div class="rowElem clearfix po_re">
+                                <label class="grid_4">{$_lang['pwd']}</label>
+                                <div class="fl_l mr_5 ml_5">
+                                  <input  type="password"  name="pwd_password" id="pwd_password" maxlength="20" limit="required:true;len:6-20" msg="{$_lang['pwd_msg']}" title="{$_lang['pwd_title']}" msgArea="login_password_msg" />
+                                </div>
+                                <span class="msg" id="login_password_msg"></span>
+                             </div>
+							 
+							 
+  
+							 
+							 <input type="hidden" name="logins" id="logins" value='0'>
+							 
+                             <!--验证码-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['code']}
+                            			</label>
+                            			<div class="grid_5 omega po_re" style="width:220px">
+                                			<input style="width:65px;" class="fl_l txt_input" name="txt_code" type="text" 
+											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['code_error']}"msgArea="secode_msg"
+											ajax="index.php?do=ajax&view=code&txt_code=" >
+								 			<div id="show_secode_menu_content" class="hidden secode_box">
+								 				<img id="secode_img" src="secode_show.php?sid=" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">
+								 				<a class="font14" href="#" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
+											</div>
+								 	        <a id="show_secode" href='index.php?do=ajax&view=menu&ajax=show_secode'></a>
+                            			</div>
+                            			<span class="" id="secode_msg"></span>
+                        			</div>						
+                        	<!--end 验证码-->
+							 
+                          <div class="mt_20 prefix_4 ml_5">
+                          	<button  type="submit" onclick="return user_login();" class="button"  > <span class="check icon"></span> {$_lang['now_bindding']}　</button> 
+						  </div>
+                             <p class="mt_20 prefix_4 ml_5"><input name="inputtext" type="checkbox" checked/> &nbsp;{$_lang['i_has_read_and_accept']}<a href="index.php?do=protocol&pro_id=218">{$_lang['login_agreen']}</a>{$_lang['rights_pub']}</p>
+                        </form>
+                    </div>
+                </div>
+                <div class="grid_7 omega border_l_c">
+                    <div class="pad10">
+                        <div class="pl_20">
+                        	<span>{$_lang['use_friend_web_login']}</span>
+							{loop $api_open $k $v}
+								{if $weibo_list[$k.'_app_id']}
+		                            <div class="mt_10">
+		                                <a href="index.php?do=oauth_login&type=$k"><img src="resource/img/ico/{$k}_t.gif" alt="{$api_name[$k]['name']}" title="{{$api_name[$k]['name']}"></a><a href="index.php?do=oauth_login&type=$k" class="ml_5">$api_name[$k]['name']{$_lang['login']}</a>
+		                            </div>
+								{/if}
+							{/loop}
+							 </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+		</div>
+			<div id="login_msg"></div>
+		</section>
+			
+	</div>
+</div>			
+<div class="clear"></div>
+<script type="text/javascript">
+In('form'); 
+ 	$("#txt_account").focus(function (){
+		var content = $("#txt_account").val();
+		if(content =="{$_lang['you_can_use_more_login_way']}"){ 
+			$("#txt_account").val("");
+		} 
+	});
+	
+	 	$("#txt_account").blur(function (){
+		var content = $("#txt_account").val();
+		if(!content ){ 
+			//$("#txt_account").val("{$_lang['you_can_use_more_login_way']}");
+		} 
+	});
+	
+	//登录
+	function user_login(){  
+		if(checkForm(document.getElementById("oauth_login_frm"), false)){ 
+			showWindow('oauth_login_frm1','oauth_login_frm','post'); 
+		}
+		return false; 
+	}
+	$("#txt_code").focus(function(){
+		$("#show_secode_menu_content").removeClass("hidden");
+	});
+		/*function showSecode(){
+	var obj = $("#show_secode").get(0);
+	ajaxmenu(obj, 250,'1','3','42');
+	return false;
+}
+function hideSecode(){
+	hideMenu("show_secode_menu");
+	return false;
+}*/
+ </script>
+<!--{template footer}-->

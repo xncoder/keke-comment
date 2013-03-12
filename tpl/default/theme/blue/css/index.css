@@ -1,0 +1,30 @@
+@charset "gbk";
+/*-------------------------------------------------
+--------------------------------------------------- 
+    注释 DEFINITIONS	: mg
+	作者 AUTHOR 		: mg
+	版本 VERSION		: 2012-02-24
+	
+	内容CONTENTS:
+		1.全局样式
+			1.1 首页高度定义
+		2.首页分类
+		3.banner切换广告
+		4.site_stats首页统计
+		5.guide首页向导
+		6.moving首页动态
+		7.notice公告
+		8.activity活动
+		9.task任务
+		10.shop商城
+		11.news资讯
+		12.case案例展示
+		13.talent人才
+			 	
+	
+/**9.task任务**/
+		* html  .box.model .task .box_detail .tops .item .task_mode{color:#6d6d6d;}
+
+.category .tab{margin:-3px -2px 0 ;}
+
+

@@ -1,0 +1,41 @@
+<link href="{SKIN_PATH}/css/user_center.css" rel="stylesheet" type="text/css">
+<header class="page_title clearfix  Anchor">
+    <div class="grid_17">
+        <h2 class="title pt_5">{$_lang['user_center']}</h2>
+    </div>
+    <div class="grid_7 hidden">
+        <div class="user_info">
+            <div class="fl_l mr_10">
+                <p>
+                    <!--{userpic($uid,small)}-->
+                </p>
+            </div>
+            <ul class="intor">
+                <li>
+                    {$_lang['welcome']}{$username}
+                </li>
+                <li>
+                    <strong class="cf60">{$_lang['currency']}{$user_info['balance']}</strong>
+                  {$_lang['cash']} | <strong><a href="index.php?do=user&view=message">{$messagecount} {$_lang['tiao_news']}</a></strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="grid_24">
+<nav class="primary_nav box clearfix">
+	
+    <a name="userCenter"></a>
+    <ul>
+        {loop $nav $k $v}
+        <li>
+            <a href="index.php?do=user&view={$k}" {if $view==$k}class="selected"{/if}><span class="icon32 {$v['1']}">{$v['0']}</span><em>{$v['0']}</em>{if $k=='message' && $messagecount}<strong class="badge">{$messagecount}</strong>{/if}</a>
+        </li>
+        {/loop}
+    </ul>
+    
+    
+</nav>
+	
+</div>
+<div class="clear"></div>

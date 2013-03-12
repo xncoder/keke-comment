@@ -1,0 +1,76 @@
+<!--{template header}-->
+<div class="panel clearfix">
+<div class="grid_17">
+ <div class="prefix_1 suffix_1">
+          <!--from表单 start-->
+             <div class="clearfix box font14">
+				 <form   id="frm_paypal" method="post" action="{if $payment_config['testurl']}{$payment_config['testurl']}{else}https://www.paypal.com/cgi-bin/webscr{/if}" target="_blank" enctype="application/x-www-form-urlencoded">
+				 <input type="hidden" name=amount value=$cash> 
+				<input type="hidden" name="notify_url" value=$notify_url>
+				<input type=hidden name="return" value=$return_url>
+				<input type=hidden name="cancel_return" value=$cancel_url>
+				<input type="hidden" name="custom" value="$v_oid" />
+				<input type="hidden" name="cmd" value="_xclick">  <!-- "_xclick" 立即购买--> 
+                 <input type="hidden" name="business" value="{$payment_config['paypal_account']}"> <!--//PayPal账户上的电子邮件地址-->  
+                 <input type="hidden" name="item_name" value="keke_witkey_online_payment"> <!--//物品名称（或购物车名称）--> 
+		 <div class="data_list mt_10">
+                     <table cellpadding="0" cellspacing="0" class="data_table">
+                       <thead>
+                           <tr>
+                               <th scope="col"></th>
+                           </tr>
+                        </thead>
+                      <tbody>
+						 <tr>
+                           <td>充值金额：<span class="red"><!--{eval printf('%10.2f',$cash)}--></span> 元 
+						   <select name="currency_code">
+					        <option value="USD">USD</option>
+							<option value="GBP">GBP</option>
+							<option value="EUR">EUR</option>
+							<option value="JPY">JPY</option>
+							<option value="CAD">CAD</option>
+							<option value="AUD">AUD</option>
+							</select> </td>
+						  </tr>
+						  <tr>
+                           <td><img src="payment/{$payment_config[pay_dir]}/{$payment_config[img]}" align="absmiddle">支持Paypal快速结算</td>
+                        </tr>
+						<tr>
+                           <td>
+                           	 	<button type="button" name="btn_confirm_pay" onclick="return confirm_paypal_pay(this);"  value="确认付款"><span class="check icon"></span>确认付款</a>
+                           	</td>
+                        </tr>
+                         </tbody>
+                      </table>
+				</div>
+                </form>
+              </div>
+           <!--from表单 end-->
+        </div>  
+	 </div>
+<div>
+<script type="text/javascript">
+	function confirm_paypal_pay(obj){
+		var url =  'index.php?do=user&view=finance&op=recharge&step=step2&pay_type=online_charge&ajax=order';
+			$.ajax( {
+				type : "POST",
+				url : url,
+				cache : false,
+				async : false,
+				data : 'uid=$uid&username=$username&cash=$cash&pay_m=$pay_m&type=$type&obj_id=$obj_id',
+				dataType : "json",
+				error : function(json) {
+					showDialog('系统繁忙，请稍后再试!', 'alert', '错误提示','',1);
+				},
+				success : function(json) {
+					if (json.status == 0) {
+						showDialog('提交失败，请稍后再试!', 'alert', '错误提示','',1);
+					} else {
+						$("input[name='custom']").val(json.data.v_oid);
+							 obj.form.submit();
+					}
+				}
+			});
+		}
+</script>
+<!--{template footer}-->

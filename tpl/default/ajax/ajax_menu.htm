@@ -1,0 +1,186 @@
+{if $ajax == 'user_detail'}<!--稿件区威客头像信息-->
+<!--星级评定样式-->
+<ul class="clearfix user_state">
+    <li>
+        <strong>{$take_num}</strong>
+        <span class="block">{$_lang['bid_work']}</span>
+    </li>
+    <li>
+        <strong>{$accepted_num}</strong>
+        <span class="block">{$_lang['bid']}</span>
+    </li>
+    <li>
+        <strong>{$order_count}</strong>
+        <span class="block">{$_lang['sell']}</span>
+    </li>
+	<li>
+		<strong class="red">{if $user_info['seller_total_num']}<!--{eval echo number_format($user_info['seller_good_num']/$user_info['seller_total_num'],2)*100}-->{else}0{/if}%</strong>
+		<span class="block">{$_lang['good_value']}<!--{$_lang['good_value_rate']}--></span>
+	</li>
+</ul>
+<!--辅助评价start-->
+			 <div class="evaluate border_t_c">
+				<ol class="clearfix">
+				{loop $buyer_aid $k $v}
+				    <li>
+				    	<div class="fl_l">{$v['aid_name']}{$_lang['zh_mh']}</div>
+						<div class="fl_l">
+				         	<!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
+					    </div>
+						<span class="red fl_l ml_10"> {$v['avg']}</span> {$_lang['fen']} 
+				    </li>
+				{/loop}
+				</ol>
+			 </div>
+<!--辅助评价end-->
+<div class="clearfix">
+	<p>
+	{$_lang['auth']}
+	{if $auth_info}
+	{loop $auth_info $k $v}
+		<a href="javascript:void(0)" title="{$v['auth_title']}">
+			<img src="{$_K['siteurl']}/{$v['auth_small_ico']}" alt=''/></a>
+	{/loop}
+	{else}
+		{$_lang['now_auth_info']}
+	{/if}
+	</p>
+</div>
+<div class="button_area mt_10">
+    <a href="javascript:void(0);" class="button" onclick="sendMessage('{$user_info[uid]}','{$user_info[username]}')"><span class="icon mail">　</span>{$_lang['send_msg']}</a>
+</div>
+{elseif $ajax=='load_comment'}<!--商品留言区留言信息-->
+<div class="ly1 mt_20 mb_10 leave">
+ <div class="top1 clearfix mt_10 po_re">
+  <a href="index.php?do=space&member_id={$comm_info['uid']}" target="_blank">
+     <!--{userpic($comm_info['uid'],'small')}-->
+  </a>
+  <a href="index.php?do=space&member_id={$l_uid}" target="_blank" class="ml_10 mr_20">{$comm_info['username']}</a>
+  <span><!--{date('Y-m-d H:i:s',$comm_info['on_time'])}--></span>
+  <div class="operate po_ab">
+  	<a href="javascript:void(0);" onclick="delComment('leave','service_id','service','{$comm_info[origin_id]}','{$comm_info[comment_id]}')" title="{$_lang['delete']}"><span class="icon16 trash">{$_lang['delete']}</span></a>
+  </div>
+ </div>
+ <div class="pl_10">
+ 	<div class="pad10">
+		<div class="font14 ws_prewrap ws_break"><!--{eval echo kekezu::escape($comm_info['content'])}--></div>
+	</div>
+ </div>
+</div>
+{elseif $ajax=='load_reply'}<!--商品留言区留言回复信息-->
+<!--留言回复开始-->
+<div class="top1 reply po_re">
+  <a href="index.php?do=space&member_id={$comm_info['uid']}" target="_blank">
+     <!--{userpic($comm_info['uid'],'small')}-->
+  </a>
+	<a href="index.php?do=space&member_id=$comm_info['uid']">{$comm_info['username']}</a>于<!--{date('Y-m-d H:i:s',$comm_info['on_time'])}-->{$_lang['comment']}
+		{if $uid == $comm_info['uid'] || $uid ==ADMIN_UID||$user_info['group_id']==7}
+		<div class="operate po_ab">
+			<a href="javascript:;" onclick="delComment('reply','service_id','service','{$comm_info[origin_id]}','{$comm_info[comment_id]}')" title="{$_lang['delete']}"><span class="icon16 trash">{$_lang['delete']}</span></a>
+	    </div>
+		{/if}
+ <div class="pl_10">
+ 	<div class="pad10">
+		<div class="font14 ws_prewrap ws_break"><!--{eval echo kekezu::escape($comm_info['content'])}--></div>
+	</div>
+ </div>
+</div>
+<!--留言回复结束-->
+{elseif $ajax=='prom_link'}<!--用户中心推广链接获取-->
+<!--推广链接 start-->
+<!--{template header}-->
+<script type="text/javascript" src="resource/js/system/custom.js"></script>
+ <article class="box_detail">
+     <div class="form_box {$_K['theme']}_style pad10">
+     	<form>
+       <div class="rowElem clearfix pb_10">
+       	 <label class="grid_2 t_r">{$_lang['display_way']}</label>
+         <div class="grid_8" >
+         	<input type="radio" name="linkMode" id="linkMode1" value="1" checked="checked"/>
+         	 <label>{$_lang['source_link']}</label>
+			<input type="radio" name="linkMode" id="linkMode2" value="2" />
+         	 <label>{$_lang['txt_link']}</label>
+          </div>
+        </div>
+		
+        <div class="rowElem clearfix">
+           <label class="grid_2 t_r">
+              {$_lang['pro_code']}
+           </label>
+           <div class="grid_17">
+           	<textarea id="promCode" cols="80" rols="5" style="width:400px;height:50px">{$link}</textarea>
+          </div>
+		  
+        </div>
+		
+		<div class="rowElem clearfix">
+			<div class="grid_3" style="padding-left:65px;">
+       		  <button type="button" value="{$_lang['copy_pro_code']}" onclick="copytext('promCode');"><span class="icon plus">&nbsp;</span>{$_lang['copy_pro_code']}</button>
+			</div>
+        </div>
+		</form>
+      </div>
+ </article>
+ <script type="text/javascript">
+ 	var link = '{$link}';
+	var promText = '{$promtext}';
+	$("#linkMode1").click(function(){
+		$("#promCode").val(link);
+	})
+	
+	$("#linkMode2").click(function(){
+		var textLink = "<a href="+link+" target=_blank>"+promText+"</a>";
+		$("#promCode").val(textLink);
+	})
+    function copytext(i){
+        setCopy($("#" + i).val(), "{$_lang['copy_success']}");
+    }
+ </script>
+<!--{template footer}-->
+<!--推广链接 end-->
+{elseif $ajax=='prom_list'}<!--用户中心推广数据加载-->
+<div id="ajax_list">
+<table cellpadding="0" cellspacing="0" class="data_table">
+  <thead>
+    <tr>
+    	{loop $table_title $v}
+       		<th scope="col" class="t_c">{$v}</th>
+		{/loop}
+       <th scope="col">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+     {loop $prom_list $v}
+     <tr>
+	 	{if $prom_code =='bid_task'}
+		  {if $model_list[$v['model_id']]['model_code']!='tender'}
+		  	<!--{eval $v['task_cash_coverage'] and $cash=$v['real_cash'] or $cash=$v['task_cash'];}-->
+			<td>{$model_list[$v['model_id']]['model_name']}</td>
+            <td><a href="index.php?do=task&task_id={$v['task_id']}" target="_blank" title="{$v['task_title']}"><!--{eval echo kekezu::cutstr($v['task_title'],68)}--></a></td>
+			<td class="t_c">{c:$cash}</td>
+			<td class="t_c">{c:$cash}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval $cash = keke_curren_class::convert($cash);}--><!--{eval echo $cash*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
+		  	<td><a href="javascript:void(0);" onclick="promLink('bid_task','task','{$v[task_id]}','{$v[task_title]}');">{$_lang['get_pro_link']}</a></td>
+		{/if}
+		{elseif $prom_code=='service'}
+			<td>{$model_list[$v['model_id']]['model_name']}</td>
+			<td><a href="index.php?do=service&sid={$v['service_id']}" target="_blank" title="{$v['title']}"><!--{eval echo kekezu::cutstr($v['title'],68)}--></a></td>
+			<td class="t_c">{c:$v['price']}</td><!--{eval $v['price'] = keke_curren_class::convert($v['price']);}-->
+			<td class="t_c">{$v['price']}&times;{$v['profit_rate']}%&times;{$prom_rule['rate']}%=<font color="red"><!--{eval echo $v['price']*$v['profit_rate']*$prom_rule['rate']/10000;}--></font></td>
+			<td><a href="javascript:void(0);" onclick="promLink('service','service','{$v[service_id]}','{$v[title]}');">{$_lang['get_pro_link']}</a></td>
+		{/if}
+		</tr>
+	{/loop}
+       </tbody>
+       <tfoot>
+         <tr>
+          	<td colspan="5"><div class="page clearfix"><p>{$pages['page']}</p><span class="t_r">{$_lang['load_result']}{$count}{$_lang['tiao']}</span></div></td>
+		  </tr>
+       </tfoot>
+</table>
+</div>
+{elseif $ajax=='show_secode'}
+  <div style="width:160px; margin-left:5px;">
+     <img width="100px" style="float:left;" id="secode_img" src="secode_show.php?sid=1111" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;" alt=''>
+     <a href="###" class="fl_l" style="line-height:20px; margin-top:4px" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
+  </div>
+{/if}

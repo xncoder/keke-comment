@@ -1,0 +1,139 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>获取任务</h1>
+    <div class="tool">
+        <a href="index.php?do={$do}&view={$view}" class="here">获取任务</a>
+        <a href="index.php?do={$do}&view=getlist"  >任务列表</a>
+    </div>
+</div>
+{if trim($config['keke_app_id'])}
+<!--页头结束--><!--提示结束-->
+<div class="box search p_relative">
+</div>
+<!--搜索结束-->
+
+<div class="box list">
+    <div class="detail">
+    	{if !$remote}
+    		<iframe src="<!--{eval echo keke_union_class::get_task_list();}-->" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="530px"></iframe>
+   		{else}
+		{if $task_list}
+    <div class="detail">
+        <form action="" id='frm_list' method="post">
+            <table cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <th width="35%">任务标题</th>
+                        <th width="8%">任务赏金</th>
+                        <th width="7%">来源</th>
+                        <th width="12%">剩余时间</th>
+                        <th width="12%">分类</th>
+                        <th width="12%">推广金</th>
+                        <th width="12%">托管方式</th>
+                        <th width="13%">操作 </th>
+                    </tr>
+                    {loop $task_list $key $value}
+                    <tr class="item">
+                        <td class="td28"><div onmouseover="postTitle(this,{$key},{$value['keke_task_id']});">{$value['task_title']}</div></td>
+                        <td>{if $value['cash_cove']}$value['cash_cove']{else}$value['task_cash']{/if}</td>
+                        <td><a href="{$value['siteurl']}" target="_blank">{$value['sitename']}</a></td>
+                        <td>
+                        	<!--{date('Y-m-d',$value['sub_time'])}-->
+						</td>
+                        <td>{$value['indus']}</td>
+                        <td>{$value['union_cash']}</td>
+						<td>{$value[method]}</td>
+                        <td>
+                        	<a href="?do=keke&view=gettask&add=add&add_id={$value['keke_task_id']}&add_index={$key}" onclick="return add_indus(this);" class="button"><span class="trash icon"></span>添加</a>
+                        </td>
+                    </tr>
+                    {/loop}
+                    <tr>
+                    	<td>
+    						<select name="p_indus_select" id="p_indus_select" onchange="cindus(this)">
+		    					<option value="">选择父行业</option>{$indus_p_arr}
+	    					</select>
+							<select name="s_indus_select" id="s_indus_select">
+								<option value="">请选择子行业</option>
+							</select>
+						</td>
+					</tr>
+                    <tr>
+                        <td colspan="6">
+                            <div class="page fl_right">
+                                {$pages['page']}
+                            </div>
+                            <div class="clearfix">
+                            <button name="sbt_action" type="submit" value="批量提交 " class="positive pill button"><span class="reload icon"></span>批量提交
+                            </button>
+                         </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    {/if}
+	{/if}
+    </div>
+</div>
+{else}
+<div class="box list">
+     <div class="detail t_c"><b>您的联盟API没有申请或暂未通过审核，暂时无法使用此功能。</b></div>
+</div>
+{/if}
+<script type="text/javascript">
+	var remote = "{$remote}";
+	var nojump = "{$nojump}";
+		if(remote&&!nojump){
+			parent.location.href=location.href+'&nojump=1';
+		}
+	function cindus(obj){
+		var pid = $(obj).val();
+		if(!pid){return false;}
+		pid=parseInt(pid);
+		$.getJSON(
+			"?do=keke&view=gettask",
+			{ajax:"ajax",pid:pid},
+			function(json){
+				if(json.status=="1"){
+					option = "<option>请选择行业</option>";
+					option += json.data;
+					$("#s_indus_select").html(option);
+				}
+			}
+		);
+	}
+	function add_indus(obj){
+		var url=$(obj).attr("href");
+		var pid=$("#p_indus_select").val();
+		var cid=$("#s_indus_select").val();
+		if(pid=="" || cid==""){
+			art.dialog("请选择父行业或者和子行业");
+			return false;
+		}
+		url +="&p_indus_select="+pid+"&s_indus_select="+cid;
+		$(obj).attr("href",url);
+		return true;
+		
+	}
+	function postTitle(obj,index,key){
+		if ($(obj).children().is("input")){
+			return false;
+		}
+		var txt=$(obj).html();
+		$(obj).html("<input type='text' id='"+key+"' value='"+txt+"' index='"+index+"' key='"+key+"' onblur='sendtitle(this)' class='txt' style='width:200px;' />");
+	}
+	function clearInput(obj){
+		//$(obj).html($(obj).children().val());
+	}
+	function sendtitle(obj){
+		var k=$(obj).attr("key");
+		var index=$(obj).attr("index");
+		var value=$(obj).val();
+		$.post("?do=keke&view=gettask&ajax=modify_title",{t_key:k,t_index:index,t_value:value}		
+		);
+	}
+</script>
+<!--主体结束-->
+<!--{template control/admin/tpl/admin_footer}-->

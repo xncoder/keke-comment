@@ -1,0 +1,51 @@
+{if $ajax=='indus_index'}
+<ul class="indus_list indus_list_shop">
+	                 	<!--{eval $is=0;$s=sizeof($final_shop);$load=array();}-->
+		                 {loop $final_shop $k $v}
+	                    	{if $is<15||($is==15&&$s==16)}
+		                       <li>
+		                         <a href="index.php?do=shop_list&path=A$v['indus_id']" target="_blank" >$v['indus_name']</a>
+	 							   <ul class="s_nav hidden">  
+	 								 {loop $indus_c_arr $k1 $v1}
+										{if $k==$v1['indus_pid']}
+											<li>
+												<a href="index.php?do=shop_list&path=A{$v1['indus_pid']}&indus_id={$v1['indus_id']}">$v1['indus_name']</a>
+											</li> 
+										 {/if}
+									 {/loop} 
+								   </ul> 
+		                      </li>
+							<!--{eval $is++;$load[$k]=1;}-->
+							{else}
+		                       <li id="s_all_li">
+		                          <a href="javascript:void(0);">{$_lang['more_category_of_task']}&gt;&gt;</a>
+								  <ul class="s_all hidden">  
+	 								{loop $indus_c_arr $k2 $v2}
+									  {if $load[$v2['indus_pid']]!=1&&$indus_p_arr[$v2[indus_pid]]}
+										<li class="s_all_li">
+											<a href="index.php?do=shop_list&path=A{$v2['indus_pid']}&indus_id={$v2['indus_id']}">$v2['indus_name']</a>
+										</li>
+									  {/if}
+									{/loop} 
+								  </ul>
+		                       </li>
+							   <!--{eval break;}-->
+						   {/if} 
+						{/loop}
+	                   </ul>
+	                   <script type="text/javascript">
+					   	$(function(){
+							$(".indus_list_shop>li").each(function(){
+								$(this).hover(function(){
+									$(this).css("z-index",2);
+									$(this).children().eq(0).addClass('selected');
+									$(this).find('ul').removeClass('hidden');
+								},function(){
+									$(this).css("z-index",1);
+									$(this).children().eq(0).removeClass('selected');
+									$(this).find('ul').addClass('hidden');
+								})
+							})
+						})
+					   </script> 
+{/if}

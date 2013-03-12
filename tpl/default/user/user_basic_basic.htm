@@ -1,0 +1,341 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+    	<!--{template user/user_nav}-->
+        <!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
+                                            </li>
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                            <div class="step_progress clearfix">
+                                
+                                <div class="messages m_infor">
+                                     <div class="icon16">warning</div>
+                                         {$_lang['zz_notice1']}
+                                     <a href="###" class="close">&times;</a>
+                               </div>
+						 
+                            </div>
+                            <div class="prefix_1 suffix_1">
+                                <div class="clearfix box font14">
+                                    <!--from表单 start-->
+                                    <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
+                                    	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                                        <input type="hidden" name="from" value="{$from}">
+                                        <input type="hidden" name="pk[uid]" value="{$uid}"><!--基本资料start-->
+										<input type="hidden" name="max" id="max" value="<!--{eval echo date('Y-m-d',time()-15*365*24*3600)}-->">
+										{if !$user_type}
+					                     <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                            	{$_lang['user_type']}{$_lang['zh_mh']}
+                                            </label>
+						                    <div class="fl_l ml_5">
+												<input type="radio" name="conf[user_type]" value='1' checked="checked" id="type_1">{$_lang['single']}
+												<input type="radio" name="conf[user_type]" value='2' id="type_2">{$_lang['enterprise']}
+						                    </div>									
+                                        </div>
+										{/if}
+					                     <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                            	{$_lang['belong_industry']}
+                                            </label>
+						                    <div class="fl_l">
+						                        <select name="conf[indus_pid]" id="indus_pid" title="{$_lang['select_industry']}" onchange="showIndus(this.value)" limit = "required:true;between:5-10" msg = '{$_lang['industry_no_choose']}' msgArea="span_indus">
+						                            <option value="">{$_lang['select_industry']}</option>
+						                      		{loop $indus_p_arr $v}
+														 <option value="{$v['indus_id']}" {if $user_info['indus_pid']==$v['indus_id']}selected{/if}>{$v['indus_name']}</option>
+													{/loop}
+												 </select>
+												 
+						                    </div>
+						                    <div class="fl_l" id="reload_indus">
+						                        <select name="conf[indus_id]" id="indus_id" limit = "required:true;between:5-10" msg='{$_lang['child_industry_no_choose']}' title='{$_lang['choose_child_industry']}' msgArea="span_indus">
+						                            <option value="">{$_lang['choose_child_industry']}</option>
+													{if $user_info['indus_id']}}
+													{loop $indus_arr $k $v}
+						                           		 <option value="{$v['indus_id']}" {if $user_info['indus_id']==$v['indus_id']}selected{/if}>{$v['indus_name']}</option>
+													{/loop}
+													{/if}
+						                        </select>
+						                    </div>	
+											<span id="span_indus"></span>								
+                                        </div>
+										{if $user_type != 2}			
+										<div id="single" ><!--个人-->
+															
+                                        <div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                            	<span id="na_1">{$_lang['real_name']}</span>
+                                            	<span id="na_2" class='hidden'>{$_lang['contact']}</span>
+                                                {$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_9 ">
+                                                <input class="txt_input " name="conf[truename]" size="39" {if $real_pass}disabled="disabled"  style="color:#999"{/if}  type="text" value="{$user_info['truename']}" title="{$_lang['real_name_tip']}"
+												 id="truename" limit="required:false;len:2-10" msg="{if $user_type==1}{$_lang['realname_can_not_more_than_ten']}{else}{$_lang['contact_at_most_ten']}{/if}" msgArea="span_truename"/>
+                                            	
+												<select name="conf[sex]" >
+													<option value="{$_lang['man']}" {if $user_info['sex']==$_lang['man']||!$user_info['sex']}selected{/if}>
+														{$_lang['man']}
+													</option>
+													<option value="{$_lang['woman']}" {if $user_info['sex']==$_lang['woman']}selected{/if}>
+														{$_lang['woman']}
+													</option>
+												</select>
+												<span id="span_truename"></span>
+											</div>
+											
+                                            <div class="grid_3 t_l">
+                                            	
+												{if $user_type==1||!$user_type}
+												{if $real_pass} 
+                                                	{$_lang['has_been_pass_by_realname_cannot_change']}
+												{else}
+													<button onclick="location.href='index.php?do=user&view=payitem&op=auth&auth_code=realname'" value="{$_lang['realname_auth']}" type="button">
+														<span class="icon plus">&nbsp;</span>
+														{$_lang['realname_auth']}
+													</button>
+												{/if}
+												{/if}
+                                            </div>
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                               {$_lang['birthday']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="grid_12 ">
+                                                <input class="txt_input" name="conf[birthday]" {if $real_pass}disabled="disabled"{/if}
+ 												type="text" size="39" value="{if $user_info['birthday']}{$user_info['birthday']}{/if}"
+												 onclick="showcalendar(event, this, 0)" title="{$_lang['birthday_tip']}<!--{eval echo date('Y-m-d',time()-15*365*24*3600)}-->" msgArea="span_birthday" 
+ 												 limit="required:true;type:date;less:max" msg="{$_lang['wrong_format_about_birthday']}" id="birthday" />
+												 <span id="span_birthday"></span>
+                                            </div>
+											
+
+                                        </div>
+											
+											<div class="rowElem clearfix form_button">
+                                            <button type="button" name="sbt_edit" class="button" value="{$_lang['save']}" onclick="check_basic1()">
+                                                <span class="check icon"></span>{$_lang['save']}
+                                            </button>
+                                        </div>
+											
+											
+										</div>
+										{else}
+										<div id="enterprise" ><!--企业-->
+										
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['company']}{$_lang['name']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_10">
+                                                <input class="txt_input" name="fds[company]" size="39" {if $real_pass}disabled="disabled"  style="color:#999"{/if}  type="text" value="{$enter_info['company']}" title="{$_lang['company']}{$_lang['name']}"
+												 id="company" limit="required:false;len:4-100" msg="{$_lang['company_name_error']}" msgArea="span_company"/>
+												 <span id="span_company"></span>
+                                            </div>
+                                            	
+												{if $user_type==2||!$user_type}
+												{if $real_pass} 
+                                                	{$_lang['company_can_not_edit']}
+												{else}
+													<button  onclick="location.href='index.php?do=user&view=payitem&op=auth&auth_code=enterprise'" value="{$_lang['enterprise_auth']}" type="button">
+														<span class="icon plus">&nbsp;</span>
+														{$_lang['enterprise_auth']}
+													</button>	
+													
+												{/if}
+												{/if}
+                                        </div>										
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['licen_num']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_30">
+                                                <input class="txt_input" name="fds[licen_num]" size="39" type="text" {if $real_pass}disabled="disabled"  style="color:#999"{/if}  value="{$enter_info['licen_num']}" title="{$_lang['company']}{$_lang['licen_num']}"
+												  id="licen_num" limit="required:false;len:5-30" msg="{$_lang['licen_num_error']}" msgArea="span_licen_num" onkeyup="clearstr(this);"/>
+												  <span id="span_licen_num"></span>
+                                            </div>
+                                            	
+													
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['legal']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_30">
+                                                <input class="txt_input" name="fds[legal]" size="39" type="text" value="{$enter_info['legal']}" title="{$_lang['company']}{$_lang['legal']}"
+												 id="legal" limit="required:false;len:2-10" msg="{$_lang['legal_error']}" msgArea="span_legal"/>
+												 <span id="span_legal"></span>
+                                            </div>
+                                            		
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['staff_num']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_30">
+                                                <input class="txt_input" name="fds[staff_num]" size="39" type="text" value="{$enter_info['staff_num']}" title="{$_lang['company']}{$_lang['staff_num']}"
+												 id="staff_num" limit="required:false;type:int;len:1-" msg="{$_lang['staff_num_error']}" msgArea="span_staff_num"/>
+												 <span id="span_staff_num"></span>
+                                            </div>
+                                            	
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['run_years']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_30">
+                                                <input class="txt_input" name="fds[run_years]" size="39" type="text" value="{$enter_info['run_years']}" title="{$_lang['company']}{$_lang['run_years']}"
+												 id="run_years" limit="required:false;type:int;len:1-" msg="{$_lang['run_years_error']}" msgArea="span_run_years"/>
+												 <span id="span_run_years"></span>
+                                            </div>
+                                            	
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['company_url']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_30">
+                                                <input class="txt_input" name="fds[url]" size="39" type="text" value="{if $enter_info['url']}{$enter_info['url']}{else}http://{/if}" title="{$_lang['company_url']}"
+												 id="run_domain" limit="required:false;type:url" msg="{$_lang['company_url_error']}" msgArea="span_domain"/>
+												 <span id="span_domain"></span>
+                                            </div>
+                                            		
+                                        </div>
+										<div class="rowElem clearfix">
+                                            <label class="grid_3 t_r">
+                                                	{$_lang['detail_address']}{$_lang['zh_mh']}
+                                            </label>
+                                            <div class="fl_l mr_30">
+                                                <input class="txt_input" name="conf[address]" size="39"  type="text" value="{$user_info['address']}" title="{$_lang['company']}{$_lang['detail_address']}"
+												 id="address" limit="required:false;len:5-" msg="{$_lang['detail_address_error']}" msgArea="span_address"/>
+												 <span id="span_address"></span>
+                                            </div>
+                                            		
+                                        </div>
+											
+										</div>
+									
+										{/if}		
+                                       <div id="enterprise1">
+                                     	   <div class="rowElem clearfix">
+                                            <div class="grid_18 alpha omega">
+                                                <label class="grid_3 t_r">
+                                                	<span id="ab_1">{$_lang['about_me']}</span>
+                                                	<span id="ab_2" class='hidden'>{$_lang['company_summary']}</span>
+													{$_lang['zh_mh']}
+                                                </label>
+												<div class=" clearfix fl_l">
+                                                <textarea cols="80" rows="8" name="conf[summary]" id="tar_content" msgArea="msg_content" class="xheditor-simple {skin:'nostyle'}" style="width:400px;">{$user_info['summary']}</textarea>
+												  <div id="msg_content"></div>
+												 <div class="ui_note">
+                                                {$_lang['please_take_it_seriously']}
+                                            	</div>
+												</div>
+                                            </div>
+                                           </div>
+										   
+										   <div class="rowElem clearfix form_button">
+                                            <button type="button" name="sbt_edit" class="button" value="{$_lang['save']}" onclick="check_basic2()">
+                                                <span class="check icon"></span>{$_lang['save']}
+                                            </button>
+                                       		</div>
+										   
+										   
+                                        </div>
+										
+										
+										<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+										<script type="text/javascript">
+							              $(function(){
+											editor = $("#tar_content").xheditor();
+											//editor.checkInner();
+									       })
+							           </script>
+                                        <!--基本资料end-->
+                                       
+                                    </form>
+                                    <!--from表单 end-->
+                                </div>
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>		
+<script type="text/javascript">
+In('form','custom','xheditor') ;
+function check_basic1(){
+	formSub('frm','form',true);
+}
+
+function check_basic2(){
+	if(contentCheck('tar_content',"{$_lang['shop_sign']}",50,1000,0,'msg_content',editor)){		
+		formSub('frm','form',true);
+		return true;
+	}else {
+	 	return false;
+	}
+}
+	  
+
+$(function(){
+	if(type!=2){
+		t1();
+	}else{
+		t2();
+	}
+})
+var type = '{$user_type}';
+	$("#type_1").click(function(){
+		t1();
+	});
+	$("#type_2").click(function(){
+		t2();
+	});
+function t1(){
+	$('#single,#na_1,#ab_1').removeClass('hidden').next().addClass('hidden');
+	$("#tar_content").attr("ignore",'true');
+	
+}
+function t2(){
+	$('#single,#na_1,#ab_1').addClass('hidden').next().removeClass('hidden');
+	$("#birthday").attr("ignore",'true');
+	$("#truename").attr("ignore",'true');
+	
+	
+}
+
+</script>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

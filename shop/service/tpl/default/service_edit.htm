@@ -1,0 +1,200 @@
+<!--{template header}-->
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box {$_K['theme']}_style pad10">
+   <div class="clearfix box" id="upload_tip">
+    <!--from表单 start-->
+    <form method="post" id="frm_service_edit" name="frm_service_edit" action='#' enctype="multipart/form-data">
+         <div class="rowElem clearfix">
+           <label class="grid_3">
+              <strong>{$_lang['goods_class']}:</strong>
+           </label>
+           <div class="grid_4 alpha">
+             <select name="indus_pid" id="indus_pid"  onchange="showIndus(this.value)" limit = "required:true;between:5-10" msg = '{$_lang['industry_class_has_not_choose']}' msgArea="span_indus">
+                <option value="">{$_lang['please_choose_class']}</option>
+                  {loop $indus_p_arr $v}
+					<option value="{$v[indus_id]}" {if $ser_info[indus_pid]==$v[indus_id]}selected{/if}>{$v[indus_name]}</option>
+				  {/loop}
+			 </select>
+          </div>
+          <div class="fl_l" id="reload_indus">
+            <select name="indus_id" id="indus_id"  limit="required:true;between:5-10" msg='{$_lang['industry_son_class_not_choose']}' title='{$_lang['your_goods_what_industry']}' msgArea="span_indus"><span id="span_indus"></span>
+               <option value="">{$_lang['please_choose_son_class']}</option>
+				{if $ser_info[indus_id]}}
+					{loop $indus_arr $k $v}
+	                    <option value="{$v[indus_id]}" {if $ser_info[indus_id]==$v[indus_id]}selected{/if}>{$v[indus_name]}</option>
+					{/loop}
+				{/if}
+            </select>
+         </div>
+        </div>                               
+         <div class="rowElem clearfix po_re">
+             <label class="grid_3"><strong>{$_lang['goods_name']}：</strong></label>
+                <div class="grid_9 alpha">
+                  <input name="title" type="text" value="{$ser_info['title']}"  title="{$_lang['you_submit_goods_notice']}" size="34px"
+				   msgArea="span_title" msg="{$_lang['please_input_goods_name']}" limit="required:true;len:5-50" id="txt_title" maxlength=50/>
+                  <span class="c999" id="span_title">{$_lang['goods_name_max_word']}</span>
+                </div>
+                <span class="grid_4 omega"></span>  
+         </div>
+                                               
+         <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['goods_description']}：</strong></label>
+             <div class="grid_9 alpha">
+                <textarea cols="62" rows="6" name="content" title="{$_lang['goods_detail_description']}" id="tar_contentsss"
+				class="xheditor {tools:'Bold,Fontface,FontColor,Italic,Underline,Strikethrough,Align,List,Outdent,Indent,Link,Unlink,Table',skin:'nostyle'}"
+				><!--{eval echo kekezu::escape($ser_info[content])}--></textarea>
+				<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+					<script type="text/javascript">
+					 $(function(){
+							 editor = $("#tar_contentsss").xheditor();
+					 })
+					</script>
+                <div class="clear"></div>
+               
+             </div>
+             <span class="grid_4 omega"></span>
+         </div>
+         <!--上传内容-->
+            <div class="rowElem clearfix lit_form border_n">
+               <label class="grid_3">
+					<strong>{$_lang['upload_pic']}：</strong>
+			  </label>
+			 <div class="grid_15 alpha">
+				<div class="bord_c">
+                    <div class="upfile ws_break">
+	 						<input type="hidden" name="pic" id="pic" value="{$ser_info['pic']}"/>
+                        	<input type="file" class="file" name="upload" id="upload"/>
+                        <div class="clear"></div>
+                        <div class="grid_15">
+                            <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$_lang['file_upload_max']}{$basic_config['max_size']}M.{$_lang['ext_limit']}({$ext})</span>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="file_list">
+                        <ul id="upfile">
+                          {if $f_info}
+                        	<li class="clearfix border_t_c border_b_c" id="{$fid}" style=" margin-top:-1px;">
+	                 			<div class="font14 fl_l">
+	                 				<a href="{$_K['siteurl']}/{$ser_info['pic']}" target="_blank">{$file_name}</a>
+               					</div>
+								<a href="javascript:;" onclick="del_file('{$fid}');" class='fl_r mr_30' >{$_lang['delete']}</a>
+							</li>
+						  {/if}
+                        </ul>
+                    </div>
+                </div>
+        	</div>
+		</div>                                              
+         <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['sell_price']}：</strong></label>
+             <div class="grid_12 alpha font14">
+                <div class="fl_l">
+                	<input class="fl_l" name="price" type="text" id="txt_price" value="{$ser_info[price]}" msgArea="span_price" size="13px"
+					 limit="required:true;type:int;between:{$config[min_cash]}-" msg="{$_lang['sell_min_money']}{$config[min_cash]}{$_lang['yuan']}"
+					 title="{$_lang['input_goods_sell_price']}{$config[min_cash]}{$_lang['yuan']}"/><span class="fl_l ml_5">{$_lang['yuan']}/</span>
+					 
+				</div>
+				<div class="fl_l ml_10">
+					<select name="unite_price" id="unite_price" style="width:110px;">
+						{loop $price_unit $v}
+							<option value="{$v}" {if $ser_info[unite_price]==$v}selected{/if}>{$v}</option>	
+						{/loop}
+           			</select>
+				</div>
+                
+				<span id="span_price"></span>
+             </div>
+             <span class="grid_4 omega"></span>
+         </div>	
+		        
+         <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['work_time']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_12 alpha font14">
+                <div class="fl_l">
+                	<input name="service_time" id="service_time" type="text"  size="13px" value="{$ser_info[service_time]}" msgArea="span_time"
+					 limit="required:true;type:int;between:1-" msg="{$_lang['service_work_time_notice']}"
+					 title="{$_lang['service_work_time_notice']}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				</div>
+                <div class="fl_l ml_10">
+                	<select name="unit_time" id="unit_time" style="width:70px;">
+						{loop $service_unit $v}
+							<option value="{$v}" {if $release_info[unite_price]==$v}selected{/if}>{$v}</option>	
+						{/loop}
+           			</select>
+				</div>
+				<span id="span_time"></span>
+             </div>
+             <span class="grid_4 omega"></span>
+         </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" value={$_lang['save_edit']} onclick="subEdit();"><span class="check icon"></span>{$_lang['save_edit']}</button>
+		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('service_edit');"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+	</form> 
+  <!--from表单 end-->
+  </div>
+ </div>
+</div>
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$ext}',
+					text:'pic',
+					limit:1}
+				,{
+					task_id:'{$ser_id}',
+					obj_id:"{$ser_id}",
+					fileType:'service',
+					objType:'service'
+				});
+		})
+</script>
+<script type="text/javascript">
+	In('form');
+	function subEdit(){
+		var i = checkForm(document.getElementById('frm_service_edit'));		
+		if(i){
+		var shtml 	 =  editor.getSource(); /// contentCheck('tar_content','{$title}',50,500,1,'upload_tip');
+			if(shtml){
+				var data= $("#frm_service_edit").serialize();
+				var url = '{$url}&'+data;
+				$.post(url,{sbt_edit:1},function(json){
+					if(json.status==1){
+						showDialog("{$_lang['edit_success']}","right","{$_lang['operate_notice']}",function(){
+							window.location.reload();
+						});hideWindow('service_edit');
+					}else{
+						showDialog("{$_lang['edit_fail']}","alert","{$_lang['operate_notice']}");
+					}
+				},'json')
+		}
+	}
+	}
+	/**
+	 * 上传完成后的后续操作
+	 * @param data 响应的json对象
+	 */
+	function uploadResponse(json){
+		if($("#"+json.fid).length<1){
+				var file_ids = $("#pic").val();
+				$("#pic").val(json.path);
+				$("#upload").val('');
+		}
+	}
+	/**
+	 * 上传附件删除
+ 	* @param file_id 附件编号
+ 	*/
+	function del_file(file_id){
+		$.getJSON("index.php?do=ajax&view=file&ajax=delete&file_id="+file_id,function(json){
+			if(json.status=='1'){
+				$("#pic").val('');
+				$("#"+file_id).remove();
+			}
+		})	
+	}
+</script>
+<!--{template footer}-->

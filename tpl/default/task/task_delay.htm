@@ -1,0 +1,173 @@
+<!--{template header}-->
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box pad10">
+
+	<div class="messages m_infor">
+    <span class="icon16"></span>
+				 {$_lang['the_current_article']}<!--{eval echo $delay_count+1}-->{$_lang['time_delay']}{$this_min_cash}{$_lang['yuan_delay']}<!--{eval echo $delay_total-$delay_count-1}-->{$_lang['times']}{$_lang['zh_jh']}
+	</div>
+    
+    <!--from表单 start-->
+    <form method="post" id="frm_delay" name="frm_delay" action="">
+
+    <div class="rowElem clearfix">
+
+      		 <label class="fl_l">{$_lang['your_current_balance_is']}{$_lang['zh_mh']} </label>
+             <div class="fl_l">
+			  <strong class="red">{c:$user_info['balance']}</strong>　
+              <strong class="red">{c:$user_info['credit']}</strong>
+			  <div class="clear"></div>
+				<div class="c999">{$_lang['bounty_higher__info']}{$_lang['zh_jh']}</div>
+			</div>
+
+     </div>
+	 <div class="rowElem clearfix">
+
+      		 <label class="fl_l">{$_lang['if_you_need_postpone']}{$_lang['zh_mh']} </label>
+             <div class="fl_l">
+              	<input type="radio" name="taskdelay" id="not_delay" value="2"/><label>{$_lang['increase_price']}</label>
+      		 	<input type="radio" name="taskdelay" id="delay" value="1" checked /><label>{$_lang['delayed_increase']}</label>
+			 </div>
+      </div>
+     <div class="rowElem clearfix">
+
+      		<label class="fl_l">{$_lang['you_wish_increase_bounty']}{$_lang['zh_mh']}</label>
+			 <div class="fl_l">
+				<input type="text" name="delay_cash" class="txt_input" id="delay_cash" onkeyup="clearstr(this)">({$_lang['minimum_price']}{c:$real_min})
+			  </div>
+
+      </div>
+     <div class="rowElem clearfix" id="is_delay">
+
+      		<label class="fl_l">{$_lang['do_you_wish_extend_stay']}{$_lang['zh_mh']}</label>
+			 <div class="fl_l">
+				<input type="text" name="delay_day" class="txt_input" id="delay_day" onkeyup="clearstr(this)">({$_lang['longest_extension']}{$max_day}{$_lang['day']})
+			 </div>
+
+      </div>
+     <div class="rowElem clearfix">
+       	 <div class="grid_10 omega">
+      		<label class="c999">{$_lang['markup_extension_rule']}</label>
+             </div>
+      </div>
+	  <div class="rowElem clearfix">
+
+			 <div class="messages">
+			  	<ul>
+			  		<li>1.{$_lang['a_single_delay_minimum_amount']}<font color="red">{c:$min_cash}</font></li>
+					<li>2.{$_lang['delayed_days_shall_not_exceed']}<font color="red">{$max_day}</font>{$_lang['day']}</li>
+			  		{loop $delay_rule $k $v}
+						<li><!--{eval echo $k+3;}-->.{$_lang['di']}<!--{eval echo $k+1;}-->{$_lang['extension_not_less_totalamount_task']}$v['defer_rate']%</li>
+					{/loop}
+			  	</ul>
+			  </div>
+
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" value="{$_lang['delayed_increase']}" onclick="Delay()"><span class="check icon"></span>{$_lang['delayed_increase']}</button>
+		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('taskdelay')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+  </div>
+
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#delay").click(function(){$("#is_delay").show()})
+		$("#not_delay").click(function(){$("#is_delay").hide()})
+	    var s= $('.messages');
+        msgshow(s);
+	});
+        //显示消息
+        function msgshow(ele){
+        	var t = setTimeout(function(){
+        		ele.slideDown(200);
+        		clearTimeout(t);
+            },400);
+        };
+	/**
+	 * 延期判断
+	 */
+	function Delay(){
+		var type  	 = parseInt($(":radio[name='taskdelay']:checked").val())+0;
+		var cash  	 = parseInt($("#delay_cash").val())+0;
+		var maxDay   = parseInt("{$max_day}")+0;
+		var minCash  = parseInt("{$real_min}")+0;
+		var day      = '0';//默认延期天数为0   
+			if(isNaN(cash)||cash==0){
+				showDialog("{$_lang['select_extension_amount']}"+minCash+"{$_lang['yuan']}","alert","{$_lang['warning']}");return false;
+			}else if(cash<minCash){
+				showDialog("{$_lang['delay_amount_shall_not_less']}"+minCash+"{$_lang['yuan']}","alert","{$_lang['warning']}");return false;
+			}
+			if(type=='1'){//延期
+					var day = parseInt($("#delay_day").val())+0;
+					if(isNaN(day)||day==0){
+						showDialog("{$_lang['extension_stay_minimum_1']}","alert","{$_lang['warning']}");return false;
+					}else if (day>maxDay){
+						showDialog("{$_lang['a_delayed_days_maximum']}"+maxDay+"{$_lang['day']}","alert","{$_lang['warning']}");return false;	
+					}
+			}
+			cashCheck(cash,day);
+	}
+	/**
+	 * 延期金额检测
+	 */
+	function cashCheck(cash,day){
+		var creditAllow = parseInt("{$credit_allow}")+0;//是否开放金币
+		var balance     = parseFloat("{$user_info['balance']}").toFixed(2);
+		var credit      = parseFloat("{$user_info['credit']}").toFixed(2);
+		var msg         = "{$_lang['extension_you_will_spend']}:";
+		if(creditAllow=='1'){
+			if(cash<=credit){//金币够
+					msg+=cash+"{CREDIT_NAME}";
+			}else{//不够
+				var costCash =cash-credit;
+				var enough = checkBalance(costCash,balance);
+				if(checkBalance(costCash,balance)){
+					msg+=costCash+"{$_lang['yuan']},";
+				}else
+					return false;
+				msg+=credit+"{CREDIT_NAME}";
+			}
+		}else{
+			if(checkBalance(cash,balance))
+				msg+=cash+"{$_lang['yuan']}";
+			else	return false;
+		}
+		showDialog(msg,"confirm","{$_lang['extension_tips']}","subDelay('"+cash+"','"+day+"')");hideWindow("taskdelay");
+	}
+	/**
+	 * 现金判断
+	 * @param cash 延期需求现金
+	 * @param balance 用户现金
+	 */
+	function checkBalance(cash,balance){
+		if(cash>balance){//现金不够
+			var chargeCash = cash-balance;//充值金额
+			showDialog("{$_lang['account_balance_insufficient']}"+chargeCash+"{$_lang['yuan']}","confirm","{$_lang['operate_notice']}","location.href='{$_K['siteurl']}/index.php?do=user&view=finance&op=recharge&type=delay&cash="+chargeCash+"#userCenter'");
+			closeWindow("{$op}");return false;
+		}else
+			return true;
+	}
+	/**
+	 * 延期提交
+	 */
+	function subDelay(cash,day){
+		$.post(basic_url+'&op={$op}',{sbt_edit:true,delay_day:day,delay_cash:cash},function(json){
+			if(json.status=='1'){
+				switch(trust_mode){
+					case "0":
+						showDialog(json.data,"right",json.msg,"location.href='"+basic_url+"'");
+						break;
+					case "1":
+						location.href=json.data;
+						break;
+				}
+			}else{
+				showDialog(json.data,"alert",json.msg);return false;
+			}
+		},'json')
+	}
+</script>
+<!--{template footer}-->

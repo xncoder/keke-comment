@@ -1,0 +1,94 @@
+<!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<!--页面内容区-->
+<div class="wrapper">
+ <!--页面头部-->
+ <header class="clearfix page_header">
+   <div class="container_24 clearfix">
+    <!--面包屑-->
+     <div class="breadcrumbs clearfix">
+      <a href="#">{$_lang['home']}</a> &gt; <a href="#">{$_lang['witkey_shop']}</a>
+    </div>
+    <!--end 面包屑-->
+    <div class="page_title">
+       <h2 class="title">{$_lang['release']}{$model_info['model_name']}</h2>
+    </div>
+	<div class="clear"></div>
+ </div> 
+</header>
+ <!--end 页面头部-->
+ <!--详细内容区-->
+ <section class="content box">
+ <!--布局框-->  
+  <div class="container_24">
+   <div class="content_d ">
+   <!--step步骤 start-->
+   <div class="step_progress clearfix">
+	{loop $stage_nav $k $v}
+	 <div class="step {$v['0']} {if $v['0']==$r_step}selected{/if}">
+	  <span class="icon32 pub">{$k}</span>
+		<strong>{$v['1']}</strong>
+		{$v['2']}
+	</div>
+	{/loop}
+ </div>
+ <!--step步骤 end-->
+                    
+ <!--步骤下部所有内容-->
+ <div class="step1_detail">
+ 	{if $r_step=='step1'}
+   <nav class="primary_nav box clearfix primary_nav1">
+      <ul>
+		 {loop $model_list $k $v}
+		    <li>
+		       <a href="index.php?do=shop_release&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model">$model_img_desc[$v['model_id']]</span><em>{$v['model_name']}</em></a>
+		   </li>
+		   {/loop}
+       </ul>
+      <div class="clear"></div>
+  </nav> 
+  {/if}
+  <!--向前 向后-->
+	{if $r_step=='step1'}
+	    <nav class="primary_nav box clearfix primary_nav1 pad10">
+	       <a href="javascript:void(0);" class="grey"><span class="icon16 undo" title="{$_lang['return']}"></span></a>
+		   <a href="{if $release_info['step1']}{$basic_url}&r_step=step2{else}javascript:void(0);{/if}" class="{if $release_info['step1']}ml_10 mr_10{else}grey{/if}"><span class="icon16 redo" title="{$_lang['forward']}"></span></a>
+		</nav>
+    {/if} 
+    {if $r_step=='step2'}
+	     <nav class="primary_nav box clearfix primary_nav1 pad10">
+	         <a href="{$basic_url}&r_step=step1" class="ml_10 mr_10"><span class="icon16 undo" title="{$_lang['return']}"></span></a>
+			 <a href="{if $release_info['step2']}{$basic_url}&r_step=step3{else}javascript:void(0);{/if}" class="{if $release_info['step2']}ml_10 mr_10{else}grey{/if}"><span class="icon16 redo" title="{$_lang['forward']}"></span></a>
+	</nav>
+   {/if} 
+     {if $r_step=='step3'}
+	      <nav class="primary_nav box clearfix primary_nav1 pad10">
+	          <a href="{$basic_url}&r_step=step2" class="ml_10 mr_10"><span class="icon16 undo" title="{$_lang['return']}"></span></a>
+			<a href="javascript:void(0);" class="grey"><span class="icon16 redo" title="{$_lang['forward']}"></span></a>
+		</nav>
+     {/if} 
+	<!--end 向前 向后-->
+   <div class="clearfix">
+    	<!--{eval require keke_tpl_class::template("shop/{$model_info['model_dir']}/tpl/{$_K['template']}/shelves_$r_step") }-->
+   </div>
+  </div> 
+  <!--end 步骤下部所有内容--> 
+  </div>
+  </div>
+ <!--end 布局框-->     	
+ </section>
+ <!--end 详细内容区-->
+ </div>
+<!--end 页面内容区-->
+<script type="text/javascript">
+    var model_id = parseInt("{$model_id}") + 0;
+    var uid = parseInt("{$uid}") + 0;
+    var r_step = "{$r_step}";
+    var basic_url = "{$basic_url}";
+    var min_day = parseInt("{$service_config['min_day']}");
+
+
+  	 In.add('shelves',{path:"resource/js/system/shelves.js",type:'js'});
+	 In('shelves','ajaxfileupload','form','script_city'); 
+</script> 
+<!--{template footer}-->

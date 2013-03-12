@@ -1,0 +1,170 @@
+<!--{template header}-->
+<div class="wrapper">
+    <div class="container_24">
+        <section class="clearfix section">
+        	<div class="box model blue ">
+        		<div class="inner">
+            <header class="box_header clearfix">
+            	<div class="grid_5 alpha omega">
+                	<h1 class="box_title"><span>{$_lang['login']}</span> Login</h1>
+				</div>
+				<div class="grid_18">
+					<nav class="box_nav clearfix">
+						<ul> 
+                			<li><a href="<!--{eval echo kekezu::refer_url();}-->">{$_lang['no_account_now_register']}</a></li>
+						</ul>
+					</nav>
+				</div>
+            </header>
+			 
+            <div class="box_detail clearfix po_re box">
+            	<div class="pad10">
+            		<div class="messages m_warn clearfix">
+            			<span class="icon16 ">{$_lang['friendly_notice']}</span>
+						{if $_K ['refer']} {if $ac_type=='reg'}{$_lang['register_success_to_login']}{else}{$_lang['need_to_logined']}{/if}{else}{$_lang['register_success_to_login']}{/if}
+					</div>
+				</div>
+            	<div class="clear"></div>
+                <div class="grid_17">
+                    <!--from表单 start-->
+                    <div class="form_box clearfix border_n">
+                        <form action="index.php?do=login" method="post" id="login_frm" name="login_frm">
+                            <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+							<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
+							<input type="hidden" name="handlekey" value="login_frm1"><!--账号-->
+                            <div class="rowElem clearfix po_re">
+                                <label class="grid_4">
+                                  {$_lang['account']}
+                                </label>
+                                <div class="grid_10">
+                                	<!--{eval $inter==1 and $v=$_lang['you_can_user_phone_eamil'] or $v=$_lang['input_your_user_name'];}-->
+									<input style="width:200px;" type="text" value="{$v}" class="txt txt_input" size="20" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20" msg="{$_lang['user_error']}" title="{$_lang['username_can_chinese']}" msgArea="login_account_msg" />
+									<span class="msg" id="login_account_msg"></span>
+                                </div>
+								
+                            </div>
+
+                            <div class="rowElem clearfix po_re">
+                                <label class="grid_4">
+                                    {$_lang['password']}
+                                </label>
+                                <div class="grid_10">
+                                	<input type="text" style="width:200px;" id="txt_password" name="txt_password" value="{$_lang['password_is_not_null']}" style="" class="txt_input txt" original-title="">
+                                    <input class="txt_input txt" style="width:200px;display:none;" type="password" name="pwd_password" id="pwd_password" maxlength="20" limit="required:true;len:6-20" msg="{$_lang['password_length_limit']}" title="{$_lang['password_length']}" msgArea="login_password_msg" />
+									<span class="msg" id="login_password_msg"></span>
+                                </div>
+                                
+                            </div>
+							{if $login_times}
+                            <input type="hidden" name="logins" id="logins" value='0'>
+                            <div class="rowElem clearfix po_re">
+                                <label class="grid_4">
+                                    验证码{$_lang['zh_mh']}
+                                </label>
+                                <div class="grid_6">
+                                    <input name="txt_code" type="text" size="8" id="txt_code" limit="required:true;len:4" msg="验证码错误!" msgArea="secode_msg" ajax="index.php?do=ajax&view=code&txt_code=">
+                                    <div style=" width:100px; margin-left:5px; float:left; ">
+                                        <img width="100px" id="secode_img" src="secode_show.php?sid=1111" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">
+										<div class="clear"></div>
+									    <a href="###" class="fl_l" style="line-height:20px; margin-top:8px;" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">换一组</a>
+                                    </div>
+									
+                                </div>
+                                <span class="" id="secode_msg"></span>
+                                <div id="login_msg">
+                                </div>
+                            </div>
+							{/if}
+                            <div>
+                            
+							</div>
+                            <div class="mt_20 prefix_4 ml_5">
+                                <button type="submit" onclick="return user_login();" class="button" id="user_login_btn">
+                                    <span class="key icon"></span>
+                                    {$_lang['login']}　 
+                                </button> 　　&gt;&gt;<a href="index.php?do=get_password" target="_blank">{$_lang['find_back_password']}</a>
+                            </div>
+                           
+                        </form>
+                    </div>
+                </div>
+                <div class="grid_7 omega border_l_c">
+                    <div class="pad10">
+
+                        <div class=" pl_20">
+                            <span>{$_lang['from_cooperation_website_login']}</span>
+						{loop $api_open $k $v}
+								{if $weibo_list[$k.'_app_id']}
+								 <div class="mt_10">
+									<a href="index.php?do=oauth_login&type={$k}" alt="{$api_name[$k]['name']}" title="{$api_name[$k]['name']}">
+										<img src="resource/img/ico/{$k}_t.gif" alt="{$api_name[$k]['name']}" title="{$api_name[$k]['name']}">
+									</a>
+									<a href="index.php?do=oauth_login&type={$k}" class="ml_5">{$api_name[$k]['name']}{$_lang['login']} </a>
+									</div>
+			                   {/if}			
+							{/loop}
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+			</div>
+        </section>
+        <div id="login_msg">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    In('form');
+	var inter = "{$inter}";
+    $("#txt_account").focus(function(){
+        var content = $("#txt_account").val();
+        if (content == "{$_lang['you_can_user_phone_eamil']}"||content=="{$_lang['input_your_user_name']}") {
+            $("#txt_account").val("");
+        }
+    });
+    
+    $("#txt_account").blur(function(){
+        var content = $("#txt_account").val();
+			inter==1?val="{$_lang['you_can_user_phone_eamil']}":val="{$_lang['input_your_user_name']}";
+        if (!content) {
+            //$("#txt_account").val(val);
+        }
+    });
+    
+    $("#txt_password").focus(function(){
+        var content = $("#pwd_password").val();
+        $(this).hide();
+		$("#pwd_password").show();
+		$("#pwd_password")[0].focus();
+        if (content == L.password_not_empty) {
+        	$("#txt_account").val("");
+        }
+    });
+    
+    $("#pwd_password").blur(function(){
+        var content = $("#pwd_password").val();
+        if (!content) {
+            $(this).hide();
+            $('#txt_password').show();
+        }
+    });
+    
+    
+    //登录
+    function user_login(){ 
+        if (checkForm(document.getElementById("login_frm"), false)) {
+        	//login_frm.submit();
+        	showWindow('login_frm1', 'login_frm', 'post',0,{cover:1},'hide()');
+        	
+        }
+        return false;
+    }
+    
+    function hide(){
+    	//hideWindow('login_frm1');
+    }
+</script>
+<!--{template footer}-->

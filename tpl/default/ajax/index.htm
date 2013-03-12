@@ -1,0 +1,63 @@
+{if $ajax=='task'}
+<!--detail内容 start-->
+<article class="box_detail no_bottom clearfix">
+	<div class="list_cont">
+   		<table cellpadding="0">
+        	{loop $task_lastest $v}
+           	<tr>
+            	<td class="position"><p><a href="index.php?do=task&task_id={$v['task_id']}" title="{$v['task_title']}">{$v['task_title']}</a></p></td>
+              	<td class="enterprise"><p><a href="<!--{eval echo kekezu::build_space_url($v['uid']);}-->" title="{$v['username']}">{$v['username']}</a></p></td>
+              	<td class="city"><p>{if $v['city']}{$v['city']}{else}未填写{/if}</p></td>
+              	<td class="money"><p>{if !$v['task_cash_coverage']}{c:$v['task_cash']}{else}{c:$cash_coverage[$v['task_cash_coverage']]['start_cove']}-{c:$cash_coverage[$v['task_cash_coverage']]['end_cove']}{/if}</p></td>
+             	<td class="action"><a href="index.php?do=task&task_id={$v['task_id']}" class="btn-recommend" title="推荐">推荐</a></td>
+          	</tr>
+        	{/loop}
+    	</table>
+    </div>
+                	
+	<div class="sort_cont">
+   		<span class="label">行业分类：</span><a href="#" title="IT互联网">IT互联网</a><i>|</i><a href="#" title="房地产">房地产</a><i>|</i><a href="#" title="金融">金融</a><i>|</i><a href="#" title="服务业">服务业</a><i>|</i><a href="#" title="制造业">制造业</a>
+   	</div>
+</article>
+<!--detail内容 end-->
+{/if}
+
+{if $ajax=='shop'}
+<!--商城列表 26条 start-->
+<ul class="small_list clearfix">
+{loop $range2 $v}
+     <li class="item">
+        {if $service_lastes[$v]}
+          <a href="index.php?do=service&sid={$service_lastes[$v]['service_id']}" title="{$service_lastes[$v]['title']}">
+          	<img src="<!--{eval echo keke_shop_class::output_pics($service_lastes[$v]['pic'],100,1)}-->" alt="{$service_lastes[$v]['title']}" title="{$service_lastes[$v]['title']}">
+          </a>
+		{else}
+           <a href="javascript:void(0);" title="{$_lang['now_no_goods']}">
+              <img src="{$style_path}/img/shop/shop_default.gif" alt="{$_lang['now_no_goods']}" title="{$_lang['now_no_goods']}">
+           </a>
+		{/if}
+		 	<dl class="shop_item_info">
+		 		<dt class="title"><a href="index.php?do=service&sid={$recomm_service[$v]['service_id']} ">{$service_lastes[$v]['title']}</a></dt>
+				<dd><strong class="cc00 money">{c:$service_lastes[$v][price]}/{$service_lastes[$v]['unite_price']}</strong></dd>
+		 	</dl>
+	</li>
+	{/loop}
+	</ul>
+   <div class="clear"></div>
+ <!--商城列表 26条 end-->
+<div class="clear"></div>
+{/if}
+{if $ajax=='bid_notice'}
+   <ul>
+     {loop $dynamic_arr $v}
+		<li><a href="$v[event][url]">{$v[username]}成功中标{$v[obj_id]}号任务</a></li>
+	 {/loop}
+  </ul>
+{/if}
+{if $ajax=='withdraw'}
+   <ul>
+     {loop $withdraw_arr $v}
+		<li class="c333 pl_10">{$v['username']}成功提现<strong class="cc00">{$v['withdraw_cash']}元</strong></li>
+	 {/loop}
+  </ul>
+{/if}

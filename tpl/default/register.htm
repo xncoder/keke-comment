@@ -1,0 +1,216 @@
+<!--{template header}--><!--页面样式	-->
+<div class="wrapper">
+	<div class="container_24">
+    	<section class="clearfix section">
+        	<div class="box model green ">
+        		<div class="inner">
+            		<header class="box_header clearfix ">
+            			<div class="grid_5 alpha omega">
+            				<h1 class="box_title"><span>{$_lang['register']}</span> Register</h1>
+						</div>
+						<div class="grid_18">
+							<nav class="box_nav clearfix">
+								<ul> 
+                					<li><a href="index.php?do=login&ac_type=reg">{$_lang['has_account_now_to_login']}</a></li>
+								</ul>
+							</nav>
+						</div>
+					</header>
+        			<div class="box_detail clearfix po_re box pt_10 pl_5">
+            			<div class="grid_17">
+                		<!--from表单 start-->
+                			<div class="form_box clearfix border_n">
+                    			<form action="index.php?do=register" method="post" id="register_frm" name="register_frm">
+                        			<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                        			<input type="hidden" name="hdn_refer" id="hdn_refer" value="{$_K['refer']}">
+									<input type="hidden" name="handlekey" value="register_frm1"><!--账号-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['account']}
+                            			</label>
+                            			<div class="fl_l ">
+                                			<input type="text" class="txt txt_input" autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20;type:string;general:true" msg="{$_lang['username_input_error']}" ajax="index.php?do=register&check_username=" title="{$_lang['please_input_register_account']}" msgArea="login_account_msg" style="width:200px;" />
+                            				<span class="msg" id="login_account_msg"><i></i></span>
+										</div>
+									
+                        			</div>
+
+                        		<!--end 账号--><!--密码-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['password']}
+                            			</label>
+                            			<div class="fl_l  ">
+                                			<input class="txt_input" onKeyup="pwStrength(this.value)" style="width:200px;" type="password" name="pwd_password" id="pwd_password" maxlength="20" limit="required:true;len:6-20" msg="{$_lang['password_input_error']}" title="{$_lang['please_input_register_pw']}" msgArea="password_msg"/>
+                            				<span class="msg" id="password_msg"></span>
+										</div>
+										
+                        			<div class="clear"></div>
+									<!--密码强度-->
+									
+										<div class="prefix_4">
+                            		 	<div id="pwdStrength" class=" msg pw_strength">
+	                                		<div class="pw_letter">
+	                                			<span class="selected">{$_lang['weak']}</span>
+												<span>{$_lang['general']}</span>
+												<span>{$_lang['better']}</span>
+											</div>
+                           			 	</div>
+										
+										</div>
+                        			</div>
+									<!--强度end-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['confirm_password']}
+                            			</label>
+                            			<div class="fl_l">
+                                			<input class="txt_input" style="width:200px;" type="password" name="pwd_password2" id="pwd_password2" maxlength="20" limit="required:true;equals:pwd_password" msg="{$_lang['repeat_password_error']}" title="{$_lang['input_pw_agian']}" msgArea="password2_msg"/>
+                            				<span class="msg" id="password2_msg"></span>
+										</div>
+										
+                        			</div> 
+                        		<!--end 密码-->
+								<!--邮箱-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['email']}
+                            			</label>
+                            			<div class="fl_l">
+                                			<input class="txt_input" style="width:200px;" autocomplete="off" type="text" class="txt" name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_error']}" title="{$_lang['email_format']}" ajax="index.php?do=register&check_email=" msgArea="email_msg"/>
+                            				<span class="" id="email_msg"></span>
+										</div>
+										
+                        			</div>
+                        	<!--end 邮箱-->					
+							
+							<!--验证码-->
+                        			<div class="rowElem clearfix po_re">
+                            			<label class="grid_4">
+                                			{$_lang['auth_code']}
+                            			</label>
+                            			<div class="grid_8 alpha omega po_re" >
+                                			<input style="width:65px;" class="fl_l txt_input" name="txt_code" type="text" 
+											size="8" id="txt_code" limit="required:true;len:4" msg="{$_lang['auth_code_error']}"msgArea="secode_msg"
+											ajax="index.php?do=ajax&view=code&txt_code=" >
+								 			<div id="show_secode_menu_content" class="hidden secode_box">
+								 				<img id="secode_img" src="secode_show.php?sid=" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">
+								 				<a class="font14" href="#" onclick="document.getElementById('secode_img').src='secode_show.php?sid='+Math.random(); return false;">{$_lang['change_a_group']}</a>
+												<span class="" id="secode_msg"></span>
+											</div>
+								 	        <a id="show_secode" href='index.php?do=ajax&view=menu&ajax=show_secode'></a>
+                            				
+										</div>
+                            			
+                        			</div>						
+                        	<!--end 验证码-->
+							
+                        <div class="mt_20 prefix_4 ml_5">
+                            <button type="submit" class="button" onclick="return user_register();">
+                                <span class="clock icon"></span>
+                                {$_lang['register']}
+                            </button>
+                        </div>
+												
+                        <p class="mt_20 prefix_4 ml_5">
+                            <input  name="inputtext" type="checkbox" checked="checked" id="inputtext" limit="required:true"
+							msg="{$_lang['you_should_agree_agreement']}" msgArea="login_msg"/> &nbsp;{$_lang['i_has_read_and_accpet']}<a  class="agreement_link" href="" target="_blank">{$_lang['register_agreement']}</a>{$_lang['and_copyright_notice']}
+                        	<span id="login_msg"></span>
+						</p>
+                    </form>
+					<div class="agreement_part clearfix" style="display:none;">
+						<p><!--{tag 注册协议}--></p>
+					</div>
+                </div>
+            </div>
+            <div class="grid_6 omega border_l_c">
+                    <div class="pad10">
+
+                     <div class=" pl_20">
+                        <span>{$_lang['from_cooperation_website_login']}</span>
+							{loop $api_open $k $v}
+								{if $weibo_list[$k.'_app_id']}
+								 <div class="mt_10">
+									<a href="index.php?do=oauth_login&type={$k}" alt="{$api_name[$k]['name']}" title="{$api_name[$k]['name']}">
+										<img src="resource/img/ico/{$k}_t.gif" alt="{$api_name[$k]['name']}" title="{$api_name[$k]['name']}">
+									</a>
+									<a href="index.php?do=oauth_login&type={$k}" class="ml_5">{$api_name[$k]['name']}{$_lang['login']}</a>
+									</div>
+			                   {/if}			
+							{/loop}
+                    </div>
+                </div>
+            </div>
+        				</div>
+		</div>
+			</div>
+        </section>
+        <div id="login_msg">
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   In('form');
+    //注册
+    function user_register(){
+		var i = checkForm(document.getElementById("register_frm"));
+        if (i) {
+			 showWindow('register_frm1', 'register_frm', 'post',0,{cover:1});
+         }else{
+      		return false;
+		 }
+    }
+$("#txt_code").focus(function(){
+	$("#show_secode_menu_content").removeClass("hidden");
+});
+$(".agreement_link").toggle(function(){
+	$(".agreement_part").show();
+},function(){
+	$(".agreement_part").hide();
+});
+function checkStrong(sPW){
+	//if (sPW.length < 3){
+		//Modes=1;
+	//}else{
+		var pwLength = 	sPW.length;
+		  var patEn = /[a-zA-Z]/;
+		  var patnum = /[0-9]/;
+		  var speChar = /[`~!@#$\^&\*\(\)=\|{}':;',\/\?\[\]\.<>]/;
+		  var isEn = patEn.test(sPW);
+		  var isNum = patnum.test(sPW);
+		  var isSpe = speChar.test(sPW);
+		  Modes = getStrong(isEn,isNum,isSpe,pwLength);
+	
+	//}
+	 return Modes; 
+}
+
+function getStrong (isEn,isNum,isSpe,pwLength){
+	if (isEn && isNum && isSpe && (pwLength>6)){
+		var setModes = 3;
+	}else{
+		var setModes = 2;
+		if((isEn && isNum)||(isNum && isSpe)||(isEn&&isSpe)){
+			var setModes = 2;
+		}else{
+			var setModes = 1;
+		}
+	}
+	return setModes;
+}
+
+function pwStrength(pwd){ 
+  if (pwd==null||pwd==""){ 
+  	S_level = 0;
+  } else{ 
+	  S_level=checkStrong(pwd); 
+	  $("#pwdStrength span:lt("+S_level+")").addClass('selected');
+	  $("#pwdStrength span:gt("+(S_level-1)+")").removeClass('selected'); 
+  } 
+
+}
+								
+</script>
+<!--{template footer}-->

@@ -1,0 +1,139 @@
+<!--{template header}-->
+<div class="wrapper">
+    <div class="container_24">
+<!--{template user/user_nav}-->
+	<!--main start-->
+<section class="clearfix section">
+<!--{template user/user_side}-->
+<div class="show_panel container_24 po_re">
+ <div class="prefix_3 grid_21">
+ <div class="panel clearfix box">
+  <!--main content-->
+  <div class="">
+   <!--header内容头部 start-->
+   <header class="clearfix box_header" >
+    <h2 class="grid_4 alpha omega box_title t_c">{$_lang['payitem']}</h2>
+     <div class="grid_17 alpha omega">
+       <nav class="box_nav">
+         <ul>
+          {loop $third_nav $k $v}
+			<li {if $k==$show}class="selectedLava"{/if}>
+				<a href="{$origin_url}&op={$op}&show={$k}#userCenter" title="$v['1']">$v['0']</a>
+			</li>
+		  {/loop}
+         </ul>
+       </nav>
+     </div>
+    <div class="clear"></div>
+  </header>
+  <!--header内容头部 end-->
+<!--detail内容 start-->
+ <article class="box_detail">  
+  <div class="messages m_infor">
+   <span class="icon16"></span>
+     	{$_lang['i_want_buy']}{$item_info['item_name']}{$_lang['now_remain']}<strong style="color:#FF6600"><!--{eval echo intval($remain)}--></strong> {$payitem_standard[$item_info['item_standard']]} <a href="###" class="close">&times;</a>
+  </div>
+  <div class=" prefix_1 suffix_1 ">
+  	<div class="form_box pad10">
+  	<form name="frm_buy" id="frm_buy" method="post" action="{$ac_url}">
+
+        <div class="grid_2">
+           <img src="{$item_info['big_pic']}" alt="{$item_info['item_name']}" title="{$item_info['item_name']}"/>
+		</div>
+        <div class="grid_12">
+         <dl>
+           <dt>
+             <div class="rowElem clearfix">
+
+                   <label>{$_lang['use_way']}
+					 
+					{$_lang['according_to']}{$payitem_standard[$item_info['item_standard']]}{$_lang['per_num']}{$_lang['count_waste']}
+					</label> 
+
+			 </div>		
+           </dt>
+		   <dd>
+			   <div class="rowElem clearfix">
+
+                   <label class="fl_l">{$_lang['buy']}{$payitem_standard[$item_info['item_standard']]}{$_lang['per_num']}</label>
+					<div class="grid_10">
+						<input type="text" size="10" name="buy_num" id="buy_num" limit="required:true;type:int;between:1-{$item_info['item_limit']}"
+						title="{$_lang['fill_buy_times']}{$item_info['item_limit']}{$_lang['times']}" msg="{$_lang['fill_buy_times_msg']}" msgArea="span_buy_num" class="txt" onkeyup="clearstr(this)">
+						
+						<span id="span_buy_num"></span>
+					</div>	
+
+				</div>				
+			</dd>
+			<dd id="need_cash" style="display:none;">
+			   <div class="rowElem clearfix">
+
+                   <label>{$_lang['need_cash']}</label>
+				   <span id="total_cash" class="mt_5 red"></span>
+
+				</div>				
+			</dd>
+
+           </dl>
+		  </div>
+		<div class="rowElem clearfix form_button">
+						<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+						<button type="submit" value="{$_lang['buy_right_now']}" name="{$_lang['buy_right_now']}" onclick="return check();" class="pill positive button"><span class="icon plus">&nbsp;</span>{$_lang['buy_right_now']}</button>
+	    </div>		
+	</form>
+	
+		<div class="messages">
+	  	<span class="icon16"></span>
+		<strong>{$_lang['buy_notice']}</strong>
+		   <ul class="num">
+			  	<li>{$item_info['item_name']}{$_lang['service']}{$_lang['according_to']}{$payitem_standard[$item_info['item_standard']]}{$_lang['count_waste']},{$_lang['per']}{$payitem_standard[$item_info['item_standard']]}<font color="red"><!--{eval echo floatval($item_info['item_cash'])}--></font>{$_lang['buy_most_single']}{$payitem_standard[$item_info['item_standard']]}{$_lang['at_most']}<font color="red">{$item_info['item_limit']}</font>{$payitem_standard[$item_info['item_standard']]}</li>
+			  	<li>$item_info['item_desc']</li>
+				
+			</ul>
+        </div>
+		
+      </div>
+    </div> 
+   </article>
+  <!--detail内容 end-->
+</div>
+<!--main content end -->
+	<div class="clear"></div>
+  </div>
+ </div>
+    </div> 
+ </section>
+ </div>
+ </div>
+ <!--main end-->
+<script type="text/javascript">
+	In('form');
+	$("#buy_num").blur(function(){
+		var buyNum=parseInt($(this).val())+0;
+		var buyMax=parseInt($item_info['item_limit'])+0;
+		var perCash=parseFloat("{$item_info['item_cash']}");
+		if(buyNum>buyMax){
+			showDialog("{$_lang['fill_wrong_buy_most']}"+buyMax+"{$_lang['times']}");return false;
+		}else if(!isNaN(buyNum)){
+			if(buyNum==0){
+				showDialog("{$_lang['fill_wrong_more_one']}");return false;
+			}else{
+				$("#need_cash").show();
+				var total=buyNum*perCash;
+				$("#total_cash").empty().text(total.toFixed(2)+"{$_lang['yuan']}");
+			}
+		}
+	})
+	function check(){
+		//var i=checkForm(document.getElementById('frm_buy'));
+		// if(i){
+			showDialog("{$_lang['confirm_buy']}","confirm","{$_lang['operate_notice']}","buy();");return false;
+		//}else
+		//	return false;
+	}
+	function buy(){
+		//$("#frm_buy").submit();
+		formSub('frm_buy','form',true);
+	}
+</script>
+<!--{template footer}-->

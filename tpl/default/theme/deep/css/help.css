@@ -1,0 +1,21 @@
+@charset "gbk";
+/* CSS Document */
+
+/*×ó±ßµ¼º½*/
+		.wrap_bk{background:#131315}
+		.nav_list dt{border-bottom:1px solid #282828;}
+		.nav_list{border-right:1px solid #282828;}
+		.bord_right{border-left:1px solid #282828;}
+		.nav_list dt a:hover{ background:#87b12a;}
+		.nav_list dt a:hover span{color:#fff !important;}
+		.nav_list dt a span{color:#999;}
+		.c000{color:#887613 !important;}
+		.nav_list dt a.selected span,.nav_list dt a.selected:hover span{font-weight:bold; color:#fff !important; background:none;}
+	
+
+	/*ÏÂ¶ËÄÚÈÝ*/
+	.article{color:#999;}
+	.question{background:#2e2e2e; border-left:5px solid #88ae34;}
+			.deep_style .question:hover{background:#515257;}
+				.q_title{ color:#BBBBBB; }
+				.top_content{border-bottom:1px dashed #2e2e2e;}

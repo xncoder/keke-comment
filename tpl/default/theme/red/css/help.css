@@ -1,0 +1,15 @@
+@charset "gbk";
+/* CSS Document */
+
+/*×ó±ßµ¼º½*/
+		.nav_list dt a:hover{ background:#951a1a;}
+		.nav_list dt a:hover span{color:#fff !important;}
+		.nav_list dt a.selected,.nav_list dt a.selected:hover span{font-weight:bold; color:#000 !important; background:none;}
+}
+	
+
+	/*ÏÂ¶ËÄÚÈÝ*/
+		.question{background:#f2f2f2; border-left:5px solid #951a1a}
+			.question:hover{background:#ed8888;}
+				.q_title{ color:#000; }
+				

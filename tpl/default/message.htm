@@ -1,0 +1,67 @@
+<!--{template header}-->
+
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box ">
+ <!--main content-->
+
+
+   <div class="clearfix box font14 pt_10">
+    <!--from表单 start-->
+    <form method="post" id="frm_msg" name="frm_msg">
+    	<input type="hidden" name="to_uid" value="{$to_uid}">
+    	<input type="hidden" name="to_username" value="{$to_username}">
+    	<div class="rowElem clearfix" id="upload_tip">
+       	 <div class="grid_10 omega"><!--发站内信 标题-->
+      		 <label class="grid_2 t_r">{$_lang['msg_notice']} </label>
+			 <div class="grid_7">
+				 <input type="text" class="txt_input" size="45" class="text" name="tar_title" id="tar_title" limit="required:true;len:2-20" title="{$_lang['msg_title']}" msg="{$_lang['msg_title_notice']}" msgArea="span_title">
+				 <div><span id="span_title">&nbsp;</span></div>
+			 </div>
+      	</div>
+      </div>
+       <div class="rowElem clearfix" id="desc">
+       	 <div class="grid_10 omega">
+      		 <label class="grid_2 t_r">{$title}{$_lang['zh_mh']} </label>
+			 <div class="grid_7">
+      		 <textarea  cols="42" rows="3" name="tar_content" id="tar_content" class="txt_input" onkeydown="checkInner(this,'100',event)"></textarea>
+			 <div class="clear"></div>
+             <div class="c999 font12" id="length_show">{$_lang['msg_content_notice']}</div>
+			 </div>
+      	</div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button mr_5" value="{$_lang['send']}" onclick="Comment()"><span class="check icon"></span>{$_lang['send']}</button>
+			 <button type="reset" class="button mr_5" value="{$_lang['reset']}"><span class="reload icon"></span>{$_lang['reset']}</button>
+
+      </div>
+	
+   </form>
+  <!--from表单 end-->
+  </div>
+
+
+ </div>
+</div>
+<script type="text/javascript">
+	/**
+	 * 所有需要提交textarea提交的操作都用此方法回复、评论、补充需求，
+	 */
+	function Comment(){
+		var i       = checkForm(document.getElementById('frm_msg'));
+		if(i){
+			var shtml  = contentCheck('tar_content','{$title}',5,100,1,'upload_tip');
+			if(shtml){
+				var data = $("#frm_msg").serialize();
+				$.post('index.php?do=ajax&view=message&op={$op}&'+data,{sbt_edit:true},
+					function(json){
+							showDialog(json.data,'notice',json.msg);hideWindow('message');
+				},'json');
+			}
+		}
+	}
+</script>
+<script type="text/javascript">
+	In('form');
+	
+</script>
+<!--{template footer}-->

@@ -1,0 +1,209 @@
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-05
+ 	
+ 	内容 CONTENTS:
+ 	1.第一步选择任务模型
+ 		1.0 任务流程图
+ 	2. 第二步填写需求
+ 		2.0 客服
+ 		2.1稿件交付
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1. 第一步选择任务模型
+ --------------------------------------*/
+.content_d{ border:1px solid #e0e0e0}
+	.box .step_progress{ background-color:#f5f5f5; border:1px solid #fff; border-width:1px 0; margin:0; }
+		.box .step_progress .step{ width:215px; padding:10px 0 10px 19px !important; margin:0; color:#999}
+		
+			.box .step_progress .step.selected .icon32.pub{ background-position:0px 0; color:#fff}
+			#ie6 .box .step_progress .step .icon32{width:32px;}
+
+			#ie6 .box .step_progress .step.selected .icon32{ background-color:#2F549F; }
+			
+			.box .step_progress .step .icon32.pub{ background-position:-64px 0}
+			.box .step_progress .step.passed .icon32.pub{ background-position:32px 0}
+			.box .step_progress .step .icon32,.box .step_progress .step.passed .icon32,.box .step_progress .step.selected .icon32{ background:none; background-image:url(../img/style/pub_icon32.gif); text-indent:0; text-align:center; font-size:18px; line-height:30px}
+			.box .step_progress .step.selected strong{ color:#333}
+			.box .step_progress .step strong{ color:#333}
+			.box .step_progress .step i{ font-size:18px;}
+		     .icon32{ text-indent:0; background:url(../img/style/icon32_task_model.png); font-size:20px; line-height:30px; font-family:"微软雅黑", "黑体", "宋体"; text-align:center;}
+			#ie6 .box .step_progress .step .icon32{ background-position:64px 0}
+			#ie6 .box .step_progress .step.selected .icon32{background-position:0px 0; color:#fff; background-color:none;}
+	.step1_detail{ background-color:#fff; border-top:1px solid #e4e4e4; }
+		 .primary_nav1{ background:none; border-radius:0; border-width:0 0 1px 0; border-color:#e4e4e4}
+			.primary_nav1 ul{ margin-left:10px}
+				 .primary_nav ul li{ margin-right:10px}
+					 .primary_nav1 .icon16{ /*float:none;*/}
+					 .primary_nav ul li a:active .icon32.task_model, .primary_nav ul li a.selected .icon32.task_model{ background-position:0 0; color:#2f549f;}
+					 .icon32.task_model{ background-position:32px 0; color:#fff; text-indent:0 !important}
+					#ie6  .task_model{ width:32px; height:32px; overflow:hidden; background:#000;}
+					#ie6  a:active .task_model,
+					,#ie6  .selected .task_model{background:#fff;}
+					.red_style .step_progress .selected{color:#999 !important;}
+					.red_style .step_progress .step .icon32{ float:left; margin-right:10px; color:#000; margin-top:5px; vertical-align:top; background:#EC9292; border-radius:20px;}
+					#ie6 .red_style .step_progress .step.selected .icon32{background:#951A1A;}
+/* 1.0 任务流程图 */
+.pic_model.single{ background-position:0 0; width:640px; height:50px;}
+.pic_model{ background-image:url(../img/style/puc_model.png); margin:auto}
+.pic_model.multi_piece{ background-position:0 -50px; width:640px; height:50px;}
+.pic_model.tender{ background-position:0 -100px; width:640px; height:50px;}
+.pic_model.my_work{background-position:0 -150px; width:640px; height:50px;}
+.pic_model.hire{background-position:0 -200px; width:640px; height:50px;}
+ .primary_nav ul li .icon32.folder_plus, .primary_nav ul li a:active .icon32.folder_plus{ background:url("../img/style/icon32.png") 0 -3264px;}
+ .primary_nav ul li a:active .icon32.folder_plus, .primary_nav ul li a.selected .icon32.folder_plus{ background-position:-32px -3264px}
+
+/* 2. 第二步填写需求
+ --------------------------------------*/
+.primary_nav1 .grey .icon16.redo,.primary_nav1 .grey .icon16.undo{ opacity:0.3;}
+.box .lit_form .info{ padding:5px 20px;}
+.box .list dd.pub_sum{ background-color:#effbe7; color:#326534; text-align:right; padding-right:15px}
+.file{position:absolute;font-size:20px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1}
+
+/* 2.0 客服 */
+.deep_style .online_service{color:#999;}
+	.online_service p{ margin:0; }
+	
+/* 2.1稿件交付 */
+
+.source_content{ border:1px solid #d4d4d4; background-color:#f8f8f8}
+.source_agreement{ margin:30px}
+.source_agreement{ margin:0px 30px}
+	.source_agreement h5{ border-bottom:2px solid #ccc; line-height:40px}
+	.mutual b{ font-weight:normal}
+.publisher .user_info,.ensure,.source_succss{ background-color:#f9f9f9;}
+.publisher .user_info p,.bidder .user_info1 p{ margin:0}
+.publisher .ensure{ border-top:1px solid #ccc}
+	.ensure{ height:45px; line-height:45px}
+.contact{ height:170px; overflow:hidden}
+	.contact span{ display:block}
+.bidder,.source_succss{border:1px solid #b5e087;}
+.bidder .ensure{ border-top:1px solid #b5e087;}
+.user_info1{ background-color:#effbe7;border-bottom:1px solid #b5e087}
+	.user_info1 .intor,.source_succss{ color:#326500}
+
+	
+	
+	
+/* 1. 进度流程图
+ --------------------------------------*/
+ .simple_step{ margin:10px 0; clear:both; background:#fff; border:1px solid #e3e3e3; font-family:"微软雅黑";}
+
+	/* 1.0.1 step单步*/
+	
+	 .simple_step .step{ float: left;font-size: 12px;  white-space: nowrap; line-height:20px; text-align:center; width:20%; background:#fff url(../img/step_bg.gif) no-repeat right;}
+		 .simple_step .step strong{ color:#333; display:block; font-weight:bolder; font-size:16px; font-style:normal; height:55px; line-height:55px; margin-left:-21px; padding-left:21px;}
+	 .simple_step .step1{}
+		
+	 .simple_step .step2{}
+	 .simple_step .step3{ width:25%;}
+	 .simple_step .step4{}
+	 .simple_step .step5{ background:#fff; width:15%}
+	
+	 .all_4 .step{ width:25%} 
+	 .all_4 .step4{ background:#fff; }
+	/* 1.0.2 当前进行的步骤 */
+	 .simple_step .step.selected{ background:#fad674 url(../img/step_selected_bg.gif) no-repeat right;}
+		 .simple_step .step.selected strong{ display:block;background:url(../img/step_passed_bg.gif) no-repeat 0;}
+		 .simple_step .step5.selected,
+		 .all_4 .step4.selected{background:#fad674}
+		 .simple_step .step1.selected strong{ background:none}
+	/* 1.0.3 已经过的步骤 */
+	 .simple_step .step.passed{}
+	 .simple_step .step.passed strong{ color:#999; position:relative; z-index:1;}
+					
+	
+/**/			
+	 .min_step li{ float:left; display:list-item;  line-height:20px;padding-top:10px; margin-top:10px; position:relative; z-index:1; border-width:4px 0 0; border-style:solid;}
+	 .min_step li .icon{ width:15px; height:15px; position:absolute; top:-9px; text-indent:-999px; border-radius:10px; }
+	 .min_step li .arrow_b, .min_step li .arrow_t{ display:block; border-width:6px}
+	 .min_step li.last{width:15px;border-color:#fff;}
+	 .min_step span{display:inline-block; padding:0 10px; padding:2px 10px \0; white-space:nowrap;}
+	
+		 .all_3 li{ width:33%;}
+		 .all_4 li{ width:25%;}
+		 .all_5 li{ width:22%;}
+		 .all_6 li{ width:16%;}
+		 .all_7 li{ width:15%;}
+		 .all_8 li{ width:13%;}
+		
+		 .step_orange_height{min-height:100px; _height: expression(this.scrollHeight < 120 ? "120px" : "auto");}
+		 .step_orange li{ border-color: #afd46e; text-align:left;}
+		 .step_orange li .title_bottom{bottom:-43px; _bottom:-42px;}
+		 .step_orange .arrow_b{ border-top-color: #f90; }
+		 .step_orange .arrow_t{border-bottom-color:#f90;}
+		 .step_orange li .title_bottom span{*margin-top:-1px; _margin-top:0;}
+		 .step_orange span{color:#333; margin-top:10px; position:relative; z-index:1; left:-15px;}
+		 .step_orange .icon{ background:#afd46e}
+
+		
+		 .step_blue li{ border-color: #09c; }
+		 .step_blue .arrow_b{ border-top-color: #09c; }
+		 .step_blue .arrow_t{border-bottom-color:#09c;}
+		 .step_blue span{ background:#09c; color:#fff;}
+		 .step_blue .icon{ background:#09c}
+		
+		
+		
+/**/
+ .field_orange{ background:#faf5e7; border-color:#dbdad5;}
+	 .field_orange .arrow_b{ border-bottom-color:#faf5e7;border-left-color:#faf5e7;border-right-color:#faf5e7}
+	 .field_orange .arrow_t{ border-top-color:#faf5e7;border-left-color:#faf5e7;border-right-color:#faf5e7}
+	 .field_orange .sp{color: #c30; font-size:14px;}
+ .field_blue{ background:#e3f5f9;border-color:#dbdad5;}
+	 .field_blue .arrow_b{ border-bottom-color:#e3f5f9;border-left-color:#e3f5f9;border-right-color:#e3f5f9}
+	 .field_blue .arrow_t{ border-top-color:#e3f5f9;border-left-color:#e3f5f9;border-right-color:#e3f5f9}
+	 .field_blue .sp{color:#09c; font-size:14px;}
+	
+	
+	
+/*  右侧  */
+ .pub_right{ margin-top:10px;}
+	 .pub_right dt,
+	 .pub_right h2{ font-size:15px; font-weight:normal; color:#333; }
+	 .pub_right h2{ margin-bottom:10px;}
+	 .pub_right dl{border-top:1px solid #e4e4e4;}
+	 .pub_right dt{ padding-top:10px; border-top:1px solid #fff;}
+	 .pub_right dd{ border-bottom:1px solid #e4e4e4; padding-bottom:10px;}
+		 .pub_right dd.last{border:none;}
+	 .helper{ background:#fff url(../img/women_sec.jpg) no-repeat 20px top; padding-top:120px;}
+	 .helper .detail{ background:#fff; padding-left:30px; }
+	 .helper .tel_phone{background:#fff url(../img/tel_phone2.jpg) no-repeat left; height:50px; }
+/**/	
+.file{position:absolute;font-size:23px;filter:alpha(opacity=0);-moz-opacity:0;opacity:0;z-index:1; cursor:pointer;}
+.upfile{padding:10px;}
+
+
+/*发布人信息*/
+.release_user_info{border-bottom:2px solid #f80; padding-bottom:15px;}
+	.release_user_info ul li{float:left; width:33%; display:inline-block;  height:25px;  position:relative;}
+		.release_user_info ul li .list_word_over{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; position:absolute;}
+			.release_user_info ul li .list_word_over:hover{width:auto; overflow:visible; background:#fff; z-index:2;}
+/*发布列表*/
+.order_info{}
+ .release_list dd{border:1px solid #D2E5E9; border-top:none; color:#333;}
+	 .release_list dd.tags{border:1px solid #D2E5E9; border-bottom:none; background:#D4F2FA; padding:5px 10px;}
+	 .release_list dd li a{color:#333;}
+ .release_list dl.may_need_list dt{background:none; border:none; font-size:14px; color:#333; text-align:left; border-bottom:1px solid #e3e3e3;}
+	 .release_list dl.may_need_list dd{border:1px solid #e3e3e3; border-top:none;}
+		 .release_list dl.may_need_list dd li{color:#666;}
+		 
+.p_img{padding:5px; overflow:hidden; text-align:center; }
+.p_img img{ width:120px; height:120px;cursor:pointer;}
+.goods_title{ text-align:center; line-height:20px; height:40px; overflow:hidden;}
+.button_box{ background:#f4f4f4; text-align:center;}
+
+#ie6 select{  margin-right:5px;}
+#ie6 button{display:block;}
+#ie6 input{ background:#FBFBFB; color:#333; border:1px solid #D8D8D8; border-left-color:#A8A8A8; border-top-color:#A8A8A8; border-radius:2px; padding:6px 4px 6px 10px; font:12px Arial, Helvetica, sans-serif;}
+#ie6 .search_input{border:none;}
+#ie6 #agreement{border:none;}
+/* 问号图片  */
+.ask_img{ margin-top:7px;}
+/* 元文字对齐 */
+.word_yuan{ margin-top:1px; margin-left:5px;}
+.footer{margin-top:10px;}

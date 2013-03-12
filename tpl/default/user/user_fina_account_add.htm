@@ -1,0 +1,246 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$_lang['bank_account']}</h2>
+                                <nav class="box_nav">
+                                    <ul>
+                                        <li class="selectedLava">
+                                            <a href="{$origin_url}&op={$op}&opp=add&step=step1#userCenter">{$_lang['add_account']}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{$origin_url}&op={$op}&opp=list#userCenter">{$_lang['account_list']}</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--detail内容 start-->
+                            <article class="box_detail last_step_three">
+                                <div class="prefix_1 suffix_1">
+								<!--step步骤 start-->
+                                <div class="step_progress clearfix ">
+                                    {loop $step_list $k $v}
+                                    <div class="step {$k} {if $k==$step}selected{/if}">
+                                        <span class="icon32">{$k}</span>
+                                        <strong>$v['0']</strong>
+                                        <em>$v['1']</em>
+                                    </div>
+                                    {/loop}
+                                </div>
+                                <!--step步骤 end-->
+								{if $step=='step1'}
+                                 
+                                    <div class="form_box pt_20">
+                                        <!--from表单 start-->
+                                        <form action="{$ac_url}&step=step1&bank_type={$user_info['user_type']}" id="frm" name="frm" method="post">
+                                            <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+											
+											{if $user_info['user_type']=='2'}
+											 <div class="rowElem clearfix">
+                                                <label class="grid_6 t_r">
+                                                    	{$_lang['choose_zhanghu_type']}：
+                                                </label>
+                                               <label for="ul_type_1"><input type="radio" name="type" value="1" id="ul_type_1" onclick="swaptab('type','backLava','',2,1)" checked="checked">{$_lang['single']}</label>
+											   <label for="ul_type_2"><input type="radio" name="type"  value="2" id="ul_type_2" onclick="swaptab('type','backLava','',2,2)">{$_lang['enterprise']}</label>
+                                                <div class="clear">
+                                                </div>
+                                              
+                                            </div>
+											{/if}
+											{if $user_info['user_type']=='2'}
+                                            <div class="rowElem clearfix" id="div_type_1">
+                                                <label class="grid_6 t_r">
+                                                    {$_lang['name_of_company']}
+                                                </label>
+                                                <input name="conf[company]" id="company" type="text" size="35" value="{$enterprise_auth['company']}" disabled/>
+                                                <div class="clear">
+                                                </div>
+                                                <div class=" prefix_6 c999">
+                                                   {$_lang['company_no_need_to_retry']}
+                                                </div>
+                                            </div>
+                                            {/if}
+                                            <div class="rowElem clearfix {if $user_info['user_type']=='2'}hidden{/if} " id="div_type_2">
+                                                <label class="grid_6 t_r">
+                                                    {if $user_info['user_type']=='2'}{$_lang['bank_name']}{else}{$_lang['realname']}{$_lang['zh_mh']}{/if}
+                                                </label>
+                                                <input name="conf[real_name]" id="truename" value="{$user_info['truename']}" type="text" size="35" {if $user_info['user_type']=='1'}disabled{/if} />
+                                                <div class="clear">
+                                                </div>
+                                                <div class=" prefix_6 c999">
+                                                    {if $user_info['user_type']=='2'}{$_lang['please_select_user_zhanghu']}{else}{$_lang['realname_no_need_to_retry']}{/if}
+                                                </div>
+                                            </div>
+											
+										
+                                            <div class="rowElem clearfix">
+                                                <label class="grid_6 t_r">
+                                                    {$_lang['bank_of_deposit']} {$_lang['zh_mh']}
+                                                </label>
+                                                <select name="conf[bank_name]" style="width:180px;">
+                                                    {loop $bank_arr $k $v}<option value="{$k}">{$v}</option>
+                                                    {/loop}
+                                                </select>
+                                                <div class="clear">
+                                                </div>
+                                                <div class=" prefix_6 c999">
+                                                    {$_lang['must_use_realname']}
+                                                </div>
+                                            </div>
+                                            <div class="rowElem clearfix">
+                                                <label class="grid_6 t_r">
+                                                    {$_lang['bank_location']} {$_lang['zh_mh']}
+                                                </label>
+                                                {if $bank_zone==$_lang['cn_mainland']}
+													<select name="province" id="province"></select><select name="city" id="city"></select><select name="area"></select>
+						                		{else}
+                                                <select name="province" id="province" style="width:180px;">
+                                                   
+                                                </select>
+                                                <select name="city" id="city" style="width:180px;">
+                                                
+                                                </select>
+                                                {/if}
+												 <span id="slt"></span>
+                                                <div class="clear">
+                                                </div>
+                                                <div class=" prefix_6 c999">
+                                                    {$_lang['tips_about_select_city']}
+                                                </div>
+                                            </div>
+									 
+                                            <div class="rowElem clearfix">
+                                                <label class="grid_6 t_r">
+                                                    {$_lang['bank_account_num']}{$_lang['zh_mh']}
+                                                </label>
+                                                <input name="conf[card_num]" id="card_num" type="text"
+												 size="35" onkeyup="clearstr(this)" limit="required:true;type:digit;len:16-19"
+												  msg="{$_lang['error_account_format']}" title="{$_lang['tips_about_bank_account_num_length']}"
+												   ajax="{$ac_url}&step=step1&bank_type={$user_info['user_type']}&check_card="
+												    msgArea="span_card_num" class="mr_5" /><span id="span_card_num"></span>
+                                            </div>
+                                            <div class="rowElem clearfix">
+                                                <label class="grid_6 t_r">
+                                                    {$_lang['input_bank_account_num_again']}{$_lang['zh_mh']}
+                                                </label>
+                                                <input name="re" id="re" type="text" size="35" msgArea="span_re_card" onkeyup="clearstr(this)" limit="required:true;type:digit;equals:card_num" title="{$_lang['confirm_id_num']}" msg="{$_lang['inconformity_with_first_input']}" class="mr_5" /><span id="span_re_card"></span>
+                                            </div>
+                                            <div class="rowElem clearfix form_button">
+                                                <button value="{$_lang['confirm']}" id="account_add" name="account_add" type="button" class="step3_bu">
+                                                    {$_lang['confirm']}
+                                                </button>
+                                            </div>
+                                        </form>
+                                        <!--from表单结束 -->
+                                    </div>
+                                    <div class="clear">
+                                    </div>
+							    {elseif $step=='step2'}
+							    <div class="box complete form_box ml_40 mr_40">	        
+							        <div class="prefix_4 suffix_4">
+							            <div class="last_success_step clearfix">
+							            	
+							            	<div class="fl_l success po_re" style="top:30px; left:30px; _left:0px;">
+												<span class="tip_icon"></span>
+											</div>
+											<div class="completedata clearfix">
+								                <ul class="clearfix">
+								                    <li class="clearfix">
+								                            <div class="grid_2">
+								                                <span class="icon32 user"></span>
+								                            </div>
+							                                <div class="font14b">
+							                                    {if $bank_info['bank_type']=='1'}{$_lang['personal']}{else}{$_lang['enterprise']}{/if}({$_lang['bank_account']})
+							                                </div>                     
+								                    </li>
+								                    <li class="clearfix">
+								                            <div class=" grid_2 ">
+								                                {$_lang['bank_of_deposit']}{$_lang['zh_mh']}
+								                            </div>
+								                                <div class="font14b">
+								                                    $bank_arr[$bank_info['bank_name']]
+								                                </div>
+								                    </li>
+								                   	<li class="clearfix">
+								                            <div class=" grid_2 ">
+								                                {$_lang['bank_account_num']}{$_lang['zh_mh']}
+								                            </div>
+								                                <div class="font14b">
+								                                    <!--{eval echo kekezu::set_star($bank_info['card_num'],3,3);}-->
+								                                </div>
+								                    </li>
+								                </ul>
+											</div>
+							            	<div  class="fl_r pad10">
+												<a href="{$ac_url}&bank_type={$user_info['user_type']}&step=step1#userCenter" class="button">{$_lang['continue_bind']}</a>
+											</div>
+							            	<div  class="fl_r pad10">
+												<a href="index.php?do=user&view=payitem&op=auth&auth_code=bank&step=step4&show=list&#userCenter" class="button">{$_lang['now_bank_auth']}</a>
+											</div>
+										</div>
+							        </div>
+							    </div>
+								{/if}
+								</div>
+                            </article>
+                            <!--detail内容 end-->
+                       
+                        <!--main content end -->
+                        <div class="clear"></div>
+                    </div>
+                	</div>
+                		<!--main end-->
+            	</div>
+            </div>
+            <!--contain end-->
+		 </section>	
+		</div> 
+<script type="text/javascript" src="{$style_path}/js/location.js"></script>
+	<script type="text/javascript">
+	var step = '{$step[4]}';
+	In('form','pcas',function(){ 
+	    if(step==1){
+			 new PCAS("province","city","area");
+		}
+	});
+  
+	function jump(){
+		var jumpUrl = "{$_K['siteurl']}/index.php?do=user&view=payitem";
+		showDialog("{$_lang['no_auth_company_click_here']}<a href='" + jumpUrl + "' style='color:red'>{$_lang['company_auth']}</a>", 'notice', "{$_lang['msg_tips']}");
+		return false;
+	}
+	
+	function modify(showId, str){
+		return false;
+	}
+	
+	$("#account_add").click(function(){
+	
+	var province = $("#province option:selected").val();
+	var city = $("#city option:selected").val();
+	
+	    if (province && city) {
+	        formSub('frm','form',true)
+	    }
+	    else {
+	        $("#slt").html("<font color='red'>{$_lang['please_select_area']}</font>");
+	        return false;
+	    }
+
+	})
+	</script>
+<!--{template user/user_footer}-->	
+ <!--{template footer}-->

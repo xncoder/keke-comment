@@ -1,0 +1,67 @@
+
+
+</div>
+<script type="text/javascript" src="../../resource/js/artdialog/artDialog.js"></script>
+<script type="text/javascript" src="../../resource/js/artdialog/jquery.artDialog.js?skin=default"></script>
+<script type="text/javascript" src="../../resource/js/artdialog/artDialog.iframeTools.source.js"></script>
+<script type="text/javascript" src="../../lang/$language/script/lang.js"></script>
+<script type="text/javascript">
+	
+	In.add('form_and_validation',{path:"../../resource/js/system/form_and_validation.js",type:'js'});
+	In.add('xheditor',{path:"../../resource/js/xheditor/xheditor.js",type:'js'});
+	In.add('mousewheel',{path:"tpl/js/jquery.mousewheel.min.js",type:'js'}); 
+	//In.add('styleswitch',{path:"tpl/js/styleswitch.js",type:'js'});
+	In.add('table',{path:"tpl/js/table.js",type:'js'});
+	In.add('calendar',{path:"../../resource/js/system/script_calendar.js"});
+	In('form_and_validation','xheditor','mousewheel','table','calendar');
+	 
+	</script>
+ 
+<script type="text/javascript">
+function cdel(o,s){
+	d = art.dialog;
+	var c = "{$_lang['you_comfirm_delete_operate']}";
+	if(s){
+		c=s;
+	}
+	d.confirm(c, function(){
+		window.location.href = o.href;
+	});
+	return false;	
+}
+
+function pdel(frm){ 
+	d = art.dialog;
+	var frm = frm; 
+	var c = "{$_lang['you_comfirm_delete_operate']}";  
+	d.confirm(c, function(){
+	 	$("#"+frm).submit();
+	}); 
+	return false;  
+}
+function batch_act(obj,frm){ 
+	d = art.dialog;
+	var frm = frm; 
+	var c = $(obj).val(); 
+	var conf = $(":checkbox[name='ckb[]']:checked").length;
+	if (conf > 0) {
+		d.confirm("{$_lang['confirm']}" + c + '?', function(){
+			$(".sbt_action").val(c);
+			$("#" + frm).submit();
+		});
+	}else{
+		d.alert("{$_lang['has_none_being_choose']}");
+	}
+	return false;  
+}
+</script> 
+{if KEKE_DEBUG}
+<div style="background-color:red;color:#fff;width:400px;text-align:center;">
+	querys: <!--{eval echo db_factory::create()->get_query_num()}-->
+	 &nbsp;
+	times:<!--{eval echo kekezu::execute_time()}-->
+</div>
+					
+{/if}
+</body>
+</html>

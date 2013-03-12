@@ -1,0 +1,110 @@
+{if $t=='style'}
+<div id="spacestyle" s='{$skin}'>
+    <div class="clearfix">
+    	<h2 class="title cfff mb_10">{$_lang['style_settings']}</h2>
+        <!--{eval $i=0;}-->
+		{loop $space_style $k $v}
+		<!--{eval $i++;}-->
+        <div class="style_item clearfix">
+            <a href="#" class="item {if $skin==$k}selected{/if}" title="{$style_arr[$k]}" id="{$k}" >
+            	<img src="{$v}" />
+				<span class="pshow {if $skin==$k}selected{/if}" id="span_{$k}">{$style_arr[$k]}</span>
+			</a>
+
+            <!--
+            <input type="radio" name="style_name" id="style_name_{$k}" {if $skin==$k}checked{/if}  value="$k">
+            -->
+			
+        </div>
+        {if $i%3==0}
+        <div class="clear">
+        </div>{/if}
+        {/loop}
+        <div class="fl_r">
+            <a class="button primary" href="javascript:void(0);" onclick="saveStyle();">
+                    {$_lang['save']}
+            </a>
+            <a class="button ml_5" href="javascript:void(0);" onclick="unSave();">
+                
+                    {$_lang['cancel']}
+                
+            </a>
+        </div>
+    </div>
+</div>
+{/if}
+{if $t=='bground'}
+<div id="bground">
+	<h2 class="title cfff mb_10">{$_lang['background_settings']}</h2>
+			<div class="z_left">
+
+				<img src="{$shop_background}" id="bgsrc" width="100" height="100">
+
+			</div>
+			<div class="z_right">
+				<input type="file" name="shop_background" id="shop_background">
+			
+	            <input type="hidden" name="file_ids" id="file_ids">
+	            <div class=" ui_note">
+	                {$_lang['tips_about_background_picture']}
+	            </div>
+				
+				
+				
+                <select name="repeat" id="repeat">
+                	<!-- 不重复 -->
+                    <option value="no-repeat"{if $shop_backstyle['repeat']=='no-repeat'}  selected="selected"{/if}>$_lang['default']</option>
+                    <!-- 重复 -->
+					<option value="repeat"{if $shop_backstyle['repeat']=='repeat'}  selected="selected"{/if}>$_lang['repeat']</option>
+                   <!-- x轴方向重复 -->
+				    <option value="repeat-x"{if $shop_backstyle['repeat']=='repeat-x'}  selected="selected"{/if}>$_lang['x_repeat']</option>
+                    <!-- y轴方向重复 -->
+					<option value="repeat-y"{if $shop_backstyle['repeat']=='repeat-y'}  selected="selected"{/if}>$_lang['y_repeat']</option>
+                </select>
+                <select name="scroll" id="scroll">
+                    <option value="scroll"{if $shop_backstyle['scroll']=='scroll'}  selected="selected"{/if}>$_lang['scroll']</option>
+                    <option value="fixed"{if $shop_backstyle['scroll']=='fixed'}  selected="selected"{/if}>$_lang['fixed']</option>
+                    <!-- 背景图像不会移动 -->
+                </select>
+                <select name="position" id="position">
+                    <option value="left"{if $shop_backstyle['position']=='left  top'}  selected="selected"{/if}>$_lang['upper_left_corner']</option>
+                    <option value="center"{if $shop_backstyle['position']=='center  top'}  selected="center"{/if}>$_lang['center']</option>
+                    <option value="right"{if $shop_backstyle['position']=='right top'}  selected="right"{/if}>$_lang['upper_right_corner']</option>
+                 </select>
+				 
+				 <div class="clear"></div>
+				<div class="pt_10 t_l">
+					<span class="fl_r">
+					<a class="button primary"  value="{$_lang['upload']}" onclick="fileUpload('shop_background');">
+	              	 {$_lang['save']}
+	            	</a>
+					<a class="button ml_5" href="javascript:void(0);" onclick="$('#bGround').slideUp();">
+                    	{$_lang['cancel']}
+            		</a>
+					</span>
+					<a href="javscript:void(0);" class=" button  " onclick="change_default();return false;">$_lang['resotre_default']</a>
+				</div>	
+				 
+            </div>
+			
+			
+    <script type="text/javascript">
+        $(function(){
+            uploadify({
+                auto: false,
+                file: 'shop_background',
+                hide: true,
+                size: "{$basic_config['max_size']}MB",
+                exts: '*.gif;*.jpg;*.jpeg;*.png',
+				text: "{$_lang['select_file']}",
+				limit:100,
+				qlimit:1
+            }, {
+                fileType: 'att',
+                objType: 'space',
+                obj_id: "{$e_shop_info['shop_id']}"
+            });
+        })
+    </script>
+</div>
+{/if}

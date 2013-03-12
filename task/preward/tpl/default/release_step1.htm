@@ -1,0 +1,156 @@
+ <!--左边部分-->
+<div class="grid_17 omega alpha">
+ <div class="pad10 border_r_c">
+  <!--提示信息-->
+   <div class="messages m_infor">
+     <span class="icon16">info</span>{$model_info[model_intro]}
+       <a href="javascript:;" class="close">&times;</a>
+   </div>
+  <!--end 提示信息-->
+  <!--from表单 start-->
+   <div class="form_box clearfix box border_n">
+      <div class="form_tip">
+        <h5 class="font14b t_c" style="color:#7caf22">{$model_info[model_name]}{$_lang['task_process']}</h5>
+       <!--计件悬赏-single-->
+		<div class="min_step all_6 step_orange mb_10 ml_30">
+					<ul class="clearfix">
+						<li class>
+							<div class="icon"></div>
+							<span>{$_lang['release']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['audit']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['submit_work']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['choos_work']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['user_mark']}</span>
+						</li>
+						
+						<li class="last">
+							<div class="icon"></div>
+							<span>{$_lang['task_over']}</span>
+						</li>
+						
+					</ul>
+				</div>
+      </div>
+	  <form action="{$basic_url}" method="post" name="frm_step1" id="frm_step1">
+	  	<input type="hidden" name="step1" value="step1">
+		<input type="hidden" name="min" value="$min" id="min">
+		<input type="hidden" name="max" value="{if $release_info['max']}{$release_info['max']}{else}{$default_max_day}{/if}" id="max">
+	  	<input type="hidden" name="formhash" value="{FORMHASH}">
+        <div class="rowElem clearfix po_re">
+          <label class="grid_3"><strong>{$_lang['budget']}{$_lang['zh_mh']}</strong></label>
+           <div class="grid_13">
+              <input class="" name="txt_task_cash" value="{if $release_info[txt_task_cash]}$release_info[txt_task_cash]{else}$task_config[min_cash]{/if}" type="text" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config[min_cash]}{$_lang['yuan']}" onkeyup="clearstr(this)"
+		    limit="required:true;type:int;between:{$task_config[min_cash]}-" msg="{$_lang['mtask_cash_msg']}{$task_config[min_cash]}{$_lang['yuan']}" onblur="getMaxDday(this.value)"/> 
+			<span class="ml_5 ">{$_lang['yuan']}</span>
+			<span id="span_task_cash" class="ml_5"></span>
+           </div>
+        </div>
+		
+      <div class="rowElem clearfix po_re">
+          <label class="grid_3"><strong>{$_lang['task_round']}{$_lang['zh_mh']}</strong></label>
+            <div class="grid_13">
+       
+               <input name="txt_task_day"   onclick="showcalendar(event, this, 0)" size="20" value="{if $release_info[txt_task_day]}$release_info[txt_task_day]{else}$default_max_day{/if}" type="text" id="txt_task_day" title="{$_lang['task_round_title']}:{$task_config[min_day]}{$_lang['day']},{$_lang['max_day']}$max_day" msgArea="span_task_day" onkeyup="clearstr(this)"
+			   	limit="required:true;type:date;than:min;less:max" msg="{$_lang['task_round_msg']}" max=""  min_day="$task_config[min_day]"/> 
+            	
+				 <span id="span_task_day"  class="ml_5"></span>
+				 
+			</div>
+        </div>
+		
+		<div class="rowElem clearfix po_re">
+           <label class="grid_3"><strong>{$_lang['need_work']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_13">
+             	<input name="txt_work_count" value="{if $release_info[txt_work_count]}$release_info[txt_work_count]{else}1{/if}" type="text" id="txt_work_count" title="{$_lang['need_work_title']}{$_lang['zh_mh']}1" msgArea="span_work_count" onkeyup="clearstr(this)"
+			   	limit="required:true;type:int;between:1-" msg="{$_lang['need_work_msg']}"/>
+				<span class="ml_5 ">{$_lang['ge']}</span>
+            	<span id="span_work_count"  class="ml_5"></span>
+             </div>
+        </div>
+        <div class="rowElem clearfix po_re">
+           <label class="grid_3"><strong>{$_lang['single_cash']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_13">
+             	<input name="txt_single_cash" value="{if $release_info[txt_single_cash]}{/if}" type="text" id="txt_single_cash" title="{$_lang['single_cash_title']}" msgArea="span_single_cash"
+				limit="required:true;type:float" msg="{$_lang['single_cash_msg']}" readonly="readonly"/>
+				<span class="ml_5">{$_lang['yuan']}</span>
+				<span id="span_single_cash"  class="ml_5"></span>
+             </div>
+        </div>
+     </form>
+    </div>
+    <!--from表单 end-->
+    <div class="step_button"> <button type="submit" name="is_submit" onclick="stepCheck();" class="big button">{$_lang['next_step']}</button></div>
+   </div>
+ </div>
+<!--end 左边部分-->
+<!--右边部分-->
+   <div class="grid_7 omega alpha">
+     <div class=" prefix_1 suffix_1 pt_20">
+       <h3 class="font14b">{$_lang['what']}{$model_info[model_name]}？ </h3>
+         <p><!--{eval echo kekezu::filter_input($model_info[model_desc])}--></p>
+     </div>
+    </div>
+<!--end 右边部分-->
+<script type="text/javascript">
+	$(function(){
+		check_single_cash();	
+		$("#txt_task_cash").keyup(function(){
+			check_single_cash();
+		});	
+		$("#txt_work_count").keyup(function(){
+			check_single_cash();
+		})
+	})
+	
+	function check_single_cash(){
+		var totle_cash = Number($("#txt_task_cash").val())+0;
+		var work_count = Number($("#txt_work_count").val())+0;
+		var single_cash = 0;
+		if(work_count){
+			single_cash = parseFloat(totle_cash/work_count);
+			single_cash = formatnumber(single_cash,2);			
+		}
+		$("#txt_single_cash").val(single_cash);
+	}
+	
+	function formatnumber(value,num){
+		var a,b,c,i
+		a = value.toString();
+		b = a.indexOf('.');
+		c = a.length;
+		if(b!=-1){
+			if(num>0){
+				a = a.substring(0,b+num+1);
+				for (i=c;i<=b+num;i++){
+					a = a + "0";
+				}				
+			}else{
+				a = a + ".";
+				for (i=1;i<=num;i++){
+					a = a + "0";
+				}				
+			}
+		}		
+		return Number(a);
+	}
+</script>
+	<script type="text/javascript" >
+		In('calendar');
+	</script>
+	

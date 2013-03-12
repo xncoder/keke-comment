@@ -1,0 +1,210 @@
+ <!--左边部分-->
+<div class="grid_17 omega alpha">
+	<div class="pad10 border_r_c">
+  <!--提示信息-->
+   		<div class="messages m_infor">
+     		<span class="icon16">info</span>{$model_info[model_intro]}
+       		<a href="javascript:;" class="close">&times;</a>
+   		</div>
+  <!--end 提示信息-->
+  <!--from表单 start-->
+   		<div class="form_box clearfix box border_n">
+      		<div class="form_tip">
+        		<h5 class="font14b t_c" style="color:#7caf22">{$model_info[model_name]}{$_lang['task_process']}</h5>
+				<div class="min_step all_7 step_orange mb_10 ml_30">
+					<ul class="clearfix">
+						<li class>
+							<div class="icon"></div>
+							<span>{$_lang['release']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['audit']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['submit_work']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['choos_work']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['publicing']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['user_mark']}</span>
+						</li>
+						
+						<li class="last">
+							<div class="icon"></div>
+							<span>{$_lang['task_over']}</span>
+						</li>
+						
+					</ul>
+				</div>
+      		</div>
+	  		<form action="{$basic_url}" method="post" name="frm_step1" id="frm_step1">
+	  		<input type="hidden" name="step1" value="step1">
+			<input type="hidden" name="min" value="$min" id="min">
+			<input type="hidden" name="max" value="{if $release_info['max']}{$release_info['max']}{else}{$default_max_day}{/if}" id="max">
+	  		<input type="hidden" name="formhash" value="{FORMHASH}">
+        	<div class="rowElem clearfix po_re">
+          		<label class="grid_3"><strong>{$_lang['reward_cash']}{$_lang['zh_mh']}</strong></label>
+           		<div class="grid_13 alpha">
+              	<input name="txt_task_cash" value="{if $release_info[txt_task_cash]}$release_info[txt_task_cash]{else}$task_config[min_cash]{/if}" type="text" size="25" id="txt_task_cash" msgArea="span_task_cash"  title="{$_lang['mtask_cash_title']}{$task_config[min_cash]}{$_lang['yuan']}" onkeyup="clearstr(this)"
+		    	limit="required:true;type:int;between:{$task_config[min_cash]}-" msg="{$_lang['mtask_cash_msg']}{$task_config[min_cash]}{$_lang['yuan']}" onblur="getMaxDday(this.value)"/>
+          	 	<span class="ml_5">{$_lang['yuan']}</span>
+			 	<div id="span_task_cash" class="ml_5"></div>
+		   		</div>
+          	</div>
+			<div class="clearfix po_re">
+        <div class="rowElem clearfix">
+        	<label class="grid_3 "><strong>{$_lang['prize_1']}{$_lang['zh_mh']}</strong></label>
+        	<div class="grid_13 alpha">
+   	   			<input class="" name="txt_prize1_num" value="{if $release_info[txt_prize1_num]}$release_info[txt_prize1_num]{/if}" type="text" size="3" id="txt_prize1_num" msgArea="span_prize1_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
+				<span class="ml_5 mr_5">{$_lang['split_cash']}</span>
+          	    <input class="" name="txt_prize1_cash" value="{if $release_info[txt_prize1_cash]}$release_info[txt_prize1_cash]{/if}" type="text" size="8" id="txt_prize1_cash" msgArea="span_prize1_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)" limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
+				<span class=" ml_5 mr_5">{$_lang['yuan']}</span>
+				<div id="span_prize1_cash"></div>
+			</div>
+		</div>
+		
+		<div class="rowElem clearfix"  id="prize_2" {if !$release_info[txt_prize2_num]}style="display:none"{/if}>
+        	<label class="grid_3"><strong>{$_lang['prize_2']}{$_lang['zh_mh']}</strong></label>
+           	<div class="grid_13 alpha">
+   	   			<input class="" name="txt_prize2_num" value="{if $release_info[txt_prize2_num]}$release_info[txt_prize2_num]{/if}" type="text" size="3" id="txt_prize2_num" msgArea="span_prize2_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)"
+	   			 limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" >
+				 <span class=" ml_5 mr_5">{$_lang['split_cash']}</span>
+          		<input class="" name="txt_prize2_cash" value="{if $release_info[txt_prize2_cash]}$release_info[txt_prize2_cash]{/if}" type="text" size="8" id="txt_prize2_cash" msgArea="span_prize2_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)"
+		    	limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
+				<span class=" ml_5">{$_lang['yuan']}</span>
+				<div id="span_prize2_cash"></div>
+			</div>
+		</div>
+		<div class="rowElem clearfix"  id="prize_3" $release_info[txt_prize3_num]style="display:none"{/if}>
+        	<label class="grid_3"><strong>{$_lang['prize_3']}{$_lang['zh_mh']}</strong></label>
+           	<div class="grid_13 alpha">
+   	   			<input class="" name="txt_prize3_num" value="{if $release_info[txt_prize3_num]}$release_info[txt_prize3_num]{/if}" type="text" size="3" id="txt_prize3_num" msgArea="span_prize3_cash"  title="{$_lang['prize_num_title']}" onkeyup="clearstr(this)"
+	   			 limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}" />
+				<span class="ml_5 mr_5">{$_lang['split_cash']}</span>
+          		<input class="" name="txt_prize3_cash" value="{if $release_info[txt_prize3_cash]}$release_info[txt_prize3_cash]{/if}" type="text" size="8" id="txt_prize3_cash" msgArea="span_prize3_cash"  title="{$_lang['prize_cash_title']}" onkeyup="clearstr(this)"
+		    	limit="required:true;type:int;between:1-" msg="{$_lang['prize_no_empty']}"/>
+				<span class="ml_5">{$_lang['yuan']}</span>
+				<div id="span_prize3_cash"></div>
+			</div>
+		</div>
+
+		<div class="rowElem clearfix po_re">
+        	
+			<div class="grid_12 prefix_3">
+			<a class="button" name="add_prize"  id="add_prize" onclick="add();">{$_lang['add_prize']}</a>
+			<a class="button" name="del_prize"  id="del_prize" onclick="del();">{$_lang['del_prize']}</a>
+			</div>
+		</div>
+			
+	</div>	
+		
+      <div class="rowElem clearfix po_re">
+          <label class="grid_3"><strong>{$_lang['task_round']}{$_lang['zh_mh']}</strong></label>
+            <div class="grid_13 alpha">       
+               <input name="txt_task_day"   onclick="showcalendar(event, this, 0)" size="25" value="{if $release_info[txt_task_day]}$release_info[txt_task_day]{else}$default_max_day{/if}" type="text" id="txt_task_day" title="{$_lang['task_round_title']}:{$task_config[min_day]},{$_lang['max_day']}$max_day {$_lang['day']}" msgArea="span_task_day" onkeyup="clearstr(this)"
+			   	limit="required:true;type:date;than:min;less:max" msg="{$_lang['task_round_msg']}" max=""    min_day = "$task_config[min_day]" class="mr_5"/>             	
+				 <span id="span_task_day"></span>
+				 <div class="clear"></div>				 
+			</div>
+        </div>
+		
+		
+        <div class="rowElem clearfix po_re">
+           <label class="grid_3"><strong>{$_lang['cash_assign']}{$_lang['zh_mh']}</strong></label>
+             <div class="grid_12"><strong>{$_lang['m_reward']}</strong></div>
+        </div>
+     </form>
+    </div>
+    <!--from表单 end-->
+    <div class="step_button"> <button type="submit" name="is_submit" onclick="stepCheck_ext();" class="big button">{$_lang['next_step']}</button></div>
+   </div>
+ </div>
+<!--end 左边部分-->
+<!--右边部分-->
+   <div class="grid_7 omega alpha">
+     	<div class=" prefix_1 suffix_1 pt_20">
+       		<h3 class="font14b">{$_lang['what']}{$model_info[model_name]}？ </h3>
+         <p><!--{eval echo kekezu::filter_input($model_info[model_desc])}--></p>
+     	</div>
+    </div>
+<script type="text/javascript"> 
+	$(function(){
+		$("#txt_prize1_cash,#txt_prize1_num,#txt_prize2_cash,#txt_prize2_num,#txt_prize3_cash,#txt_prize3_num").keyup(function(){
+			$("#check_cash").removeClass("valid_error").html(" ");
+		})
+	})
+	function add(){
+		if($("#prize_2").is(":hidden")){ 
+			$("#prize_2").show();
+		}else{
+			$("#prize_3").show();
+		} 
+	} 
+	function del(){
+		if ($("#prize_3").is(":visible")) {
+			$("#prize_3").hide();
+			$("#txt_prize3_num").val('');
+			$("#txt_prize3_cash").val('');
+		}
+		else {
+			$("#prize_2").hide();
+			$("#txt_prize2_num").val('');
+			$("#txt_prize2_cash").val('');
+		}
+	}	
+	function stepCheck_ext(){ 	
+		
+		var prize_1_price = Number($("#txt_prize1_cash").val()); 
+		var total_prize =prize_1_price ;
+		if($("#prize_2").is(":hidden")){
+			//$("#prize_2").remove();  
+		}	 
+		if($("#prize_3").is(":hidden")){
+			//$("#prize_3").remove();  
+		}	 
+		
+		if ($("#prize_2").is(":visible")) {
+			var prize_2_price = Number($("#txt_prize2_cash").val()); 
+				total_prize += prize_2_price;
+		}
+		 
+		if ($("#prize_3").is(":visible")) { 
+				var prize_3_price = Number($("#txt_prize3_cash").val()); 
+				total_prize +=prize_3_price;
+		}
+		
+		var total_cash = $("#txt_task_cash").val();
+	
+		if(total_prize != total_cash){
+			//$("#txt_prize1_cash").focus();
+			$("#span_prize2_cash").removeClass("msg msg_ok");
+			$("#span_prize3_cash").removeClass("msg msg_ok");
+			$("#span_prize1_cash").removeClass("msg msg_ok").addClass("msg msg_error").html("<i></i><span>{$_lang['no_equal']}</span>");			
+			return false;
+		}else{
+			$("#span_prize1_cash").removeClass("msg msg_error").html(" ");			
+		}
+		stepCheck();
+	}
+	
+
+	</script>
+<!--end 右边部分-->
+	<script type="text/javascript" >
+		In('calendar'); 
+	</script>
+	

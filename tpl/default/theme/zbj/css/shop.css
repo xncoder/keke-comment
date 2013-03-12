@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+	
+	内容 CONTENTS:
+	1. 商城首页
+		1.0 banner部分
+		1.1  热门分类区
+		1.2  热门推荐区
+		
+	2. 商城列表
+	3. 商城地图（地图搜索下拉按钮）
+	4. 商城详细
+		4.0  商品描述
+		4.1  购买记录
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1.商城首页
+ --------------------------------------*/
+
+.list dd.odd{ background:#fff;}
+.shop_author{ background:#fff;}
+/* 1.1 热门分类区 */
+.box.model.purple .box_detail{ background:url(../img/style/box_detai_bk.png) repeat-y right;}
+.box_detail ul.category_list li.category_width{width:316px; float:left; height:130px; overflow:hidden; position:relative; z-index:1; padding-bottom:10px;}
+.box_detail ul.category_list li.category_width:hover,
+.box_detail ul.category_list li.hover{z-index:3; overflow:visible;}
+.box_detail ul.category_list li.hover .item{position:absolute; z-index:2;}
+
+/* 1.2 热门推荐 区*/ 
+.pic_top .one p a.shop_word:hover{ overflow:visible; width:auto; background:#fffeb5; z-index:2;}
+
+/* 4.商城详细
+ --------------------------------------*/
+.product_desc{border:none; background:url(../img/shop/shop_decs_bg.png) repeat-x 0 0;}
+	.product_desc_lcon .pro_decs_img{width:360px; height:360px; overflow:hidden; background:#eee; box-shadow:inset 0 0 2px rgba(0,0,0,.2);}
+	.product_desc_lcon .pro_decs_img:hover{box-shadow: 0 0 3px rgba(0,0,0,.5); }
+		.product_desc_lcon .pro_decs_img img{display: block; margin:auto;  width: auto; cursor:-moz-zoom-in;cursor:-webkit-zoom-in;cursor:-o-zoom-in;cursor:url(../img/system/cursor_in.cur),pointer\9;}
+		.product_desc_rcon p{color:#666; font-size:14px; margin-bottom:15px;}
+			.product_desc_rcon p span{color:#333; margin-right:10px;}
+			.product_desc_rcon p em{color:#cc0000; display:inline-block; width:100px; font-style:normal;}
+			.product_desc_rcon p.pro_price b{color:#cc0000; font-size:30px; position:relative; top:2px;}	
+			.product_desc_rcon p.pro_price i{color:#cc0000; font-style:normal; font-family:"宋体";  font-size:20px; position:relative; top:2px;}
+			.product_desc_rcon p.msg{font-size:12px; line-height:18px; padding:10px;}	
+			.product_desc_rcon p.law_notice{font-size:12px; line-height:18px; color:#333;}
+/* 右内容 */
+.shop_info_rcon a.button{margin-bottom:10px;}
+	.shop_info_rcon a.button span{margin-right:5px;}
+.shop_author	h2{color:#333; font-size:12px;}
+	.shop_sign a{padding-bottom:4px;}
+	.shop_author .inner{border:1px solid #fff;}
+	.shop_author p{padding:1px 0 1px 5px;}
+		.shop_author p em{ font-style:normal; margin-right:5px;}	
+	.shop_author_link{padding:3px 15px;
+		  background-color: #f6f6f6;
+		  background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#f0f0f0)); 
+		  background-image: -webkit-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:    -moz-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:     -ms-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:      -o-linear-gradient(top, #f6f6f6, #f0f0f0); 
+		  background-image:         linear-gradient(top, #f6f6f6, #f0f0f0);
+		  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f6f6f6', EndColorStr='#f0f0f0'); 
+	}
+		.shop_author_link a:hover{ text-decoration:underline;}
+.shop_intrest{border:none;}
+	.shop_intrest h3{border-bottom:1px solid #ccc; padding-bottom:5px;}
+	.shop_intrest a{display:block; padding:10px 0  5px 0;}
+	.shop_intrest img{margin:0;}
+	.shop_intrest span{line-height:18px; margin-top:5px;}
+	.shop_intrest em{ font-style:normal; color:#cc0000; line-height:18px;}					
+
+
+
+
+/* 4.0商品描述 */
+#ie6 .example{ height:260px;}
+
+
+
+

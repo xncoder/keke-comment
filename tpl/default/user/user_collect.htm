@@ -1,0 +1,150 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha box_title t_c">{$title}</h2>
+                   
+                            </header>
+                            <!--header内容头部 end--><!--detail内容 start-->
+                            <article class="box_detail">
+                               
+                                <div class="">
+                                    <!--from表单 start-->
+                                    <div class="clearfix box pad10">
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_10 fl_l">
+                                                    <input type="text" name="f_id" class="togg_u txt_input" value="{$_lang['please_enter_the_collection_num']}" title="{$_lang['please_enter_the_collection_num']}" size="5" style="width:140px;"/>
+                                                </div>
+                                                <div class="mr_10 fl_l">
+                                                    <input type="text" name="obj_name" class="togg_u txt_input" value="{$_lang['please_enter_the_collection_name']}" title="{$_lang['please_enter_the_collection_name']}" style="width:150px;"/>
+                                                </div>
+                                                <div class="fl_l">
+                                                    <select class="fl_l" name="ord">
+                                                        {loop $ord_arr $k $v}<option value="{$k}" {if $ord==$k}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="mr_10 fl_l">
+                                                    <select class="fl_l" name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button type="submit" class="block" name="sbt_search" value="{$_lang['search']}" onclick="check('frm');"><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--from表单 end--><!--date_table数据表格 start-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            {$_lang['collection_num']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['collection_name']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['collection_time']}
+                                                        </th>
+														 <th scope="col">
+                                                  {$_lang['operate']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                           {if $favor_arr}
+                                            {loop $favor_arr $v}
+                                                    <tr>
+                                                    <td>
+                                                        $v['f_id']
+                                                    </td>
+                                                    <td>
+                                                        {if $v['keep_type']=='task'}<a href="index.php?do=task&task_id={$v['obj_id']}" title="$v['obj_name']" target="_blank">$model_name_arr[$v['obj_type']]['model_name']&nbsp;&nbsp;$v['obj_name']</a>
+                                                    </td>
+                                                    {elseif $v['keep_type']=='work'}<a href="index.php?do=task&task_id={$v['origin_id']}&view=work#work_{$v['obj_id']}" title="$v['obj_name']" target="_blank">$model_name_arr[$v['obj_type']]['model_name']&nbsp;&nbsp;$v['obj_name']</a>
+                                                    </td>
+                                                    {elseif $v['keep_type']=='service'}<a href="index.php?do=service&sid={$v['obj_id']}" title="$v['obj_name']" target="_blank">$model_name_arr[$v['obj_type']]['model_name']&nbsp;&nbsp;$v['obj_name']</a>
+                                                </td>
+												  {elseif $v['keep_type']=='shop'}<a href="index.php?do=space&member_id={$v['obj_id']}" title="$v['obj_name']" target="_blank">$v['obj_name']</a>
+                                                </td>
+                                                {/if}
+                                                <td>
+                                                    <!--{date('Y-m-d',$v['on_date'])}-->
+                                                </td>
+												 <td>
+                                                    <a class="button" href="index.php?do=$do&view=$view&ac=del&f_id={$v['f_id']}&page={$page}&op={$op}"
+													 onclick="return del(this);"><span class="trash icon"></span>{$_lang['delete']}</a>
+                                                </td>
+                                            </tr>
+                                            {/loop}
+                                            {else}
+                                               <tr>
+											    	 <td colspan="4" class="t_c">
+                                                          {$_lang['norecord']}
+                                                      </td>
+	                                            </tr>
+                                            {/if}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                	<td>
+                                                		</td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                       {$_lang['total']}:{$count}{$_lang['ge']}
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!--data_table数据表格 end-->
+                                    <div class="page clearfix">
+                                        <p>
+                                            {$pages['page']}
+                                        </p>
+                                    </div>
+                                </div>
+                                </div>
+                            </article>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end -->
+                        <div class="clear">
+                        </div>
+                    </div>
+                </div>
+                </section>
+                <!--main end-->
+            </div>
+            </div>
+            <!--contain end-->
+ <script type="text/javascript">
+
+	function del(obj){
+		var url = obj.href;
+		//alert(url);
+		showDialog("{$_lang['confirm_delete']}",'confirm',"{$_lang['operate_notice']}",function(){formSub(url,'url',false)});return false;		
+	}
+   </script>
+<!--{template user/user_footer}-->            
+<!--{template footer}-->
+

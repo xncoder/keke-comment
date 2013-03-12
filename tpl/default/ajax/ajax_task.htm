@@ -1,0 +1,57 @@
+{if $ajax=='work_comment'}<!--稿件区留言加载-->
+<div class="old_comment">
+    {loop $comment_info $v2}
+    <div class="comment_item">
+        <a href="index.php?do=space&member_id=$v2['uid']">{$v2['username']}</a>{$_lang['yu']}<!--{date('Y-m-d H:i:s',$v2['on_time'])}-->{$_lang['comment']}
+        {if $v2['status']=='0'}{$_lang['new']}{/if}:<span class="db"><!--{eval echo kekezu::escape($v2['content'])}--></span>
+    </div>
+    {/loop}
+</div>
+{/if}
+{if $ajax=='mark_aid'}
+	{if $aid_info}<!--星级评定样式-->
+			{loop $aid_info $k $v}
+				<div class="grid_3 omega">
+				    <b>{$v['aid_name']}</b>&nbsp;&nbsp;&nbsp;&nbsp;
+				    <font color="red">{$v['avg']}</font>分
+				</div>
+				<div class="grid_2 alpha">
+				        <!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->
+				</div>
+				<div class="clear"></div>
+			{/loop}
+	{/if}
+{/if}
+{if $ajax=='tao_goods'}{loop $data $k $v}
+		{if $k==0||$k==3}<tr>{/if}
+					<td style="border:1px solid #ccc">
+					      			<div class="po_re">
+					      				<div class="po_ab">
+						      			<input  type="radio" id="g_{$page_no}_{$k}" name="tao_good"  detail="{$v['detail_url']}" pic="{$v['pic_url']}"
+							 				pric="{$v['price']}" onclick="postPro(this);" title="{$v['title']}" />
+										</div>
+						      			<div class='t_c p_img'>
+						      				<label for="g_{$page_no}_{$k}"><img src="{$v['pic_url']}" width="100" alt="{$v['title']}" detail="{$v['detail_url']}" pic="{$v['pic_url']}"
+							 				pric="{$v['price']}" onclick="postPro(this);"  title="{$v['title']}"/></label>
+										</div>
+										<div class='clear'></div>
+										<div class='goods_title'>
+											
+											<strong class="block">
+												<a href="{$v['detail_url']}" target="_blank" class='p_title' title="{$v['title']}">
+												<!--{eval echo kekezu::cutstr($v['title'],24)}-->
+											</a>
+											</strong>
+											
+											
+											<span class='red p_price'>{$v['price']}</span>{$_lang['yuan']}
+											<span class=''>
+												{$v['location']['state']}{$v['location']['city']}
+						      				</span>
+										</div>	
+										
+									</div>
+								</td>
+		{if $k==2||$k==5}</tr>{/if}
+	{/loop}
+{/if}

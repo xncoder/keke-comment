@@ -1,0 +1,30 @@
+<!--{template header}-->
+<script type="text/javascript" src="lang/cn/script/lang.js"></script>
+<input type="button" onclick="showDialog('{$_lang[tips]}','info','test');" value="info">
+<input type="button" onclick="showDialog('{$_lang[info]}','notice','test');" value="notice">
+<input type="button" onclick="showDialog('{$_lang[info]}','confirm','test');" value="confirm">
+<input type="button" onclick="showDialog('{$_lang[info]}','right','test');" value="right">
+<input type="button" onclick="showDialog('{$_lang[info]}','alert','test');" value="alert">
+<input type="button" onclick="showDialog('{$_lang[info]}','sigh','test');" value="sigh">
+<input type="button" onclick="scookie();" value="{$_lang['set_cookie']}">  
+<input type="button" onclick="gcookie();" value="{$_lang['get_cookie']}"> 
+<script type="text/javascript">
+	function scookie(){
+	   setcookie('a','b,c');
+	   showDialog(L.tips,'right','{$_lang[save]}cookie{$_lang[success]}!');
+	   return  false;
+	}
+	function gcookie(){
+		var c = getcookie('a');
+		var a = c.split(',');
+		alert(a[1]);
+	}
+	
+	
+</script>
+<!--{template footer}-->
+
+
+
+
+

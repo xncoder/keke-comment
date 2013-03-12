@@ -1,0 +1,234 @@
+<!--{template header}--><!--页面内容区-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<!--页面样式-->
+<div class="wrapper">
+<!--页面头部-->
+ <header class="clearfix page_header">
+   <div class="container_24 clearfix">
+     <div class="page_title">
+        <h2 class="title">$agree_info['agree_title']</h2>
+     </div>
+     <div class="clear"></div>
+   </div>
+ </header>
+<!--end 页面头部-->
+<!--详细内容区-->
+ <section class="content box">
+ <!--布局框-->  
+  <div class="container_24">
+    <div class="content_d">
+   	<!--step步骤 start-->
+      <div class="step_progress clearfix">
+       {loop $stage_nav $k $v}
+         <div class="step {$v['0']} {if $v['0']==$step}selected{/if}">
+            <span class="icon32 pub">{$k}</span>
+            <strong>{$v['1']}</strong><em>{$v['2']}</em>
+         </div>
+	  {/loop}
+      </div>
+   <!--step步骤 end-->
+                    
+   <!--步骤下部所有内容-->
+    <div class="step1_detail">
+	  <div class="clearfix">
+        <!--左边部分-->
+         <div class="grid_17 alpha">
+          <div class="prefix_1 suffix_1 border_r_c">
+            <!--源文件协议内容-->
+			<form method="post" action="{$basic_url}" id="agree_frm" name="agree_frm">
+             <div class="source_content1 clearfix">
+               <div class="source_agreement1 clearfix">
+                 <h5 class="font14b mt_20 mb_10 ">{$_lang['deliver_obj']}</h5>
+				 {if $task_status!=9}
+				 	<div class="t_c prefix_1 mb_10">
+					 {if $uid==$buyer_uid}
+					 	<button type="button" onclick="report('work','1','{$agree_info[work_id]}','{$seller_uid}','{$seller_username}');" class="button mt_20 mb_10">{$_lang['apply_zc']}</button>
+	                 {/if}
+					 {if $uid==$seller_uid}
+					 	<button type="button" onclick="report('task','1','{$agree_info[task_id]}','{$buyer_uid}','{$buyer_username}');" class="button mt_20 mb_10">{$_lang['apply_zc']}</button>
+	                 {/if}
+					 </div>
+				 {else}
+	                  <div class="messages m_warn">
+	                     <div class="icon16">warning</div>{$_lang['site_involved_in_pending']}
+	                  </div>
+				 {/if}
+				  <div class="grid_14 prefix_1">
+							
+                 <!--左边发布者-->
+                   <div class="grid_6">
+                    <div class="{if $uid==$buyer_uid}bidder{else}publisher bord_c{/if}">
+                      <div class="{if $uid==$buyer_uid}user_info1{else} user_info border_b_c{/if} clearfix pad10 ">
+                       <div class="fl_l mr_10">
+                          <p><!--{userpic($agree_info['buyer_uid'],'middle')}--></p>
+                       </div>
+                           <ul class="intor">
+                              <li class="font14b">{$_lang['pub_name']}{if $uid==$buyer_uid}({$_lang['me']}){/if}</li>
+                              <li>{$buyer_username}</li>
+                           </ul>
+                      </div>
+                      <div class="pad10 contact">
+                        <span>{$_lang['username']}{$_lang['zh_mh']}{if $buyer_contact['truename']}$buyer_contact['truename']{else}$buyer_username{/if}</span>
+                        <span>{$_lang['tel']}{$_lang['zh_mh']}{if $buyer_contact['phone']}$buyer_contact['phone']{else}{$_lang['now_no']}{/if}</span>
+                        <span>{$_lang['mobile']}{$_lang['zh_mh']}{if $buyer_contact['mobile']}$buyer_contact['mobile']{else}{$_lang['now_no']}{/if}</span>
+                        <span>Q  Q{$_lang['zh_mh']}{if $buyer_contact['qq']}$buyer_contact['qq']{else}{$_lang['now_no']}{/if}</span>
+                        <span>MSN{$_lang['zh_mh']}  {if $buyer_contact['msn']}$buyer_contact['msn']{else}{$_lang['now_no']}{/if}</span>
+                        <span>{$_lang['email']}{$_lang['zh_mh']}{if $buyer_contact['email']}$buyer_contact['email']{else}{$_lang['now_no']}{/if}</span>
+                      </div>
+					  {if $task_status!=9}
+                      <div class="t_c  ensure">
+                          	{if $process_can['confirm']}
+                          	  <button type="button" onclick="confirmFile();" class="button">{$buyer_status_arr[$buyer_status]}</button>
+							{else}
+                          	  {$buyer_status_arr[$buyer_status]}
+							{/if}
+					  </div>
+					  {/if}
+                    </div>
+                 </div>
+                <!--end 左边发布者-->
+                 <div class="grid_2 alpha omega">
+                    <p style="margin:auto; line-height:300px; text-align:center"><img src="resource/img/public/mutual.png" alt="{$_lang['each']}"></p>
+                 </div>
+                <!--右边中标者-->
+                 <div class="grid_6">
+                    <div class="{if $uid==$seller_uid} bidder {else} publisher bord_c {/if}">
+                      <div class="{if $uid==$seller_uid}user_info1{else} user_info border_b_c{/if} clearfix pad10 ">
+                        <div class="fl_l mr_10">
+                          <p><!--{userpic($agree_info['seller_uid'],'middle')}--></p>
+                        </div>
+                         <ul class="intor">
+                            <li class="font14b">{$_lang['bidder']}{if $uid==$seller_uid}({$_lang['me']}){/if}</li>
+                            <li>{$seller_username}</li>
+                          </ul>
+                      </div>
+                      <div class="pad10 contact">
+                        <span>{$_lang['username']}{$_lang['zh_mh']}{if $seller_contact['truename']}$seller_contact['truename']{else}$seller_username{/if}</span>
+                        <span>{$_lang['tel']}{$_lang['zh_mh']}{if $seller_contact['phone']}$seller_contact['phone']{else}{$_lang['now_no']}{/if}</span>
+                        <span>{$_lang['mobile']}{$_lang['zh_mh']}{if $seller_contact['mobile']}$seller_contact['mobile']{else}{$_lang['now_no']}{/if}</span>
+                        <span>Q  Q{$_lang['zh_mh']}{if $seller_contact['qq']}$seller_contact['qq']{else}{$_lang['now_no']}{/if}</span>
+                        <span>MSN{$_lang['zh_mh']}  {if $seller_contact['msn']}$seller_contact['msn']{else}{$_lang['now_no']}{/if}</span>
+                        <span>{$_lang['email']}{$_lang['zh_mh']}{if $seller_contact['email']}$seller_contact['email']{else}{$_lang['now_no']}{/if}</span>
+                                                            
+                      </div>
+					  {if $task_status!=9}
+                          <div class="t_c  ensure">
+                          	{if $process_can['upload']}	
+						 	   <input type="hidden" name="op" value="confirm">
+							   <button type="button" class="button" onclick="confirmUpload();">{$seller_status_arr[$seller_status]}</button>
+							{else}
+                          	  {$seller_status_arr[$seller_status]}
+							{/if}
+						  </div>
+					 {/if}
+                      </div>
+                  </div>
+                  <!--end 右边中标者-->
+                </div>
+         	 <div class="clear"></div>
+			 {if $process_can['upload']}
+              <div class="grid_14 prefix_1">
+				  <div class=" messages m_infor">
+				  	<input type="hidden" name="file_str" id="file_str"> 
+					<!--{eval $flie_types = kekezu::get_ext_type();}-->
+	                     <span class="icon16">info</span>
+						 {$_lang['most_upload_attachment']}.{$_lang['toplimit']}{$basic_config['max_size']}M):
+						<div class="upfile ws_break">
+			                 <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$flie_types}</span>
+			            </div>
+	             		<input type="file" class="file_input" name="upload_input" id="upload_input">
+					</div>
+			 </div>
+			 {/if}
+			 {if $process_can['download']&&$file_list}
+			 <div class="grid_14 prefix_1">
+			  <ul id="file">
+			 	{loop $file_list $v}
+			 	<li id="{$v['file_id']}">
+			 		<div class="msg msg_ok block">
+					   <b class="font14 ">{$v['file_name']}</b>
+					   <a class="" href="index.php?do=ajax&view=file&ajax=download&file_name={$v['file_name']}&file_path={$v['save_name']}" >{$_lang['download']}</a>
+					</div>
+				</li>
+				{/loop}
+				</ul>
+			</div>
+			 {/if}
+         	 <div class="clear"></div>
+             <h5 class="font14b mt_20 mb_10">{$_lang['list_state']}</h5>
+              <div class="grid_14 prefix_1">
+                 <!--messages消息 start-->
+				 {loop $stage_list $v}
+	                  <div class="messages {$v['0']}">
+	                     <span class="icon16">{$v['1']}</span>{$v['2']}
+	                  </div>
+				 {/loop}
+             <!--messages消息 end-->
+          </div>
+        </div>
+      </div>
+     <!--end 源文件协议内容-->
+	 </form>
+     </div>
+    </div>
+    <!--end 左边部分-->
+   <!--右边部分-->
+   <div class="grid_7 alpha">
+      <div class=" prefix_1 suffix_1 pt_20">
+          <!--{tag 任务交付协议简介}-->
+      </div>
+   </div>
+   <!--end 右边部分-->
+  </div>
+  </div> 
+  <!--end 步骤下部所有内容--> 
+ </div>
+ </div>
+  <!--end 布局框-->     	
+ </section>
+<!--end 详细内容区-->
+</div>
+<!--end 页面内容区-->
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$flie_types}',
+					file:'upload_input',
+					text:"{$_lang['file_str']}",
+					limit:5}
+				,{
+					task_id:"{$agree_info['task_id']}",
+					obj_id:'{$agree_id}',
+					objType:'agreement'
+				});
+		})
+</script>
+<script type="text/javascript">
+	var basic_url  = '{$basic_url}';
+	var uid        = parseInt('{$uid}')+0;
+	var trust_mode = "{$trust_mode}";
+	/**
+	 * 上传完成后的后续操作
+	 * @param {Object} data 响应的json对象
+	 */
+	function uploadResponse(json){
+		if($("#"+json.fid).length<1){
+			var file_str = $("#file_str").val();
+				 if(file_str){
+					$("#file_str").val(file_str+','+json.fid);
+				}else{	
+					$("#file_str").val(json.fid);
+					$("#upload").val('');
+				}
+		}
+	}
+</script>
+ 
+<script type="text/javascript" >
+ 	In.add('sreward_agreement',{path:"task/sreward/{SKIN_PATH}/sreward_agreement.js",type:'js'}); 
+	
+	In('sreward_agreement','form'); 
+</script> 
+<!--{template footer}-->

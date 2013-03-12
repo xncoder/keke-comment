@@ -1,0 +1,114 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+	
+	内容 CONTENTS:
+	1. 商城首页
+		1.0 banner部分
+		1.1  热门分类区
+		1.2  热门推荐区
+		
+	2. 商城列表
+	3. 商城地图（地图搜索下拉按钮）
+	4. 商城详细
+		4.0  商品描述
+		4.1  购买记录
+		
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1.商城首页
+ --------------------------------------*/
+/* 公用*/
+.deep_style .panel{color:#999;}
+.comment_item{ border-left:2px solid #4E4F52; background-color:#2E2E2E;}
+.border_r_c{border-right:1px solid #4E4F52;} 
+/* 1.0 banner部分 */
+.container{background:none; }
+.shoptab{display:block; background:#131315}
+.content{border-top:1px solid #4E4F52;}
+
+/* 1.1 热门分类区 */
+.box_detail ul.category_list li.category_width{ text-overflow:ellipsis;  padding-top:0;}
+		.category_list .item{  _height:expression(this.scrollHeight < 100 ? "100px" : "auto");}
+			.item h2{color:#887613; font-size:14px; font-weight:bold;}
+			.box_detail ul.category_list li .item a{color:#999;}
+			.box_detail ul.category_list li .item a:hover{color:#88bebe;}
+			.kinds_bg{background:#131315;}
+			.box.model .box_detail{border-top:1px solid #252528;}
+			.category_list .item:hover,.category_list .item.hover,
+			.category_list .item:hover,.category_list .item:hover
+			{background:#2e2e2e;}
+/* 1.2 热门推荐 区*/
+		.left{background:#2e2e2e; border-right:1px solid #4e4f52;}
+		.rights{background:#2e2e2e;}
+		.contents{border-top:1px solid #393a3f; border-bottom:1px solid #393a3f;}
+			.title h5{color:#000;}
+			.pic_top .one p{position:relative;}
+					.pic_top .one:hover a.shop_word,.pic_top .one.hover a.shop_word{color:#e40d29;}
+				.jy p{color:#000;}
+				.pic img{background:#2e2e2e;}
+				.text{color:#898484;}
+				.pic_top .one:hover,.pic_top .one.hover{background:#2e2e2e;}
+				.deep_style .pic_top .one:hover a.shop_word,.pic_top .one.hover a.shop_word{background:#2e2e2e; color:#8fb63a;}
+				.review{color:#6a6d78;}
+				.title h5{color:#bba736;}
+/* 1.2 任务列表*/
+.box.normal .inner{border:1px solid #000;}	
+.condition dd a{color:#59B8D3;}	
+.condition dt{color:#989AA1;}	
+.box.normal .title{color:#E4E847;}
+.condition{border-bottom:1px solid #25292A;}
+.select_condition{border-top:1px solid #252528;}
+.min_page{border-left:1px solid #252528;}	
+.min_page p{color:#999;}
+.page_count{border-left:1px solid #252528;}
+.minor_nav ul.nav_group{background:#131315; border:#4E4F52;}
+.minor_nav a{background:#4E4F52; border:1px solid #25292A;}
+.box.normal .border_b_c{border-bottom:1px solid #4E4F52;}
+.deep_style p{color:#adaaaa;}
+.page .stats{border-right:2px solid #5A5B61;}
+.buyNow{background:#131315; border:1px solid #4e4f52; height:61px;}
+.product_desc{background:#2E2E2E; border:1px solid #282828;}
+.shop_otherInfo, .shop_author, .example{background:#2e2e2e; border:1px solid #4e4f52;}
+.shop_intrest{border-top:1px solid #4e4f52;}
+.notice{background:#737070;}
+.other_product{border-top:1px solid #282828;}
+#ie6 .deep_style .box.normal span.trash{text-indent:0;}
+/* 3.商城地图-----地图搜索下拉按钮------
+ --------------------------------------*/
+.content{border-top:1px solid #4E4F52;}
+.operate{bottom:0; right:0; z-index:2; height:26px; line-height:16px;}
+ .condition dd .jqTransformSelectWrapper a.selected, .basic_style .condition dd .jqTransformSelectWrapper a.selected:hover{ border-radius:0px;}
+ .jqTransformSelectWrapper ul a:hover{ background:#ED8888;}	
+ .footer .jqTransformSelectWrapper ul a:hover.selected{background:#951a1a;}	
+
+.example ul.task_list li a{background:url(../img/style/dot.png) no-repeat 0 0; }
+.example ul.task_list li a:hover,.example ul.task_list li a:hover span.bk_color{ background-color:#131315; }
+
+/* 4.0商品描述 */
+.deep_style .buyNow .shop_arrow{background:url(../img/shop/shop_detail_deep.png) no-repeat scroll 0 0;}
+.other_product img{ border:1px solid #4E4F52; }
+.example{ _overflow:hidden; background:#131315;}
+.example h3{color:#887613;}
+.box .box_header{padding:10px 0; border-bottom:1px solid #252528;}
+.show_panel .box_nav a{padding:5px 6px;}
+.border_r_c.task_list{border-right:1px solid #282828;}
+.shop_otherInfo li span{color:#887613;}
+.shop_sum{border-color:#4E4F52;} 
+.other_product img{border:1px solid #4E4F52;}
+.example .text_ov a:hover{background:#131315;}
+.rowElem{color:#999;}
+.shop_intrest img{border:1px solid #4E4F52;}
+/* 4.4 任务工具 */
+.deep_style .tool_text p{margin:0 5px; margin-bottom:0;}
+.deep_style .ly_notice{background:#737070;}
+.deep_style .page_nav ul li a{color:#999;}
+.deep_style .box.normal2 .title{color:#b3b1b1;}
+.deep_style .tool_list{border:1px solid #4e4f52;}
+.deep_style .tool_text{background:#2e2e2e;}
+.deep_style .top1{background:#2e2e2e;}

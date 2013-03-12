@@ -1,0 +1,78 @@
+<!--{template header}-->
+<style type="text/css">
+.agreement{border:1px solid #ccc; background:#f9f9f9; margin-top:10px;}
+.agtop{height:50px;}
+.agreetop{font-size:25px; font-family:"微软雅黑"; color:#2f549f; font-weight:normal;}
+.cont{border-top:1px solid #ccc;}
+.contents{width:820px; margin:auto; margin-top:15px;}	
+</style>
+<!--页面头部-->
+	<header class="clearfix page_header">
+    	<div class="container_24">
+
+        <!--页面导航-->
+        	<div class="breadcrumbs clearfix ">
+            	<a href="index.php">{$_lang['home']}</a> &gt; 
+				<span>
+					{if $art_info['cat_type']=='about'}关于网站{/if}
+					{if $art_info['cat_type']=='bulletin'}网站公告{/if}
+				</span>
+        	</div>
+        <!--end 页面导航-->
+    	</div>
+	</header>
+<!--end 页面标题-->
+<section class="clearfix content">
+<div class="container_24 mb_20">
+ <div class="clearfix agreement {$_K['theme']}_style pad20 mar0">
+ 	<div class="agtop t_c">
+ 	<h1 class="agreetop">{$art_info['art_title']}</h1>
+	</div>
+   <div class="clearfix box" id="upload_tip">
+       <div class="rowElem cont clearfix" id="desc">
+       		<div class="t_c">
+       			<!--{eval echo date("Y-m-d",$art_info['pub_time'])}--> |
+				{$art_info['views']} {$_lang['view_num']} | 
+				{$_lang['author']}:{if $art_info['username']}{$art_info['username']}{else}{$_lang['ym']}{/if} | 
+				{$_lang['source']}:{if $art_info['art_source']}{$art_info['art_source']}{else}{$_lang['wz']}{/if}
+			</div>
+			 <div class="contents">
+				<!--{eval echo kekezu::filter_input($art_info['content'])}-->
+				<div class="operate t_r">
+			 		<a target="_blank" href="#" title="{$_lang['print']}">
+			 			<div class="icon16 print"></div>
+					</a>
+					<a target="_blank" href="#" title="{$_lang['return_top']}">
+			 			<div class="icon16 arrow-top"></div>
+					</a>
+					<a target="_blank" href="#" title="{$_lang['return_home']}">
+			 			<div class="icon16 home"></div>
+					</a>
+				 </div>
+			 </div>
+			 <div class="clear"></div>
+								<!--左内容头-->
+            <div class=" clearfix pad5" >
+					{if $art_down_info}
+						{if $static}
+							<a href="{$pre_url}html/article/info/{$art_info['art_cat_id']}_{$art_down_info['art_id']}.htm" class="fl_r mr_20">
+	                   {else}
+	                      <a href="{$pre_url}index.php?do={$do}&view={$view}&art_cat_id={$art_info['art_cat_id']}&art_id={$art_down_info['art_id']}" class="fl_r mr_20">
+	                   {/if}<strong class="font_simsun mr_5 c555">{$_lang['next_article']}：</strong><!--{eval echo kekezu::cutstr($art_down_info['art_title'],30)}--></a>
+                    {/if}
+					{if $art_up_info}
+						{if $static}
+							<a href="{$pre_url}html/article/info/{$art_info['art_cat_id']}_{$art_up_info['art_id']}.htm" class="fl_r mr_10">
+	                   {else}
+	                      <a href="{$pre_url}index.php?do={$do}&view={$view}&art_cat_id={$art_info['art_cat_id']}&art_id={$art_up_info['art_id']}" class="fl_r mr_20">
+	                   {/if}<strong class="font_simsun mr_5 c555">{$_lang['previous_article']}：</strong><!--{eval echo kekezu::cutstr($art_up_info['art_title'],40)}--></a>
+                    {/if}
+            </div>
+            <!--end 左内容头-->
+			    <div class="clear">
+                </div>
+      </div>
+	</div>
+ </div>
+</div>
+<!--{template footer}-->

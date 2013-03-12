@@ -1,0 +1,91 @@
+@charset "gbk";
+/*-------------------------------------------------
+--------------------------------------------------- 
+           注释 DEFINITIONS	: mg
+	作者 AUTHOR 		: mg
+	版本 VERSION		: 2012-02-10
+	
+	内容CONTENTS:
+		1.全局样式
+			1.1 首页高度定义
+		2.首页分类
+		3.banner切换广告
+		4.site_stats首页统计
+		5.guide首页向导
+		6.moving首页动态
+		7.notice公告
+		8.activity活动
+		9.task任务
+		10.shop商城
+		11.news资讯
+		12.case案例展示
+		13.talent人才
+		
+			
+*/
+/*1.全局样式
+-----------------------------------------------------*/
+/*1.1首页高度定义*/
+ .category{height:312px;}
+	
+/*2.首页分类*/ 
+	 .category li{/*border-top:1px solid #fff; */border-bottom:1px solid #e8e8e8;} 
+	 .category a:hover{ text-shadow:0 0 2px #FFB500;} 
+		.category li.all_cat a.selected{ background:#FF7701;}
+	 	.category_pop{bottom:74px; box-shadow:inset 0 0 5px rgba(0,0,0,.2), 5px 3px 5px rgba(0,0,0,.3);border-radius:0 5px 5px 0;-o-transition: all 0.3s ease-out 0s;-webkit-transition: all 0.3s ease-out 0s;-moz-transition: all 0.3s ease-out 0s;-ms-transition: all 0.3s ease-out 0s;transition: all 0.3s ease-out 0s;}
+	   		/*.category .tab{left:-31px; top:-7px;}*/
+		    /*.category .tab li{ clear:both; width:auto;}*/
+			.category .tab a{padding:0; border:1px solid #DEDEE0; border-right:none; /*line-height:15px;*/ padding-right:0; padding-left:0;}	 
+			.category .tab a:hover{cursor:pointer;}
+			.category .tab a.selected{border:1px solid #FCB86F; background:#ff8a00 url(../img/style/tab_selected_three.png) repeat-x;} 
+			.category .tab a span{background: #e7e7e7 url(../img/style/tab_selected_two.png) repeat-y; border:1px solid #F5F5F7; border-right:none; display:inline-block; padding:10px 0 ; *padding:10px 2px 10px 5px; width:23px; *width:16px; height:auto; line-height:15px;white-space:normal;}
+			.category .tab a.selected span{background:#ff8a00 url(../img/../img/style/tab_selected_one.png) repeat-y; border:1px solid #FCB86F; border-right:none;}			 			 		
+			.category .indus_list li a.selected{border:3px solid #FFBF01; border-right:none;}
+			.category .indus_list li ul.s_nav{border:3px solid #FFBF01;}
+			.category .indus_list li ul.s_all{ border:3px solid #FFBF01;}
+			
+/***3.banner切换广告***/		
+	 .banner #slides a.next:hover, .banner #slides a.prev:hover{ background:#ff8a00; background:rgba(255, 138, 0,.9);}
+	 			
+/**6.moving首页动态**/		
+	.box.default .moving p{color:#666;}
+	.box.default .moving .item{padding:5px 0 0;}
+	.box.default .box_header .box_nav a{margin: 5px 0;}
+
+/**8.activity活动**/
+.box.default .activity .box_detail .small_list li{position:relative; width:166px; overflow:hidden;}
+		.box.default .activity .box_detail .small_list .item a{width:155px; overflow:hidden;}		
+			
+/**9.task任务**/
+	.box.model .task .box_detail .small_list .item a:hover{text-decoration:none; background:#fff;}
+	* html  .box.model .task .box_detail .tops .item .task_mode{color:#6d6d6d;}
+	.box.model .shop .box_detail .small_list a{background:#dedede;}
+
+	.news .box_detail .small_list{ padding:0 15px; min-height:484px;}
+	.news .box_detail .small_list .main_img{ height:100px; overflow:hidden; background:#fff;}
+	.news .box_detail .small_list .main_img img{ max-width:278px; }
+		 	 
+	.box.model .news .box_detail .small_list .main_title a:hover,
+	.box.model .news .box_detail .small_list .item a:hover{background-color:#F8f8f8;;}
+			 	
+			 
+/**12.case案例展示**/
+.case .box_detail .small_list{ padding:0 15px; min-height:484px;}
+.case .box_detail .small_list li{float:left; display:inline; margin:5px;}
+.case .box_detail .small_list li.item{ width:80px; height:80px;}
+.case .box_detail .small_list li.item a{ display:block;  background:#dedede; width:80px; height:80px; }
+.case .box_detail .small_list li.item img{display:block; width:80px; height:80px;}
+.case .box_detail .small_list li.first{ width:260px; background:#fafafa;}
+.case .box_detail .small_list li.first .main_img a{ display:block; width:260px; height:260px; background:#dedede;}
+.case .box_detail .small_list li.first .main_img img{display:block; width:260px; height:260px;}
+.case .box_detail .small_list li.first .main_title{ padding:5px 10px; white-space:nowrap; position:relative; height:25px;}
+.case .box_detail .small_list li.first .main_title a{ display:block; width:220px; overflow:hidden; position:absolute;}
+.case .box_detail .small_list li.first .main_title a:hover{width:auto; overflow:visible;  z-index:2; background-color:#fafafa;}
+.case .box_detail .all_list{ clear:both; float:none; margin:0; display:block; padding:5px 20px;}
+.case .box_detail .all_list a{ width:auto; float:none; position:static; display:block; clear:both;padding:5px 0; }
+		
+/**13.talent人才**/
+.talent .box_detail .ranking_list .item .rank_no{ background:#ff8a00;}
+		
+		
+

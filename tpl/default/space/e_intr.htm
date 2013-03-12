@@ -1,0 +1,45 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}--> 
+           <div class="main_box">
+            
+                
+            	<!--main_con-->
+            	<div class="main_con">
+                	
+            		<h1 class="s_l_title ">{$_lang['about_us']}</h1>
+                    
+                    <div class="clear"></div>
+                    
+                    <!--con_info-->
+                    <div class="con_info pb_30 clearfix ws_break"> 
+                    	<div class="clear"></div> 
+                     {$e_shop_info[shop_desc]}
+                    </div>
+            
+					<div class="clear"></div>
+                	
+            		<h1 class="s_l_title  ">{$_lang['contact']}</h1>
+                    
+                    <div class="clear"></div>
+                    
+                    <!--con_info-->
+                    <div class="con_info pb_30 clearfix"> 
+                    	<ul>
+                    	 <li><span class="mr_10">{$_lang['mobile']}{$_lang['zh_mh']}</span>{if $sect_info['mobile']['v1']=='1'}{$_lang['confidential']}{else}$member_info['mobile']{/if}</li>
+                         <li><span class="mr_10">{$_lang['fixed_telephone']}{$_lang['zh_mh']}</span>{if $sect_info['phone']['v1']=='1'}{$_lang['confidential']}{else}$member_info['phone']{/if}</li>
+                         <li><span class="mr_10">{$_lang['emaill']}{$_lang['zh_mh']}</span>{if $sect_info['email']['v1']=='1'}{$_lang['confidential']}{else}$member_info['email']{/if}</li>
+                         <li><span class="mr_10">{$_lang['qq']}{$_lang['zh_mh']}</span>{if $sect_info['qq']['v1']=='1'}{$_lang['confidential']}{else}$member_info['qq']{/if}</li>
+                         <li><span class="mr_10">{$_lang['msn']}{$_lang['zh_mh']}</span>{if $sect_info['msn']['v1']=='1'}{$_lang['confidential']}{else}$member_info['msn']{/if}</li>
+                        </ul>
+                    </div>
+            
+                </div>
+                <!--end main_con-->
+                
+            </div>
+            <!--end main_con-->
+            </div>
+			
+            <div class="clear"></div>
+            
+ <!--{template footer}-->
+

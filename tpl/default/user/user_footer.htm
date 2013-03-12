@@ -1,0 +1,23 @@
+<!--jQueryµ÷ÓÃ--> 
+<script type="text/javascript">
+	$(function(){
+		var Is = location.href.search('&op=');
+		if(Is>-1){
+			$("html,body").animate({scrollTop:$(".Anchor").offset().top});
+		}
+	})
+	function check(obj){
+		return checkForm(document.getElementById(obj));
+	}
+	In.add('jscolor',{path:"resource/js/others/jscolor.js",type:'js'}); 
+	In('calendar'); 
+	
+	$(function(){
+		$(".togg_u").focus(function(){
+        	 this.value = '';
+        }).blur(function(){
+                this.value == '' ? this.value = $(this).attr(this.title ? 'title' : 'original-title') : '';
+        })
+	}) 	
+</script>
+ 

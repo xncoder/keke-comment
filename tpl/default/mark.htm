@@ -1,0 +1,102 @@
+<!--{template header}-->
+<!--星级评定样式-->
+<link href="resource/js/jqplugins/starrating/jquery.rating.css" rel="stylesheet" type="text/css">
+<!--详细内容区-->
+    <div class="pad10"> 
+      <!--from表单 start-->
+       <div class="form_box clearfix box border_n" id="upload_tip">
+         <form action="" method="post" name="frm_mark" id="frm_mark">
+         	<input type="hidden" id="jump_url" value="{$jump_url}">
+         	<div class="rowElem clearfix">
+         		<label class="grid_2 t_r">{$_lang['mark_type']}</label> 
+                 <input type="radio" name="mark_status" value="1" {if $mark_info['mark_status']==1||!$mark_info['mark_status']}checked=checked{/if}/><label>{$_lang['good_value']}<img src="resource/img/ico/ico_mark_1.gif" alt=''></label>
+                 <input type="radio" name="mark_status" value="2" {if $mark_info['mark_status']==2}checked=checked{/if}/><label>{$_lang['middle_value']}<img src="resource/img/ico/ico_mark_2.gif" alt=''></label>
+                  <input type="radio" name="mark_status" value="3" {if $mark_info['mark_status']==3}checked=checked{/if}/><label>{$_lang['bad_value']}<img src="resource/img/ico/ico_mark_3.gif" alt=''></label>
+		    </div>
+           <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['mark_content']}</strong></label>
+               <div class="grid_9 alpha">
+                 <textarea cols="52" rows="3" name="tar_content" id="tar_content" title="{$_lang['mark_content']}" onkeydown="checkInner(this,100,event);">{if $mark_info['mark_content']}{$mark_info['mark_content']}{/if}</textarea>
+                 <div class="clear"></div>
+                 <div class="c999" id="length_show">{$_lang['mark_content_msg']}</div>
+               </div>
+           </div>
+           <div class="rowElem clearfix">
+             <label class="grid_3"><strong>{$_lang['assistant_mark']}</strong></label>
+               <div class="grid_9 alpha">
+                 
+				<!--辅助评价start-->
+		     
+				{loop $aid_info $k $v}
+				<div class="grid_5 cf60 fl_l lineh">
+					<input type="hidden" name="star[$k]" id="star_{$k}">
+					<div class="grid_2 omega">{$v['aid_name']}</div>
+                      <div class="grid_3 alpha">
+                         <div class="star" style="width:150px;margin:5px 0">
+     							<!--{eval echo keke_user_mark_class::gen_star($v[avg],$k,0);}-->
+                          </div>
+                        </div>   
+				</div>     
+				 <div class="clear"></div>                        
+				{/loop}
+				<!--辅助评价end-->
+               </div>
+           </div>
+        <!--from表单 end-->
+        <div class="rowElem clearfix form_button"> 
+   	 	 <button type="button" class="button" value="{$_lang['confirm']}" onclick="confirmMark()"><span class="check icon"></span>{$_lang['confirm']}</button>
+	 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="hideWindow('mark')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+        </div>
+      </form>    
+    </div>
+   </div>
+<!--end 详细内容区-->
+<!--星级评定-->
+<script type="text/javascript" src="resource/js/jquery.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.rating.js"></script>
+<script type="text/javascript" src="resource/js/jqplugins/starrating/jquery.MetaData.js"></script>
+<script type="text/javascript">
+	var mark_id = parseInt('{$mark_info[mark_id]}')+0;
+	var task_id = parseInt('{$task_id}')+0;
+	//alert(task_id);
+$(function(){
+	$("div[class*='star_']").click(function(event){
+		var classStr = this.className;
+		var showId   = classStr.match(new RegExp("(star_[0-9]+)","g"));
+		var point    = $(this).find("a:first").attr("tt");
+			point	 = parseFloat(point/2).toFixed(1);	
+		$("#"+showId).val(point);
+		$("#span_"+showId).html("<font color=\"red\">"+point+"{$_lang['fen']}</font>");
+		event.stopPropagation();
+	})
+})
+/**
+ * 提交
+ */
+function confirmMark(){
+	if(contentCheck('tar_content','{$title}',5,100,1,'upload_tip')){
+		var data = $("#frm_mark").serialize();
+		
+		$.post('index.php?do=mark&'+data,{mark_id:mark_id,sbt_mark:1},function(json){
+			if(json.status==1){
+				showDialog(json.data,'right',json.msg,"doJump('"+$("#jump_url").val()+"')");
+				hideWindow('mark');return false;
+			}else{
+				showDialog(json.data,'alert',json.msg);return false;
+			}
+		},'json');
+	}
+}
+/**
+ * 评价完成跳转
+ */
+function doJump(url){
+		if(url){
+			dojump = url.replace(/\-/g,'=').replace(/\*/g,'&');
+			location.href="{$_K['siteurl']}/index.php?"+dojump;
+		}else{
+			location.href="index.php?do=task&task_id="+task_id+"&view=mark";
+		}
+}
+</script>
+<!--{template footer}-->

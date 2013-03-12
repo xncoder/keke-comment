@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+/*-------------------------------------------------
+--------------------------------------------------- 
+           注释 DEFINITIONS	: mg
+	作者 AUTHOR 		: mg
+	版本 VERSION		: 2012-02-14
+*/
+
+
+/*案例列表*/	
+.case{min-height:500px; _height: expression(this.scorllHeight < 500 ? "500px" : "auto" );}
+	ul.case_list li{float:left; border:1px #c0c0c0 dashed; border-top:none; border-left:none;  width:314px;}
+		ul.case_list li.no_rborder{border-right:none; width:316px;}
+		.case_con{padding:16px 28px; line-height:25px; position:relative;}
+		.case_con:hover,.case.hover{ background:#fffeb5;}
+			.case_con img{display:block; width:258px; background:#fff; height:258px; overflow:hidden;}
+			.img_title{height:25px; line-height:25px; position:relative;}
+					a.case_name{ width:250px;  font-size:14px; font-weight:bold; float:left; overflow:hidden; text-overflow:ellipsis;  white-space:nowrap; position:absolute;}
+						a.case_name:hover{ overflow:visible; width:auto; background:#fffeb5; z-index:2; position:relative;}
+
+
+/*@media only screen and (min-width: 1280px) and (max-width: 1600px){
+	ul.case_list li{width:394px;}
+	ul.case_list li.no_rborder{ width:395px}
+	a.case_name{ width:336px;}
+	.case_con img{ margin-left:auto; margin-right:auto;}
+}*/		
+							

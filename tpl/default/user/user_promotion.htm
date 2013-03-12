@@ -1,0 +1,316 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+ <div class="container_24">
+  <!--{template user/user_nav}-->
+<!--main start-->
+ <section class="clearfix section">
+ <!--{template user/user_side}-->
+ <div class="show_panel container_24 po_re">
+  <div class="prefix_3 grid_21">
+   <div class="panel clearfix box">
+    <!--main content-->
+     <div class="">
+      <!--header内容头部 start-->
+       <header class="clearfix box_header">
+        <h2 class="grid_4 alpha omega box_title t_c">{$_lang['promotion']}</h2>
+         <div class="grid_17 alpha omega">
+          <nav class="box_nav">
+           <ul>
+             {loop $third_nav $k $v}
+               <li {if $k==$show}class="selectedLava"{/if}>
+                   <a href="{$origin_url}&op={$op}&show={$k}#userCenter" title="$v['1']">$v['0']</a>
+               </li>
+             {/loop}
+           </ul>
+          </nav>
+        </div>
+        <div class="clear"></div>
+      </header>
+    <!--header内容头部 end-->
+<!--detail内容 start-->
+{if $basic_config['prom_open']=='1'}
+ {if $show=='reg'}
+ <article class="box_detail">
+   <div class="messages m_infor">
+     <span class="icon16"></span>{$_lang['reg_notice1']}<b class="cf60">{$global_config['prom_period']['v']}{$_lang['day']}</b>{$_lang['reg_notice2']}<a href="###" class="close">&times;</a>
+    </div>
+     <div class="form_box pad10 clearfix" style="margin-left:10px; margin-right:10px;">
+       <div class="rowElem clearfix  pt_10 grid_20">
+       	 <label class="grid_2 t_l">{$_lang['reg']}</label>
+		 <button type="button" onclick="promLink('reg');" id="reg" class="fl_r"><span class="icon plus">&nbsp;</span>{$_lang['get_link']}</button>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['fail_case']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_notice1']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_notice2']}{$_lang['zh_jh']}
+	         </div>
+        </div>
+       </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['can_rule']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	{$_lang['downline_regester_pass']}<font color="red">{$_lang['l']}{$effect_mode['prom_item']}{$_lang['r']}</font>{$_lang['zh_jh']}
+         </div>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['pro_cash']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	{$_lang['first_get']}{if $effect_mode['cash']}<font color="red">{c:$effect_mode['cash']}</font> {/if}
+				{if $effect_mode['credit']}{CREDIT_NAME}<font color="red">{$effect_mode['credit']}</font> {/if}
+				{$_lang['get_cash_notice1']}<b class="cf60">{$global_config['prom_period']['v']}{$_lang['day']}</b>{$_lang['get_cash_notice2']}{$_lang['zh_jh']} 
+         </div>
+        </div>
+      </div>
+ </article>
+ <div class="clear"></div>
+ {/if}
+ {if $show=='pub_task'}
+ <article class="box_detail">
+   <div class="messages m_infor">
+     <span class="icon16"></span>
+			{if $effect_mode['pub_task_rake_type']==1}
+				{$_lang['you_will_get']}<b class="cf60">{if $effect_mode['cash']}{c:$effect_mode['cash']}{/if}{if $effect_mode['credit']},{$effect_mode['credit']}{CREDIT_NAME}{/if}</b>{$_lang['zh_jh']}
+			{else}
+				{$_lang['high_task_cash']}<b class="cf60">{$effect_mode['rate']}%</b>{$_lang['zh_jh']}
+			{/if}
+		{$_lang['recomment_user_pub_task']}<a href="###" class="close">&times;</a>
+    </div>
+     <div class="form_box pad10 clearfix" style="margin-left:10px; margin-right:10px;">
+       <div class="rowElem clearfix  pt_10 grid_20">
+       	 <label class="grid_2 t_l">{$effect_mode['prom_item']}</label>
+		 	<button type="button" onclick="promLink('pub_task','release');" class="fl_r"><span class="icon plus">&nbsp;</span>{$_lang['get_link']}</button>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['fail_case']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice1']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice2']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice3']}{$_lang['zh_jh']}
+	         </div>
+        </div>
+       </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['can_rule']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	<div class="grid_13">
+         	{$_lang['model_bind']}{$_lang['zh_mh']}
+         	{if $effect_mode['model']}
+				<!--{eval $models = explode(",",$effect_mode['model']);}-->
+				{loop $models $v}
+					{if $model_list[$v]}{$_lang['l']}$model_list[$v]['model_name']{$_lang['r']}{/if}
+				{/loop}{$_lang['zh_jh']}
+			{else}
+				{$_lang['not_model_limit']}{$_lang['zh_jh']}
+			{/if}
+		   </div>
+         	<div class="grid_13">
+			{$_lang['industry_limit']}{$_lang['zh_mh']}
+			{if $effect_mode['indus_string']}
+				<!--{eval $indus = explode(",",$effect_mode['indus_string']);}-->
+				{loop $indus $v}
+					{if $indus_list[$v]}{$_lang['l']}$indus_list[$v]['indus_name']{$_lang['r']}{/if}
+				{/loop}{$_lang['zh_jh']}
+			{else}
+				{$_lang['not_industry']}{$_lang['zh_jh']}
+			{/if}
+		   </div>
+         </div>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['pro_cash']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	{$_lang['task_over_you_can_get_reward']}
+			{if $effect_mode['pub_task_rake_type']==1}
+				{if $effect_mode['cash']}<font color="red">{c:$effect_mode['cash']}</font>{/if}{if $effect_mode['credit']}<font color="red">{$effect_mode['credit']}{CREDIT_NAME}</font>{/if}{$_lang['zh_jh']}
+			{else}
+				{$_lang['task_reward_de']}<font color="red">{$effect_mode['rate']}</font>{$_lang['as_prom_work']}{$_lang['zh_jh']}
+			{/if}
+			</div>
+        </div>
+      </div>
+ </article>
+ <div class="clear"></div>
+ {/if}
+  {if $show=='bid_task'}
+ <article class="box_detail">
+   <div class="messages m_infor">
+     <span class="icon16"></span>{$_lang['high_zz_task_cash']}<b class="cf60">{$effect_mode['rate']}%</b>{$_lang['prom_cash_recomment_notice']}<a href="###" class="close">&times;</a>
+    </div>
+     <div class="form_box pad10 clearfix" style="margin-left:10px; margin-right:10px;">
+       <div class="rowElem clearfix  pt_10 grid_20">
+       	 <label class="grid_2 t_l">{$effect_mode['prom_item']}</label>
+		 	<button type="button" value="{$_lang['read_task']}" onclick="getList('task_list','bid_task');" class="fl_r"><span class="icon plus">&nbsp;</span>{$_lang['read_task']}</button>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['fail_case']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice1']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice2']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice3']}{$_lang['zh_jh']}
+	         </div>
+        </div>
+       </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['can_rule']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	<div class="grid_13">
+         	{$_lang['model_bind']}{$_lang['zh_mh']}
+         	{if $effect_mode['model']}
+				<!--{eval $models = explode(",",$effect_mode['model']);}-->
+				{loop $models $v}
+					{if $model_list[$v]}{$_lang['l']}$model_list[$v]['model_name']{$_lang['r']}{/if}
+				{/loop}{$_lang['zh_jh']}
+			{else}
+				{$_lang['not_model_limit']}{$_lang['zh_jh']}
+			{/if}
+		   </div>
+         	<div class="grid_13">
+			{$_lang['industry_limit']}{$_lang['zh_mh']}
+			{if $effect_mode['indus_string']}
+				<!--{eval $indus = explode(",",$effect_mode['indus_string']);}-->
+				{loop $indus $v}
+					{if $indus_list[$v]}{$_lang['l']}$indus_list[$v]['indus_name']{$_lang['r']}{/if}
+				{/loop}{$_lang['zh_jh']}
+			{else}
+				{$_lang['not_industry']}{$_lang['zh_jh']}
+			{/if}
+		   </div>
+         	<div class="grid_13">
+			   {$_lang['more_task_model_notice']}{$_lang['zh_jh']}
+		   </div>
+         </div>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['prom_cash']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+				{$_lang['task_over_you_can_get_from_zz']}<font color="red">{$effect_mode['rate']}%</font>{$_lang['de_prom_cash']}{$_lang['zh_jh']}
+          </div>
+        </div>
+      </div>
+ </article>
+ <div class="clear"></div>
+  <div class="clearfix box pad10">
+ 	<div class="data_list mt_10" id="task_list" style="display:none;">
+     
+    </div>
+ </div>
+ {/if}
+ {if $show=='service'}
+ <article class="box_detail">
+   <div class="messages m_infor">
+     <span class="icon16"></span>{$_lang['high_zz_cash']}<b class="cf60">{$effect_mode['rate']}%</b>{$_lang['prom_cash_recomment_notice']}<a href="###" class="close">&times;</a>
+    </div>
+     <div class="form_box pad10 clearfix" style="margin-left:10px; margin-right:10px;">
+       <div class="rowElem clearfix  pt_10 grid_20">
+       	 <label class="grid_2 t_l">{$_lang['service']}</label>
+		 	<button type="button" value="{$_lang['read_goods']}" onclick="getList('service_list','service');" class="fl_r"><span class="icon plus">&nbsp;</span>{$_lang['read_goods']}</button>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['fail_case']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+	         <div class="grid_13">
+	         	{$_lang['prom_regester_online_notice1']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['goods_trade_over_and_not_work']}{$_lang['zh_jh']}
+	         </div>
+	         <div class="grid_13">
+	         	{$_lang['user_pub_not_time_in']}{$_lang['zh_jh']}
+	         </div>
+        </div>
+       </div>
+	   
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['can_rule']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	<div class="grid_13">
+         	{$_lang['model_bind']}{$_lang['zh_mh']}
+         	{if $effect_mode['model']}
+				<!--{eval $models = explode(",",$effect_mode['model']);}-->
+				{loop $models $v}
+					{if $model_list[$v]}{$_lang['l']}$model_list[$v]['model_name']{$_lang['r']}{/if}
+				{/loop}{$_lang['zh_jh']}
+			{else}
+				{$_lang['not_model_limit']}{$_lang['zh_jh']}
+			{/if}
+		   </div>
+         	<div class="grid_13">
+			{$_lang['industry_limit']}{$_lang['zh_mh']}
+			{if $effect_mode['indus_string']}
+				<!--{eval $indus = explode(",",$effect_mode['indus_string']);}-->
+				{loop $indus $v}
+					{if $indus_list[$v]}{$_lang['l']}$indus_list[$v]['indus_name']{$_lang['r']}{/if}
+				{/loop}{$_lang['zh_jh']}
+			{else}
+				{$_lang['not_industry']}{$_lang['zh_jh']}
+			{/if}
+		   </div>
+         	<div class="grid_13">
+			   {$_lang['more_task_model_notice']}{$_lang['zh_jh']}
+		   </div>
+         </div>
+        </div>
+       <div class="rowElem clearfix  pt_10 grid_18">
+       	 <label class="grid_3 t_r">{$_lang['pro_cash']}{$_lang['zh_mh']}</label>
+         <div class="grid_14">
+         	{$_lang['goods_trade_over_you_get']}<font color="red">{$effect_mode['rate']}%</font>{$_lang['de_prom_cash']}{$_lang['zh_jh']}
+         </div>
+        </div>
+      </div>
+ </article>
+ <div class="clear"></div>
+  <div class="clearfix box pad10">
+ 	<div class="data_list mt_10" id="service_list" style="display:none;"></div>
+ </div>
+ {/if}
+ {else}
+ <div class="clear"></div>
+  <div class="clearfix box pad10 t_c">
+ 		{$_lang['pro_sys_close']}
+  </div>
+ {/if}
+<!--detail内容 end-->
+</div>
+<!--main content end -->
+<div class="clear"></div>
+</div>
+</div>
+</section>
+<!--main end-->
+</div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+	function promLink(promCode,l,o,promText){
+		var url = "index.php?do=ajax&view=menu&ajax=prom_link&prom_code="+promCode;
+		o?url+="&o="+o:"";
+		l?url+="&l="+l:"";
+		promText?url+="&promtext="+promText:"";
+		showWindow("promlink",url);return false;
+	}
+	function getList(obj,promCode){
+		if($.trim($("#"+obj).html()).length==0){
+			var url = "index.php?do=ajax&view=menu&ajax=prom_list&prom_code="
+					+promCode;
+			$("#"+obj).load(url).show();
+			$("html,body").animate({scrollTop:$("#"+obj).offset().top})
+		}
+	}
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

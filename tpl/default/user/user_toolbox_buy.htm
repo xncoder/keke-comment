@@ -1,0 +1,118 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+ <div class="container_24">
+  <!--{template user/user_nav}-->
+<!--main start-->
+  <section class="clearfix section">
+  <!--{template user/user_side}-->
+  <div class="show_panel container_24 po_re">
+   <div class="prefix_3 grid_21">
+     <div class="panel clearfix box">
+     <!--main content-->
+       <div class="">
+        <!--header内容头部 start-->
+         <header class="clearfix box_header">
+           <h2 class="grid_4 alpha omega box_title t_c">{$_lang['toolbox']}</h2>
+           <div class="grid_17 alpha omega">
+              <nav class="box_nav">
+                <ul>
+                    {loop $third_nav $k $v}
+                       <li {if $k==$show}class="selectedLava"{/if}>
+                         <a href="{$origin_url}&op={$op}&show={$k}#userCenter" title="$v['1']">$v['0']</a>
+                        </li>
+                    {/loop}
+                </ul>
+               </nav>
+         </div>
+         <div class="clear"></div>
+       </header>
+    <!--header内容头部 end-->
+	<!--detail内容 start-->
+    <article class="box_detail">
+      <div class="messages m_infor">
+        <span class="icon16"></span>
+           {$_lang['make_you_more_competitive']} <a href="###" class="close">&times;</a>
+      </div>
+     <div class="prefix_1 suffix_1 mt_10">
+      <div class="list">
+        <dl>
+        	<dd class="tags">
+            	<ul>
+                    <li class="w4 t_l">{$_lang['tool_name']}</li>
+                    <li>{$_lang['cash_idea']}</li>
+                    <li class="w2">{$_lang['in_use']}</li>
+                    <li>{$_lang['remain']}</li>
+                    <li class="w2">{$_lang['operate']}</li>
+                </ul>
+            </dd>
+ {if $payitem_list}           
+      {loop $payitem_list $k $v}
+	   {if item_show($v['item_type'])}
+      	<dd class="clearfix" style="height:inherit;">
+		<!--{eval $remain= keke_payitem_class::payitem_exists($uid,"$k",$v['item_type']);}-->
+			<ul>
+              <li class="pt_10">
+                  <img src="{$_K['siteurl']}/{$v['big_pic']}" alt="{$v['item_name']}" title="{$v['item_name']}"/>
+              </li>
+              <li class="w3 t_l">
+               		<h3>{$v['item_name']}</h3>
+                    
+               </li>
+               <li>
+               		<div><strong style="color:#FF6600">{c:$v['item_cash']}/{$payitem_standard[$v['item_standard']]}</strong></div>
+               		
+               </li>
+               <li class="w2">
+               		<div>
+               			{if $task_open&&$shop_open}
+               				{$payitem_type[$v['item_type']]}
+						{elseif !$task_open}
+							{$_lang['shop_fabu']}
+						{else}
+							{$_lang['task_fabu']}
+						{/if}
+					</div>
+               </li>
+               <li>
+               		<div><strong style="color:#FF6600"><!--{eval echo intval($remain)}--></strong>{$payitem_standard[$v['item_standard']]}</div>
+
+               
+               </li>
+			   <li class="w7 t_l">
+			 	<div class="c999 info">{$v['item_desc']}</div>
+			</li>
+               <li class="w2">
+					
+		          <button class="block fl_r" type="button" value="{$_lang['buy_now']}" name="{$_lang['buy_now']}" onclick="location.href='{$origin_url}&op={$op}&show={$show}&item_code={$v['item_code']}#userCenter'">
+		              <span class="icon plus">&nbsp;</span>{$_lang['buy_now']}
+		           </button>
+             </li>
+			 </ul>
+           </dd>
+		{/if}
+     {/loop}
+  {else}
+  	<dd class="clearfix" style="height:inherit;">
+  	<ul>
+  	  <li class="t_c w0">{$_lang['norecord']}</li>
+  	</ul>
+  	</dd>
+  {/if}
+            </dl>
+        </div>
+    </div>
+    </article>
+   <!--detail内容 end-->
+  </div>
+  <!--main content end -->
+   <div class="clear"></div>
+   </div>
+   </div>
+ </section>
+   <!--main end-->
+  </div>
+</div>
+<!--contain end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

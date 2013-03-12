@@ -1,0 +1,150 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$model_info['model_name']}{$_lang['manage']}</h1>
+    <div class="tool">
+        	<a href="index.php?do=$do&model_id=$model_id&view=list">{$_lang['task_list']}</a>
+			{loop $ops $v}
+				<a href="index.php?do=$do&model_id={$model_id}&view=edit&task_id={$task_id}&op={$v}" class="{if $op==$v}here{/if}">{$_lang['b_task_'.$v]}</a>
+       		{/loop}
+	</div>
+</div>
+<!--页头结束-->
+<div class="box post">
+    <div class="tabcon">
+        <div class="title">
+            <h2>{if $task_id}{$_lang['edit']}{else}{$_lang['add']}{/if}{$_lang['reward_task']}</h2>
+        </div>
+        <div class="detail">
+            <form method="post" action="index.php?do=$do&model_id={$model_id}&view=edit&task_id={$task_id}" id="frm_art_edit" enctype="multipart/form-data">
+                <input type="hidden" name="task_id" value="$task_info[task_id]">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th scope="row" width="130">
+                            {$_lang['task_title']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            <input type="text" class="txt" name="fields[task_title]" value="$task_info[task_title]" size="80">
+							&nbsp;&nbsp;&nbsp;<label for="recomment"><input type="checkbox" id="recommend" name="recommend" {if $task_info[is_top]}checked{/if}><font color="red">{$_lang['is_recommend_task']}</font></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['task_type']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            {$model_list[$task_info[model_id]][model_name]}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['industry']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            <select name="slt_indus_id">
+                                <option value="0">{$_lang['top']}</option>
+									{loop $indus_option_arr $v}
+										 {$v}
+									{/loop}
+                            </select>　
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['pub_name']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                        <b>{$task_info[username]}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<b>{$_lang['mobile']}：{$task_info['contact']}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['pub_time']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            <!--{date('Y-m-d H:i:s',$task_info[start_time])}-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['expiration_time']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            <!--{date('Y-m-d H:i:s',$task_info[end_time])}-->
+                        </td>
+                    </tr>
+					    <tr>
+                        <th scope="row" width="130">{$_lang['attachment_task']}</th>
+                        <td>
+                         {if $file_list}
+        					{loop $file_list $file}
+    							<a target="_blank" href="../../{$file[save_name]}">{$file[file_name]}</a>&nbsp;&nbsp;&nbsp;
+    						{/loop}
+						{else}
+							{$_lang['no_attachment']}
+						{/if}
+                        </td>
+                      </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['task_cash']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            <select name='fds[task_cash_coverage]'>
+        						{loop $cash_rule_arr $value}
+									<option {if $task_info[task_cash_coverage]==$value['cash_rule_id']}selected="selected"{/if} value="$value['cash_rule_id']">{c:$value['start_cove']}-{c:$value['end_cove']}</option>
+								{/loop}
+							</select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            {$_lang['task_description']}{$_lang['zh_mh']}
+                        </th>
+                        <td>
+                            <textarea rows="18" name="fields[task_desc]" style="width:75%;" id="tar_content" class="xheditor {urlBase:'$_K[siteurl]/',tools:'mfull',admin:'../../',html5Upload:false,upImgUrl:'../../index.php?do=ajax&view=upload&file_type=att'}" cols="70">
+                                {$task_info[task_desc]}
+                            </textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            &nbsp;
+                        </th>
+                        <td>
+                        <button name="sbt_edit" value="1" class="positive primary  button" type="submit">
+                            <span class="check icon"></span>{$_lang['submit']}
+                        </button>
+                        <button type="submit" name="sbt_edit" class="positive primary" value="1">
+                            <span class="lock icon"></span>{$_lang['freeze']}
+                        </button>
+                      
+                    </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+<!--主体结束-->
+<script type="text/javascript">
+    $(function(){
+        var c_id = parseInt("$art_info['art_cat_id']");
+        if (c_id) {
+            $("#slt_cat_id").val(c_id);
+        }
+        
+        $("input[name='sbt_edit']").click(function(){
+            var si = $("#slt_cat_id").val();
+            if (!si) {
+                $("#msg_cat_id").html("{$_lang['please_select_category']}");
+                return false;
+            }
+            else {
+                $("#msg_cat_id").html("{$_lang['classification_has_been_select']}");
+                return true;
+            }
+        })
+    })
+</script>
+<!--{template control/admin/tpl/admin_footer}-->

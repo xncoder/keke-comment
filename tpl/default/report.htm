@@ -1,0 +1,114 @@
+<!--{template header}-->
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box pad10">
+    <!--from表单 start-->
+    <form method="post" id="frm_report" name="frm_report" action=''>
+     <input type="hidden" name="obj" value="{$obj}">
+     <input type="hidden" name="obj_id" value="{$obj_id}">
+     <input type="hidden" name="type" value="{$type}">
+     <input type="hidden" name="to_uid" value="{$to_uid}">
+     <input type="hidden" name="to_username" value="{$to_username}">
+     <div class="rowElem clearfix" id="upload_tip">
+      		 <label class="fl_l t_r">{$_lang['attachment_upload']}</label>
+		<div class="fl_l" style="width:350px">
+			 	<input type="hidden" name="file_url" id="file_url">
+			 	<input type="file" class="file" name="upload" id="upload">
+		  	 	 {$_lang['only_one_upload']}{$_lang['upload_notice']}{$basic_config['max_size']}{$_lang['size_notice']}:
+			<div>
+			<div class="upfile ws_break">
+                 <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">.doc,.docx,.rar,.zip</span>
+            </div>
+			</div>
+		</div>
+      </div>
+       <div class="rowElem clearfix" id="desc">
+      		 <label class="fl_l t_r">{$transname}{$_lang['cause']} </label>
+			 <div class="fl_l">
+      		 <textarea cols="70" rows="3" name="tar_content" id="tar_content"  class="txt_input" onkeydown="checkInner(this,'100',event)"></textarea>
+      		<div class="clear"></div>
+             <div class="c999" id="length_show">{$_lang['input_cause_msg_notice']}</div>
+			 </div>
+      </div>
+	 <div class="rowElem clearfix" style="padding-left:60px;width:400px">
+          <div class="messages clearfix">
+             
+                <span class="icon16"></span><label>{if $type==3}{$_lang['complaint']}{$_lang['suggest']}{else}{$_lang['process']}{/if}</label>
+             
+             <div class="pl_10">
+             	
+                    <ul>
+                    	{if $type==3}
+						<li class="clearfix">{$_lang['the_complaint_proposed_rules_written_here']}</li>
+						{else}
+                        <li class="clearfix">{$_lang['website_notice1']}{$_K['html_title']}{$_lang['website_notice2']}</li>
+                        <li class="clearfix">{$_lang['website_notice3']}{$_K['html_title']}{$_lang['website_notice4']}</li>
+						{/if}
+                    </ul>
+            </div>
+          </div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" value="{$_lang['save']}" onclick="subReport()"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value="{$_lang['cancel']}" onclick="hideWindow('report')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+   </form>
+  <!--from表单 end-->
+
+
+
+ </div>
+</div>
+<script type="text/javascript">
+		$(function(){
+			uploadify({
+					auto:true,
+					size:"{$basic_config['max_size']}MB",
+					exts:'{$flie_types}',
+					text:"$_['upload_file']",
+					limit:1}
+				,{
+					task_id:'{$task_id}',
+					obj_id:'{$obj_id}',
+					objType:'{$obj_type}'
+				});
+		})
+</script>
+<script type="text/javascript">
+		In('form'); 
+</script>
+
+<script type="text/javascript">
+	function subReport(){
+		var type='{$type}';
+        if(type==3){
+			basic_url = 'index.php?do=index';
+		}
+		
+		var i = checkForm(document.getElementById('frm_report'));
+		if(i){
+		var shtml 	 = contentCheck('tar_content','{$title}',5,100,1,'upload_tip');
+			if(shtml){		
+				var data = $("#frm_report").serialize();				
+				$.post(basic_url+'&op={$op}&'+data,{sbt_edit:true},
+				function(json){
+					if(json.status=='1'){
+						showDialog(json.data,'right',json.msg);hideWindow('report');return false;
+						}
+					else{
+						showDialog(json.data,'alert',json.msg);return false;
+					}
+			},'json');
+			}
+		}
+	}
+	/**
+	 * 上传完成后的后续操作
+	 * @param {Object} data 响应的json对象
+	 */
+	function uploadResponse(json){
+		if($("#"+json.fid).length<1){
+				$("#file_url").val(json.msg.url);
+			}
+	}
+</script>
+<!--{template footer}-->

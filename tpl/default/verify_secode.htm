@@ -1,0 +1,35 @@
+<!--安全码验证 start-->
+<article class="box_detail">
+    <div class="messages m_warn clearfix">
+        <span class="icon16 fl_l">warning</span>
+        {$_lang['notice_user_msg']}<font color="red"><b>{$_lang['notice_user_title']}</b></font>{$_lang['fuhao']} <a href="###" class="close">&times;</a>
+    </div>
+    <div class=" prefix_1 suffix_1">
+        <div class="box waring form_box">
+        	<div class="inner">
+            <form action="index.php?do=ajax&view=ajax&ac=safe_secode" method="post" id="frm_secode" name="frm_secode" onload="document.form.autocomplete.setAttribute('autocomplete', 'off');">
+                <div class="rowElem clearfix">
+                    <label class="grid_2">
+                        {$_lang['save_code']}
+                    </label>
+                    <div class="grid_15">
+                        <input class="txt_input mr_5" type="password" size="40" title="{$_lang['code_notice_title']}" name="sec_code" id="sec_code" limit="required:true;len:6-20" msg="{$_lang['code_notice_msg']}" msgArea="span_secode"/>
+						<span id="span_secode"></span>
+                    </div>
+                </div>
+                <div class="rowElem clearfix form_button">
+                    <div class="grid_8">
+                        &nbsp;
+                    </div>
+                    <div class="grid_10 t_l">
+                        <button class="grid_2 alpha" type="submit" value="{$_lang['confirm']}" onclick="return checkForm(document.getElementById('frm_secode'))">
+                            {$_lang['confirm']}
+                        </button>
+                    </div>
+                </div>
+            </form>
+			</div>
+        </div>
+    </div>
+</article>
+<!--安全码验证 end-->

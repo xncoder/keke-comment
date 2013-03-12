@@ -1,0 +1,22 @@
+<!--用户中心样式-->
+<div class="second_menu container_24 po_ab clearfix">
+    <div class="suffix_21">
+        <nav class="minor_nav box clearfix">
+           <!--子导航开始-->
+			{loop $sub_nav $val}
+		       <ul class="nav_group clearfix">
+				{loop $val $k $v}
+				{if $k!='auth'||($k=='auth'&&$auth_item_list)}
+		             <li>
+		                 <a href="index.php?do=user&view={$view}&op={$k}" title="{$_lang['enter']}{$v['0']}" {if $k==$op}class="selected"{/if}>
+		                   <div class="icon16 {$v['1']}">icon</div><strong>{$v['0']}</strong>
+					     </a>
+		             </li>
+					 {/if}
+				{/loop}
+		       </ul>
+			{/loop}
+			<!--子导航结束-->
+        </nav>
+    </div>
+</div>

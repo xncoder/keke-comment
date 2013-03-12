@@ -1,0 +1,21 @@
+<!--步骤下部所有内容-->
+<div class="step1_detail clearfix">
+    <div class="grid_20 prefix_2 suffix_2">
+        <div class="box complete form_box ml_40 mr_40 ">
+            <div class="form_tip border_n clearfix">
+             <span style="display:inline-block; vertical-align:middle;"><img src="resource/img/keke/right.gif"></span>
+			 <span>{if $status==1}
+			    {$_lang['audit_release']}
+			 {elseif $status==2}
+			    {$_lang['suc_release']}
+			 {/if}</span>
+			
+            </div>
+        </div>
+        <div class="t_c mt_20 mb_30">
+            <a href="index.php?do=task&task_id={$task_id}" class="button">{$_lang['confirm_look']}</a>
+            <a href="index.php?do=release" class="button  ml_10">{$_lang['return_new_release']}</a>
+        </div>
+    </div>
+</div>
+<!--end 步骤下部所有内容-->

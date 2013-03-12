@@ -1,0 +1,82 @@
+<!--{template header}-->
+<!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+        <!--{template user/user_side}-->
+        <div class="show_panel container_24 po_re">
+        <div class="prefix_3 grid_21">
+            <div class="panel clearfix box">
+                <!--main content-->
+                <div class="">
+                    <!--header内容头部 start-->
+                    <header class="clearfix box_header">
+                        <h2 class="grid_4 alpha omega box_title t_c">{$_lang['account_bind']}</h2>
+                        <div class="grid_17 alpha omega">
+                            <nav class="box_nav">
+                                <ul>
+                                    <li class="selectedLava">
+                                        <a href="#userCenter" title="{$username}">{$_lang['current_account']}:{$username}</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </header>
+                    <!--header内容头部 end--><!--detail内容 start-->
+                    <article class="box_detail">
+                        <!--messages消息 start-->
+                        <div class="messages m_infor clearfix">
+                            <span class="icon16 fl_l">info</span>
+                            {$_lang['multiple_account_login']}{$_lang['zh_jh']} <a href="###" class="close">&times;</a>
+                        </div>
+                        <!--messages消息 end-->
+                        <div class="prefix_4 suffix_4">
+                            <div class="form_box pad10 box">
+                                <ul id="list">{if $t}
+	                                    {loop $t $k $v}
+										{if $weibo_list[$k.'_app_id']}
+	                                    <li class="border_b_c clearfix pt_20 pb_20">
+	                                        <span class="grid_5"><img class="fl_l" src="resource/img/ico/ico_32_{$k}.gif"><span class="fl_l mt_5 ml_5">{$api_name[$k]['name']}</span></span>
+	                                        <span class="grid_4 t_c">{if $v['uid']}<span class="c690 fontb">{$_lang['been_link']}($v['account'])</span> {else}<span class="c369">{$_lang['no_link']}</span> {/if}</span>
+	                                        {if $v['uid']}
+	                                        <button class="grid_3 alpha omega" type="button" onclick="location.href='index.php?do=$do&view=$view&op=$op&ac=unbind&type=$k&id=$v['id']'" value={$_lang['unbind']} name="">
+	                                            {$_lang['unbind']}
+	                                        </button>
+	                                        {else}
+	                                        <button class="grid_3 alpha omega" type="button" onclick="location.href='index.php?do=$do&view=$view&op=$op&ac=bind&type=$k'" value={$_lang['to_bind']} name="">
+	                                            {$_lang['to_bind']}
+	                                        </button>
+	                                        {/if}
+	                                    </li>
+										{/if}
+										{/loop}
+									{else}
+										<li class="t_c">  $_lang['not_open']</li>
+									{/if}
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    <!--detail内容 end-->
+                </div>
+                <!--main content end -->
+                <div class="clear">
+                </div>
+            </div>
+        </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+	$(function(){
+		$("#list li:last").css('border-bottom',0);
+	})
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

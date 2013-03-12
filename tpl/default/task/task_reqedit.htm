@@ -1,0 +1,51 @@
+<!--{template header}-->
+
+ <!--winbody content-->
+<div class="winbody {$_K['theme']}_style">
+ <div class="clearfix box pad10">
+   	<div class="messages m_infor"><span class="icon16"></span>{$_lang['be_careful_info']}{$_lang['zh_jh']}</div>
+    <!--from表单 start-->
+    <form method="post" id="frm_reqedit" name="frm_reqedit" action="">
+       <div class="rowElem clearfix" id="desc">
+      		 <label class="hidden">{$title}{$_lang['zh_mh']} </label>
+      		<textarea cols="87" rows="8" name="tar_content" id="tar_content" class="txt_input block" onkeydown="checkInner(this,'500',event)" style="width:470px;height:100px">{$ext_desc}</textarea>
+      		<div class="clear"></div>
+            <div class="c999" id="length_show">{$_lang['can_also_input']}</div>
+      </div>
+      <div class="rowElem clearfix form_button">
+       	 	 <button type="button" class="button" value={$_lang['save']} onclick="reqedit()"><span class="check icon"></span>{$_lang['save']}</button>
+		 	 <button type="button" class="button" value={$_lang['cancel']} onclick="hideWindow('reqedit')"><span class="reload icon"></span>{$_lang['cancel']}</button>
+      </div>
+	
+   </form>
+  <!--from表单 end-->
+	
+ </div>
+</div>
+<!--winbody content end-->
+<script type="text/javascript">
+	/**
+	 * 需要提交textarea提交的操作用此方法.补充需求，
+	 */
+	In.add('pop_window',{path:"{$_K['siteurl']}/resource/js/system/pop_window.js",type:'js'});
+	In('form','pop_window');
+	function reqedit(){
+		var shtml  		= contentCheck('tar_content','{$title}',20,500,1,'desc');
+		if(shtml){
+			$.post(basic_url+'&op={$op}',{sbt_edit:true,tar_content:shtml},
+				function(json){
+					if(json.status=='1'){
+						showDialog(json.data,'right',json.msg,'scroll("{$op}")');$("#{$op}").html(shtml);hideWindow('reqedit');
+						}
+					else
+						showDialog(json.data,'alert',json.msg);
+			},'json');
+		}
+	}
+	function scroll(anchor){
+		if($("#"+anchor).length>0){
+			$("html,body").animate({scrollTop:$("#"+anchor).offset().top});
+		}
+	}
+</script>
+<!--{template footer}-->

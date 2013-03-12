@@ -1,0 +1,156 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+</head>
+<body>
+    <!--页面内容-->
+    <div class="container_24 clearfix">
+	
+
+                    <!--顶部内容-->
+                        <div class="m_bk clearfix mb_10">
+                            
+							
+                            <div class="pt_5  clearfix">
+                            	
+                                
+
+                           </div>
+						   
+						   <div class="clearfix">
+						   	
+							<div class="grid_6">
+                            		<form name="frm_s" id="frm_s" action="index.php?do=space&member_id={$member_id}&view={$view}&ord={$ord}&page={$page}&limit={$limit}" method="post">
+                            			<div class="po_re">
+                            				<input type="text" name="title" class="txt_input togg"  value="{$_lang['to_search_product_name']}" id="title_search" style="color:#999; padding-left:30px; _padding-left:10px;  width:130px; " >
+											 <div class="icon16 zoom po_ab search_img"></div>
+											
+											 	<button name="a" type="button" class="button" value="{$_lang['search']}"  onclick="search();">{$_lang['search']}</button>
+											 
+                            			</div>
+                            		</form>
+                            </div>
+								
+							<div class="grid_3 ">
+								{$_lang['total_find']}<span class="cc00"> $count </span>{$_lang['tiao_result']}
+							</div>
+							<div class="condit fl_l  mr_5">
+                                     	{$_lang['order']}：<a href="index.php?do=space&member_id={$member_id}&view={$view}&ord={if $ord==1}2{else}1{/if}&page={$page}&limit={$limit}">{$_lang['selling_price']}{if $ord==1}▼{else}▲{/if}</a>
+								</div>
+								    <!--小翻页-->
+                                    <div class="min_page fl_l ">
+                                        <p class="clearfix">$pages['page']</p>
+                                        <div class="clear"></div>
+                                    </div>
+									<!--end 小翻页-->
+									<!--列表项数量-->
+                                    <div class="page_count fl_r">
+                                        <a href="index.php?do=space&member_id={$member_id}&view={$view}&ord={$ord}&page={$page}&limit=8" {if $limit==8||!$limit}  class="selected" {/if}>8 </a>
+                                        <a href="index.php?do=space&member_id={$member_id}&view={$view}&ord={$ord}&page={$page}&limit=12" {if $limit==12}  class="selected" {/if}>12 </a>
+                                        <a href="index.php?do=space&member_id={$member_id}&view={$view}&ord={$ord}&page={$page}&limit=16" {if $limit==16}  class="selected" {/if}>16 </a>
+                                    </div>
+                                    <!--end 列表项数量-->
+							</div>
+                                
+                           
+                   </div>
+    			<!--end 顶部内容-->
+		
+		
+		
+        <div class="clearfix masonry">
+				
+			<!--其他浮动部分-->
+			{loop $service_arr $k $v}
+            <div class="box mb_10 goods hidden">
+                <div class="pad10 clearfix">
+                    <div class="block po_re clearfix"  onMouseover="show_new('$v[service_id]');" >
+                    	<img  alt="$v[title]" name="lazyImg" src="<!--{eval echo keke_shop_class::output_pics($v[pic],'',1)}-->">
+						{if $member_id!=$uid}
+						<div class="shade" style="display:none" id="p_$v[service_id]">
+							<ul>
+	                        	<li><a href="index.php?do=service&sid=$v[service_id]" target="_blank"><div class="icon16 fl_l mt_5 expand reverse"></div>{$_lang['open_new_window']}</a></li>
+	                        	<li><a href="index.php?do=shop_order&sid=$v[service_id]"><div class="icon16 fl_l mt_5 download reverse"></div>{$_lang['purchase']}</a></li>
+							</ul>
+                        </div>
+						{/if}
+					</div>
+					<div class="po_re goods_words mt_10">
+						<a href="index.php?do=service&sid=$v[service_id]" target="_blank"
+						 class="goods_word" title="$v[title]">
+						 	<!--{eval echo kekezu::cutstr($v['title'], 30);}-->
+						 </a>
+						<span style="color:#FF3D00;padding:0" class="fl_r">
+                    		[<!--{eval echo mb_strcut($model_list[$v['model_id']]['model_name'],4,4,$_K['charset'])}-->]
+						</span>
+                	</div>
+					<div class="clear"></div>
+					<div>
+                		<span class="mr_10 red">{c:$v['price']}/{$v['unite_price']}</span>
+						<span class="fl_r">{$_lang['for_sale']}:{$v['sale_num']}({$v['unite_price']})</span>
+					</div>
+                </div>
+            </div>
+            {/loop}
+			 <!--end 其他浮动部分-->
+		
+	 		
+			
+ 		
+		</div>
+    </div>
+
+<script type="text/javascript">
+    
+    $('#ajaxwaitid').show();
+	var s = "{$_lang['to_search_product_name']}";
+    window.onload=function(){
+		$('#ajaxwaitid').hide();
+		$('.box').removeClass('hidden');
+	
+	
+        $('#container').masonry({
+            itemSelector: '.box',
+            columnWidth: 30.416
+        });
+		
+		
+        $('.togg').focus(function(){
+			var i = $.trim($(this).val());
+				if(i==s){
+					$(this).val('');
+				}
+		}).blur(function(){
+			var i = $.trim($(this).val());
+			if(i==''){
+					$(this).val(s);
+			}
+		}).keyup(function(){
+			$(this).css('color','');
+		});
+    }
+    	function search(){
+			var v = $("#title_search").val();
+				if(v&&v!=s){
+					$('#frm_s').submit();
+				}else{
+					$("#title_search").focus();
+				}
+		}
+		
+        var member_id = $member_id;
+        function show_new(service_id){
+            var service_id = service_id;
+            $("#p_" + service_id).show();
+            $("#p_" + service_id).mouseout(function(){
+                $("#p_" + service_id).hide();
+            });
+        }
+        
+        $(".goods img").mouseover(function(){
+        	var m_height = $(this).height();
+        	$(this).siblings(".shade").css('height',m_height);
+        });
+
+    </script>
+
+ 
+    <!--{template footer}-->

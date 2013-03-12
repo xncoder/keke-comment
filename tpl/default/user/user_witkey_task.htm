@@ -1,0 +1,213 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['task_manage']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $model_list $k $v}
+                                            <li {if $model_id==$k}class="selectedLava"{/if}>
+                                                <a href="index.php?do={$do}&view={$view}&op={$op}&model_id={$k}#userCenter" title={$_lang['my_go_in']}{$v['model_name']}>{$_lang['my_go_in']}{$v['model_name']}(<!--{eval echo intval($user_join[$k])}-->)</a>
+                                            </li>
+                                            {/loop} 
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end--><!--detail内容 start-->
+                            <article class="box_detail">
+                             {if $model_id}
+                                <!--messages消息 start-->
+                                <div class="messages m_infor clearfix">
+                                    <span class="icon16 fl_l">info</span>
+                                    <div class="grid_18">{$_lang['my_canyu']}{$model_list[$model_id]['model_name']}{$_lang['task_number']} :<!--{eval echo intval($user_join[$model_id])}-->{$_lang['ge']}{$_lang['zh_jh']}</div>
+                                </div>
+                                <!--messages消息 end-->
+                                <div class="">
+                                    <!--from表单 start-->
+                                    <div class="clearfix box pad10">
+                                        <form action="{$url}#userCenter" method="post" id="frm">
+                                            <input type="hidden" name="page" value="{$page}">
+                                            <div class="rowElem clearfix">
+                                                <div class="mr_10 fl_l">
+                                                    <input type="text" name="$id_fds" class="togg_u txt_input" value={$_lang['enter_manuscript_id']} title={$_lang['enter_manuscript_id']} size="13"/>
+                                                </div>
+                                                <div class="mr_10 fl_l">
+                                                    <label class="t_l fl_l">
+                                                        {$_lang['task_status']}{$_lang['zh_mh']}
+                                                    </label>
+                                                    <select class="fl_l" name="task_status" style="width:80px">
+                                                        <option value="-1" {if !isset($task_status)||$task_status==-1}selected="selected"{/if}>{$_lang['all']}</option>
+                                                        {loop $status_arr $k $v}<option value="$k" {if $k==$task_status&&isset($task_status)}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class=" fl_l">
+                                                    <label class="t_l fl_l">
+                                                        {$_lang['manuscript_status']}{$_lang['zh_mh']}
+                                                    </label>
+                                                    <select class="fl_l" name="$satus_fds" style="width:80px">
+                                                        <option value="" {if !isset($task_status)}selected="selected"{/if}>{$_lang['all']}</option>
+                                                        {loop $work_arr $k $v}<option value="$k" {if $k==$work_status&&isset($work_status)}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class=" fl_l">
+                                                    <select class="fl_l" name="ord">
+                                                        {loop $ord_arr $k $v}<option value="$k" {if $k==$ord}selected="selected"{/if}>{$v} </option>
+                                                        {/loop}
+                                                    </select>
+                                                </div>
+                                                <div class="mr_20 fl_l">
+                                                    <select class="fl_l" name="page_size">
+                                                        <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                                                        <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                                                        <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="fl_r">
+                                                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']}><span class="icon magnifier"></span>{$_lang['search']}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!--date_table数据表格 start-->
+                                        <div class="data_list mt_10">
+                                            <table cellpadding="0" cellspacing="0" class="data_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" width="10%">
+                                                           {$_lang['manuscript_id']}
+                                                        </th>
+                                                        <th scope="col" width="30%">
+                                                            {$_lang['belong_task']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['task_cash']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['pub_time']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['task_status']}
+                                                        </th>
+                                                        <th scope="col">
+                                                            {$_lang['manuscript_status']}
+                                                        </th>
+                                                        <th scope="col" width="150">
+                                                            {$_lang['operate']}
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                 {if  $task_info}
+												    {loop $task_info $v}
+                                                    <tr>
+                                                        <td>
+                                                            #$v[$id_fds]
+                                                        </td>
+                                                        <td>
+                                                            <a href="index.php?do=task&task_id={$v['task_id']}" title="$v['task_title']" target="_blank"><!--{eval echo kekezu::cutstr($v['task_title'],60)}--></a>
+                                                        </td>
+                                                        <td>
+                                                        {if $v[model_id]==4||$v[model_id]==5}
+                                                          {c:$cove_arr[$v[task_cash_coverage]]['start_cove']}-{c:$cove_arr[$v[task_cash_coverage]]['end_cove']}
+                                                          {else}
+                                                           {c:$v['task_cash']}
+                                                        {/if}
+                                                        </td>
+                                                        <td>
+                                                            <!--{date('Y-m-d H:i:s',$v[$time_fds])}-->
+                                                        </td>
+                                                        <td>
+                                                            $status_arr[$v['task_status']]
+                                                        </td>
+                                                        <td>
+                                                            $work_arr[$v[$satus_fds]]
+                                                        </td>
+														<td>
+															<!--{eval $opera = wiki_opera($v['model_id'],$v['task_id'],$v['work_id'],$url);}-->
+															
+															  {loop $opera $k $v}
+															  	<a class="button" href="{$v['href']}" {if $v['click']}onclick="{$v['click']}"{/if}>
+															  		<span class="{$v['ico']} icon"></span>{$v['desc']}
+															  	</a>
+															  {/loop}
+														</td>
+                                                    </tr>
+                                                    {/loop}
+													{else}
+														<tr>
+														    <td colspan="8" class="t_c">
+	                                                            {$_lang['norecord']}
+	                                                        </td>
+	                                                    </tr> 
+													{/if}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr> 
+                                                        <td colspan="8">
+                                                            {$_lang['total']}:{$count}{$_lang['ge']}
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        <!--data_table数据表格 end-->
+                                        <div class="page clearfix">
+                                            <p>
+                                                {$pages['page']}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--from表单 end-->
+                                </div>
+							{else}
+								<div class='t_c fontb pad30' style="height:95px">{$_lang['task_model_close']}</div>
+							{/if}
+                            </article>
+                            <!--detail内容 end-->
+                        </div>
+                    </div>
+                    <!--main content end -->
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+    </div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+//确认工作
+function work_over(url){
+			showWindow("work_hand",url,"get",'0');
+			return false; 
+}
+    function del(obj){
+        var url = obj.href;
+        showDialog("$_lang['confirm_delete_ma']", "confirm", "{$_lang['operate_notice']}", function(){
+           formSub(url,'url',false);
+        });
+        return false;
+    }
+	function share(t_id){
+		var url = "{$_K['siteurl']}/index.php?do=ajax&view=share&op=center&task_id="+t_id;
+		showWindow('share',url,'get','0');return false;
+	}
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

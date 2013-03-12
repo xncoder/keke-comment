@@ -1,0 +1,29 @@
+	{if $_K['map_api']=='baidu'}
+		<script type="text/javascript" src="{$_K['baidu_api']}"></script>
+		{else}
+		<script type="text/javascript" src="{$_K['google_api']}"></script>
+		{/if}
+	<div id="div_map"  >
+		<script type="text/javascript">
+			$(function(){	
+				var px = parseFloat("{$px}");
+				var py = parseFloat("{$py}");												
+				init(px,py,8);
+			})
+			function init(px,py,zo){							
+				map = new BMap.Map("container"); // 创建地图实例
+				var point = new BMap.Point(py,px); // 创建点坐标												
+				map.centerAndZoom(point, zo); // 初始化地图，设置中心点坐标和地图级别
+				map.enableScrollWheelZoom(); //鼠标滑动设置地图级别
+				var opts = {type: BMAP_NAVIGATION_CONTROL_SMALL};
+				map.addControl(new BMap.NavigationControl(opts)); //添加平移缩放控件	
+				var marker = new BMap.Marker(point);
+				map.addOverlay(marker);	
+			}						
+		</script>
+		<input type="hidden" name="px" id="px" value="{$px}"/>
+		<input type="hidden" name="py" id="py" value="{$py}"/> 
+		
+		<div id="container" style="width:500px;height:200px"></div>
+								
+	</div>

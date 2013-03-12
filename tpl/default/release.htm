@@ -1,0 +1,109 @@
+<!--{template header}-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<div class="wrapper">
+    <!--页面头部-->
+    <header class="clearfix page_header">
+        <div class="container_24 clearfix">
+            <!--面包屑-->
+            <div class="breadcrumbs clearfix">
+                <a href="index.php">{$_lang['home']}</a> &gt; <a href="javascript:void(0);">{$_lang['pub_task']}</a>
+            </div>
+            <!--end 面包屑-->
+            <div class="page_title">
+                <h2 class="title">{$_lang['pub_task']}</h2>
+            </div>
+            <div class="clear">
+            </div>
+            <!--页面子导航-->
+            <nav class="clearfix page_nav po_re">
+                <ul>
+                    <li {if $pub_mode=='professional'}class="selected"{/if}>
+                        <a href="index.php?do=release&pub_mode=professional" title="{$_lang['specialty_model']}">{$_lang['specialty_model']}</a>
+                    </li>
+                 
+                    <li {if $pub_mode=='onekey'}class="selected"{/if}>
+                        <a href="index.php?do=release&pub_mode=onekey&target_task={$target_task}" class="{$_lang['onkey_release']}">{$_lang['onkey_release']}</a>
+                    </li>
+                </ul>
+            </nav>
+            <!--end 页面子导航-->
+            <div class="clear">
+            </div>
+        </div>
+    </header>
+    <!--end 页面头部--><!--详细内容区-->
+    <section class="content box">
+        <!--布局框-->
+        <div class="container_24">
+        <div class="content_d">
+            <!--step步骤 start-->
+            <div class="step_progress clearfix">
+                {loop $stage_nav $k $v}
+                <div class="step {$v['0']} {if $v['0']==$r_step}selected{/if}">
+                    <span class="icon32 pub">{$k}</span>
+                    <strong>{$v['1']}</strong>
+                    {$v['2']}
+                </div>
+                {/loop}
+            </div>
+            <!--step步骤 end--><!--步骤下所有内容-->
+            <div class="step1_detail">
+                {if $r_step=='step1'}<!--任务模式-->
+                <nav class="primary_nav primary_nav1 clearfix border_b_c">
+                    <ul>
+                        {loop $model_list $k $v}
+                        <li>
+                            <a href="index.php?do=release&pub_mode={$pub_mode}&model_id={$k}" {if $k==$model_id}class="selected"{/if}><span class="icon32 task_model"><!--{eval echo kekezu::cutstr($v['model_name'],0,2)}--></span><em>{$v['model_name']}</em></a>
+                        </li>
+                        {/loop}
+                    
+                    </ul>
+                    <div class="clear">
+                    </div>
+                </nav>
+				{/if}
+				<!--向前 向后-->
+				
+                {if $r_step=='step2'}
+	                <nav class="clearfix primary_nav1 border_b_c pad5">
+	                	<a href="{$basic_url}&r_step=step1" class="ml_10"><span class="icon16 undo" title="{$_lang['return']}">{$_lang['return']}</span></a>
+						<a href="{if $release_info['step2']}{$basic_url}&r_step=step3{else}javascript:void(0);{/if}" class="{if $release_info['step2']}ml_10 mr_10{else}grey ml_10{/if}"><span class="icon16 redo" title="{$_lang['forward']}">{$_lang['forward']}</span></a>
+						{if $user_info['pub_num']}
+						<a href="index.php?do=user&view=employer&op=task&model_id={$model_id}" class="ml_10 button">{$_lang['view_i_release_the_task']}</a>
+						{/if}
+					</nav>
+                {/if} 
+                {if $r_step=='step3'}
+	                <nav class="clearfix primary_nav1 border_b_c pad5">
+	                	<a href="{$basic_url}&r_step=step2" class="ml_10 mr_10"><span class="icon16 undo" title="{$_lang['return']}">{$_lang['return']}</span></a>
+						<a href="javascript:void(0);" class="grey"><span class="icon16 redo" title="{$_lang['forward']}">{$_lang['forward']}</span></a>
+					</nav>
+                {/if} 
+				<!--end 向前 向后-->
+				<!--end 任务模式-->
+                <!--任务模式下部内容-->
+                <div class="clearfix">
+                    <!--{eval require keke_tpl_class::template("task/{$model_info['model_dir']}/tpl/{$_K['template']}/release_$r_step") }-->
+                    <!--end 任务模式下部内容-->
+                </div>
+                <!--end 步骤下所有内容-->
+            </div>
+        </div>
+        <!--end 布局框-->
+    
+    <!--end 详细内容区-->
+</div>
+</section>
+</div>
+<script type="text/javascript" src="resource/js/system/release.js"></script>
+<script type="text/javascript">
+    var model_id = parseInt("{$model_id}") + 0;
+    var uid = parseInt("{$uid}") + 0;
+    var r_step = "{$r_step}";
+    var basic_url = "{$basic_url}";
+    var min_day = parseInt("{$task_config['min_day']}");
+	
+	In('ajaxfileupload','form');
+</script>
+
+<!--{template footer}-->

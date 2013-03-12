@@ -1,0 +1,31 @@
+<!--{template header}-->
+<link href="resource/css/animate.css" rel="stylesheet" type="text/css">
+<div class="po_re errow_box">
+	<div  class="systips animated">
+			<div class="systips_detail error">
+				<div class="tip_icon"></div>
+				<div class="pt_20">
+					<div class="tip_title">{$_lang['sorry_you_visit_the_page_not_found_or_deleted']}
+						<div class="tip_title_second">{$_lang['status']}£º{$status}</div>
+					</div>
+					<div class="tip_messages">
+						<ul>
+							<li>{$_lang['please_check_that_you_visit_the_URL_is_correct']}</li>
+							<li>{$_lang['if_you_visit_the_URL_is_correct_please_contact_customer_service']}</li>
+							<li>{$_lang['or']}<a href="index.php">{$_lang['return_home']}</a>{$_lang['view_other']}</li>
+						</ul>
+					</div>
+				</div>	
+			</div>	
+	</div>	
+</div>	
+<!--{template footer}-->
+<script>
+	$(function(){
+		$('.systips').addClass('bounceIn');
+	})
+</script>
+
+
+
+

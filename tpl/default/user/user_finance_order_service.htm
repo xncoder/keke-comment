@@ -1,0 +1,279 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+<div class="container_24">
+ <!--{template user/user_nav}--><!--main start-->
+  <section class="clearfix section">
+    <!--{template user/user_side}-->
+    <div class="show_panel container_24 po_re">
+     <div class="prefix_3 grid_21">
+      <div class="panel clearfix box">
+      <!--main content-->
+       <div class="">
+        <!--header内容头部 start-->
+         <header class="clearfix box_header">
+	         <h2 class="grid_4 alpha omega box_title t_c">{if $view=='employer'}$_lang['buy_in']{else}$_lang['sell_out']{/if}</h2>
+	         <div class="grid_17 alpha omega">
+	             <nav class="box_nav">
+	                 <ul>
+	                 	{loop $third_nav $v}
+                        <li {if $model_id==$v['1']}class="selectedLava"{/if}>
+                            <a href="index.php?do=user&view={$view}&op={$op}&model_id={$v['1']}#userCenter" title="{$v['2']}">{$v['2']}({$v['3']})</a>
+                        </li>
+                        {/loop} 
+	                 </ul>
+	             </nav>
+	         </div>
+	         <div class="clear">
+	         </div>
+         </header>
+       <!--header内容头部 end--><!--detail内容 start-->
+     <article class="box_detail">
+     	{if $model_id}
+        <div class="">
+         <!--from表单 start-->
+         <div class="clearfix box pad10">
+          <form action="{$url}#userCenter" method="post" id="frm">
+            <input type="hidden" name="page" value="{$page}">
+              <div class="rowElem clearfix">
+                <div class="mr_5 fl_l">
+                 <input type="text" name="order_id" class="togg_u txt_input" value="{$_lang['please_input_order_id']}" title="{$_lang['please_input_order_id']}" size="5" style="width:120px;"/>
+                </div>
+                <div class="fl_l mr_5">
+                 <input type="text" name="order_title" class="togg_u txt_input" value="{$_lang['please_input_order_name']}" title="{$_lang['please_input_order_name']}" style="width:130px;"/>
+                </div>
+                <div class="fl_l">
+                  <select name="status" style="width:100px">
+                    <option value="">{$_lang['all']}</option>
+                     {loop $status_arr $k $v}
+					 	<option value="$k" {if $k==$status}selected="selected"{/if}>{$v}  </option>
+                     {/loop}
+                  </select>
+                </div>
+                <div class="fl_l">
+                 <select name="ord">
+                   {loop $ord_arr $k $v}
+				   <option value="$k" {if $k==$ord}selected="selected"{/if}>{$v}  </option>
+                   {/loop}
+                 </select>
+                </div>
+                <div class="fl_l">
+                  <select name="page_size">
+                    <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                    <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                    <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                   </select>
+                </div>
+               <div class="fl_r">
+                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']}><span class="icon magnifier"></span>{$_lang['search']}</button>
+                </div>
+              </div>
+            </form>
+           <!--date_table数据表格 start-->
+           <div class="data_list mt_10">
+            <table cellpadding="0" cellspacing="0" class="data_table">
+              <thead>
+                <tr>
+                 <th scope="col" width="43%">{$_lang['order_name']}</th>
+                 <th scope="col" width="15%">{if $role=='2'}$_lang['seller']{else}$_lang['buyer']{/if}</th>
+                 <th scope="col" width="9%">{$_lang['single_price_yuan']}</th>
+                 <th scope="col" width="10%">{$_lang['trans_status']}</th>
+                 <th scope="col" width="13%">{$_lang['trans_operate']}</th>
+                 <th scope="col" width="11%">{$_lang['other_operate']}</th>
+               </tr>
+              </thead>
+            
+			 
+              <tbody class="order_{$v['order_id']}" id="order_{$v['order_id']}">
+              	{if $order_arr}
+              	 {loop $order_arr $v}  
+                <tr>
+					<!--{eval $class_name =	$model_list[$v['model_id']]['model_code']."_shop_class";}-->
+					<!--{eval $process_arr = call_user_func(array($class_name,'process_action'),$role,$v['order_status']);}-->
+				    <!--{eval $mark_info = get_mark_info($v['order_id'],$v['obj_id'],$v['order_uid'],$v['seller_uid']);}-->
+                    <!--订单名称-->
+					<td>
+						<p>{if $view=='witkey'} <!--{eval $v['order_body']=str_replace($_lang['buy_goods'],$_lang['sell_goods'],$v['order_body']);}--> {/if}{$v['order_body']}</p>
+						<div>{$_lang['order_id']}{$_lang['zh_mh']}#{$v['order_id']}&nbsp;{$_lang['pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['order_time'])}--></div>
+					</td>
+                    <!--卖家-->
+                    <td>
+                    	<span>
+						{if $role=='2'}
+					 		<a href="index.php?do=space&member_id={$v['seller_uid']}">{$v['seller_username']}</a>
+					 		<a href="javascript:void(0)" onclick="sendMessage('{$v['seller_uid']}','{$v['seller_username']}')">{$_lang['send_message']}</a>
+						{else}
+					 		<a href="index.php?do=space&member_id={$v['order_uid']}">{$v['order_username']}</a>
+					 		<a href="javascript:void(0)" onclick="sendMessage('{$v['order_uid']}','{$v['order_username']}')">{$_lang['send_message']}</a>
+						{/if}
+						</span>
+					</td>
+                    <!--单价（元）-->
+                    <td>{c:$v['order_amount']}</td>
+                    <!--交易状态-->
+                    <td>{$status_arr[$v['order_status']]}</td>
+                    <!--交易操作-->
+                    <td>
+                    	{if $process_arr['trans']}
+                    		{loop $process_arr['trans'] $k2 $v2}
+								<a href="javascript:void(0);"  onclick="process('{$k2}','{$v2}','{$v['order_id']}','{$v['model_id']}','{$v['obj_id']}','{$model_list[$v['model_id']]['model_code']}',{if $role==2}'{$v['seller_uid']}'{else}'{$v['order_uid']}'{/if})">{$v2}</a><br>
+                                __<pre>{$k2},{$v2},{$v['order_id']},{$v['model_id']}</pre>__
+							{/loop}							
+						{/if}
+						{if $v['order_status']=='confirm'}
+						    {if $mark_info['mark_status']!=1&&$mark_info['mark_count']<2}						
+							<a href="javascript:void(0);" onclick="orderMark('{$mark_info['mark_count']}','{$v['model_id']}','{$v['order_id']}',{$v['obj_id']},{if $role==2}'{$v['seller_uid']}'{else}'{$v['order_uid']}'{/if});">$_lang['each_mark']</a>							
+							{/if}
+						{/if}
+						<p>{if $process_arr['after']}
+								{loop $process_arr['after'] $k2 $v2}
+	                    			<a href="javascript:void(0);" onclick="process('{$k2}','{$v2}','{$v['order_id']}','{$v['model_id']}','{$v['obj_id']}','{$model_list[$v['model_id']]['model_code']}','{$v['order_uid']}')">{$v2}</a><br>
+								{/loop}
+							{/if}
+						</p>
+					</td>
+                    <!--其它操作-->
+                    <td>
+                    	{if $process_arr['other']}
+							{loop $process_arr['other'] $k2 $v2}
+                    			<a href="javascript:void(0);" onclick="process('{$k2}','{$v2}','{$v['order_id']}','{$v['model_id']}','{$v['obj_id']}','{$model_list[$v['model_id']]['model_code']}','{$v['order_uid']}')">{$v2}</a><br>
+							{/loop}
+						{/if}
+                    	<a href="index.php?do=service&sid={$v['obj_id']}" target="_blank">{$_lang['view']}</a> 
+						<p>
+						{if preg_match("/".$_lang['confirm']."/",$v2)}
+							{if $v['submit_method']=='outside'}
+									{if $role==2}{$_lang['contant']}{$v['mobile']}
+									{else}
+										{$_lang['get_pay']}
+									{/if}
+								{else}
+								{/if}
+						{/if}
+						</p>
+					</td>
+                </tr>
+				 {/loop}
+				 {else} 
+			 	<tr>	
+					<td colspan="8" class="t_c">
+					{$_lang['norecord']}
+					</td> 
+				</tr>
+				 {/if}
+             </tbody>
+            
+            </table>
+          </div>
+         <!--data_table数据表格 end-->
+         <div class="page clearfix">
+            <p>{$pages['page']}</p>
+         </div>
+        </div>
+       <!--from表单 end-->
+      </div>
+	{else}
+		<div class='t_c fontb pad30' style="height:95px">{$_lang['shop_model_close']}</div>
+	{/if}
+     </article>
+     <!--detail内容 end-->
+    </div>
+   </div>
+   <!--main content end -->
+   <div class="clear"></div>
+   </div>
+   </div>
+  </section>
+  <!--main end-->
+  </div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+	var basic_url = "index.php?do=user&view=finance&op=order&obj_type=service&role=2&page_size=10&status=&page=1";
+	var uid = parseInt('{$uid}')+0;
+	var role = parseInt('{$role}')+0;//收到的则获取关于雇主的辅助项.反之
+	function process(action,desc,order_id,model_id,obj_id,model_code,to_uid){
+	
+		if(check_user_login()){
+		 
+			if(action){
+			switch(action){
+				case "mark":
+					orderMark(model_id,obj_id,to_uid);
+					break;
+				case "download":
+					download(obj_id,model_id);
+					break;
+				case "arbitral":
+					orderRreport(order_id);//订单发起维权
+					break;
+				default:	
+					showDialog(desc+"{$_lang['ma']}?","confirm","{$_lang['operate_notice']}","confirm('"+action+"','"+order_id+"','"+model_id+"','"+model_code+"')");return false;
+					break;
+			}
+		  }
+		}
+	}
+	/**
+	 * 订单发起维权
+	 * @param {Object} order_id
+	 */
+	function orderRreport(order_id){
+		report('order',role,order_id);//此处用role代替report_type方便在控制获取to_uid，to_username
+	}
+	/**
+	 * 操作提交
+	 * @param {Object} ac
+	 * @param {Object} order_id
+	 * @param {Object} model_id
+	 */
+	function confirm(ac,order_id,model_id){
+		  //alert(ac+order_id+','+model_id);return false;
+			var url="index.php?do=user&view=finance&op=order";
+			$.post(url,{ac:ac,order_id:order_id,model_id:model_id},function(json){
+				if(json.status=='1'){
+					if(ac=='delete'){
+						$(".order_"+order_id).slideUp(600).remove();
+					}
+					var jump_url = url+"&obj_type={$obj_type}&role={$role}&order_id="+order_id+"#userCenter";					
+					showDialog(json.data,'notice',json.msg,"winRload()");return false;
+				}else{
+					showDialog(json.data,'alert',json.msg);return false;
+				}
+			},'json')
+	}
+	/**
+	 * 互评
+	 * @param {Object} model_code
+	 * @param {Object} obj_id
+	 */
+	function orderMark(mark_count,model_id,order_id,obj_id,to_uid){
+	  if(mark_count==0||mark_count==1){
+	  	if(role=='1'){
+				role_type=1;
+		}else{
+				role_type=2;
+		}
+		url=basic_url+"&model_id="+model_id+"&mark=1&obj_id="+obj_id+"&order_id="+order_id+"&role_type="+role_type+"&to_uid="+to_uid;
+		mark(url,'service','sid',obj_id);
+		
+	  }else{
+	  	showDialog("$_lang['pingjia_error']",'alert',"$_lang['msg_tishi']");return false;
+	  }
+		
+	}
+	/**
+	 * 下载
+	 * @param {Object} obj_id
+	 */
+	function download(obj_id,model_id){
+		
+		basic_url+="&download=1&model_id="+model_id+"&sid="+obj_id;
+		//alert(basic_url);
+		showWindow('filedown',basic_url,'get',0);return false;
+	}
+	function winRload(){
+	  document.location.reload();
+	}
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="{$_K['charset']}">
+<title>{$page_title}</title>
+<meta name="keywords" content="{$page_keyword}">
+<meta name="description" content="{$page_description}">
+<meta name="generator" content="{$_lang['keke_pub']} {KEKE_VERSION}" />
+<meta name="viewport" content="width=320,initial-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style” content=black" /> 
+<meta name="author" content="kekezu" />
+<meta name="copyright" content="{$basic_config['copyright']}" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="favicon.ico"/>
+<script type="text/javascript">
+	var SITEURL= "{$_K['siteurl']}";
+	var SKIN_PATH = '{SKIN_PATH}';
+	var LANG       = '{$language}';
+	var INDEX      = '{$do}';
+	var CHARSET    = "{$_K['charset']}";
+</script>
+<link href="resource/css/reset.css" rel="stylesheet">
+<!--公用样式-->
+<link href="resource/css/base.css" rel="stylesheet">
+<!--box样式-->
+<link href="resource/css/box.css" rel="stylesheet">
+<!--布局样式-->
+<link href="resource/css/layout/layout.css" rel="stylesheet">
+
+
+
+<!--[if lte IE 8]>
+	<link href="resource/css/layout/960.min.css" rel="stylesheet">
+<![endif]-->
+<!--[if lt IE 9]>
+	<script src="resource/js/system/html5.js" type="text/javascript"></script>
+<![endif]-->
+<!--jQuery1.4.4库-->
+<script src="resource/js/jquery.js" type="text/javascript"></script>
+<script src="lang/{$language}/script/lang.js" type="text/javascript"></script>
+<script src="resource/js/system/keke.js" type="text/javascript"></script>
+<script src="resource/js/system/form_and_validation.js" type="text/javascript"></script>
+<style type="text/css">
+    #wrapper{ font-family: "微软雅黑"}
+    .header{ background: #2F549F; padding:5px 0; }
+    .header h1{ color: #fff;}
+    .login_nav{padding:5px;}
+    .login_nav li{ display: inline; float: left;padding:0 5px}
+    .login_nav li a{ display: inline-block; font-size: 16px; padding: 3px 10px;  color: #8CA5DD; text-shadow:1px 1px 2px rgba(0,0,0,.3); border-radius: 5px;}
+    .login_nav li a:hover{ color: #fff;}
+    .login_nav li a.selected{ color: #fff; background: #234077;}
+    .login_form_box{ font-size: 14px; padding:20px 0;}
+    .login_form_box label{ margin-left: -80px;}
+    .login_form_box .button_box button{ width: 100px;}
+    .footer{ border-top: 1px solid #eee; text-align: center; color: #999;}
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input.focus,
+    .txt_input:focus,
+    .txt_input.focus{ border-color:#006DC2;  box-shadow:inset 1px 1px 3px #A6CAEA, 0 0 3px rgba(102, 146, 219,1);}
+    input[type="submit"],button[type="submit"]{
+            font-family: "微软雅黑";
+            border: 1px solid #4081af; 
+            border-bottom-color: #20559a; 
+            background: #0090D2; 
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #52a8e8), color-stop(1, #2e76cf)); 
+            background: -moz-linear-gradient(center top, #52a8e8 20%, #2e76cf 100%); 
+            }
+    input[type="submit"]:hover,
+        button[type="submit"]:hover{
+            background: #0073d2; 
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #3e9ee5), color-stop(1, #1666ca)); 
+            background: -moz-linear-gradient(center top, #3e9ee5 20%, #1666ca 100%);
+        }
+    input[type="submit"]:active,button[type="submit"]:active{
+            border-color: #20559a;
+        }
+</style>
+
+</head>
+    <body>
+    <!--[if IE 8]><div id="ie8"><![endif]-->
+    <!--[if IE 7]><div id="ie7"><![endif]-->
+    <!--[if IE 6]><div id="ie6"><![endif]-->
+	<div class="{$_K['theme']}_style" id="wrapper">
+		
+        <div id="append_parent">
+        </div>
+        <div id="ajaxwaitid">
+        	<div>
+        	<img src="{SKIN_PATH}/theme/{$_K['theme']}/img/system/loading.gif" alt="loading"/>
+			{$_lang['request_processing']}
+			</div>
+		</div>
+	 
+	
+		<!--body start-->
+		
+		
+		
+			<div class="t_c site_messages">
+						  
+			</div>
+	<!--头部 start-->
+    <header class="header">
+        <div class="container_24 clearfix">
+        	<!--logo start-->
+            <hgroup class="grid_5 logo">
+             	 <h1><a href="index.php">
+             	 	{if isset($custom_logo)}
+					<img src="{$basic_config['web_logo']}"
+					{else}
+					<img src="{SKIN_PATH}/theme/{$_K['theme']}/img/style/{$basic_config['web_logo']}"
+					{/if}
+					 title="{$_K['html_title']}" alt="{$_K['html_title']}"></a></h1>
+            </hgroup>
+            <!--logo end-->
+			
+			<div class="grid_10">
+				<nav class="login_nav clearfix">
+                        <ul> 
+                            <li><a id="tab_outh_1" href="#" class="selected" onclick="swaptab('outh','selected','',2,1)">{$_lang['login']}</a></li>
+                            <li><a id="tab_outh_2" href="#" onclick="swaptab('outh','selected','',2,2)">{$_lang['register']}</a></li>
+                        </ul>
+                </nav>
+			</div>
+			
+            <div class="clear"></div>
+        </div>
+    </header>
+    <!--头部 end-->
+			
+<div class="wrapper">
+    <div class="container_24">
+        <section id="div_outh_1" class="clearfix section ">
+
+                    <!--from表单 start-->
+                    <div class="login_form_box clearfix t_c">
+                        <form action="index.php?do=login_p" method="post" id="login_frm" name="login_frm">
+                            <input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+							<input type="hidden" name="is_login" value="1">
+							<input type="hidden" name="releation_id" value="{$releation_id}">
+							<input type="hidden" name="r_task_id" value="{$r_task_id}">
+							<input type="hidden" name="task_id" value="{$task_id}">
+							<input type="hidden" name="login_type" value="{$login_type}">
+							<input type="hidden" name="app_uid" value="{$app_uid}">
+							
+							<!--账号-->
+                            <div class="rowElem clearfix">
+                                <label>
+                                  	{$_lang['account']}
+                                </label>
+								  
+                             		<input style="width:200px;" type="text" class="txt txt_input" size="20" 
+									autocomplete="off" name="txt_account" id="txt_account" limit="required:true;len:2-20" 
+									msg="{$_lang['user_error']}" title="{$_lang['username_can_chinese']}"
+									msgArea="login_account_msg" />
+								 
+									
+  								
+                            </div>
+
+                            <div class="rowElem clearfix ">
+                                <label>
+                                   	{$_lang['password']}
+                                </label>
+                                    <input class="txt_input txt" style="width:200px;" 
+									type="password" 
+									name="pwd_password" id="pwd_password" maxlength="20"
+									limit="required:true;len:6-20" 
+									msg="{$_lang['password_length_limit']}" 
+									title="{$_lang['password_length']}" 
+									msgArea="login_password_msg" />
+                                  
+                                
+                            </div>
+
+                            
+                            <div class="button_box">
+                                <button type="submit" class="button" onclick="return check_login()" id="user_login_btn">
+                                  {$_lang['login']}
+                                </button> 　　
+
+                            </div>
+                            
+                        </form>
+						<script type="text/javascript">
+							function check_login(){
+								return checkForm(document.getElementById("login_frm"),false);
+							}
+						</script>
+                    </div>
+
+
+        </section>
+      
+	  	
+		<section id="div_outh_2" class="clearfix section hidden">
+            <div class="login_form_box clearfix t_c">
+            	 <form action="index.php?do=login_p" method="post" id="frm_reg" name="frm_reg">
+            	 	<input type="hidden" name="is_register" value="1">
+					<input type="hidden" name="releation_id" value="{$releation_id}">
+					<input type="hidden" name="r_task_id" value="{$r_task_id}">
+					<input type="hidden" name="task_id" value="{$task_id}">
+					<div class="rowElem clearfix">
+                                <label>
+           								{$_lang['user_name']}
+                                </label>
+                                <input style="width:200px;" type="text"  
+								 class="txt txt_input" size="20" autocomplete="off" name="txt_account" 
+								 id="txt_account" limit="required:true;len:2-20" msg="{$_lang['user_error']}" 
+								 title="{$_lang['username_can_chinese']}" msgArea="login_account_msg" />
+                               
+								
+                    </div>
+					
+					<div class="rowElem clearfix">
+                                <label>
+                                    	 {$_lang['pass_word']}
+                                </label>
+                                <input style="width:200px;" type="password"  class="txt txt_input" size="20"
+								 autocomplete="off"  name="pwd_password" id="pwd_password" maxlength="20" 
+								 limit="required:true;len:6-20" msg="{$_lang['password_input_error']}" 
+								 title="{$_lang['please_input_register_pw']}" msgArea="password_msg" />
+                               
+								
+                    </div>
+					
+					<div class="rowElem clearfix">
+                                <label>
+                                  	{$_lang['re_password']}
+                                </label>
+                                <input style="width:200px;" type="password"   
+								class="txt txt_input" size="20" autocomplete="off" 
+								name="pwd_password2" id="pwd_password2" maxlength="20" limit="required:true;equals:pwd_password" msg="{$_lang['repeat_password_error']}" title="{$_lang['input_pw_agian']}" msgArea="password2_msg" />
+                               
+								
+                    </div>
+					
+					<div class="rowElem clearfix">
+                                <label>
+                                  	{$_lang['email']}
+                                </label>
+                                	
+									<input style="width:200px;" type="text" 
+									class="txt txt_input" size="20" autocomplete="off" 
+									name="txt_email" id="txt_email"limit="type:email;required:true;len:6-50" msg="{$_lang['email_error']}" title="{$_lang['email_format']}" ajax="index.php?do=register&check_email=" msgArea="email_msg" />
+                               
+								
+                    </div>
+					
+					<div class="button_box">
+                                <button type="submit" class="button" onclick="return user_register();">
+                                   	{$_lang['register_now']}
+                                </button> 　　
+
+                            </div>
+					
+            	 </form>
+            </div>
+			<script type="text/javascript">
+				function user_register(){
+						var i = checkForm(document.getElementById("frm_reg"));
+				        if (i) {
+							 showWindow('frm_reg1', 'frm_reg', 'post',0,{cover:1});
+				         }else{
+				      		return false;
+						 }
+				   }
+			</script>
+		</section>
+
+    </div>
+</div>
+
+<footer class="footer">
+                <div class="container_24 clearfix ">
+                    
+                 
+                            <dl>
+	                            <dt>
+	                                {$_lang['company']}{$basic_config['company']}<span class="pad10">{$_lang['address']}{$basic_config['address']}</span>{$_lang['contact_phone']}{$basic_config['phone']}
+	                            </dt>
+	                            <dd>
+	                            {P_NAME}{KEKE_VERSION} Copyright &copy; 2009 -2011 kekezu. All rights reserved <a href="http://icp.valu.cn/" target="_blank">{$basic_config['filing']}</a>
+	                                {if KEKE_DEBUG}
+	                                <span>
+	                                    Querys: <!--{eval echo db_factory::create()->get_query_num()}-->
+	                                     &nbsp;
+	                                    Times:<!--{eval echo kekezu::execute_time()}-->
+	                                </span>         
+	                                {/if}
+	                            </dd>  
+                            </dl>
+
+                  <div class="clearfix"></div>
+                </div>
+                    
+</footer>
+<!--[if IE 6]></div><![endif]-->
+<!--[if IE 7]></div><![endif]-->
+<!--[if IE 8]></div><![endif]-->
+</body>
+</html>

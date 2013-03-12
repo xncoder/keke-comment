@@ -1,0 +1,69 @@
+ <div class="panel clearfix box grid_24">
+                <header class="clearfix box_header">
+                	<div class="fl_l pl_10 pr_20">
+                    <h3 class="font16b lineh_32">{$_lang['evaluation']}[ {$mc['all']} ]</h3>
+					</div>
+					   <div class="grid_18 alpha">
+                      	<nav class="box_nav">
+                        	<ul class="clearfix">
+						  	<li><a href="{$basic_url}&view=mark">{$_lang['all_evaluation']}[ {$mc['all']} ]</a></li>
+						  	<li><a href="{$basic_url}&view=mark&st=1">{$_lang['good_value']}[ <!--{eval echo intval($mark_count['1']['count'])}--> ]</a></li>
+							<li><a href="{$basic_url}&view=mark&st=2">{$_lang['mid_evaluation']}[ <!--{eval echo intval($mark_count['2']['count'])}--> ]</a></li>
+							<li><a href="{$basic_url}&view=mark&st=3">{$_lang['bad_value']}[ <!--{eval echo intval($mark_count['3']['count'])}--> ]</a></li>
+							<li><a href="{$basic_url}&view=mark&ut=1">{$_lang['from_seller']}[{$mc['seller']}]</a></li>
+							<li><a href="{$basic_url}&view=mark&ut=2">{$_lang['from_buyer']}[{$mc['buyer']}]</a></li>
+				      		</ul>
+                         </nav>
+				     </div>
+                </header>
+            
+				{if $mark_info} <!--ÆÀ¼Û-->
+					{loop $mark_info $v}
+                     <div class="ly1 pb_20 pl_40 pr_40 clearfix">
+                        <div class="top1 clearfix mt_10">
+                            <div class="fl_l mr_10">
+                            	<a class="fl_l" href="index.php?do=space&member_id={$v['by_uid']}" title="{$v['by_username']}"><!--{userpic($v['by_uid'],'small')}--></a>
+								<div class="fl_l pt_15 ml_10">{$_lang['to']}<a href="index.php?do=space&member_id={$v['uid']}" class="ml_10 mr_10">{$v['username']}</a>{$_lang['de']}
+								{if $v['mark_status']==1}{$_lang['good_value']}{elseif $v['mark_status']==2}{$_lang['mid_evaluation']}{elseif $v['mark_status']=='3'}{$_lang['bad_value']}{else}{$_lang['no_reply_evaluation']}{/if}
+								<img src="resource/img/ico/ico_mark_{$v['mark_status']}.gif" alt=''>
+								</div>
+                            </div>
+                        </div>
+                        <div class="pl_10">
+                            <p class="mt_10 font14 ws_prewrap ws_break">{$v['mark_content']}
+                            </p>
+                        </div>
+						<!--{eval $aid_info=keke_user_mark_class::get_user_aid($v['by_uid'],$v['mark_type'],$v['mark_status'],2,$v['model_code'],$v['obj_id']);}-->
+						<div class="fl_l">
+							{loop $aid_info $k2 $v2}
+								<div class="grid_4 omega">
+						        	 <b>{$v2['aid_name']}</b>&nbsp;&nbsp;&nbsp;&nbsp;<font color="red">{$v2['avg']}</font>{$_lang['fen']}
+						          </div>
+						       <div class="grid_3 alpha">
+						        <div class="clearfix">
+						             <!--{eval echo keke_user_mark_class::gen_star2($v2['avg']);}-->
+								 </div>
+						         </div>
+								<div class="clear"></div>
+							{/loop}
+						</div>
+                    </div>
+					{/loop}<!--endÆÀ¼Û-->
+				{else}
+					<div class="t_c"><span class="c999">{$_lang['now_no_record']}</span></div>
+				{/if}  
+       
+				
+				 <!--page ·­Ò³ start-->
+                <div class="page">
+                    <p class="clearfix">{$pages['page']} </p>
+                    <div class="clear">
+                    </div>
+                </div>
+                <!--page ·­Ò³ end-->
+                
+                <div class="clear">
+                </div>
+            </div>
+
+ 

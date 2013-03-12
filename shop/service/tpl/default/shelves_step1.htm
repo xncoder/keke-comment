@@ -1,0 +1,97 @@
+ <!--左边部分-->
+
+   <div class="grid_17 omega alpha">
+      <div class="pad10 border_r_c">
+        <!--提示信息-->
+         <div class="messages m_infor">
+	          <span class="icon16">info</span>{$_lang['goods_info_notice']}
+	         <a href="javascript:;" class="close">&times;</a>
+        </div>
+       <!--end 提示信息-->
+       <!--提示下部内容 start-->
+	  <form action="{$basic_url}" method="post" name="frm_step1" id="frm_step1">
+	  	<input type="hidden" name="step1" value="step1">
+	  	<input type="hidden" name="p_step" value="">
+	  	<input type="hidden" name="formhash" value="{FORMHASH}">
+       <div class="form_box clearfix box border_n">
+          <div class="form_tip">
+             <h5 class="font14b t_c" style="color:#7caf22">{$model_info[model_name]}{$_lang['flow_map']}</h5>
+             <!--雇佣服务流程图-hire-->
+			 <div class="min_step all_8 step_orange mb_10 ml_30">
+					<ul class="clearfix">
+						<li class>
+							<div class="icon"></div>
+							<span>{$_lang['pub']}</span>
+						</li>
+					 
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['audit']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['shelves']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['sold']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['payment']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['peer']}</span>
+						</li>
+						
+						<li>
+							<div class="icon"></div>
+							<span>{$_lang['assessment']}</span>
+						</li>
+						
+						<li class="last">
+							<div class="icon"></div>
+							<span>{$_lang['end']}</span>
+						</li>
+						
+					</ul>
+				</div>
+          </div>
+          <div class="pad10">
+          <!--源文件协议内容-->
+	         
+	          <div class="source_content clearfix" id="agreement">
+	             <div class="source_agreement">
+	              <h5 class="font16b t_c">{$_lang['service_sell_agreement']}</h5>
+	                <!--{tag 作品出售协议}-->
+	             </div>
+	         </div>
+         <!--end 源文件协议内容-->
+		 <div class="pt_15">
+        <div class="step_button">
+        	 <button type="submit" name="is_submit" class="button"><span class="check icon"></span>{$_lang['agree_next_step']}</button>
+		</div>
+		</div>
+   		</div>
+      </div>
+	  </form>
+     <!--提示下部内容 end-->
+      </div>
+    </div>
+    <!--end 左边部分-->
+   <!--右边部分-->
+    <div class="grid_7 alpha omega">
+	     <div class=" prefix_1 suffix_1 pt_20">
+	         <!--{eval echo kekezu::filter_input($model_info[model_desc]);}-->
+		 </div>
+    </div>
+	<script type="text/javascript">
+		In('print');
+		 
+	</script>
+    <!--end 右边部分-->

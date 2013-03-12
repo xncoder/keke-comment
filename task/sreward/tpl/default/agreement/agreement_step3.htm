@@ -1,0 +1,57 @@
+<!--{template header}--><!--页面内容区-->
+<link href="resource/css/public.css" rel="stylesheet" type="text/css">
+<!--页面样式-->
+
+<div class="wrapper">
+<!--页面头部-->
+ <header class="clearfix page_header">
+   <div class="container_24 clearfix">
+     <div class="page_title">
+        <h2 class="title">$agree_info['agree_title']</h2>
+     </div>
+     <div class="clear"></div>
+   </div>
+ </header>
+<!--end 页面头部-->
+<!--详细内容区-->
+ <section class="content box">
+ <!--布局框-->  
+  <div class="container_24">
+    <div class="content_d">
+   	<!--step步骤 start-->
+      <div class="step_progress clearfix">
+       {loop $stage_nav $k $v}
+         <div class="step {$v['0']} {if $v['0']==$step}selected{/if}">
+            <span class="icon32 pub">{$k}</span>
+            <strong>{$v['1']}</strong><em>{$v['2']}</em>
+         </div>
+	  {/loop}
+      </div>
+   <!--step步骤 end-->
+   <!--步骤下部所有内容-->
+     <div class="step1_detail clearfix">
+		<div class="grid_20 prefix_2 suffix_2">
+           <div class="pad10 t_c source_succss font14 mt_30 mb_30">
+           	<img src="resource/img/keke/right.gif" >
+           	{$_lang['suc_source_deliver']}
+			</div>
+           <div class="t_c mb_30"><button type="button" class="button" onclick="mark('{$basic_url}&op=mark','task','task_id','{$agree_info['task_id']}');">{$_lang['each_mark']}</button></div>
+        </div>
+     </div> 
+  <!--end 步骤下部所有内容--> 
+  </div>
+ </div>
+  <!--end 布局框-->     	
+ </section>
+<!--end 详细内容区-->
+</div>
+<!--end 页面内容区-->
+ 
+<script type="text/javascript">
+	var basic_url = '{$basic_url}';
+ 
+	In.add('sreward_agreement',{path:"task/sreward/{SKIN_PATH}/sreward_agreement.js",type:'js'}); 
+	In('sreward_agreement'); 
+ 
+</script>
+<!--{template footer}-->

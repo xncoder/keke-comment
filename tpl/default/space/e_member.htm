@@ -1,0 +1,45 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}--><!--main_con-->
+<div class="main_con mt_20 mb_20" id="taskScroll">
+    <h1 class="s_l_title">{$_lang['corporate_members']}</h1>
+    <div class="clear">
+    </div>
+	<div>
+	<div id="m_list">
+    {loop $m_arr $k $v}
+    <div class="member_list_box mt_20 clearfix">
+        <img src="{if file_exists($v['member_pic'])}$v['member_pic']{else}{$_K['siteurl']}/data/avatar/default/man_big.jpg{/if}" alt="" class="pimg"/>
+        <div class="right_con clearfix ws_break">
+            <h2 class="c000">$v['truename']</h2>
+			<ul>
+	            <li class="col2">
+	                {$_lang['job_position']}{$_lang['zh_mh']}{$v['member_job']}
+	            </li>
+	            <li class="col2">
+	                {$_lang['edu_background']}{$_lang['zh_mh']}{$v['top_eduction']}
+	            </li>
+	            <li class="col2">
+	                {$_lang['graduated']}{$_lang['zh_mh']}{$v['school']}
+	            </li>
+	            <li class="col2">
+	                {$_lang['entry_age']}{$_lang['zh_mh']}<!--{date('Y-m-d',$v['entry_age'])}-->
+	            </li>
+			</ul>
+           ¸öÈË¼ò½é{$_lang['zh_mh']} $v['member_desc']
+        </div>
+    </div>
+	
+    {/loop}   <div class="clear">
+                </div>
+                <!--page ·­Ò³ start-->
+                <div class="pages">
+                    $pages['page']
+                </div>
+                <!--page ·­Ò³ end-->
+    </div>
+    </div>
+</div>
+<!--end main_con-->
+</div>
+<div class="clear">
+</div>
+<!--{template footer}-->

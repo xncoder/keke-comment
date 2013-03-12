@@ -1,0 +1,243 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$action_arr[$type][1]}{$_lang['manage']}</h1>
+    <div class="tool">
+        <a href="index.php?do=trans&view=rights&type={$type}">{$action_arr[$type][1]}{$_lang['list']}</a>
+		<a href="javascript:void(0);" class="here">{$action_arr[$type][1]}{$_lang['manage']}</a>
+    </div>
+</div>
+ <div class="box post">
+  <div class="tabcon">
+   <div class="title"><h2>{$trans_object[$report_info[obj]]}{$action_arr[$type][1]}#{$report_id}</h2></div>
+    <div class="detail">
+     <form action="index.php?do={$do}&view={$view}&type={$type}&report_id={$report_id}" method="post" name="frm" id="frm">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+   
+	   
+	   <tr>
+       <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['the_promoters']}</th>
+       <td>
+       		<a href="{$_K[siteurl]}/index.php?do=space&member_id={$report_info[uid]}" target="_blank">$report_info['username']</a>
+			<font color="red">E-mail</font>:{$user_info['email']}&nbsp;||&nbsp;<font color="red">{$_lang['tel']}</font>:{if $user_info['phone']}$user_info['phone']{else}{$_lang['not_completed']}{/if}&nbsp;||&nbsp;<font color="red">QQ</font>:{if $user_info['qq']}$user_info['qq']{else}{$_lang['not_completed']}{/if}&nbsp;||&nbsp;<font color="red">{$_lang['mobile']}</font>:{if $user_info[mobile]}{else}{$_lang['not_completed']}{/if}
+	   </td>
+      </tr>
+	  <tr>
+       <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['object']}</th>
+       <td>
+       		<a href="{$_K[siteurl]}/index.php?do=space&member_id={$report_info[to_uid]}" target="_blank">$report_info['to_username']</a>
+			<font color="red">E-mail</font>:{$to_userinfo['email']}&nbsp;||&nbsp;<font color="red">{$_lang['tel']}</font>:{if $to_userinfo['phone']}$to_userinfo['phone']{else}{$_lang['not_completed']}{/if}&nbsp;||&nbsp;<font color="red">QQ</font>:{if $to_userinfo['qq']}$to_userinfo['qq']{else}{$_lang['not_completed']}{/if}&nbsp;||&nbsp;<font color="red">{$_lang['mobile']}</font>:{if $to_userinfo[mobile]}$to_userinfo[mobile]{else}{$_lang['not_completed']}{/if}
+	   </td>
+      </tr>
+	  <tr>
+         <th scope="row" width="130">{$_lang['apply']}{$action_arr[$type][1]}{$_lang['time']}</th>
+         <td><!--{date('Y-m-d H:i:s',$report_info[on_time])}--></td>
+      </tr>
+	  <tr>
+        <th scope="row" width="130">{$_lang['apply_status']}</th>
+        <td>{$trans_status[$report_info[report_status]]}</td>
+      </tr>
+	 <tr>
+        <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['explain']}</th>
+        <td><!--{eval echo nl2br($report_info['report_desc'])}--></td>
+     </tr>
+	 <tr>
+        <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['attachment']}</th>
+        <td>
+			<!--{eval $filename=substr($report_info[report_file],strrpos($report_info[report_file],'/')+1);}-->
+			{if $report_info[report_file]}<a href="index.php?do={$do}&view={$type}&ac=download&filename=$filename&filepath={$v[report_file]}">{$filename}</a>{else}{$_lang['uncommitted_attachment']}{/if}
+		</td>
+    </tr>
+	<tr>
+         <th scope="row" width="130">{$_lang['belong_to_task']}</th>
+         <td>
+         	<a href="{$_K[siteurl]}/index.php?do=task&task_id={$obj_info[origin_id]}" target="_blank">{$obj_info[origin_title]}</a>
+		{$_lang['task_cost']}{$_lang['zh_mh']} {$obj_info[cash]}  
+		  {$trans_object[$report_info[obj]]}{$_lang['id']}#{$report_info['obj_id']}
+		 </td>
+       </tr>
+	<tr>
+       <th scope="row" width="130">{$action_arr[$type][1]}{$_lang['treatment_scheme']}</th>
+	   <td>
+	   	{if $report_info['report_status'] != 4}
+			{if $process_can['sharing']}
+			 <div class="messages">
+			  	<ul>
+			  		<li>{$_lang['hirer_deposit_cash']}<b><font color="red">{$match_task['hirer_deposit']}{$_lang['yuan']}</font></b>:
+							 <input type="radio" name="op_result[hire_deposit]" value=1 checked="checked">{$_lang['all_return']}
+							 <input type="radio" name="op_result[hire_deposit]" value=2>{$_lang['part_refund']}({$_lang['according_the_task_config']}<font color="red">{$match_task['deposit_rate']}%</font>{$_lang['deposit_cash']})
+							 <input type="radio" name="op_result[hire_deposit]" value=3>{$_lang['all_deduct']}
+					</li>
+					<li>{$_lang['wiki_deposit_cash']}<b><font color="red">{$match_work['wiki_deposit']}{$_lang['yuan']}</font></b>:
+							 <input type="radio" name="op_result[wiki_deposit]" value=1 checked="checked">{$_lang['all_return']}
+							 <input type="radio" name="op_result[wiki_deposit]" value=2>{$_lang['part_refund']}({$_lang['according_the_task_config']}<font color="red">{$match_task['deposit_rate']}%</font>{$_lang['deposit_cash']})
+							 <input type="radio" name="op_result[wiki_deposit]" value=3>{$_lang['all_deduct']}
+					</li>
+					<li>{$_lang['host_amount']}<b><font color="red">{$match_task['host_amount']}{$_lang['yuan']}</font></b>: 
+							<input type="radio" name="op_result[host_amount]" value=1 id="host_1" checked="checked">{$_lang['all_return']}
+							<input type="radio" name="op_result[host_amount]" value=2 id="host_2">{$_lang['both_side_dealing']}
+							<div style="margin-left:130px" class="hidden">
+								{$_lang['hirer_dealing']}:<input type="text" name="op_result[hire_get]" id="hire_get" class="txt">
+								{$_lang['wiki_dealing']}:<input type="text" name="op_result[wiki_get]" id="wiki_get" class="txt">
+							</div>
+					</li>
+			  	</ul>
+			  </div>
+			{/if}
+			{if $process_can['deduct']}
+				<br>{$_lang['informants_surplus']}{$credit_info[type]}:{$credit_info[max_credit]}{$_lang['point']}
+				      {$_lang['deduction_of_informants']}{$credit_info[$type][1]}{$credit_info[type]}
+				<input type="text" name="op_result[credit_value]" id="credit" size=4 class="txt"
+				 onblur="clearstr(this)"
+				 max="{$credit_info[max_credit]}">{$_lang['point']}{$_lang['zh_jh']} <span>{$_lang['deducted_points_not_more_than']}{$credit_info[max_credit]}</span>(<font color="red">{$_lang['do_not_choose_if_not_deducted']}</font>)
+			{/if}
+			{if $process_can['freeze_user']}
+				<br>
+				<input type="checkbox" name="op_result[freeze_user]" id="freeze_user" value="1">
+				{$_lang['freezing_username']}
+				<input type="text" name="op_result[freeze_day]" id="freeze_day" onblur="clearstr(this)" maxlength="2" size=4 class="txt">{$_lang['day']}{$_lang['zh_jh']}(<font color="red">{$_lang['do_not_choose_if_not_freeze']}</font>)
+			{/if}
+		{else}
+		{$report_info[op_result]}		   
+		{/if}		
+	   </td>
+	</tr>
+	<tr>
+      <th scope="row">&nbsp;</th>
+      <td>
+          <div class="clearfix padt10">
+             {if $report_info['report_status'] != 4}
+			 <input type="hidden" name="op_result[process_result]" id="result">		
+          	 <input type="hidden" name="op_result[action]" id="action">
+			 <label for="reply" id="lab_replay" style="display:none;" >{$_lang['please_explain_reason']}{$_lang['zh_mh']}<br>
+			 <textarea cols="25"  rows="7"  style="width:360px;" name="op_result[reply]" id="reply" onclick="this.value=''">{$_lang['please_enter_untenable_reason']}</textarea>
+			 </label> 
+          	 <button class="positive primary pill button" type="submit" name="btn_report" id="btn_report" value="{$_lang['handle']}{$action_arr[$type][1]}" onclick="return report();"><span class="icon pen"></span>{$_lang['handle']}{$action_arr[$type][1]}</button>
+			
+			 {/if}
+          </div>
+      </td>
+   </tr>
+ </table>
+ </form>
+ </div>  
+ </div>         
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#host_1").click(function(){
+			$(this).next().next().addClass("hidden");
+		})
+		$("#host_2").click(function(){
+			$(this).next().removeClass("hidden");
+		})
+	})
+	function report(){
+		var reportType='{$type}';//交易维权类型 rights 维权    report举报
+		switch(reportType){
+			case "rights":
+				var content='';
+				var hire = $("input:radio[name='op_result[hire_deposit]']:checked").val();
+					if(hire==1){
+							content+="{$_lang['all_return']}";
+					}else if(hire==2){
+							content+="{$_lang['part_refund']}";
+					}else{
+							content+="{$_lang['all_deduct']}";
+					}
+					content+="{$_lang['hirder_deposit_cash']}";
+				var wiki = $("input:radio[name='op_result[wiki_deposit]']:checked").val();
+					if(hire==1){
+							content+="{$_lang['all_return']}";
+					}else if(hire==2){
+							content+="{$_lang['part_refund']}";
+					}else{
+							content+="{$_lang['all_deduct']}";
+					}
+					content+="{$_lang['wiki_deposit_cash']}</br>";
+				var host = $("input:radio[name='op_result[host_amount]']:checked").val();
+					if(host==1){
+						content+="{$_lang['hirder_deposit_cash_all_refund']}";
+					}else{
+						var host_amount = "{$match_task['host_amount']}";
+						var hire_get    = parseFloat($("#hire_get").val());
+						var wiki_get    = parseFloat($("#wiki_get").val());
+							isNaN(hire_get)?hire_get=0.00:'';
+							isNaN(wiki_get)?wiki_get=0.00:'';
+						if(hire_get+wiki_get!=host_amount){
+							art.dialog.alert("{$_lang['commission_allocation_is_not_complete']}");return false;
+						}
+						content+="{$_lang['hirer_dealing']}:"+hire_get+",{$_lang['wiki_dealing']}:"+wiki_get;
+					}
+					art.dialog({
+							title: "{$_lang['confirmation_prompts']}",
+					 		content: "{$_lang['current_treatment_options']}{$_lang['zh_mh']}<br>"+content,
+							icon: 'question',
+							yesFn: function(){
+							$("#result").val(content);
+							$("#action").val('pass');$("#frm").submit()},
+					    noFn :function(){this.close();return false;}
+					});
+				return false;
+				break;
+			case "report":
+				var credit=parseInt($("#credit").val())+0;
+				var maxCredit=parseInt($("#credit").attr("max"))+0;
+				var freeze_day=parseInt($("#freeze_day").val())+0;
+				
+				if(!$("#freeze_user").is(":checked")){
+					art.dialog.alert("{$_lang['warning_not_select_treatment_scheme']}");return false;
+				}			
+				if(!isNaN(credit)){
+					if(credit<0){
+						art.dialog.alert("{$_lang['warning_deducted_points_not_negative']}");return false;
+					}
+					else if(credit==0||credit>maxCredit){
+						art.dialog.alert("{$_lang['warning_deduction']}{$credit_info[type]}{$_lang['maximum']}:"+maxCredit+"{$_lang['point']}");return false;
+					}
+				}
+				if($("#freeze_user").is(":checked")){
+					if(isNaN(freeze_day)||freeze_day==0){
+						art.dialog.alert("{$_lang['warning_please_enter_frozen_days']}");return false;
+					}		
+				}
+				var content='';
+				if(credit){
+					content+="{$_lang['deduction']}{$report_info[to_username]}{$credit_info[type]}"+credit+"{$_lang['point']}{$_lang['zh_jh']}<br>";
+				}
+				if($("#freeze_user").is(":checked")){
+					content+="{$_lang['freezing_username']}{$report_info[to_username]}"+freeze_day+"{$_lang['day']}{$_lang['zh_jh']}";
+				}
+				art.dialog({
+							title: "{$_lang['confirmation_prompts']}",
+					 		content: "{$_lang['current_treatment_options']}{$_lang['zh_mh']}<br>"+content,
+							icon: 'question',
+							yesFn: function(){
+							$("#result").val(content);
+							$("#action").val('pass');$("#frm").submit()},
+					    noFn :function(){this.close();return false;}
+					});
+				return false;
+					break;
+		}
+	}
+	function check(){
+		art.dialog({
+   			title: "{$_lang['confirmation_not_accept']}{$action_arr[$type][1]}{$_lang['record']}?",
+ 			content:document.getElementById('lab_replay'),
+			follow: document.getElementById('btn_report'),
+			icon: 'question',
+   			yesFn: function(){
+				var i = document.getElementById('reply').value;
+				if(!i){
+					art.dialog.alert("{$_lang['not_accept_reason_not_empty']}!");
+					return false;
+				}
+				$("#result").val("{$action_arr[$type][1]}{$_lang['not_established']}:"+document.getElementById('reply').value);
+				$("#action").val('no_pass');$("#frm").submit()},
+			noFn :function(){this.close();return false;}
+		});
+	 
+		return false;
+	}
+</script>
+<!--{template control/admin/tpl/admin_footer}-->

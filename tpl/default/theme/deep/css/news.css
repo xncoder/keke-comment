@@ -1,0 +1,5 @@
+@charset "gbk";
+.news_list, .normal1{background:#131315;}
+.box.normal1.bord_c{border:1px solid #4e4f52;}
+.news_list .item{border-bottom:1px solid #282825;}
+.news_list .prefix_1{color:#fff;}

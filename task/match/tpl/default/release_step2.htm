@@ -1,0 +1,135 @@
+<!--左边部分-->
+<div class="grid_17 ">
+    <div class="pad10 border_r_c">
+        <!--from表单 start-->
+        <div class="form_box clearfix box border_n">
+         <form action="{$basic_url}" method="post" name="frm_step2" id="frm_step2">
+	  	<input type="hidden" name="step2" value="step2">
+	  	<input type="hidden" name="formhash" value="{FORMHASH}">
+                <div class="rowElem clearfix">
+                    <label class="grid_3">
+                        <strong>{$_lang['industry']}{$_lang['zh_mh']}</strong>
+                    </label>
+                    <div class="grid_12 alpha">
+                        <select name="indus_pid" id="indus_pid"  title="{$_lang['select_industry']}" onchange="showIndus(this.value)" limit = "required:true;between:5-10" msg = '{$_lang['industry_no_choose']}' msgArea="span_indus">
+                            <option value="">{$_lang['select_industry']}</option>
+                      		{loop $indus_p_arr $v}
+								 <option value="{$v[indus_id]}" {if $release_info[indus_pid]==$v[indus_id]}selected{/if}>{$v[indus_name]}</option>
+							{/loop} 
+						 </select>
+
+                    <span  id="reload_indus">
+                        <select name="indus_id" id="indus_id"  limit = "required:true;between:5-10" msg='{$_lang['industry_z_no_choose']}' title='{$_lang['choose_part']}' msgArea="span_indus"><span id="span_indus"></span>
+                            <option value="">{$_lang['choose_part']}</option>
+							{if $release_info['indus_id']}
+							{loop $indus_arr $k $v}
+                           		 <option value="{$v[indus_id]}" {if $release_info[indus_id]==$v[indus_id]}selected{/if}>{$v[indus_name]}</option>
+							{/loop}
+							{/if}
+                        </select>
+					</span>
+						 <div id="span_indus"  class="ml_5"></div>
+                    </div>
+					
+                </div>
+                <div class="rowElem clearfix po_re">
+                    <label class="grid_3">
+                        <strong>{$_lang['title']}{$_lang['zh_mh']}</strong>
+                    </label>
+                    <div class="grid_13 alpha">
+                        <input name="txt_title" id="txt_title" type="text" value="<!--{eval echo kekezu::escape($release_info['txt_title'])}-->" title="{$_lang['txt_title']}" size="34" msgArea="span_title"
+						limit="required:true;len:5-50" msg="{$_lang['txt_title']}" maxlength="50" style="width:255px"  class="mr_5"/>
+                        <div class="c999" id="span_title">{$_lang['span_title']}</div>
+                    </div>
+                </div>
+                <div class="rowElem clearfix">
+                    <label class="grid_3">
+                        <strong>{$_lang['need']}{$_lang['zh_mh']}</strong>
+                    </label>
+                    <div class="grid_13 alpha">
+                        <textarea style="width:100%" rows="12" name="tar_content" title="{$_lang['textarea_title']}" id="tar_content" msgArea="msg_content" class="xheditor {tools:'Bold,Fontface,FontColor,Italic,Underline,Strikethrough,Align,List,Outdent,Indent,Link,Unlink,Table',skin:'nostyle'}"><!--{eval echo kekezu::escape($release_info['tar_content'])}--></textarea>
+                        <div class="clear"></div>
+                        <div id="msg_content"></div>
+						<script type="text/javascript" src="resource/js/xheditor/xheditor.js"></script>
+						<script type="text/javascript">
+							 $(function(){
+							 	editor = $("#tar_content").xheditor();
+							 	
+							 })
+						</script>
+                    </div>
+                </div>
+				
+                <div class="rowElem clearfix lit_form border_n">
+                    <label class="grid_3">
+                        <strong>{$_lang['upload']}{$_lang['zh_mh']}</strong>
+                    </label>
+                    <!--上传内容-->
+                    <div class="grid_13 alpha">
+                        <div class="bord_c">
+                        	<div class="upfile ws_break">
+                                    <span style="line-height:15px; display:block" class=" ws_prewrap ws_break">{$_lang['upload_title']}{$basic_config['max_size']}M.{$_lang['upload_style']}{$ext_types}</span>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="upfile ws_break">
+                                <div class="grid_8">
+			 						<input type="hidden" name="file_ids" id="file_ids">
+                                	<input type="file" class="file" name="upload" id="upload">
+                                </div>
+								 <div class="clear">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<script type="text/javascript">
+							$(function(){
+								uploadify({
+										auto:true,
+										size:"{$basic_config['max_size']}MB",
+										exts:'{$ext_types}',
+										limit:1}
+									);
+							})
+					</script>
+                    <!--end 上传内容-->
+                </div>
+               <div class="rowElem clearfix">
+                    <label class="grid_3">
+                        <strong>{$_lang['contact']}{$_lang['zh_mh']}</strong>
+                    </label>
+                    <div class="grid_12 alpha">
+                        <input name="txt_mobile" id="contact_mobile" type="text" value="{if $release_info['txt_mobile']}$release_info['txt_mobile']{else}$user_info['mobile']{/if}"
+						  title="{$_lang['mobile_title']}" size="34" msgArea="span_mobile"
+						limit="required:true;type:mobileCn" msg="{$_lang['mobile_msg']}" maxlength="50" class="mr_5"/>
+                        <div class="c999" id="span_mobile">{$_lang['contact_can_no_null']}</div>
+                    </div>
+                </div>	
+            </form>
+        </div><!--from表单 end-->
+        <div class="step_button">
+            <button type="submit" name="is_submit" onclick="stepCheck();" class="big button">{$_lang['next_step']}</button>
+            <span class="block"><input type="checkbox" name="agreement" id="agreement" checked>
+                 <label>
+                    {$_lang['agree']}《<a href="" target="_blank" class="agreement_link">{$_lang['agreement']}</a>》
+                </label>
+            </span>
+        </div>
+    </div>
+		<div class="agreement_part clearfix" style="display:none;">
+		<p><!--{tag 任务发布协议}--></p>
+    </div>
+</div>
+<!--end 左边部分--><!--右边部分-->
+<div class="grid_7 alpha">
+    <div class="pl_20 pr_20 pt_20">
+        <h3 class="font14b">如在发布任务时遇到麻烦，请联系：</h3>
+        <div class="online_service clearfix border_b_c mb_10 pb_10">
+            <div class="clearfix mt_10 t_c">
+					<p class="font14b">客服电话：$kf_phone</p>
+            </div>
+        </div>
+        <h3 class="font14b">{$_lang['what']}{$model_info[model_name]}？ </h3>
+         <p><!--{eval echo kekezu::filter_input($model_info[model_desc])}--></p>
+    </div>
+</div>
+<!--end 右边部分-->

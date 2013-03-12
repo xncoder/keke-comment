@@ -1,0 +1,127 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+        <!--Ò³ÃæÄÚÈÝ-->
+       <div class="container_24">
+    	<div class="wrapper m_bk clearfix"><!--»»·ô-->
+			
+        	<!--×ó±ßÍ¼Ïñ-->
+        	<div class="grid_6 mr_20 pt_10">
+            	<div class="pl_20">
+            		 <p class="user_pic pb_10"><!--{userpic($member_info['uid'],'larger')}--></p>
+					 {if $uid==$member_id}
+						 <p><a href="index.php?do=user&view=setting&op=picture" class="button">{$_lang['revise_head']}</a></p>
+					 {/if}
+					 <dl >
+					 	<dd class="info_1  pb_10">
+                    	<ul>
+                            <li><span class="mr_5">{$_lang['sex']}{$_lang['zh_mh']}</span>$member_info['sex']</li>
+                            <li><span class="mr_5">{$_lang['area']}{$_lang['zh_mh']}</span>$member_info['residency']</li>
+                            <li><span class="mr_5">{$_lang['date_birth']}{$_lang['zh_mh']}</span>{if $member_info['birthday']}{$member_info['birthday']}{/if}</li>
+                        </ul>
+                    </dd>
+					 </dl>
+				</div>	 
+				
+               
+            </div>
+            <!--end ×ó±ßÍ¼Ïñ-->
+            
+            <!--ÓÒ±ß½éÉÜ-->
+            <div class="grid_17 pt_10 pb_20">
+            	<dl class="construct  font14 pad10">
+                	<dt class="title c000">$member_info['username']</dt>
+                	<dd class="info_1 mt_20 pb_10">
+                    	<ul>
+                    		
+                        	<li><span class="mr_10">{$_lang['industry_info']} {$_lang['zh_mh']}</span>
+							{if !empty($indus_arr[$member_info['indus_pid']]['indus_name'])} $indus_arr[$member_info['indus_pid']]['indus_name']|$indus_arr[$member_info['indus_id']]['indus_name']{else}{$_lang['no']}{/if}
+							</li>
+                            <li class="clearfix">
+                                <span class="mr_10 fl_l">{$_lang['witkey_skills']}{$_lang['zh_mh']}</span>
+                                	 $member_info['skill_ids'] 
+						    </li>
+                            <li class="clearfix">
+                            	<span class="mr_10 fl_l">{$_lang['skills_certificate']}{$_lang['zh_mh']}</span>
+                                <div class="technology fl_l ">
+                                	<!--¼¼ÄÜÖ¤Êé-->
+                                	{if $skill_desc_arr}
+										{loop $skill_desc_arr $k $v}
+	                                    <div class="clear"></div>
+										<dl>
+	                                        <dt class="clearfix title_1">
+	                                            <p class="fl_l"><a href="#">$v['v1']</a></p>
+												<a href="###" class="fl_r mr_10 up_down"><span class="icon16 sq-plus" onclick="show_hide('{$v['ext_id']}');" id="span_$v['ext_id']"></span></a>
+	                                        </dt>
+	                                        <dd class="info_2" style="display:none" id="dd_$v['ext_id']"><img src="$v['v2']"></dd>
+	                                    </dl>
+										<div class="clear"></div>
+										{/loop}
+									{else}
+									 	{$_lang['no_data']}
+									{/if}
+									 
+                                </div>
+                            </li>
+							
+	
+                            <li class="clearfix">
+                            <span class="mr_10 fl_l ">{$_lang['personal_experience']}{$_lang['zh_mh']}</span>
+                           {if $skill_exp_arr}
+						    <table cellpadding="0" cellspacing="0" class="table_1 fl_l mt_10">
+                            	<tr>
+                                	<th>{$_lang['start_time']}</th>
+                                    <th>{$_lang['end_time']}</th>
+                                    <th>{$_lang['matter']}</th>
+                                </tr>
+								<!--¸öÈË¾­Àú-->
+								
+									{loop $skill_exp_arr $k $v}
+		                                <tr>
+		                                	<td>$v['v1']</td>
+		                                    <td>$v['v2']</td>
+		                                    <td>$v['v3']</td>
+		                                </tr>
+									{/loop}
+								
+                         
+                            </table>
+							{else}
+									 $_lang['no_data'] 
+								{/if}
+                            </li>
+                            <li class="clearfix">
+                                <span class="mr_10 fl_l">{$_lang['personal_brief_introduction']}{$_lang['zh_mh']}</span>
+                                <p class="fl_l words"><!--{eval echo kekezu::filter_input($member_info['summary'])}--></p>
+                            </li>
+                             
+                        </ul>
+                    </dd>
+                    <dd class="info_1 mt_20 pb_10">
+                    	<ul>
+                    	 <li><span class="mr_10">{$_lang['mobile']}{$_lang['zh_mh']}</span>{if $sect_info['mobile']['v1']=='1'}{$_lang['confidential']}{else}$member_info['mobile']{/if}</li>
+                         <li><span class="mr_10">{$_lang['emaill']}{$_lang['zh_mh']}</span>{if $sect_info['email']['v1']=='1'}{$_lang['confidential']}{else}$member_info['email']{/if}</li>
+                         <li><span class="mr_10">{$_lang['qq']}{$_lang['zh_mh']}</span>{if $sect_info['qq']['v1']=='1'}{$_lang['confidential']}{else}$member_info['qq']{/if}</li>
+                         <li><span class="mr_10">{$_lang['msn']}{$_lang['zh_mh']}</span>{if $sect_info['msn']['v1']=='1'}{$_lang['confidential']}{else}$member_info['msn']{/if}</li>
+                         <li><span class="mr_10">{$_lang['fixed_telephone']}{$_lang['zh_mh']}</span>{if $sect_info['phone']['v1']=='1'}{$_lang['confidential']}{else}$member_info['phone']{/if}</li>
+                         </ul>
+                    </dd>
+                </dl>
+            </div>
+            <!--end ÓÒ±ß½éÉÜ-->
+        </div>
+		<div class="clear"></div>
+</div>
+<script type="text/javascript">
+		function show_hide(ext_id){
+			var ext_id = ext_id;
+			var obj_id = 'dd_'+ext_id;
+			var span_class =  $("#span_"+ext_id).attr("class");
+			if(span_class=='icon16 sq-minus'){
+				 $("#span_"+ext_id).attr("class","icon16 sq-plus");
+			}else{ 
+				 $("#span_"+ext_id).attr("class","icon16 sq-minus");
+			}
+			$("#"+obj_id).slideToggle(500);
+			
+		}
+	</script>
+<!--{template footer}-->

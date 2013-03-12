@@ -1,0 +1,515 @@
+<!--{template header}-->
+<link rel="stylesheet" href="{SKIN_PATH}/css/shop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{SKIN_PATH}/theme/{$_K['theme']}/css/shop.css" rel="stylesheet" type="text/css">
+<div class="wrapper">      
+        <!--页面头部-->
+        <header class="clearfix page_header">
+        	<div class="container_24">
+        	
+				<!--{ad_show(SHOPLIST_HEAD,威客商城_头部广告)}-->
+			  
+            <!--页面导航-->
+            <div class="breadcrumbs clearfix">
+                <a href="index.php">{$_lang['home']}</a> &gt; <span>{if $search_key}$search_key{else}{$_lang['shop_hall']}{/if}</span>
+              </div>
+            <!--end 页面导航-->
+          </div>
+        </header> 
+        <!--end 页面标题-->
+        
+        
+        
+        
+        
+        
+        <!--主内容-->
+        <section class="clearfix content">
+            <div class="container_24">
+            	
+    	<div class="clear"></div>
+		
+	  <!--大厅列表_头部二栏广告 start-->
+	 		 <!--{ad_show(LIST_HEAD_TWO)}-->
+	  <!--大厅列表_头部二栏广告 end-->
+		<div class="clear"></div>
+                <div class="box mb_10 clearfix">
+                	<div class="grid_24">
+                    <!--筛选条件-->
+                    <div class="filter box normal po_re">
+                    	<div class="inner">
+                      <!--条件列表-->
+                      <div class="condition_list pad10" > 
+                        <!--分类-->
+                        <dl class="condition clearfix">
+                            <dt class="grid_2 omega">
+                                {$_lang['shop_classify']}
+                            </dt>
+                            <dd class="grid_21">
+                                <!--{eval $exist = stristr($path, "A");}-->
+								<a href="$check_all['A']"  {if !$exist}  class='selected' {/if}>{$_lang['all']} </a>
+                                {loop $check_url_arr['A'] $k $v}
+									<a href="$v['url']" {if $v['selected']}  class="selected" {/if}>$v['indus_name']</a>
+                                {/loop} 
+                            </dd>
+                        </dl>
+                         <!--end 分类-->
+                       
+                      	  <!--条件1-->
+                          <dl class="condition clearfix">
+                            <dt class="grid_2 omega">{$_lang['goods_kinds']}</dt>
+                            <dd class="grid_21">
+                            	<!--{eval $exist = stristr($path, "C");}-->
+                                <a href="$check_all['C']" {if !$exist} class="selected" {/if}>{$_lang['all']}</a> 
+								{loop $check_url_arr['C'] $k $v}
+								    
+								    <a href="$v['url']"  {if $v['selected']} class="selected" {/if}>$v['name']</a> 
+                                {/loop}
+                                </dd>
+                           </dl>
+						   
+                           <div id="condition_list" style="display:none;">
+                           <!--条件2-->
+                           <dl class="condition clearfix">
+                            <dt class="grid_2 omega">{$_lang['goods_money']}</dt>
+                            <dd class="grid_21">
+                                        <span id="general_search" {if $_COOKIE['kekeshop_list_search_cash']}  style="display:none;" {/if}>
+	                                        	<!--{eval $exist = stristr($path, "B");}-->
+											<a href="$check_all['B']" {if !$exist}  class="selected" {/if}>{$_lang['all']}</a>
+											{loop $check_url_arr['B'] $k $v}
+												 
+													<a href="$v['url']" {if $v['selected']}  class="selected" {/if} >$v['name'] </a>
+											{/loop}
+											
+													<a class="button" style="" onclick="custom_search_cash('shop_list_search_cash')">
+	                                        		<span class="icon cog"></span>{$_lang['user_defined']}</a>
+										</span>
+                                        <div id="cool_search" {if !$_COOKIE['kekeshop_list_search_cash']}  style="display:none;" {/if}>
+                                            <div class="grid_12">
+                                            	<div class="pr_30">
+	                                                <div id="slider-range" class="mr_5">
+	                                                	
+	                                                </div>
+													<div class="clear"></div>
+													<ul class="range-num">
+														<li >0</li>
+	                                                	<li>1000</li>
+														<li>2000</li>
+														<li >3000</li>
+														<li class="lasts">4000</li>
+														<li class="lasts">5000</li>
+													</ul>
+													<div class="clear"></div>
+												</div>
+												<div class="clear"></div>
+												<div class="pt_10">
+	                                                <label for="amount1">
+	                                                  	  {$_lang['price']}:
+	                                                </label>
+												
+	                                                <input type="text" id="amount1" class="txt_input" size="5"/> -
+													<input type="text" id="amount2" class="txt_input" size="5"/> {$_lang['yuan']}
+													<a class="button" style="" onclick="search_task_cash()"><span class="magnifier icon"></span>{$_lang['search']}</a>
+                                            		
+												</div>
+											</div>
+											<div class="grid_8"><a class="button" style="" onclick="task_cash_reset('shop_list_search_cash')"><span class="icon reload"></span>{$_lang['return']}</a></div>
+											
+                                        </div>
+                                    </dd>
+                           </dl>
+						  <form id="cash_frm" name="cash_frm" action="index.php?do=shop_list" method="get">  
+							<input type="hidden" name="do" value="shop_list">
+							<input type="hidden" name="path" value="{if $path}$path{/if}">
+							<input type="hidden" name="min" id="min">
+							<input type="hidden" name="max" id="max">
+							<input type="hidden" name="page_size" id="page_size" value="$page_size">
+						  </form>
+						  
+						 <form id="cash_frm_fh" name="cash_frm_fh"  action="index.php?do=shop_list" method="post"> 
+							<input type="hidden" name="do" value="shop_list">
+							<input type="hidden" name="path" value="{if $path}$path{else};{/if}"> 
+							<input type="hidden" name="page_size" id="page_size" value="$page_size">
+							
+						 </form>
+                           <!--end 条件2-->
+                       
+                           <!--条件4-->
+                           <dl class="condition clearfix">
+                            <dt class="grid_2 omega">{$_lang['pub_time']}</dt>
+                            <dd class="grid_21">
+                            	<!--{eval $exist = stristr($path, "D");}-->
+                                <a href="$check_all['D']" {if !$exist} class="selected" {/if}>{$_lang['all']}</a> 
+								{loop $check_url_arr['D'] $k $v}
+								  
+								    <a href="$v['url']"  {if $v['selected']} class="selected" {/if} >$v['name']</a> 
+                                {/loop}
+                                </dd>
+                           </dl>
+                           <!--end 条件4-->
+						</div>
+						<!--工具栏-->
+                            <div class="operate po_ab">
+                                <a href="javascript:show_hide()" id="tool_show" title="{$_lang['unfold']}"><span class="icon16 sq-plus">{$_lang['unfold']}</span></a>
+                                <a href="javascript:show_hide()" id="tool_hide" style="display:none" title="{$_lang['fold']}"><span class="icon16 sq-minus">{$_lang['fold']}</span></a>
+                            </div>
+                            <!--end 工具栏-->
+                       </div>
+                       <!--end 条件列表-->
+                       
+                       
+                       <!--已选条件-->
+                       <div class="select_condition clearfix pad10 m_h">
+                       
+                           <div class="grid_2 omega">
+                           		<h3 class="title">{$_lang['selected_terms']}</h3>
+                           </div>
+                        
+                        	<div class="grid_21">
+                            		<!--当无选择条件时显示span标记-->
+                                    
+									{loop $select_arr $k $v}
+                                    <a href="$v['url']" class="selected" ><span>$v['name'] <span class="close">&times;</span></a> 
+									{/loop}
+									{if $select_arr}
+								
+										<a href="index.php?do=shop_list" class="button"><span class="icon reload"></span>{$_lang['reset']}　</a>
+										<a href="javascript:save_cookie()" class="button"><span class="icon check"></span>{$_lang['save_search_terms']}</a>
+									
+										<div class="success" style="color:#2f55a0;display:none" id="success">
+	                                        {$_lang['save_suc']}
+	                                    </div>
+									{else}
+										<span>{$_lang['no_selected_terms']}</span> 
+									{/if}
+                            </div>
+                       </div>
+					   	
+							
+                       <!--end 已选条件-->
+					   </div>
+                    </div>
+                     <!--end 筛选条件-->
+                    </div>
+                </div>
+            
+            
+                <section class="clearfix section"> 
+                    <div class="second_menu container_24 po_ab m_h">
+                        <div class="suffix_23 pull_1">
+                            <nav class="minor_nav box">
+                                <ul class="nav_group clearfix">                                	
+                                    <li>
+                                    	<a href="index.php?do=help&fpid=291" title="{$_lang['help_center']}"><span class="icon16 help">{$_lang['help_center']}</span><b class="font14 ml_5 po_re" style="top:3px;">？</b></a>
+									</li>
+									<li>
+										<a href="index.php?do=shop_map" title="{$_lang['shop_map']}"><span class="icon16  globe-2">{$_lang['shop_map']}</span></a> 
+									</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <div class="show_panel container_24 po_re">
+                        <div class="po_re clearfix box">
+                                  
+                                <!--左边内容-->
+                                <div class="grid_20">
+                                    <div class="box normal clearfix">
+                                        <!--左内容头-->
+                                    	<div class="border_b_c clearfix hidden">
+                                    	<div class="grid_5 omega">
+                                            <div class="sum clearfix">
+                                                <p>{$_lang['total_find']}<span class="cc00"> $count </span>{$_lang['tiao_result']}</p>
+                                             </div>
+                                        </div>
+                                         <div class="grid_15 alpha omega m_h"> 
+                                              <!--列表项数量-->
+                                              <div class="page_count fl_r">
+                                                  <a href="index.php?do=shop_list&path=$path&min=$min&max=$max&page_size=20" {if $page_size==20||!$page_size} class="selected" {/if}>20</a>
+                                                  <a href="index.php?do=shop_list&path=$path&min=$min&max=$max&page_size=40" {if $page_size==40} class="selected" {/if}>40</a>
+                                                  <a href="index.php?do=shop_list&path=$path&min=$min&max=$max&page_size=60" {if $page_size==60} class="selected" {/if}>60</a>
+                                                  <a href="index.php?do=shop_list&path=$path&min=$min&max=$max&page_size=80" {if $page_size==80} class="selected" {/if}>80</a>
+                                              </div>
+                                              <!--end 列表项数量-->
+											  <!--小翻页-->
+                                              <div class="min_page  fl_l pl_10">
+                                                <p class="clearfix">
+                                                         $pages['page']
+                                                  </p>
+                                                  <div class="clear"></div>
+                                              </div>
+                                              <!--end 小翻页-->
+                                          </div>
+										  </div>
+                                          <!--end 左内容头-->
+                                        
+                                        <!--列表主内容-->
+                                        <div class="list">
+                                            <dl>
+                                              <dt>{$_lang['reward_goods']}</dt>
+                                              <dd class="tags clearfix">
+                                                <ul> 
+                                                    <li class="w5 t_l m_col2">{$_lang['goods_info']} {$_lang['total_find']} $count {$_lang['tiao_result']}</li>
+                                                    <li class="w3 t_l m_h">{$_lang['author_description']}</li> 
+                                                    <li class="w2 m_col2">
+													<a href="index.php?do=shop_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=2" {if !$ord||$ord==2} style="display:none" {/if}  title="{$_lang['low_price_former']}">{$_lang['has_sell_or_price']} ▲</a> 
+													<a href="index.php?do=shop_list&path=$path&min=$min&max=$max&page_size=$page_size&ord=1" {if $ord==1} style="display:none" {/if}  title="{$_lang['high_price_former']}">{$_lang['has_sell_or_price']} ▼</a>
+												
+													</li> 
+                                                </ul>
+                                              </dd>
+                            
+										 
+										 {loop $service_arr $k $v}
+                                           <dd class="po_re clearfix 
+												   {if $v['pay_item'] == '2' }
+												   		app_top
+												   {elseif $v['pay_item'] == '3'}
+												   		app_urgent
+												   {elseif $v['pay_item'] == '1'}
+												   		app_hide
+												   {elseif $v['is_top'] == '1'}
+														app_recmd
+												   {elseif $v['task_union'] == '1'}
+														app_union
+												   {elseif $v['is_delay'] == '1'}
+														app_delay
+												   {/if}
+												   "
+										   >
+                                                <ul class="clearfix pt_10">
+                                                    <li class="w2 m_col2">
+                                                        <div class="img_box">
+                                                        	<a href="index.php?do=service&sid=$v['service_id']"><img name="lazyImg" lazy_src="<!--{eval echo keke_shop_class::output_pics($v['pic'],100,1);}-->" alt="$v['title']" title="$v['title']"></a>
+                                                        </div>
+                                                        
+                                                    </li>
+                                                    <li class="w3 t_l ws_break m_col2 ">
+                                                    	
+                                                        	<a href="index.php?do=service&sid=$v['service_id']" class="font14b list_small_title" title="$v['title']">$v['title']</a>
+                                                            <p class="m_h">
+                                                              {$_lang['goods_type']}{$_lang['zh_mh']}
+                                                                {if $v['model_id']==6}
+                                                                  <strong class="c393">{$_lang['works']}</strong>
+                                                                {elseif $v['model_id']==7}
+                                                                  <strong class="c939">{$_lang['service']}</strong>
+                                                                {/if}
+                                                              
+                                                            </p>
+                                                            <p class="block m_h">
+                                                            {$_lang['goods_class']}{$_lang['zh_mh']}	
+																{if $v['indus_id']}$indus_all_arr[$v['indus_pid']]['indus_name'] / $indus_all_arr[$v['indus_id']]['indus_name']{/if}
+																</p> 
+																<!--{eval $time=time();}-->
+                                                        	{if $v['top_time']>$time&&$item_config['2']['small_pic']}
+																<img src="{$_K['siteurl']}/{$item_config['2']['small_pic']}" alt="{$_lang['top']}" title="{$_lang['top']}">
+																
+															{/if}
+															{if $v['urgent_time']>$time&&$item_config['3']['small_pic']}<img src="{$_K['siteurl']}/{$item_config['3']['small_pic']}" alt="{$_lang['hurry_up']}" title="{$_lang['hurry_up']}">{/if}
+                                                     	   {if stristr($v['pay_item'],'4')&&$item_config['4']['small_pic']}<img src="{$_K['siteurl']}/{$item_config['4']['small_pic']}" alt="{$_lang['map']}" title="{$_lang['map']}">{/if}
+														   {if $v['is_top'] == '1'}<img src="{$_K['siteurl']}/resource/img/ico/tj.png" alt="{$_lang['recommend']}" title="{$_lang['recommend']}">{/if}
+                                                        
+                                                    </li>
+                                                    <li class="w3 t_l ws_normal m_h ws_break">
+                                                    	<a href="index.php?do=space&member_id=$v['uid']">$v['username']</a>
+                                                        <p>&nbsp;<!--{eval echo kekezu::cutstr(strip_tags(htmlspecialchars_decode($v['content'])), 100);}--></p>
+                                                    </li>
+                                                    <li class="w2 m_col2">
+                                                    	<p class="cc00 font14b">&nbsp; {c:$v['price']} </p>
+                                                        {if $v['sale_num']>0}{$_lang['selled']} $v['sale_num'] {$_lang['records']}{/if}
+                                                    </li>
+                                                    
+                                                </ul>
+                                                <div class="clear"></div>
+												
+                                                <div class="operate clearfix ">
+                                                    <a href="javascript:favor('service_id','service','{$model_list[$v['model_id']]['model_code']}','{$v['uid']}','{$v['service_id']}','{$v['title']}','{$v['service_id']}')" original-title="{$_lang['favorit']}" ><span class="icon16 star-fav-empty">{$_lang['favorit']}</span> </a>
+                                                    <a href="index.php?do=service&sid=$v['service_id']" target="_blank" original-title="{$_lang['new_window_open']}"><span class="icon16 expand">{$_lang['new_window_open']}</span></a>
+                                                   <a class="" href="index.php?do=ajax&view=share&oid=$k&title={$v['title']}" id="share$k" onclick="return false;" onmouseover="share(this);return false;" title="{$_lang['share']}"><span class="icon16 share">{$_lang['share']}</span></a></a>
+                                                </div>
+                                              </dd>
+											  {/loop} 
+                                            </dl>    
+                                        </div>
+                                        <!--end 列表主内容-->
+										<!--右下角的返回顶部-->
+                                        <div class="operate mt_10 fl_r">
+                                                    <a href="index.php" class="" title="{$_lang['return_home']}"><span class="icon16 home"></span><span class="return_word">{$_lang['return_home']}</span></a>
+                                                    <a href="#" class="" title="{$_lang['return_top']}"><span class="icon16 arrow-top"></span><span class="return_word">{$_lang['return_top']}</span></a>
+                                        </div>
+                                        <!--end右下角的返回顶部-->      
+                                    </div>
+                                     
+                                    <!--page 翻页 start-->
+                                    <div class="page">
+                                        <p class="clearfix">
+                                            <span class="stats">{$_lang['total']} $count {$_lang['tiao']} </span>
+                                           $pages['page']
+                                        </p>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <!--page 翻页 end-->
+                                    <div class="clear"></div>
+                                         
+                                </div>
+                                <!--end 左边部分-->
+                                
+                                <!--右边部分-->
+                                <div class="grid_4 m_h">
+                                        
+										<div class="mb_10">
+									   	<a href="{$_K['siteurl']}/index.php?do=shop_release" class="submit block">发布商品</a>
+									   </div>
+										<div class="box normal">
+                                        <!--任务动态-->
+                                        <div class="inner">
+                                                <h3 class="title pl_10">{$_lang['shop_dt']}</h3>
+                                                <div class=" pl_10 pr_10 pb_10">
+                                                
+                                                   <ul id="history_collect ">
+                                                	{loop $dynamic_arr $k $v}
+                                                    <li class="border_b_c ws_break">
+                                                    	<p><a href="$v['feed_username']['url']">$v['feed_username']['content']</a> $v['action']['content']</p>  
+														<p><a href="$v['event']['url']">$v['event']['content']</a></p>
+														<p><!--{eval echo kekezu::feed_time ($v['feed_time'] );}--></p>
+													</li>
+                                                   {/loop}
+                                                </ul>
+												</div>
+                                        </div>
+                                    	</div>
+                                        
+									<div class="clear"></div>
+										<!--威客商城_右侧广告-->
+										<div style="margin:0 -5px;">
+										<!--{ad_show(SHOPLIST_CENTAL_RIGHT)}-->
+										</div>
+									<div class="clear"></div>
+                                        
+                                    </div>
+                                
+                                <!--end 右边部分-->         
+                            
+                        </div>
+                    </div>
+                                    
+                </section>    
+					<div class="clear"></div>
+					 
+					 		 <!--{ad_show(SHOPLIST_BOTTOM,威客商城_底部广告)}-->
+			
+					<div class="clear"></div>                
+            </div>  
+        </section> 
+</div>  
+        <!--end 主内容--> 
+		
+<script type="text/javascript">
+	/** 检查用户是否登陆 */
+		var uid = parseInt('{$uid}')+0; 
+
+	function check_user_login() {
+		if (isNaN(uid) || uid == 0) {
+			showDialog("{$_lang['if_now_login']}", 'confirm', "{$_lang['login_notice']}", 'user_login()', 0);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+
+/** 用户登陆 */
+
+function user_login() {
+	showWindow('user_login', 'index.php?do=login', 'get');
+	return false;
+} 
+		//页面加载，判断搜索条件是现实还是隐藏
+        $(function(){
+            var show_cookie = getcookie('show_cookie');
+            
+            if (show_cookie == 1) {
+                $("#condition_list").show();
+                $("#tool_hide").show();
+                $("#tool_show").hide();
+            }
+        });
+        
+        //搜索条件现实 /隐藏
+        function show_hide(){
+            $("#condition_list").toggle(0, function(){
+                if ($("#tool_show").is(":hidden")) {
+                    setcookie('show_cookie', '');
+                    $("#tool_show").show();
+                    $("#tool_hide").hide();
+                }
+                else {
+                    setcookie('show_cookie', 1,3600);
+                    $("#tool_hide").show();
+                    $("#tool_show").hide();
+                }
+            });
+        }	
+
+	
+ 
+//收藏
+function taskFavor(type,obj_id) {
+	if (check_user_login()) {
+		var url="index.php?do=task&task_id="+obj_id+"&op=taskfavor";
+		$.getJSON(url,{keep_type:type,obj_id:obj_id},function(json){
+			showDialog(json.data,'notice',json.msg);return false;
+		})
+	}
+}
+//分享
+var share=function(obj,title){
+	CHARSET.toLowerCase()=='utf-8'?obj.href = encodeURI(obj.href):'';
+	ajaxmenu(obj,250,'1','2','43');
+	return false;
+}
+//进度条
+    function task_bar(){
+        var min = Number($min);
+        var max = Number($max);
+        
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 5000,
+            values: [min, max],
+            slide: function(event, ui){
+                $("#amount1").val(ui.values['0']);
+				$("#amount2").val(ui.values['1']);
+            }
+        });
+        //$("#amount").val('$' + $("#slider-range").slider("values", 0) + ' - $' + $("#slider-range").slider("values", 1));
+		$("#amount1").val($("#slider-range").slider("values", 0));
+		$("#amount2").val($("#slider-range").slider("values", 1));
+    }
+    
+    
+    //赏金搜索 
+    function search_task_cash(){
+        var url = window.location.href;
+        var min = $("#amount1").val();
+        var max =  $("#amount2").val();
+		
+        $("#min").val(min);
+        $("#max").val(max); 
+        $("#cash_frm").submit();
+    }
+     
+	  
+            
+	 
+</script>		
+<script type="text/javascript"> 
+    In.config('serial',true);
+	In.add('ui_core',{path:"resource/js/others/ui.core.js",type:'js'});
+	In.add('ui_slider',{path:"resource/js/others/ui.slider.js",type:'js',rely:['ui_core']});
+	In.add('search',{path:"{$style_path}/js/search.js",type:'js'});
+	In('search','ui_slider','lazy',function(){task_bar();loadPics();});
+ 
+</script>
+	<!--{template footer}-->

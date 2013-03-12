@@ -1,0 +1,156 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+<div class="container_24">
+ <!--{template user/user_nav}--><!--main start-->
+  <section class="clearfix section">
+    <!--{template user/user_side}-->
+    <div class="show_panel container_24 po_re">
+     <div class="prefix_3 grid_21">
+      <div class="panel clearfix box">
+      <!--main content-->
+       <div class="">
+        <!--header内容头部 start-->
+         <header class="clearfix box_header">
+          <h2 class="grid_4 alpha omega box_title t_c">{$_lang['order_manage']}</h2>
+           <div class="grid_17 alpha omega">
+            <nav class="box_nav">
+               <ul>
+                  <li {if !$obj_type||$obj_type=='task'}class="selectedLava"{/if}>
+                     <a href="index.php?do=user&view=finance&op=order&obj_type=task#userCenter" title={$_lang['task_trans']}>{$_lang['task_trans']}</a>
+                  </li>
+                  <li {if $obj_type=='service'}class="selectedLava"{/if}>
+                     <a href="index.php?do=user&view=finance&op=order&obj_type=service#userCenter" title={$_lang['goods_trans']}>{$_lang['goods_trans']}</a>
+                  </li>
+              </ul>
+            </nav>
+          </div>
+         <div class="clear"></div>
+       </header>
+       <!--header内容头部 end--><!--detail内容 start-->
+     <article class="box_detail">
+     		<div class="">
+         <!--from表单 start-->
+         <div class="clearfix box pad10">
+          <form action="{$url}#userCenter" method="post" id="frm">
+            <input type="hidden" name="page" value="{$page}">
+              <div class="rowElem clearfix">
+                <div class="mr_5 fl_l">
+                 <input type="text" name="order_id" class="togg_u txt_input" value="{if $order_id}$order_id{else}{$_lang['please_input_order_id']}{/if}" title={$_lang['please_input_order_id']} size="5" style="width:120px;"/>
+                </div>
+                <div class=" mr_5 fl_l">
+                 <input type="text" name="order_title" class="togg_u txt_input" value="{if $order_title}$order_title{else}{$_lang['please_input_order_name']}{/if}" title="{$_lang['please_input_order_name']}" style="width:130px;"/>
+                </div>
+                <div class="fl_l">
+                  <select name="status">
+                    <option value="">{$_lang['all']}</option>
+                     {loop $status_arr $k $v}
+					 	<option value="$k" {if $k==$status}selected="selected"{/if}>{$v}  </option>
+                     {/loop}
+                  </select>
+                </div>
+                <div class="fl_l">
+                 <select name="ord">
+                   {loop $ord_arr $k $v}
+				   <option value="$k" {if $k==$ord}selected="selected"{/if}>{$v}  </option>
+                   {/loop}
+                 </select>
+                </div>
+                <div class="fl_l">
+                  <select name="page_size">
+                    <option value="10" {if $page_size=='10'}selected="selected"{/if}>{$_lang['page_size']}10{$_lang['tiao']}</option>
+                    <option value="20" {if $page_size=='20'}selected="selected"{/if}>{$_lang['page_size']}20{$_lang['tiao']}</option>
+                    <option value="30" {if $page_size=='30'}selected="selected"{/if}>{$_lang['page_size']}30{$_lang['tiao']}</option>
+                   </select>
+                </div>
+                <div class="fl_r">
+                    <button class="block" type="submit" name="sbt_search" value={$_lang['search']}><span class="icon magnifier"></span>{$_lang['search']}</button>
+                </div>
+              </div>
+            </form>
+           <!--date_table数据表格 start-->
+           <div class="data_list mt_10">
+            <table cellpadding="0" cellspacing="0" class="data_table">
+              <thead>
+                <tr>
+                 <th scope="col" width="50%">{$_lang['order_name']}</th>
+                 <th scope="col" width="10%">{$_lang['single_price_yuan']}</th>
+                 <th scope="col" width="10%">{$_lang['trans_status']}</th>
+                 <th scope="col" width="20%">{$_lang['trans_operate']}</th>
+                 <th scope="col" width="20%"> {$_lang['other_operate']}</th>
+               </tr>
+              </thead>
+			  
+			  <tbody class="order_{$v['order_id']}" id="order_{$v['order_id']}">
+			  	{if $order_arr}
+             {loop $order_arr $v} 
+                <tr>
+                	<td> 
+					<p><strong>{$v['order_name']}</strong></p>
+					{$_lang['order_id']}{$_lang['zh_mh']}#{$v['order_id']}&nbsp;&nbsp;&nbsp;&nbsp;{$_lang['pub_time']}{$_lang['zh_mh']}<!--{date('Y-m-d H:i:s',$v['order_time'])}-->
+					
+					</td>
+                    <td>{c:$v['order_amount']}</td>
+                    <td>{$status_arr[$v['order_status']]}</td>
+                    <td>
+                    	{if $v['order_status']=="wait"}<a href="index.php?do=user&view=finance&op=order&order_id=$v['order_id']&model_id=$v['model_id']&ac=ok">{$_lang['go_pay']}</a>{/if}
+                    </td>
+                    <td>
+					{if $v['order_status']=='wait'}
+                    	<a href="javascript:void(0);" onclick="delOrder($v['order_id'])">{$_lang['delete']}</a> 
+					{/if}
+                    	<a href="index.php?do=task&task_id={$v['obj_id']}" target="_blank">{$_lang['view']}</a> 
+					</td>
+                   
+                </tr> 
+             {/loop}
+			 {else}
+			 
+			 	<tr>	
+					<td colspan="8" class="t_c">
+					{$_lang['norecord']}
+					</td> 
+				</tr>
+			 {/if}
+			 </tbody>
+            </table>
+          </div>
+         <!--data_table数据表格 end-->
+         <div class="page clearfix">
+            <p>{$pages['page']}</p>
+         </div>
+        </div>
+       <!--from表单 end-->
+      </div>
+     </article>
+     <!--detail内容 end-->
+    </div>
+   </div>
+   <!--main content end -->
+   <div class="clear"></div>
+   </div>
+   </div>
+  </section>
+  <!--main end-->
+  </div>
+</div>
+<!--contain end-->
+<script type="text/javascript">
+	var url = "{$url}";
+	var uid = parseInt('{$uid}')+0;
+
+	function delOrder(order_id){
+		var c = confirm("{$_lang['confirm_delete_order']}");
+		if(c){
+			$.getJSON(url,{action:"delete",order_id:order_id},function(json){
+				if(json.status=='1'){
+					//tipsAppend("order_"+order_id,json.data,"successful","green");
+					$(".order_"+order_id).slideUp(600).remove();
+				}else{
+					shodDialog("{$_lang['order_delete_fail']}","alert","{$_lang['operate_notice']}");return false;
+				}
+			})
+		}
+	}
+</script>
+<!--{template user/user_footer}-->
+<!--{template footer}-->

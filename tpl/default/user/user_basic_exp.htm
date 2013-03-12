@@ -1,0 +1,201 @@
+<!--{template header}--><!--contain start-->
+<div class="wrapper">
+    <div class="container_24">
+        <!--{template user/user_nav}-->
+		<!--main start-->
+      
+        <section class="clearfix section">
+            <!--{template user/user_side}-->
+            <div class="show_panel container_24 po_re">
+                <div class="prefix_3 grid_21">
+                    <div class="panel clearfix box">
+                        <!--main content-->
+                        <div class="">
+                            <!--header内容头部 start-->
+                            <header class="clearfix box_header">
+                                <h2 class="grid_4 alpha omega box_title t_c">{$_lang['basics']}</h2>
+                                <div class="grid_17 alpha omega">
+                                    <nav class="box_nav">
+                                        <ul>
+                                            {loop $third_nav $k $v}
+                                            <li {if $k==$opp}class="selectedLava"{/if}>
+                                                <a href="{$ac_url}&opp={$k}#userCenter" >{$v['0']}</a>
+                                            </li>
+                                            {/loop}
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="clear">
+                                </div>
+                            </header>
+                            <!--header内容头部 end-->
+                            
+                            </div>
+                            <div class="prefix_1 suffix_1">
+                                <!--个人经历start-->
+                                <div class="clearfix box font14">
+                                    <div class="grid_19 suffix_1">
+                                    {if $exp_info}<h3 class="mt_10 mb_10">{$_lang['have_been_added_personal_experiences']}</h3>{/if}
+                                        {loop $exp_info $v}
+                                        <div class="exp_info pb_10 border_b_c mb_10 clearfix" id="{$v['ext_id']}">
+                                            <div class="grid_17 alpha">
+                                                <span>{$v['v1']}{$_lang['to']}{$v['v2']}</span>
+                                                <p style="word-wrap : break-word ;word-break:break-all;">
+                                                   <!--{eval echo nl2br($v['v3'])}-->
+                                                </p>
+                                            </div>
+                                            <div class="grid_2 omega mt_20 tool_bar">
+                                                <a href="javascript:void(0)" title="{$_lang['edit']}" class="mr_10 fl_l" onclick="edit(this,$v['ext_id'],'$v['v1']','$v['v2']');"><span class="icon16 pencil">{$_lang['edit']}</span></a>
+                                                <a href="javascript:void(0)" title="{$_lang['delete']}"class="fl_l" onclick="del($v['ext_id'])"><span class="icon16 delete">{$_lang['delete']}</span></a>
+                                            </div>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                        {/loop} 
+                                    </div>
+                                    <!--from表单 start-->
+                                    <div id="form">
+                                        <h3 class="mt_10 mb_10">{$_lang['add_personal_exp']}</h3>
+                                        <form action="{$ac_url}&opp={$opp}" method="post" id="frm" name="frm">
+                                        	<input type="hidden" name="formhash" id="formhash" value="{FORMHASH}">
+                                            <input type="hidden" name="ac" id="ac" value="add">
+											<input type="hidden" name="ext_id" id="ext_id">
+											<input type="hidden" name="max" value="<!--{date('Y-m-d',time())}-->" id="max">
+                                            <div class="rowElem clearfix" id="start">
+                                                <label class="grid_2 t_r">
+                                                   {$_lang['start_time']}{$_lang['zh_mh']}
+                                                </label>
+                                                <input class="txt_input fl_l" size="22" type="text" name="exp[v1]" onclick="showcalendar(event, this, 0)" title="{$_lang['start_time']}" id="v1"
+												 limit="required:true;type:date;less:max" value="<!--{date('Y-m-d',time()-86400)}-->" msgArea="span_v1"
+												  msg="{$_lang['start_time_early']}<!--{date('Y-m-d',time())}-->" title="{$_lang['start_time_early']}<!--{date('Y-m-d',time())}-->"/><span id="span_v1"></span>
+                                            </div>
+                                            <div class="rowElem clearfix" id="end">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['deadline']}{$_lang['zh_mh']}
+                                                </label>
+                                                <input class="txt_input fl_l" size="22" type="text" name="exp[v2]" onclick="showcalendar(event, this, 0)" title="{$_lang['deadline']}" id="v2"
+												 limit="required:true;type:date;than:v1" value="<!--{date('Y-m-d',time())}-->"
+												  msgArea="span_v2" msg="{$_lang['dealy_time_later']}" title="{$_lang['dealy_time_later']}"/><span id="span_v2"></span>
+                                            </div>
+                                            <div class="rowElem clearfix" id="desc">
+                                                <label class="grid_2 t_r">
+                                                    {$_lang['exp_describe']}{$_lang['zh_mh']}
+                                                </label>
+                                                <div class="grid_15">
+                                               	 <textarea rows="5" cols="70" style="width:300px;height:100px;" title="{$_lang['length_about_exp_description']}"
+												 name="exp[v3]"  id="v3" onkeydown="checkInner(this,180,event)" class="fl_l"></textarea>
+												 </div>
+												 <div class="clear"></div>
+												 <div class="grid_2">&nbsp;</div>
+												<div class="c999 grid_6" id="length_show">{$_lang['exp_limit']}</div>
+                                            </div>
+                                            <div class="rowElem clearfix form_button">
+                                                <button type="submit"  name="sbt_add" id="sbt_add" value="{$_lang['add_exp']}" onclick="return check_form('frm');">
+                                                    <span class="check icon"></span>{$_lang['add_exp']}
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!--from表单 end-->
+                                </div>
+                                <!--个人经历end-->
+                            </div>
+                            <!--detail内容 end-->
+                        </div>
+                        <!--main content end-->
+                    </div>
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--main end-->
+
+</div>
+<!--contain end-->
+<script type="text/javascript">
+	In('form');
+	var Today = '{$today}';
+    /**
+     * 删除经历
+     * @param {Object} ext_id 经历编号
+     */
+    function del(ext_id){
+		showDialog("{$_lang['del_personal_exp']}","confirm","{$_lang['operate_notice']}",function(){
+            var url = '$ac_url&opp=$opp&ac=del&ext_id=' + ext_id;
+            $.getJSON(url, function(json){
+                if (json.status == '1') {
+                    tipsAppend(ext_id, json.msg, 'successful', 'green');
+                    $("#" + ext_id).slideUp(2000).remove();
+                }
+                else {
+                    tipsAppend("#" + ext_id, json.msg, 'error', 'red');
+                }
+            })
+		});return false;
+    }
+    
+    /**
+     * 编辑经历
+     * @param {Object} obj 当前对象
+     * @param {Object} ext_id 经历比爱好
+     * @param {Object} v1 开始时间
+     * @param {Object} v2 结束时间
+     * @param {Object} v3 经历描述
+     */
+    function edit(obj, ext_id, v1, v2, v3){
+        $(obj).next().remove();
+        $("#form h3").html("{$_lang['edit_personal_exp']}");
+        $("#form #sbt_add").val("{$_lang['edit_exp']}").text("{$_lang['edit_exp']}");
+        $("#form #ac").val("edit");
+        $("#form #v1").val(v1);
+        $("#form #v2").val(v2);
+		var v3 = $(obj).parent().prev().children('p').html();
+		
+        $("#form #v3").val($.trim(v3).replace('&lt;','<','g').replace('&gt;','>','g').replace('<br>','','g'));
+        $("#ext_id").val(ext_id);
+        $("#form").insertAfter($(obj).parent().parent());
+    }
+    function checkDay(){
+		 var st = $("#v1").val();
+			if(st>Today){
+			   tipsAppend("v1", "{$_lang['warm_about_start']}", 'warning', 'm_warn');
+				return false;
+		}
+	}
+    /**
+     * 表单提交  添加/编辑经历
+     * @param {Object} obj
+     */
+    function check_form(obj){
+        var st = $("#v1").val();
+        var end = $("#v2").val();
+		if(st>Today){
+			  tipsAppend("v1", "{$_lang['warm_about_start']}", 'warning', 'm_warn',1);
+			   return false;
+		}
+        if (st >= end) {
+            tipsAppend("v2", "{$_lang['warm_about_start_time']}", 'warning', 'm_warn',1);
+            var v2 = $("#v2");
+            v2.attr(v2['0'].title ? 'title' : 'original-title', "{$_lang['warm_about_start_time']}").focus();
+            return false;
+        }
+		if(end>Today){
+            tipsAppend("v2", "{$_lang['warm_about_end_time']}", 'warning', 'm_warn',1);
+            return false;
+		}
+        var i = checkForm(document.getElementById(obj));
+         if (i){
+				if(contentCheck('v3',"{$_lang['exp_describe']}",20,180,2,'v3')){
+            		formSub('frm','form',true);
+				}else{
+          		  return false;
+				}
+       }else{ 
+            return false;
+  	 	}
+    }
+</script>
+<!--main end-->
+<!--{template user/user_footer}-->
+<!--{template footer}-->

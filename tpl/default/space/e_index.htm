@@ -1,0 +1,273 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+<link href="resource/js/jqplugins/jcarousel/horizontal.css" rel="stylesheet" type="text/css" charset="utf-8">
+<link href="resource/js/jqplugins/jcarousel/vertical.css" rel="stylesheet" type="text/css" charset="utf-8">
+<!--sidebar企业信息-->
+<div class="sidebar  clearfix">
+    <div class="pt_20 pl_20 clearfix sidebar_bk">
+        <h1 class=" c000">{$_lang['enterprise_info']}</h1>
+        <div class="sidebar_list mt_15 mb_20">
+            <dl class="clearfix">
+                <dt>
+                    {$_lang['conpany_name']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                    <a href="#">{$e_shop_info['shop_name']}</a>
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <dt>
+                    {$_lang['contact_user']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                    {$e_shop_info['username']}
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <dt>
+                    {$_lang['auth']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                	{loop $auth_item_list $k $v}						
+						{if $auth_info[$k]['auth_status']==1}
+						<img src="{$v['auth_small_ico']}" alt="" title="{$v['auth_title']}">
+						{else}
+						<img src="{$v['auth_small_n_ico']}" alt="" title="{$v['auth_title']}"></a>
+						{/if}						
+					{/loop}								
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <dt>
+                    {$_lang['area']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                    <!--{eval echo str_replace(',','-',$member_info['residency'])}-->
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<!--end sidebar--><!--container_box公司介绍-->
+<div class="container_box clearfix ">
+    <div class="container pt_20 pl_40 pr_40">
+        <h1 class=" c000">{$_lang['about_us']}</h1>
+        <div class="com_intro ws_break">
+            <p>
+                <!--{eval echo kekezu::cutstr($e_desc, 400);}-->...
+            </p>
+        </div>
+    </div>
+    <div class="more_btn fl_r ">
+        <a href="index.php?do=space&member_id=$member_id&view=intr" class="font14">more >></a>
+    </div>
+</div>
+<!--end container_box-->
+<div class="clear">
+</div>
+<div class="border_t_ef">
+</div>
+<!--商铺信息-->
+<div class=" e_info clearfix">
+    <div class="pt_20 pl_20 clearfix">
+        <h1 class=" c000">{$_lang['e_info']}</h1>
+        <div class="sidebar_list mt_15 mb_20">
+            <dl class="clearfix">
+                <dt>
+                    {$_lang['credit_level']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                    {$level['pic']}
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <dt>
+                    {$_lang['good_rate']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                    <em class="cc00">{$good_rate}</em>
+                </dd>
+            </dl>
+            {loop $seller_aid $k $v}
+            <dl class="clearfix">
+                <dt>
+                    {$v['aid_name']}{$_lang['zh_mh']}
+                </dt>
+                <dd>
+                    <em class="cc00 mr_5">{$v['avg']}</em>
+                    <!--{eval echo keke_user_mark_class::gen_star2($v['avg']);}-->{$_lang['total']}{$v['count']}{$_lang['people']}
+                </dd>
+            </dl>
+            {/loop}
+        </div>
+    </div>
+</div>
+<!--资质证书-->
+<div class="container_box ">
+    <div class="cer_box">
+        <h1 class=" c000">{$_lang['cert']}</h1>
+        <div id="jcarousel" class="jcarousel">
+            <ul class="clearfix">
+                {loop $cert $k $v}
+                <li>
+                    <a href="###"><span class="cer_img"><img src="{$v['v2']}" alt=""></span><span class="cer_title">{$v['v1']}</span></a>
+                </li>
+                {/loop}
+            </ul>
+        </div>
+        <a href="#" class="left_arrow arrow" onclick="$('#jcarousel').jcarousel('scroll', '-=1'); return false;"><span>Prev (1)</span></a>
+        <a href="#" class="right_arrow arrow" onclick="$('#jcarousel').jcarousel('scroll', '+=1'); return false;"><span>Next (1)</span></a>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="border_t_ef">
+</div>
+<!--热门商品分类-->
+{if $task_open||$shop_open}
+<div class="left_side clearfix">
+    <div class="pt_20 pl_20 clearfix">
+        <h1 class=" c000">{$_lang['e_search']}</h1>
+        <div class="">
+            <form action="index.php?do=space&member_id={$member_id}&view=goods" method="post" name="frm_s" id="frm_s">
+                <input type="text" id="title_search" style="width:120px;" name="title"
+				 class="c999 togg" value="{$_lang['to_search_product_name']}"/>
+                <button type="button" class="mar0 button" onclick="search();">
+                    <span class="magnifier icon"></span>{$_lang['search']}
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="pt_20 pl_20 clearfix">
+        <h1 class=" c000">{$_lang['supply_category']}</h1>
+        <div class="cag_list">
+            <ul>
+            	{loop $hot_cat $k $v}
+	               	 	<li>
+	                   	 	<h4><a href="index.php?do=space&view=goods&member_id={$member_id}&indus_id={$k}" target="_blank">{$v['indus_name']}</a></h4>
+	                	</li>
+				{/loop}
+            </ul>
+        </div>
+    </div>
+</div>
+{/if}
+<!--右侧：职位信息-->
+<div class="container_box ">
+{if $shop_open}
+    <div class="pt_20 pl_40 clearfix">
+        <div class="more_btn fl_r po_ab">
+            <a href="index.php?do=space&member_id=$member_id&view=goods" class="font14">more >></a>
+        </div>
+        <h1 class=" c000">{$_lang['goods']}</h1>
+        <ul class="pro_list pt_10 clearfix">
+            {loop $shop_arr $k $v}
+            <li>
+                <a href="index.php?do=service&sid=$v['service_id']">
+                	<img src="<!--{eval echo keke_shop_class::output_pics($v[pic],'',1)}-->" alt="" />
+					<span class="pro_title">
+						<h2>
+							<span class="pro_name">
+								<span class="cc00">
+									[<!--{eval echo mb_strcut($model_list[$v['model_id']]['model_name'],4,4,$_K['charset'])}-->]
+								</span>
+								<!--{eval echo kekezu::cutstr($v['title'], 32);}-->
+								
+							</span>
+							
+								<span class="pro_price">
+									{c:$v['price']}/$v['unite_price']
+								</span>
+						</h2>
+					</span>
+				</a>
+            </li>
+            {/loop}
+        </ul>
+    </div>
+	{/if}
+	{if $task_open}
+    <div class="pt_20 pl_40 pr_30 clearfix">
+        <div class="more_btn fl_r po_ab">
+            <a href="index.php?do=space&member_id=$member_id&view=task" class="font14">more >></a>
+        </div>
+        <h1 class="c000">{$_lang['task']}</h1>
+        <dl class="task_list list mb_20">
+            <dd class="tags">
+                <ul>
+                    <li class="w2 t_l">
+                        {$_lang['t_cash']}
+                    </li>
+                    <li class="w3 t_l">
+                        {$_lang['t_title']}
+                    </li>
+                    <li class="w2">
+                        {$_lang['t_type']}
+                    </li>
+                    <li>
+                        {$_lang['t_status']}
+                    </li>
+                    <li class="w2">
+                        {$_lang['t_time']}
+                    </li>
+                </ul>
+            </dd>
+            {loop $pub_task_arr $k $v}
+            <dd class="clearfix">
+                <ul>
+                    <li class="w2 t_l cc00" title="{$_lang['currency']}$v['task_cash']{$_lang['yuan']}">
+                        <b>{if $v['task_cash_coverage']}
+								{c:$cash_cove[$v['task_cash_coverage']]['start_cove']}~
+								{c:$cash_cove[$v['task_cash_coverage']]['end_cove']}
+						   {else}
+						   		{c:$v['task_cash']}
+						   {/if}
+						</b>
+                    </li>
+                    <li class="w3 t_l">
+                        <a href="index.php?do=task&task_id=$v['task_id']"><!--{eval echo kekezu::cutstr($v['task_title'],38)}--></a>
+                    </li>
+                    <li class="w2">
+                        $model_list[$v['model_id']]['model_name']
+                    </li>
+                    <li>
+                        <!--{eval $arr = call_user_func(array($model_list[$v['model_id']]['model_code'] . "_task_class", 'get_task_status' ));}-->{$arr[$v['task_status']]}
+                    </li>
+                    <li class="w2">
+                        <!--{date('Y-m-d',$v['start_time'])}-->
+                    </li>
+                </ul>
+            </dd>
+            {/loop}
+        </dl>
+    </div>
+	{/if}
+</div>
+</div>
+<div class="clear">
+</div>
+<script type="text/javascript" src="resource/js/jqplugins/jcarousel/jquery.jcarousel.js">
+</script>
+<script type="text/javascript" src="resource/js/jqplugins/jcarousel/jquery.jcarousel.autoscroll.js">
+</script>
+<script type="text/javascript" src="resource/js/jqplugins/jcarousel/jquery.jcarousel.pagination.js">
+</script>
+<!--end main-->
+<script type="text/javascript">
+    $(function(){
+        $("dl.task_list dd ul li.w1,dl.task_list dd ul li.w4").hover(function(){
+            $(this).addClass('hover');
+        }, function(){
+            $(this).removeClass('hover');
+        });
+        
+        $('#jcarousel').jcarousel({
+            wrap: 'circular',
+            animation: 200
+        }).jcarouselAutoscroll({
+            interval: 3000
+        });
+        
+		
+    })
+</script>
+<!--{template footer}-->

@@ -1,0 +1,83 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    	<h1>{$_lang['tpl_manage']}</h1>
+          <div class="tool">         
+			<a href="index.php?do=config&view=tpl" {if $view == 'tpl'}class="here"{/if} >{$_lang['tpl_edit']}</a>
+		
+        </div>
+</div>
+<div class="box list">
+<div class="detail">
+    <form name="frm_config_msg" action="#" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="vip_cash_rul_count" id="vip_cash_rul_count" value="{$vip_rul_count}">
+        <table  height="auto" border="0" cellspacing="0" cellpadding="0" >
+            <tr>
+            	<th>{$_lang['tpl_name']}</th>
+				<th width="150">{$_lang['tpl_img']}</th>
+				<th>{$_lang['explain']}</th>
+				<th>{$_lang['open_status']}</th>
+				<th>{$_lang['current_skin']}</th>
+				<th>{$_lang['author']}</th>
+				<th>{$_lang['operate']}</th>
+            </tr>
+			{loop $tpl_arr $key $value}
+			
+			<tr class="item">
+            	
+                <td>
+                	{$_lang[$value['tpl_title']]}
+                </td>
+				<td>
+                    <img src="../../tpl/$value['tpl_title']/img/style/{$value['tpl_title']}.jpg" alt={$_lang['preview']} width="110px;" height="120px;" />
+				</td>
+				<td>$value['tpl_desc']</td>
+                <td>
+                	<label for="rdo_temp_{$value['tpl_id']}">
+                         <input type="radio" value="{$value['tpl_id']}" 
+						 id="rdo_temp_{$value['tpl_id']}" name="rdo_is_selected" 
+						 {if $value['is_selected']==1}checked="checked"{/if}/>
+                    </label>
+                </td>
+                <td>
+                	{loop $skins $k $v}
+						<input type="radio" value="{$k}" id="rdo_tpl_{$value['tpl_id']}"
+						 name="skin[{$value[tpl_title]}]" {if $value['tpl_pic']==$k}checked{/if}/>{$_lang[$v]}</br>
+					{/loop}
+                </td>
+				<td>$value['develop']</td>	
+                <td>
+                	<button type="submit"  name="sbt_edit" id="sbt_edit" class="button" value="{$_lang['use']}"> {$_lang['use']} </button>
+                	 <a type="button" class="button" value="{$_lang['preview']}" onclick="window.open('http://www.kekezu.com/app_store-view-app_tpl.html#holder')"><span class="book icon"></span>{$_lang['view']}</a>
+                     
+					 <a type="button" class="button" value="{$_lang['export']}" href='index.php?do=tpl&view=export&tplname={$value['tpl_path']}'>{$_lang['backup']}</a>
+					 {if $value['tpl_path']!='default'}
+                        <a href="index.php?do=config&view=tpl&delid=$value['tpl_id']" 
+						type="button" class="button" value="{$_lang['uninstall']}" onclick="return confirm({$_lang['comfirm_want_del']})">{$_lang['uninstall']}</a>
+                     {/if}
+                </td>  
+                   
+            </tr>
+			{/loop}
+			  <tr>
+                <td scope="row">
+                    
+                </td>
+                <td colspan="6">
+                	{$_lang['enter_dir_name']}
+					<input name="txt_newtplpath" type="text" class="txt" >
+					<button type="submit" name="sbt_edit" class="button" value={$_lang['from_dir_install']}>{$_lang['from_dir_install']}</button>
+					<!--<input type="file" name="uploadtplfile"  > 
+					<button type="submit" value={$_lang['from_upload']} name="sbt_edit" class="button">{$_lang['from_upload']}</button>-->
+                    
+                </td>
+             </tr>
+        </table>
+    </form>
+</div>
+</div>
+<script type="text/javascript">
+function simg(url){
+		art.dialog.through({title:{$_lang['view']},content:"<img src='"+url+"'>"});
+	}
+</script>
+<!--{template control/admin/tpl/admin_footer}-->

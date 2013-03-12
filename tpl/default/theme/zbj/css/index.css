@@ -1,0 +1,48 @@
+@charset "gbk";
+/*-------------------------------------------------
+--------------------------------------------------- 
+    注释 DEFINITIONS	: mg
+	作者 AUTHOR 		: mg
+	版本 VERSION		: 2012-02-24
+	
+	内容CONTENTS:
+		1.全局样式
+			1.1 首页高度定义
+		2.首页分类
+		3.banner切换广告
+		4.site_stats首页统计
+		5.guide首页向导
+		6.moving首页动态
+		7.notice公告
+		8.activity活动
+		9.task任务
+		10.shop商城
+		11.news资讯
+		12.case案例展示
+		13.talent人才
+*/		
+		
+/* 首页分类 */
+.category .tab{top:-2px;}
+
+.category a.purple{color:#333;}
+.category .tab a{background:#f3f3f3; margin:0; border-right:1px solid #ccc;margin:0 -2px;}
+	.category .tab a.purple{border-right:none; border-left:1px solid #ccc;}
+.category .tab a.selected{background:#fff;  padding-bottom:1px}
+ .category .indus_list li ul.s_nav, .category .indus_list li a.selected{border:1px solid #f80;}
+  .category .indus_list li a.selected{border-right:none; background:#fff; margin:-1px 0;}
+  .category .indus_list li ul.s_nav{right:-231px; _right:-232px; background:#fff; top:-1px;}
+  .category a:hover{ text-shadow:none;}
+/* notice */
+.notice .box_header ul li{border-bottom:2px solid #efefef;}			 	
+/* moving */
+.box.default  .moving{ position:relative;}
+.box.default .moving .box_detail{margin-top:5px;}
+.box.default  .moving .box_header{margin:0 15px; padding:3px 0 0 !important; overflow:visible; border-bottom:2px solid #efefef !important;}
+	.box.default  .moving .box_nav{ bottom:-2px;}
+/* 9.task任务 */
+		* html  .box.model .task .box_detail .tops .item .task_mode{color:#6d6d6d;}
+
+
+
+

@@ -1,0 +1,26 @@
+	{if $_K['map_api']=='baidu'}
+		<script type="text/javascript" src="{$_K['baidu_api']}"></script>
+		{else}
+		<script type="text/javascript" src="{$_K['google_api']}"></script>
+		{/if}
+	<div id="div_map"  >
+		<script type="text/javascript">
+			$(function(){	
+				var px = parseFloat("{$px}");
+				var py = parseFloat("{$py}");												
+				init(px,py,8);
+			})
+			function init(px,py,zo){
+				var myLatlng = new google.maps.LatLng(px,py);
+				var myOptions = {center: myLatlng,	zoom: 6,mapTypeId: google.maps.MapTypeId.ROADMAP};
+				var map = new google.maps.Map(document.getElementById('container'),myOptions); 
+			   var marker = new google.maps.Marker({map: map,position:myLatlng	})
+		
+			}	
+							
+		</script>
+		<input type="hidden" name="px" id="px" value="{$px}"/>
+		<input type="hidden" name="py" id="py" value="{py}"/> 		
+		<div id="container" style="width:500px;height:200px"></div>
+								
+	</div>

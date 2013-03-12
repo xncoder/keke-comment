@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-05
+	
+	内容 CONTENTS:
+	1. 商城首页
+		1.0 banner部分
+		1.1  热门分类区
+		1.2  热门推荐区
+		
+	2. 商城列表
+	3. 商城地图（地图搜索下拉按钮）
+	4. 商城详细
+		4.0  商品描述
+		4.1  购买记录
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+/* 1.商城首页
+ --------------------------------------*/
+
+/* 1.0 banner部分 */
+.container{ margin:0 auto; background:#fff;}
+	.shoptab{background:#fff;}
+
+/* 1.1 热门分类区 */
+		.item h2{color:#666;}
+			.category_list .item:hover,.category_list .item.hover{position:absolute; z-index:2;}
+				.box.model.rose .box_header .box_title{color:#fff; position:relative; background:#FF8A00; margin-left:-2px;text-shadow:1px 1px 2px rgba(0,0,0,.9); margin-bottom:-1px;}
+				.box.model .box_header{ padding:0; border:1px solid #fff; background:#f5f5f5;box-shadow:0 3px 3px rgba(0,0,0,.1); height:33px;}
+
+
+/* 1.2 热门推荐 区*/
+.orange_style p{ margin-bottom:0}
+	.left{height:260px;}
+		.title h5{color:#666;}
+	.rights{height:260px;}
+		.pic_top .one p{position:relative;}
+			.pic_top .one p a.shop_word:hover{background:#fffeb5; overflow:visible; width:auto;  position:absolute; z-index:2; left:0;}
+				.jy p{color:#000; font-size:20px; padding-top:5px; margin-bottom:0;}
+				.box.model .box_detail{padding-top:0;}
+				.box_detail ul.category_list li.category_width{width:316px; float:left;  height:130px; overflow:hidden; position:relative; z-index:1; text-overflow:ellipsis; padding-bottom:10px;}
+				.box_detail ul.category_list li.category_width:hover,.box_detail ul.category_list li.hover{z-index:3; overflow:visible;}
+
+
+/* 4.商城详细
+ --------------------------------------*/
+
+/* 4.0商品描述 */	
+.box.orange_style .shop_author .loading_bar .progress_bar{ height:15px; line-height:15px;background-color:#ff8a00;border-radius:5px}
+.example{ height:250px;}
+
+/* 4.1购买记录 */
+#ie6 .example{ height:260px;}
+
+@media only screen and (min-width: 1280px) and (max-width: 1600px){
+	.banner_bg{ text-align:right;}
+	.banner_bg img{ display:inline; margin:0}
+}
+

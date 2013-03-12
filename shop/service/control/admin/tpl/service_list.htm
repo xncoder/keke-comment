@@ -1,0 +1,125 @@
+<!--{template control/admin/tpl/admin_header}-->
+
+<div class="page_title">
+    	<h1>{$_lang['witkey_service_manage']}</h1>
+        <div class="tool">              
+          <!-- <a href="index.php?do={$do}&model_id={$model_id}&view=order">{$_lang['order_manage']}</a>-->
+		   <a href="index.php?do={$do}&model_id={$model_id}&view=list" class="here" >{$_lang['service_list']}</a>  
+        </div>
+</div>
+<!--页头结束-->
+
+<!--提示结束-->
+	
+	<div class="box search p_relative">
+    	<div class="title"><h2>{$_lang['search']}</h2></div>
+    	<div class="detail" id="detail"> 
+		<form method="post" action="index.php?do={$do}&model_id={$model_id}&view={$view}" id="frm_art_search">
+		<input type="hidden" name="page" value="{$page}">
+    		<table cellspacing="0" cellpadding="0">    		
+				<tbody>
+					<tr>
+						<th>{$_lang['id']}</th>
+		                <td><input type="text" class="txt" name="w[service_id]" id="service_id" size="5" value="{$w[service_id]}" onkeyup="clearstr(this);"  ></td>
+		                <th>{$_lang['service_name']}</th>
+		                <td>
+		                <input type="text" class="txt" name='w[title]' id="title" value="{$w[title]}" size="12" >
+						</td>
+						</th>
+						<th>{$_lang['shopkeeper']}</th>
+						<td>
+							<input type="text" class="txt" name="w[username]" id="username" size="12" value="{$w[username]}" tips="{$_lang['please_input_shop_name']}">
+						</td>
+						<th>{$_lang['goods_status']}</th>
+						<td>
+							 <select name="w[service_status]">
+							 	<option value="">{$_lang['goods_status']}</option>
+								{loop $status_arr $k $v}
+									<option value="{$k}">{$v}</option>
+								{/loop}
+	             			 </select>
+						 </td>
+					</th>
+					</tr>
+					<tr>
+						<th>{$_lang['result_order']}</th>
+						<td colspan="5">
+
+							 <select name="w[ord]">
+                     		 	 <option {if $w[ord]=='service_id desc' or !isset($w[ord])}selected="selected" {/if}  value="service_id desc">ID{$_lang['desc']}</option>
+                     		 	 <option {if $w[ord]=='service_id asc'} selected="selected" {/if}  value="service_id asc">ID{$_lang['asc']}</option>
+                     		 </select>
+ 							<select name="w[page_size]">
+	                			<option value="10" {if $w[page_size]=='10'}selected="selected"{/if}>{$_lang['page_size']}10</option>
+	                			<option value="20" {if $w[page_size]=='20'}selected="selected"{/if}>{$_lang['page_size']}20</option>
+	                			<option value="30" {if $w[page_size]=='30'}selected="selected"{/if}>{$_lang['page_size']}30</option>
+	            			</select>
+	           				<button class="pill" type="submit" value="{$_lang['search']}" name="sbt_search"><span class="icon magnifier">&nbsp;</span>{$_lang['search']}</button>
+						</td>
+					</tr>          			
+           		</tbody>
+			</table>
+			</form>
+    	</div>
+    </div>
+<!--搜索结束-->
+	
+<div class="box list">	
+    <div class="title"><h2>{$_lang['shop_list']}</h2></div>
+    <div class="detail"> 
+	<form action="" method="post" name="frm_list" id="frm_list">
+		<input type="hidden" name="w[page_size]" value="{$page_size}">
+		<div id="ajax_dom">
+		<input type="hidden" name="page" value="{$page}" />
+    	<table cellpadding="0" cellspacing="0">
+    		<tbody>
+        	<tr>
+        		<th width="10%">ID</th>
+           		<th width="23%">{$_lang['service_name']}</th>
+           		<th width="7%">{$_lang['quotation_yuan']}</th>
+				<th width="7%">{$_lang['shopkeeper']}</th>
+				<th width="6%">{$_lang['goods_status']}</th>
+                <th width="17%">{$_lang['operate']}</th>
+            </tr>
+			
+            {loop $service_arr $k $v}
+            <tr class="item">
+            	<td><input type="checkbox" name="ckb[]" value="{$v[service_id]}">{$v[service_id]}</td>
+                <td><a target="_blank" href="{$_K[siteurl]}/index.php?do=service&sid={$v[service_id]}"><!--{eval echo kekezu::cutstr($v[title],44)}--></a></td>
+                <td>{if $v[price]}{c:$v[price]}{else}{$_lang['no_quotation']}{/if}</td>
+				<td>{$v[username]}</td> 
+                <td>{$status_arr[$v[service_status]]}</td>
+                <td><a href="index.php?do=$do&model_id=$model_id&view=edit&service_id=$v['service_id']&page={$page}" class="button dbl_target"><span class="pen icon"></span>{$_lang['edit']}</a>
+                <a href="{$url_str}&ac=del&service_id={$v[service_id]}&page={$page}"  onclick="return cdel(this);" class="button"><span class="trash icon"></span>{$_lang['delete']}</a>
+				{if $v[service_status]!=2}
+					<a href="{$url_str}&ac=pass&service_id={$v[service_id]}&page={$page}"  onclick="return cdel(this,'{$_lang['shelves_this_product']}{$_lang['zh_wh']}');" class="button"><span class="cog icon"></span>{$_lang['shelves']}</a>
+				{/if}
+				{if $v[service_status]==2}
+					<a href="{$url_str}&ac=nopass&service_id={$v[service_id]}&page={$page}"  onclick="return cdel(this,'{$_lang['merchandise_off_the_shelf']}{$_lang['zh_wh']}');" class="button"><span class="lock icon"></span>{$_lang['off_the_shelf']}</a>
+				{/if}
+				</td>
+            </tr>
+            {/loop} 
+			          
+          	<tr>
+            	<td colspan="8">
+                    <div class="page fl_right">{$pages[page]}</div>
+                    <div class="clearfix">
+                  		<input type="checkbox" class="checkbox" id="checkbox" onclick="checkall();"/>
+                        <label for="checkbox">{$_lang['select_all']}</label>  
+                        <input type="hidden" name="sbt_action" class="sbt_action" />
+						<button class="pill negative" type="submit" value="{$_lang['mulit_delete']}" onclick="return batch_act(this,'frm_list');"><span class="icon trash">&nbsp;</span>{$_lang['mulit_delete']}</button>                        
+                        <button class="pill negative" type="submit" value="{$_lang['batch_shelves']}" onclick="return batch_act(this,'frm_list');" ><span class="icon check">&nbsp;</span>{$_lang['batch_shelves']}</button>
+						<button class="pill negative" type="submit" value="{$_lang['batch_off_the_shelf']}" onclick="return batch_act(this,'frm_list');"><span class="icon lock">&nbsp;</span>{$_lang['batch_off_the_shelf']}</button>
+					</div>
+                 </td>
+        	</tr>
+		 </tbody>
+        </table>
+		</div>
+     </form>   
+    </div> 
+</div> 
+<!--主体结束-->
+
+ <!--{template control/admin/tpl/admin_footer}-->

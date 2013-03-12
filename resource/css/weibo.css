@@ -1,0 +1,317 @@
+.weibo_style{font:12px/25px Arial, Helvetica, sans-serif; background-color:#EAEAEA; color:#6d6d6d;}
+a{color:#2f549f; text-decoration:none;}
+a:link,.box a:visited{ text-decoration:none;}
+a:active{ }
+a:hover{}
+ul { list-style: none outside; }
+
+input[type="button"],
+			button[type="button"],button[type="reset"]
+			{margin:1px 5px 5px ; 
+				padding: 4px 10px;
+				padding:4px 5px\9; 
+				border: 1px solid #cacaca;
+				border-bottom-color: #bbb; 
+				color: #3C3C3D; 
+				text-align: center; 
+				text-shadow: 0 -1px 0 rgba(255,255,255,.3); 
+				text-decoration: none; 
+				-webkit-border-radius: 2px; 
+				-moz-border-radius: 2px; 
+				khtml-border-radius: 2px; 
+				border-radius: 2px; 
+				background: #F6F6F6; 
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #F6F6F6), color-stop(1, #E3E3E3)); 
+				background: -moz-linear-gradient(center top, #F6F6F6 20%, #E3E3E3 100%); }
+				form input[type="button"]:hover,
+				input[type="button"]:hover,
+				button[type="button"]:hover,button[type="reset"]:hover{
+					border-color:#2796b6;
+					color: #fff; 
+					text-shadow: 0 1px 0 rgba(0,0,0,.3);
+					background: #26c3d8; 
+					background: -webkit-gradient(linear, left top, left bottom, color-stop(.2, #2999b9), color-stop(1, #2897b7)); 
+					background: -moz-linear-gradient(center top, #2999b9 20%, #2897b7 100%); 
+					-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+					-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29); 
+					box-shadow: inset 0 1px 0 rgba(255,255,255,.3), inset 0 0 2px rgba(255,255,255,.3), 0 1px 2px rgba(0,0,0,.29);
+					background-position:0 0;
+				}
+				a.button, button { display: inline-block; padding:6px 5px; font-family: 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 12px; color: #3C3C3D; text-shadow: 1px 1px 0 #FFFFFF; background: #ECECEC url('button/img/css3buttons_backgrounds.png') 0 0 repeat-x; white-space: nowrap; overflow: visible; cursor: pointer; text-decoration: none; border: 1px solid #CACACA; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; outline: none; zoom: 1; line-height: 15px; *display: inline; *vertical-align: middle; }
+/* 头部  */
+
+/* 1.4 头部
+-----------------------------------------*/
+/* 头部站内消息或广告 */
+.site_messages{ background:#f7f7f7; color:#333; line-height:25px; text-align:center;}
+	.site_messages p{ margin:0;}
+
+/* 头部容器 */
+.header{ background:#26C3D8 url(../img/weibo/weibo_header_bg.jpg) no-repeat 40% bottom; border-bottom:1px solid #1c92a2; color:#fff; min-height:80px;_height: expression( this.scrollHeight < 80 ? "80px" : "auto" );}
+.header .container_24{ position:relative; z-index:10;}
+/* 头部网站标题 */
+	.header hgroup h1,.header hgroup h2{ color:#fff;}
+	.header .logo{ padding-top:10px;}
+	
+	
+/* 头部搜索 */
+	.header .search{ padding-top:25px; z-index:4;}
+	/* 搜索容器 */
+		.header .search .search_box{ border:1px solid #2796b6; height:30px; background:#fff; box-shadow: inset 0 2px 5px rgba(0,0,0,0.4),0 1px 0 rgba(255,255,255,0.3); width:270px; overflow:hidden;}
+		/* 搜索输入框 */
+		.header .search .search_input{  position:relative; left:50px; width:220px; background:none; border:none; height:18px; font:12px Arial;padding:6px 4px 6px 8px}
+		/* 搜索下拉框 */
+		.header .search .search_selcecter{ position:absolute; left:1px;}
+		/* 搜索下拉选项 */
+		.header .search .search_options{ /*position:absolute; z-index:999; left:0; top:0;*/ background:#E3F4FA; box-shadow: inset 1px 2px 5px rgba(0,0,0,0.4);}
+		/* 搜索下拉选项链接 */
+		.header .search .search_selcecter a{ display:block; height:30px; line-height:30px;padding:0 5px;width:40px;}
+		.header .search .search_selcecter a:hover{ background:#2F549F; color:#fff;}
+		/* 搜索下拉选中选项 */
+		.header .search .search_selcecter a.selected,.header .search .search_selcecter a.selected:hover{ display:block; background:none; color:#2F549F;}
+		/* 搜索按钮 */
+		.header .search .search_btn{ height:30px; box-shadow:0 1px 0 rgba(255,255,255,0.3); position:relative; left:5px;}
+	/* 登录以及登录后最外层容器 */
+	.header .user_box{ padding-top:25px; position:relative; z-index:20;}
+	/* 登录注册按钮容器 */
+	.header .user_login{ float:right;}
+		.header .user_login li{ display:inline; float:left; margin-right:5px;}
+		.header .user_login a{ display:inline-block; color:#fff; line-height:30px; height:30px; padding:0 10px 0; border:1px solid #2F549F; width:60px; text-align:center;}
+		.header .user_login a:hover{border-color:#123989; background:#3961b0;box-shadow: inset 0 0 3px rgba(112,169,207,1),0 1px 0 rgba(255,255,255,0.3);}
+		.header .user_login a:active{border-color:#123989;background:#2F549F;box-shadow: inset 0 2px 5px rgba(0,0,0,0.4),0 1px 0 rgba(255,255,255,0.3);}
+		.header .user_login a.selected,
+		.header .user_login a.selected:hover{ border-color:#123989;background:#1d3e7f;box-shadow: inset 0 2px 5px rgba(0,0,0,0.4),0 1px 0 rgba(255,255,255,0.3);}
+		.header .user_login a .icon16.rnd_br_down,
+		.header .user_login a.selected .icon16.rnd_br_down{background-position:-16px -2912px;}
+		
+	/* 登录弹出框容器 */	
+	.header .login_pop{ position:absolute; z-index:999; top:57px; right:5px; width:210px; box-shadow: 0 2px 5px rgba(0,0,0,.5); border-radius:5px 0 5px 5px;}
+		/*.header .login_pop:hover{box-shadow: 0 5px 5px rgba(102, 146, 219,.7); background:#fff;}*/
+	.header .login_pop p{ margin:0;}
+		.header .login_pop .textbox{ padding:5px 10px;}
+		.header .login_pop .textbox a{ color:#9AB4E8;}
+		.header .login_pop .remember{padding:5px 10px;}
+		.header .login_pop label{ display:inline; color:#ccc; vertical-align:middle;}
+			.header .login_pop .textbox  label{display:inline; float:left;}
+			.header .login_pop .textbox .txt_input{ width:180px;}
+		.header .login_pop button{ width:100px;}
+		/* 其他登录 */
+		.header .login_other{ padding:5px 10px; color:#ccc; border-top:1px solid #395B9D;}
+			.header .login_other a{width:16px; height:16px; overflow:hidden; float:left; margin:5px 0 0 3px;}
+		.header .login_other img{ width:16px; height:16px; overflow:hidden; display:block;}
+	/* 已经登录容器 */
+	.header .user_logined{ clear:both; display:block; /*background:#274b94;box-shadow:0 1px 0 rgba(255,255,255,0.3);*/box-shadow:0 0 3px rgba(0, 0, 0,0.3);line-height:30px;height:30px;border:1px solid #123989;
+  background-color: #2C55A8;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#2C55A8), to(#274B94)); 
+  background-image: -webkit-linear-gradient(top, #2C55A8, #274B94); 
+  background-image:    -moz-linear-gradient(top, #2C55A8, #274B94); 
+  background-image:     -ms-linear-gradient(top, #2C55A8, #274B94); 
+  background-image:      -o-linear-gradient(top, #2C55A8, #274B94); 
+  background-image:         linear-gradient(top, #2C55A8, #274B94);
+}
+		.header .user_logined li{display:inline; float:left;text-align:center; }
+		.header .user_logined li.line { display:block; height:28px;margin-top:1px; _margin-top:0px;}
+			.header .user_logined li#avatar{ width:60%; text-align:left; overflow:hidden; white-space:nowrap;}
+			.header .user_logined li.logout{ width:38%; }
+
+		.header .user_logined a{ display:block; color:#fff; /*padding:0 5px; */ min-width:20px;}
+		.header .user_logined a:hover{ box-shadow: 0 1px 2px rgba(0,0,0,0.4)}
+		.header .user_logined img.pic_small{ width:25px; height:25px;  display:block; float:left;  margin-right:5px;}
+		.header .user_logined a span.user_named{ display:inline-block; line-height:30px; cursor:pointer;}
+		/* 已经登录弹出框容器 */
+		.header .user_nav_pop{ position:absolute;z-index:999; top:56px; left:0; box-shadow:0 5px 5px rgba(0,0,0,.3); border-radius:0 0 5px 5px;}
+		.header .user_nav_pop .nav_list{ display:block; padding:5px 0; }
+		.header .user_nav_pop .nav_list li{ float:none; display:block; text-align:left;}
+		.header .user_nav_pop .nav_list a{ display:block;  padding:0 15px;}
+		.header .user_nav_pop .nav_list a:hover{ color:#fff;}
+		.header .user_nav_pop .nav_list a .icon16{ float:right; margin-top:8px; opacity:0.3;}
+		.header .user_nav_pop .nav_list a:hover .icon16{ opacity:1;}
+		.header .user_nav_pop .nav_list a.selected{ color:#D0F09E;}
+		.header .user_nav_pop .nav_list a.selected:hover{ background:#46BE41;}
+		
+	/* 语言栏容器 */
+	.header .language{ padding-top:25px;}
+		/* 语言栏选择区域 */
+		.header .lan_selcecter{position:relative; width:70px; z-index:11;}
+		/* 语言栏选项容器 */
+		.header .lan_options{position:absolute; z-index:999; left:0; top:0;  width:70px;border-radius:5px;  }
+			/* 语言栏显示列表时改变的样式 */
+			.header .lan_options.hover{background:#1d3e7f;padding-bottom:5px; box-shadow:0 5px 3px rgba(0,0,0,.3);}
+			/* 语言栏链接 */
+			.header .lan_options a{ color:#9ab4e8; display:block; line-height:20px; height:20px; padding:0 5px; font-size:10px;}
+			.header .lan_options a:hover{ background:#224894; color:#fff;}
+			.header .lan_options a.selected,.header .lan_options a.selected:hover{ font-size:12px;line-height:30px; height:30px; background:none;}
+			
+/* 1.5 导航
+-----------------------------------------*/			
+.nav{  color:#fff; font-size:14px; height:30px; width:100%;background:#00a2b8; font-size:14px;  _height: expression( this.scrollHeight < 30 ? "30px" : "auto" ); width:100%; border-top:1px solid #45bbcb;  border-bottom:1px solid #45bbcb;}
+	.nav .menu{ display:block; position:relative; z-index:2;}
+		/* 导航工具栏 */
+		.nav .operate{ bottom:3px; right:0;}
+		
+			.nav .operate a{ color:#fff}
+			.nav .operate .icon16{ float:none;}
+		.nav ul li{ display:inline; float:left; }
+		
+		#ie6 .nav .operate{  bottom:auto; top:2px;}
+		#ie6 .nav .operate a{ width:50px; float:right; padding:5px;}	
+		#ie6 .nav .operate a:hover{} 
+		
+		/* 导航间隔线 */
+		.nav ul li.line { display:block; height:30px; width:0; font-size:0; border-left:1px solid #446ac1; border-right:1px solid #7fa2dd;}
+			/*导航链接*/
+			.nav li a{ color:#fff;display:inline-block;  font:bold 14px/30px Arial, Helvetica, sans-serif; width:85px; min-width:85px;   text-align:center;-o-transition: all 0.2s ease-out 0.1s; -webkit-transition: all 0.2s ease-out 0.1s; -moz-transition: all 0.2s ease-out 0.1s; -ms-transition: all 0.2s ease-out 0.1s; transition: all 0.2s ease-out 0.1s;}
+			.nav li a:hover{ position:relative; z-index:1;  color:#1c6b82; font-weight:bold;
+								 background: #f0fafd !important;
+							    background-image: -webkit-gradient(linear, left top, left bottom, from(#dff5fa), to(#fcfeff)); 
+							    background-image: -webkit-linear-gradient(top, #dff5fa, #fcfeff); 
+							    background-image:    -moz-linear-gradient(top, #dff5fa, #fcfeff); 
+							    background-image:     -ms-linear-gradient(top, #dff5fa, #fcfeff); 
+							    background-image:      -o-linear-gradient(top, #dff5fa, #fcfeff); 
+							    background-image:         linear-gradient(top, #dff5fa, #fcfeff);
+								filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dff5fa', endColorstr='#fcfeff');
+								box-shadow:0 0 5px rgba(149, 26, 26,.5);  }
+			.nav li a:active{ background:#2F549F; box-shadow:inset 0 5px 5px rgba(0,0,0,0.5); border-color:#446AC1; }
+			.nav li a.selected,.nav a.selected:hover,.nav a.selected:visited{ background:#fff url(../img/style/nav_ul_selected.gif) no-repeat center center; color:#2F549F;border-color:#fff; position:relative; z-index:1;box-shadow:0 0 3px rgba(255,255,255,0.5);}
+
+
+
+.weibo_style .header .logo{ width:350px;}
+.weibo_style .header .grid_2{ display:none;}
+.weibo_style .header .grid_12{ width:390px;}
+
+/* 1.7 页脚
+-----------------------------------------*/	
+.footer{  background:#fff;}
+	/*1.7.3 版权 */
+	.footer .site_copyright .container_24{ border-top:1px solid #eee;}
+
+
+/* 内容  */
+.wrapper{  background:#fff url(../img/weibo/weibo_bg.jpg) no-repeat top center; border-top:1px solid #2598aa; padding-bottom:20px;}
+.weibo_banner{height:495px;}
+		h1.weibo_title{ font-family:"微软雅黑"; font-size:30px; font-weight:normal; line-height:45px; padding-left:20px; height:50px; color:#fff; background:url(../img/weibo/post_title.gif) no-repeat;}
+			.weibo_title strong{font-weight:bolder;}
+		.weibo_detail{border:1px solid #e6e6e6; background:#fff;}
+			.detail_box{padding:10px;}
+			.detail_left{ width:50%; border-bottom:1px solid #e6e6e6; height:110px; position:relative; z-index:1;}
+				.detail_left li span{color:#2f549f;}
+				.detail_left li p{color:#666; line-height:25px; margin-bottom:0;}
+				.detail_left .button_box{ position:absolute; right:20px; top:20px;}
+			li.w4{width:70%;}
+			button[type="button"]{margin-top:1px;}
+			.header .user_logined{ clear:both; display:block; box-shadow:0 0 3px rgba(0, 0, 0,0.3);line-height:30px;height:30px;border:1px solid #2d829a;
+									background-color: #36A1BE;
+  									background-image: -webkit-gradient(linear, left top, left bottom, from(#40A9C4), to(#2A98B8)); 
+  									background-image: -webkit-linear-gradient(top, #40A9C4, #2A98B8); 
+  									background-image:    -moz-linear-gradient(top, #40A9C4, #2A98B8); 
+  									background-image:     -ms-linear-gradient(top, #40A9C4, #2A98B8); 
+  									background-image:      -o-linear-gradient(top, #40A9C4, #2A98B8); 
+  									background-image:         linear-gradient(top, #40A9C4, #2A98B8);
+			}
+			.header .user_logined li.line { display:block; height:28px; border-left:1px solid #247991; border-right:1px solid #5cb1c9; margin-top:1px; _margin-top:0px;}
+			.header .user_logined a:hover{ background:#29b1d5;}
+
+		  	.header .search .search_btn{ border:1px solid #cacaca !important;}
+			.header .lan_options.hover a.selected,
+			.header .lan_options.hover a.selected:hover{ color:#000 !important; }
+			.nav li a{font-weight:bold; border:none;}
+			.header .user_login a{border:1px solid #3fbacb;}
+			.header .user_login a:hover{background:#00a2b8; border:1px solid #3fbacb;}
+			.header .user_login a.selected,
+		.header .user_login a.selected:hover{background:#00a2b8; border:1px solid #1c92a2;}
+		.header .login_other{border:1px solid #1c92a2;}
+		.header .login_pop{background:#00a2b8; background:rgba(0, 162, 184,.9);}
+
+			
+			.operate a:hover{background-color:#26c3d8; color:#fff;}
+			.header .lan_options.hover{background:#26c3d8;padding-bottom:5px; box-shadow:0 5px 3px rgba(0,0,0,.3); border:1px solid #23b2c5;}
+			.header .lan_options a:hover{ background:#2a98b8; color:#fff;}
+			.header .user_logined li.logout a{color:#fff; width:73px;}
+			.header .search .search_selcecter a:hover{ background:#00a2b8; color:#fff;}
+			.header .lan_options.hover a.selected
+			,.header .lan_options.hover a.selected:hover{ color:#fff !important;}
+
+			.header .user_nav_pop{background:#00a2b8; background:rgba(0, 162, 184,.9);}
+			.header .lan_options a{color:#fff;}
+			.header .user_nav_pop .nav_list a{color:#fff;}
+		/* 导航间隔线 */
+		.nav ul li.line { display:block; height:0px; width:0; font-size:0; border:none;}	
+		/* 内容部分 */
+		.main_con{ position:relative; margin-top:-40px}
+		
+		/* 微博右边部分 */
+		h1.rule_title{font-family:"微软雅黑"; font-size:18px;  font-weight:bold; padding-left:10px; color:#fff; background:#2BAAD0 url(../img/weibo/side_title.gif) no-repeat right; margin-top:20px;}
+		.weibo_rule{ padding-top:10px; padding-left:20px;}
+		
+		.weibo_rule li{height:30px; line-height:30px;}
+		.weibo_rule li a{padding-left:15px; line-height:25px; background:url(../img/public/dot.png) no-repeat; display:block;}
+		.weibo_help{ margin-top:20px; margin-left:10px; background:url(../img/style/weibo_help.gif) no-repeat; height:220px;}
+		.weibo_help h1{font-size:14px; font-weight:bold;}
+		.weibo_help li{padding-left:60px;}
+		.weibo_help li a{color:#2f549f;}
+		
+		.post_button{ text-align:center;padding-top:9px;}
+		#ie6 .post_button{padding-top:20px;}
+		.post_button a{ display:inline-block; width:210px; height:65px; text-indent:-999em;}
+		.post_button a.post{ background:url(../img/weibo/post.gif) no-repeat;}
+		.post_button a.setin{background:url(../img/weibo/setin.gif) no-repeat;}
+		
+		.jcarousel-skin-default{ padding-top:31px; position:relative; }
+		#ie6 .jcarousel-skin-default{ padding-top:19px; }
+		
+		.jcarousel li p,
+		.jcarousel li p a{ display:block; text-align:center; font-weight:bolder; color:#0f899a;}
+		.jcarousel li p a{ padding:10px 15px;}
+		.jcarousel li p .task_type{ position:absolute; color:#fff;  font-weight:normal;}
+		.jcarousel li p strong{ display:block; }
+		
+		.jcarousel li p.box_min{ width:160px; height:215px; background:url(../img/weibo/box_min.gif) no-repeat top center; margin-top:20px; margin-left:7px; margin-right:7px; position:relative;}
+		.jcarousel li p.box_min a{width:130px; height:195px;}
+		.jcarousel li p.box_big{ width:185px; height:250px; background:url(../img/weibo/box_big.gif) no-repeat top center; margin-left:7px; margin-right:7px; position:relative;}
+		.jcarousel li p.box_big a{width:155px; height:225px; font-size:14px;}
+		
+		.jcarousel li p.box_min strong{ padding-top:10px; padding-bottom:10px;font-size:22px;}
+		.jcarousel li p.box_big strong{ padding-top:25px; padding-bottom:10px;font-size:27px;}
+		
+		
+		
+		.jcarousel li p.box_min .task_type{ top:20px; left:8px;font-size:12px;}
+		.jcarousel li p.box_big .task_type{ top:35px; left:6px;font-size:14px;}
+		
+		.jcarousel-left-right{ }
+		.jcarousel-left-right a{ display:block; width:47px; height:106px; text-indent:-999em;position:absolute; top:50%; margin-top:-65px;}
+		#ie6 .jcarousel-left-right a{top:41%; }
+		.jcarousel-left-right a.prev{ background:url(../img/weibo/prev.gif) no-repeat top center; left:29px;}
+		#ie6 .jcarousel-left-right a.prev{left:-50px;}
+		.jcarousel-left-right a.next{ background:url(../img/weibo/next.gif) no-repeat top center;  right:28px;}
+		
+		#jcarousel-pagination{ height:25px;  text-align:center; position:relative; top:-13px;}
+		.jcarousel-pagination-item{display:inline-block;width:13px; height:13px;  font-size:1px; line-height:13px; color:#128AA1; margin-left:8px; background:url(../img/weibo/page-item.gif) no-repeat;}
+		.jcarousel-pagination-item-active{color:#fff; background:url(../img/weibo/page-item-active.gif) no-repeat;}
+		
+		
+		.weibo_style .jcarousel-skin-default .jcarousel-vertical,
+		.weibo_style .jcarousel-skin-default .ver-ti-cal {
+		    position: relative;
+		    overflow: hidden;
+		    width: 100%;
+		    width: 210px;
+		    height: 162px;
+		    border:none;
+		}
+		.weibo_style .jcarousel-skin-default .jcarousel-vertical ul,
+		.weibo_style .jcarousel-skin-default .ver-ti-cal ul {
+		    height: 20000px;
+		    width: 210px;
+		    position: absolute;
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		}
+		.weibo_style .jcarousel-skin-default .jcarousel-vertical li, 
+		.weibo_style .jcarousel-skin-default .ver-ti-cal li{
+			width: 210px;
+		}
+		.weibo_style #get_post li a{width: 210px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+		

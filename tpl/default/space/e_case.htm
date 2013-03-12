@@ -1,0 +1,44 @@
+<!--{eval require keke_tpl_class::template(SKIN_PATH."/space/{$type}_nav")}-->
+<div class="main_con mt_20 mb_20" id="taskScroll">
+    <h1>{$_lang['success_case']}</h1>
+    <div class="clear"></div>
+        <div id="case_list">
+            <!--suc_list_box-->{loop $shop_arr $k $v}
+            <div class="suc_list_box clearfix">
+                <img src="{$v['case_pic']}" alt="" />
+                <div class="right_con clearfix">
+                    <h2 class="c000"><!--{eval echo kekezu::cutstr($v['title'], 40);}--></h2>
+                    <p>
+                        {$_lang['industry']}{$_lang['zh_mh']} 
+                        {$indus_p_arr[$indus_c_arr[$v['in_id']]['indus_pid']]['indus_name']}|{$indus_c_arr[$v['in_id']]['indus_name']} 
+                        <font class="fl_r mr_5">
+                            <!--{date('Y-m-d',$v['start_time'])}-->~<!--{date('Y-m-d',$v['end_time'])}-->
+                        </font>
+                    </p>
+                    <p>
+                        {$_lang['service_address']}{$_lang['zh_mh']}
+                        {if $v['case_type']==1}<a href="index.php?do=service&sid=$v['service_id']" target="_blank">$d_url/index.php?do=service&sid=$v['service_id']</a>
+                        {else}<a href="{$v['case_url']}" target="_blank">{$v['case_url']}</a>
+                        {/if}
+                    </p>
+                    <p>
+                        $v['content']
+                    </p>
+                </div>
+            </div>
+            {/loop}<!--end suc_list_box-->
+            <div class="clear">
+            </div>
+            <!--page ·­Ò³ start-->
+            <div class="pages">
+                $pages['page']
+            </div>
+            <!--page ·­Ò³ end-->
+        </div>
+
+</div>
+<!--end main_con-->
+</div>
+<div class="clear">
+</div>
+<!--{template footer}-->

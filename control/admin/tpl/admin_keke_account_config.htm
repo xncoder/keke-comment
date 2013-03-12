@@ -1,0 +1,107 @@
+  <!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>{$_lang['union_api_config_manage']}</h1>
+    <div class="tool">
+       		 <a href="index.php?do=keke&view=account&op=config" {if $op=='config'}class="here"{/if}>{$_lang['union_api_config']}</a>
+       	{if $config['keke_app_id']}
+			 <a href="index.php?do=keke&view=account&op=account" {if $op=='account'}class="here"{/if}>个人信息</a>
+		{else}
+			 <a href="{$gate}/apply.php" target="_blank">申请应用</a>
+		{/if}
+    </div>
+</div>
+{if $op=='config'}
+<div class="box tip clearfix p_relative">
+    <div class="control"><a title="关闭" onclick="$(this).parent().parent().fadeOut();" href="javascript:void(0);"><b>×</b></a></div>
+    <div class="title"><h2>小提示</h2></div>
+    <div class="detail pad10">
+       <ul style="color:red">
+          <li>联盟应用默认为关闭，需启用后才可使用相关功能</li>
+          <li>自动提交配置开启后将允许站点的任务自动在发布完成后提交至联盟后台；推广金将采用与联盟协商达成的固定比例计算</li>
+		  <li>唯一标识用于构造联盟端对此任务的区别标识，为防止重复可能请定义站点唯一标识</li>
+       </ul>
+    </div>
+</div>
+<div class="box post">
+    <div class="tabcon">
+        <div class="title">
+            <h2>{$_lang['union_api_config']}</h2>
+        </div>
+        <div class="detail">
+            <form name="frm_config_kekeapi" id="frm_config_kekeapi" action="index.php?do=keke&view=account" method="post" accept-charset="{$_K['charset']}">
+            	<input type="hidden" name="op" value="{$op}" />
+            	<input type="hidden" name="old_keke_id" value="{$config['keke_app_id']}" />
+            	<input type="hidden" name="old_keke_secret" value="{$config['keke_app_secret']}" />
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tbody id="qq">
+                        <tr>
+                            <th scope="row" width="130">
+                                应用开关{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <input type="radio" name="application" value="1" {if $config['application']==1}checked="checked"{/if}>启用
+                                <input type="radio" name="application" value="0" {if $config['application']==0}checked="checked"{/if}>禁用
+								(是否启用联盟应用)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="130">
+                                自动提交{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <input type="radio" name="auto_commit" value="1" {if $config['auto_commit']==1}checked="checked"{/if}>是
+                                <input type="radio" name="auto_commit" value="0" {if $config['auto_commit']==0}checked="checked"{/if}>否
+								 (是否自动向联盟提交任务、若选择则站点发布的相关任务将自动提交至联盟后台)
+							 </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="130">
+                                唯一标识{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <label><input type="text" size="50" name="log" class="txt" value="{$config['log']}" limit="type:int" msg="唯一标识" msgArea="txt_unio_log"/><span id="txt_unio_log"></span>(站点唯一标识)</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="130">
+                                联盟应用编号{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <label><input type="text" size="50" name="keke_id" class="txt" value="{$config['keke_app_id']}" limit="type:int" msg="UNIOappid" title={$_lang['unionapp_id']} msgArea="txt_unio_appid_msg"/><span id="txt_unio_appid_msg"></span>({$_lang['union_api_id']})</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" width="130">
+                                联盟应用密钥{$_lang['zh_mh']}
+                            </th>
+                            <td>
+                                <label><input type="text" size="50" name="keke_secret" value="{$config['keke_app_secret']}" limit="type:string" msg="UNIOappsecret" title={$_lang['unionapp_id']} msgArea="txt_uniosecret_msg" class="txt"/><span id="txt_uniosecret_msg"></span>({$_lang['union_app_secret_id']})</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <th scope="row">
+                        &nbsp;
+                    </th>
+                    <td>
+                        <div class="clearfix padt10">
+                            <button class="positive pill primary button" type="submit" name='submit' value="{$_lang['submit']}">
+                                <span class="check icon"></span>{$_lang['submit']}
+                            </button>
+                            <button class="pill button" type="button" onclick="history.go(-1);" value="{$_lang['return']}">
+                                <span class="leftarrow icon"></span>{$_lang['return']}
+                            </button>
+                        </div>
+                    </td>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+{else}
+<div class="box list">
+    <div class="detail">
+    	<iframe src="{$gate}/remote.php?app_id={$config[keke_app_id]}&do=account" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="500px"></iframe>
+    </div>
+</div>
+{/if}
+<!--{template control/admin/tpl/admin_footer}-->

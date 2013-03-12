@@ -1,0 +1,23 @@
+<!--{template control/admin/tpl/admin_header}-->
+<div class="page_title">
+    <h1>任务列表</h1>
+    <div class="tool">
+        <div class="tool"> 
+         			<a href="index.php?do={$do}&view=posttask">任务提交</a>
+					<a href="index.php?do={$do}&view=postlist" class="here">任务列表</a>
+		 </div>
+    </div>
+</div>
+{if trim($config['keke_app_id'])}
+<div class="box list">
+    <div class="detail">
+    	<iframe src="{$gate}/remote.php?app_id={$config[keke_app_id]}&do=post" id="post_frame" name="post_frame" scrolling="auto" frameborder="0" width="98%" height="530px"></iframe>
+    </div>
+</div>
+{else}
+<div class="box list">
+     <div class="detail t_c"><b>您的联盟API没有申请或暂未通过审核，暂时无法使用此功能。</b></div>
+</div>
+{/if}
+<!--主体结束-->
+<!--{template control/admin/tpl/admin_footer}-->

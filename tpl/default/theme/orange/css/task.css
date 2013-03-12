@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+/* -------------------------------------------------------------- 
+-----------------------------------------------------------------
+ 	注释 DEFINITIONS	: lf
+	作者 AUTHOR 		: lf
+ 	版本 VERSION		: 2012-02-24
+ 	
+ 	内容 CONTENTS:
+ 	1. 任务首页
+ 		1.1 banner部分
+ 		1.2  选项卡
+ 		1.3  热门分类区
+ 		1.4  热门推荐区
+ 	2. 任务列表
+ 	3. 任务地图（地图搜索下拉按钮）
+ 	4. 任务详细
+ 		4.1 任务描述
+ 		4.2 任务稿件
+ 		4.3 任务作品
+ 		4.4 任务工具 
+ 	5. 页面元素
+ 		5.1  通用
+ 		5.2 icon图标
+ 		5.3   链接	
+ 		5.4  头部标题
+ 		5.5  其他标记
+ 		5.6 right列表
+ 		5.7  广告位 
+ 		5.8 evaluate辅助评价
+ 		5.9   用户隐藏层		
+-----------------------------------------------------------------
+-------------------------------------------------------------- */
+
+
+/* 1. 任务首页
+ --------------------------------------*/
+
+/* 1.1 banner部分 */
+.container{ background:#fff;}
+	.banner{clear:both;}
+
+/* 1.2 选项卡 */
+.tasktab{background:#fff;}
+
+/* 1.3 热门分类区 */
+.item h2{color:#555;}
+.box_detail ul.category_list li .item a{color:#666;}
+.box_detail ul.category_list li .item a:hover{color:#333;}	
+
+/* 1.4热门推荐区 */
+.trade p{color:#000; padding-top:5px; margin-bottom:0;}
+	
+/* 4. 任务详细
+ --------------------------------------*/
+
+/* 4.1 任务描述 */
+aside .item a{background:url(../img/style/dot.png) no-repeat 0 0;}
+aside .item a:hover{background-position:0 -25px;}
+		
+/* 4.2 任务稿件 */
+.work_9_big{ background:url(../img/task/task_9_big.gif) no-repeat}
+.work_10_big{ background:url(../img/task/task_10_big.gif) no-repeat}
+
+/* 4.3 任务稿件 */
+	.sum_title .gj_bg{ background: #FEA523; color:#fff; padding-left:10px; width:181px;}		
+
+/* 4.4 任务工具 */
+.control{text-align:center;}
+
+/* 5. 页面元素
+ --------------------------------------*/
+
+/* 5.4 头部标题 */
+.head_title h1{ font-size:22px; color:#369; font-family:"Trebuchet MS", Arial, Helvetica, sans-serif}
+.head_title h1 span{ padding:0 5px 0 3px;}
+.head_title p span{ margin-right:10px}
+
+/* 5.6 right列表 */
+.list button{ float:left;}
+	 
+@media only screen and (min-width: 1280px) and (max-width: 1600px){
+	.banner_bg{ text-align:right;}
+	.banner_bg img{ display:inline; margin:0}
+}
+
+	
+	
+		
+		
+		
+		
+		

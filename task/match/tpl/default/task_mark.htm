@@ -1,0 +1,61 @@
+
+<!--星级评定样式-->
+ 
+<!--星级评定-->
+
+            <div class="grid_24 po_re">
+            	 <div class="panel clearfix box">
+                <header class="clearfix box_header">
+                    <div class="fl_l pl_10 pr_20">
+                    	<h3 class="font16b lineh_32">{$_lang['evaluate']}[{$task_info['mark']['all']}]</h3>
+                    </div>
+					  <div class="grid_18 alpha">
+                      	<nav class="box_nav">
+                        	<ul class="clearfix">
+						  	<li><a href="{$basic_url}&view=mark">{$_lang['all_value']}[{$task_info['mark']['all']}]</a></li>
+						  	<li><a href="{$basic_url}&view=mark&st=1">{$_lang['good_value']}[ <!--{eval echo intval($mark_count[1][count])}--> ]</a></li>
+							<li><a href="{$basic_url}&view=mark&st=2">{$_lang['middle_value']}[ <!--{eval echo intval($mark_count[2][count])}--> ]</a></li>
+							<li><a href="{$basic_url}&view=mark&st=3">{$_lang['bad_value']}[ <!--{eval echo intval($mark_count[3][count])}--> ]</a></li>
+						  	 <li><a href="{$basic_url}&view=mark&ut=2">{$_lang['from_employer']}[{$task_info['mark']['master']}]</a></li>
+							<li><a href="{$basic_url}&view=mark&ut=1">{$_lang['from_witkey']}[{$task_info['mark']['wiki']}]</a></li>
+                            </ul>
+                         </nav>
+				     </div>
+                </header>
+                <div class="grid_22 prefix_1">
+				{if $mark_info} <!--评价-->
+					{loop $mark_info $v}
+                    <div class="ly1 mt_20 mb_10">
+                        <div class="top1 clearfix mt_10">
+                            <div class="fl_l mr_10">
+                            	<a href="index.php?do=space&member_id={$v[uid]}" title="{$v[username]}"><!--{userpic($v[uid],'small')}--></a>
+								<a href="index.php?do=space&member_id={$v[by_uid]}" class="ml_10 mr_10">{$v[by_username]}</a>
+								{$_lang['to']}<a href="index.php?do=space&member_id={$v[uid]}" class="ml_10 mr_10">{$v[username]}</a>{$_lang['de']}
+								{if $v[mark_status]==1}{$_lang['good_value']}{elseif $v[mark_status]==2}{$_lang['middle_value']}{elseif $v[mark_status]=='3'}{$_lang['bad_value']}{else}{$_lang['no_reply_value']}{/if}
+								<img src="resource/img/ico/ico_mark_{$v[mark_status]}.gif" alt=''>
+								
+								<a onclick="return false;" href="index.php?do=ajax&view=task&ajax=mark_aid&auid={$v[uid]}&mark_type={$v[mark_type]}&mark_status={$v[mark_status]}&obj_id={$v[obj_id]}"
+								 onmouseover="loadMarkAid(this)" id="task_mark_{$v[mark_id]}">{$_lang['check_evalue']}</a>
+                            </div>
+                        </div>
+                        <div class="pl_30 ml_30">
+                            <p class="mt_10 pl_5 font14 ws_prewrap ws_break">{$v[mark_content]}
+                            </p>
+                        </div>
+						<div class="fl_r mark_aid_{$v[mark_id]}"></div>
+                    </div>
+					<div class="clear"></div>
+					{/loop}<!--end评价-->
+				{else}
+					<div class="t_c"><span class="c999">{$_lang['now_no_record']}</span></div>
+				{/if}
+                </div>
+                <!--page 翻页 start-->
+                <div class="page">
+                    <p class="clearfix">{$pages[page]} </p>
+                    <div class="clear"></div>
+                </div>
+                <!--page 翻页 end-->
+                <div class="clear"></div>
+            </div>
+		</div>	
