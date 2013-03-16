@@ -1238,7 +1238,10 @@ function showDialog(msg, mode, t, func, cover, funccancel) {
 	}
 	showMenu({'mtype':'dialog','menuid':menuid,'duration':3,'pos':'00','zindex':JSMENU['zIndex']['dialog'],'cache':0,'cover':cover});
 }
-
+/**
+ * @k : 消息类型
+ * @url: 对应的 url
+ */
 function showWindow(k, url, mode, cache, menuv,recall) {
 
 	mode = isUndefined(mode) ? 'get' : mode;
@@ -2523,4 +2526,4 @@ window.onload = function(){
  
 }
 
- 
+

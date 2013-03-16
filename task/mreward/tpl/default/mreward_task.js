@@ -36,10 +36,12 @@ function workHand() {
  */
 function workBid(work_id, to_status,obj) {
 	if (check_user_login()) {
+        // 判断当前用户是否为发布职位的雇主
 		if (guid != uid) {
 			showDialog(L.t_master_can_operate_work, "alert",L.operate_notice);
 			return false;
 		} else {
+            // $basic_url = "index.php?do=task&task_id=$task_id"; 
 			var url = basic_url + '&op=work_choose&work_id=' + work_id;
 			$.post(url, {
 				to_status : to_status

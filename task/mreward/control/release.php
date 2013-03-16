@@ -1,6 +1,7 @@
 <?php
 defined ( 'IN_KEKE' ) or exit ( 'Access Denied' );
 $std_cache_name = 'task_cache_'.$pub_mode.'_'.$model_id.'_'.$t_id.'_' . substr ( md5 ( $uid ), 0, 6 );
+// 初始化 mreward_release_class
 $release_obj = mreward_release_class::get_instance ( $model_id,$pub_mode);
 $payitem_arr = keke_payitem_class::get_payitem_info('employer','mreward'); 
 $payitem_standard = keke_payitem_class::payitem_standard (); 
@@ -18,6 +19,7 @@ switch ($r_step) {
 				$release_obj->get_max_day ( $task_cash );
 				break;
 		}
+        // 创建task时，默认将r_step 赋值为 step1. 
 		if (kekezu::submitcheck($formhash)) {
 			$release_info and $_POST = array_merge ( $release_info, $_POST );
 			$_POST['txt_task_cash'] = keke_curren_class::convert($_POST['txt_task_cash'],0,true);
@@ -46,7 +48,7 @@ switch ($r_step) {
 		break;
 	case "step3" :
 		$limit_max =ceil(( strtotime($release_info['txt_task_day']) - time())/3600/24); 
-	switch ($ajax) {
+	    switch ($ajax) {
 			case "save_payitem" : 
 				$release_obj->save_pay_item ( $item_id, $item_code, $item_name, $item_cash, $std_cache_name ,$item_num);
 				break;

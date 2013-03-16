@@ -504,7 +504,17 @@ static function draw_tree($arr, $tree, $level, &$temp_arr, $out, $index, $id, $p
 			$result = $_lang ['now'];
 		}
 		return $result;
-	}
+    }
+    /*
+     *  表单hash生成算法
+     *  time() 结果形式 1363141079 substr(time(), 0, -7) 舍掉后7位，结果为136
+     *  ENCODE_KEY  config/config.inc.php:11:define('ENCODE_KEY','keke'); 
+     *  $uid $username 可直接获得
+     *  md5(136 . uid . username . keke) ，取后6位
+     *  uid 通过 space 的member_id可获得， username在页面直接能找到 
+     *  结论：formhash 值可预测，并且每个用户的hash值在 10^7 s 内不会变化，所以token完全是虚设
+     *  建议：修改 ENCODE_KEY 值，或者用substr(time(), 0, 7)) （但是方法二修改了逻辑，会导致无法校验）
+     */
 	static function formhash() {
 		$uid = null;
 		$username = null;
@@ -520,6 +530,9 @@ static function draw_tree($arr, $tree, $level, &$temp_arr, $out, $index, $id, $p
 		global $_lang;
 		global $_K, $kekezu;
 		if (! empty ( $var ) && $_SERVER ['REQUEST_METHOD'] == 'POST') {
+            // 如果 HTTP_REFERER 为空，判断是直接发起的请求，而非页面跳转
+            // 取HTTP_REFERER中https://xxxxx/的xxx部分，即域名，和HTTP_HOST的域名比较，判断是否为跨域请求
+            // 最后判断表单的 formhash 值与 define('FORMHASH', kekezu::formhash()) 计算的hash值是否一致
 			if ((empty ( $_SERVER ['HTTP_REFERER'] ) || preg_replace ( "/https?:\/\/([^\:\/]+).*/i", "\\1", $_SERVER ['HTTP_REFERER'] ) == preg_replace ( "/([^\:]+).*/", "\\1", $_SERVER ['HTTP_HOST'] )) && $var == FORMHASH) {
 				return true;
 			} elseif ($return_json == true) {

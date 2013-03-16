@@ -318,10 +318,10 @@ class mreward_task_class extends keke_task_class {
 		//die('1');
 		//检测登录
 		kekezu::check_login ( $url, $output ); 
-		//检测是否可选/是否中标
+		//检测是否可选/是否中标 
 		$this->check_if_operated ( $work_id, $to_status, $url, $output ); 
 		$status_arr = $this->get_work_status ();
-		
+	    // set_work_status 执行update语句，更新work_id状态为to_status	
 		if ($this->set_work_status ( $work_id, $to_status )) {
 			$status_desc_arr = array ("1" => $_lang ['work_get_prize1'], "2" => $_lang ['work_get_prize2'], "3" => $_lang ['work_get_prize3'] );
 			//稿件信息
@@ -602,7 +602,8 @@ class mreward_task_class extends keke_task_class {
 			$work_count = db_factory::get_count ( sprintf ( "select count(work_id) as work_count from %switkey_task_work where task_id='%d' and work_status='%d' ", TABLEPRE, $this->_task_id, 0 ) );
 			
 			//雇主在选稿期没有操作过任何一个稿件时
-			if ($work_num ['work_num'] == $work_count) {
+			//if ($work_num ['work_num'] == $work_count) {
+			if ($work_num  == $work_count) {
 				$this->auto_choose ( $prize_date ['count'] ['prize_1'], $prize_date ['count'] ['prize_2'], $total_prize_count ); 
 				//自动选稿
 			} else {
