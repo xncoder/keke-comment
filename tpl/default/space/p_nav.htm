@@ -108,8 +108,7 @@
             <!--最顶部-->
             <div class="head_top fl_r clearfix">
             	<a href="index.php" target="_blank"><div class="icon16 home reverse"></div>{$_lang['return_home']}</a>
-               
-				{if $p_shop_info['uid']==$uid}
+				{if $member_id==$uid}
 				<!--自己的店铺-->
                 	<a href="index.php?do=user&view=setting&op=space&opp=basic#userCenter" title={$_lang['custom']}>
                 		<div class="icon16 wrench-plus reverse"></div>{$_lang['custom']}</a>

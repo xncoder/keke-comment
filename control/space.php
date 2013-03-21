@@ -2,6 +2,7 @@
 $member_id = intval ( $member_id );
 $language = $kekezu->_lang;
 keke_lang_class::package_init ( $do );
+// get_user_info 从 witkey_space 和 witkey_member 读取数据
 $member_info = kekezu::get_user_info ( $member_id );
 // e:enterprise 有6个router
 $e_route_arr = array ("index", "statistic", "goods", "member", "intr", "case", "task" ); 
@@ -9,7 +10,7 @@ $e_route_arr = array ("index", "statistic", "goods", "member", "intr", "case", "
 $e_banner_keys = array ('index' => 'sy', 'intr' => 'gsjs', 'member' => 'qycy', 'task' => 'xgrw', 'goods' => 'spzs', 'case' => 'cgal', 'statistic' => 'gstj' );
 // P:Person 有4个router
 $p_route_arr = array ("index", "info", "goods", "statistic" );
-// 是否开启商品展示
+// 是否开启商品展示, 要关闭goods功能，故添加 TRUE
 if($shop_open==0 || TRUE){
 	unset($e_route_arr[2],$p_route_arr[2]);
 }
@@ -22,9 +23,11 @@ if($task_open==0&&$shop_open==0){
 }
 $shop_obj = new Keke_witkey_shop_class ();
 $shop_obj->setWhere ( "uid = " . intval ( $member_id ) );
+// select * from witkey_shop
 $p_shop_info = $shop_obj->query_keke_witkey_shop ();
 if (! $p_shop_info) { 
-    // 横向权限验证,如果访问当前页面的用户为主用户，则跳转到空间设置页面
+    // 该用户尚未开通空间
+    // 水平权限验证: 如果当前用户访问自己的空间，则跳转到开通空间设置页面，否则跳转到网站首页
 	$jump_url = $member_id == $uid ? 'index.php?do=user&view=setting&op=space' : 'index.php';
 	kekezu::show_msg ( $_lang ['this_user_no_open_space'], $jump_url );
 }
@@ -40,6 +43,7 @@ if ($e_shop_info [$banner_column]) {
 } else {
 	$banner_arr = array ('sy' => 'tpl/default/img/enterprise/banner_img.jpg', 'gsjs' => 'tpl/default/img/enterprise/banner_img.jpg', 'qycy' => 'tpl/default/img/enterprise/qycy_banner.jpg', 'xgrw' => 'tpl/default/img/enterprise/rw_banner.jpg', 'spzs' => 'tpl/default/img/enterprise/sp_banner.jpg', 'cgal' => 'tpl/default/img/enterprise/suc_banner.jpg', 'gstj' => 'tpl/default/img/enterprise/gstj_banner.jpg' );
 }
+// 原先的banner图片可以替换，对应的动作为up_pic
 if ($ac == 'up_pic') {
 	$banner_keys = $e_banner_keys; 
 	$img_type = $banner_keys [$view] ? $banner_keys [$view] : 'sy'; 
@@ -140,8 +144,10 @@ if($shop_backstyle){
 }
 in_array ( $view, $p_shop_info ['shop_type'] == 2 ? $e_route_arr : $p_route_arr ) or $view = "index";
 $ip = kekezu::get_ip ();
+// 更新访问量
 if ($_COOKIE ['ip'] != 1) {
 	db_factory::execute ( sprintf ( " update %switkey_shop set views=views+1 where uid=%d", TABLEPRE, $member_id ) );
+    // 设置为 httponly cookie
 	setcookie ( "ip", 1, time () + 3600 * 24, COOKIE_PATH, COOKIE_DOMAIN,NULL,TRUE );
 }
 // 先载入space的语言文件

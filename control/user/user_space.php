@@ -4,6 +4,7 @@ $opps = array('basic','link','member','case','member','cate','notice');
 in_array($opp,$opps) or $opp ="basic";
 $ac_url = "index.php?do=$do&view=$view&op=$op&opp=$opp";
 if($shop_info){
+    // 已经开通空间,载入“空间设置”选项
 	$third_nav = array (
 				"basic" => array ($_lang['space_set'],$_lang['space_set'] )
 		);
@@ -16,6 +17,7 @@ if($shop_info){
 	}
 	$third_nav["view"] =array($_lang['search_space'],$_lang['search_space'] );
 }else{
+    // 没开通空间，需要填写基本资料
 	$ac='open';
 	$third_nav=array("basic" => array ($_lang['space_set'],$_lang['space_set']));	
 	if(intval($user_info['user_type'])==2){
